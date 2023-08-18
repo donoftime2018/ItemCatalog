@@ -1,5 +1,6 @@
 {
   "name": "item-catalog",
+  "homepage": "http://donoftime2018.github.io/ItemCatalog",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
