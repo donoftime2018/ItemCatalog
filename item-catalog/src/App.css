@@ -1,0 +1,13 @@
+@font-face {
+    font-family: "Inter";
+    src: url('https://fonts.googleapis.com/css?family=Inter');
+}
+
+* {
+    font-family: "Arial";
+    /* background-color: orange; */
+}
+
+body {
+    background-color: burlywood;
+}

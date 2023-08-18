@@ -1,0 +1,30 @@
+@font-face {
+    font-family: "Inter";
+    src: url('https://fonts.googleapis.com/css?family=Inter');
+}
+
+.itemLayout {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: "Inter";
+    justify-content: center;
+    align-items: center;
+}
+
+.itemLayout>*{
+    flex: 0 0 33%;
+    margin-right: 2%;
+}
+
+.formLayout {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.formLayout>* {
+    margin-right: 2%;
+    /* position: fixed; */
+    /* flex: 0 0 33%; */
+}

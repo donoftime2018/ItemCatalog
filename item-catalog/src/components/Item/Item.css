@@ -1,0 +1,16 @@
+
+@font-face {
+    font-family: "Inter";
+    src: url('https://fonts.googleapis.com/css?family=Inter');
+}
+
+.itemCard {
+    border-radius: 25px;
+    font-family: "Inter";
+    border: solid 2px black;
+    font-size: 24px;
+    margin-bottom: 5%;
+    background-color: azure;
+    /* margin-right: auto; */
+    /* margin-left: auto; */
+}
