@@ -12,13 +12,15 @@ const Dashboard = () => {
     const getItems = async() => {
         const response = await fetch("http://localhost:4000/items/",{
             method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            },
             "Cache-Control": "no-cache"
         })
         const data = await response.json()
         setItems(data);
+
+        if (!response.ok)
+        {
+            window.location.reload()
+        }
     }
 
     useEffect(()=>{
