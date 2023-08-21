@@ -20,15 +20,10 @@ const Item = ({itemName, itemDesc, itemPrice, id, dbID}) => {
 
     const deleteItem = async() => {
         let id = dbID;
-        const response = await fetch("http://localhost:4000/items/deleteItems/" + id, {
+        await fetch("http://localhost:4000/items/deleteItems/" + id, {
             method: "DELETE",
-            headers: {
-                "Content-Type": "application/json"
-            }
+            cache: 'no-cache'
         })
-
-        console.log(response)
-        
     }
 
     return(<>

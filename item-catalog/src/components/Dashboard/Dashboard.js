@@ -10,7 +10,13 @@ const Dashboard = () => {
     const [items, setItems] = useState([])
 
     const getItems = async() => {
-        const response = await fetch("http://localhost:4000/items/")
+        const response = await fetch("http://localhost:4000/items/",{
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            cache: 'no-cache',
+        })
         const data = await response.json()
         setItems(data);
     }
