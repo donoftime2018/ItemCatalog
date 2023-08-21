@@ -20,7 +20,7 @@ const AddForm = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                cache: 'no-cache',
+                "Cache-Control": "no-cache",
                 body: JSON.stringify(data)
             })
             

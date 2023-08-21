@@ -22,7 +22,7 @@ const Item = ({itemName, itemDesc, itemPrice, id, dbID}) => {
         let id = dbID;
         await fetch("http://localhost:4000/items/deleteItems/" + id, {
             method: "DELETE",
-            cache: 'no-cache'
+            "Cache-Control": "no-cache"
         })
     }
 

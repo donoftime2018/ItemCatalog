@@ -15,7 +15,7 @@ const Dashboard = () => {
             headers: {
                 "Content-Type": "application/json"
             },
-            cache: 'no-cache',
+            "Cache-Control": "no-cache"
         })
         const data = await response.json()
         setItems(data);
