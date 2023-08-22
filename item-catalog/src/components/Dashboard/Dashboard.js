@@ -17,7 +17,7 @@ const Dashboard = () => {
                 const response = await axios.get("http://localhost:4000/items/")
                 setItems(response.data)
             } catch(error){
-                console.log(error)
+                console.error(error)
             }
     }
         getItems()

@@ -14,18 +14,19 @@ const AddForm = () => {
     const addItemToDB = async() => {
         const data = {name, price, desc}
 
-        try {
-            if (name !== "" && desc !== "" && price !== "")
-            {
-                const response = await axios.post("http://localhost:4000/items/insertItems", {
-                    data
-                })
-                
-                console.log(response.data)
-            }
-        } catch (error)
+            
+        if (name !== "" && desc !== "" && price !== "")
         {
-            console.log(error)
+            const response = await fetch("http://localhost:4000/items/insertItems", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                "Cache-Control": "no-cache",
+                body: JSON.stringify(data)
+            }).then(response=>response.json())
+            
+            return response.json()
         }
     }
 
