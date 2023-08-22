@@ -4,26 +4,22 @@ import "./Dashboard.css"
 import Item from "../Item/Item";
 import AddForm from "../addItem/addForm";
 import ItemContext from "../context/context";
+import axios from 'axios'
 
 const Dashboard = () => {
 
     const [items, setItems] = useState([])
 
-    const getItems = async() => {
-        const response = await fetch("http://localhost:4000/items/",{
-            method: "GET",
-            "Cache-Control": "no-cache"
-        })
-        const data = await response.json()
-        setItems(data);
-
-        if (!response.ok)
-        {
-            window.location.reload()
-        }
-    }
-
     useEffect(()=>{
+
+        const getItems = async() => {
+            try {
+                const response = await axios.get("http://localhost:4000/items/")
+                setItems(response.data)
+            } catch(error){
+                console.log(error)
+            }
+    }
         getItems()
     }, [items.length, items])
 

@@ -1,7 +1,8 @@
 import {Card, CardHeader, CardContent, Divider, Input, Icon, IconButton, Button, TextField} from "@mui/material"
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useState } from "react"
-import "./addForm.css"
+import "./addForm.css";
+import axios from "axios";
 
 const AddForm = () => {
         
@@ -13,18 +14,18 @@ const AddForm = () => {
     const addItemToDB = async() => {
         const data = {name, price, desc}
 
-        if (name !== "" && desc !== "" && price !== "")
+        try {
+            if (name !== "" && desc !== "" && price !== "")
+            {
+                const response = await axios.post("http://localhost:4000/items/insertItems", {
+                    data
+                })
+                
+                console.log(response.data)
+            }
+        } catch (error)
         {
-            const response = await fetch("http://localhost:4000/items/insertItems", {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                "Cache-Control": "no-cache",
-                body: JSON.stringify(data)
-            })
-            
-            return response.json()
+            console.log(error)
         }
     }
 
