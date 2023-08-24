@@ -14,7 +14,7 @@ const AddForm = () => {
     
 
     const addItemToDB = async() => {
-        const data = {name, price, desc, rating}
+        const data = {name, price, desc}
 
             
         if (name !== "" && desc !== "" && price !== "")

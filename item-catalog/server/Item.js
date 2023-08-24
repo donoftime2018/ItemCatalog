@@ -19,6 +19,7 @@ const itemSchema = new mongoose.Schema({
     rating: {
         type: Number,
         min: 0,
+        default: 0,
         max: 10,
         required: true
     }
