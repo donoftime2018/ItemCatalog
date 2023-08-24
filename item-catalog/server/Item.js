@@ -20,7 +20,6 @@ const itemSchema = new mongoose.Schema({
         type: Number,
         min: 0,
         max: 10,
-        default: 0,
         required: true
     }
 }, {

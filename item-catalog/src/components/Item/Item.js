@@ -21,19 +21,10 @@ const Item = ({itemName, itemDesc, itemPrice, itemQuantity, itemRating, id, dbID
     }
 
     const checkRating = () => {
-        if (itemRating != null && itemRating !==0)
+        if (itemRating != null)
         {
             return itemRating + " out of 10"
         }
-
-        else if (itemRating === 0)
-        {
-            return itemRating + " out of of 10"
-        }
-
-        else {
-            return "No rating exists"
-        }   
     }
 
     const deleteItem = async() => {

@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router()
 const Item = require('./Item.js');
 
+mongoose.set('runValidators', true);
 //Read all items
 router.route('/').get(async(req, res)=>{
     Item.find({}).sort({rating: -1, price: 1}).then(function(data) {
@@ -42,11 +43,16 @@ router.route("/deleteItems/:id").delete(async(req, res)=>{
 
 //update rating
 router.route("/increaseRating/:id").put(async(req, res)=>{
-    Item.updateOne({_id: req.params.id}, {$inc: {rating: 1}}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
+    Item.updateOne({_id: req.params.id}, {$inc: {rating: 1}}, 
+        {
+            runValidators: true
+        }).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
 })
 
 router.route("/decreaseRating/:id").put(async(req, res)=>{
-    Item.updateOne({_id: req.params.id}, {$inc: {rating:-1}}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
+    Item.updateOne({_id: req.params.id}, {$inc: {rating:-1}},  {
+        runValidators: true
+      }).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
 })
 
 module.exports = router
