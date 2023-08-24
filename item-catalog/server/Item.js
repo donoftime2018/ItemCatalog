@@ -18,13 +18,9 @@ const itemSchema = new mongoose.Schema({
     
     rating: {
         type: Number,
-        required: true,
         min: 0,
-        max: 10
-    },
-
-    quantity: {
-        type: Number,
+        max: 10,
+        default: 0,
         required: true
     }
 }, {
