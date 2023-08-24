@@ -14,6 +14,18 @@ const itemSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true
+    },
+    
+    rating: {
+        type: Number,
+        required: true,
+        min: 0,
+        max: 10
+    },
+
+    quantity: {
+        type: Number,
+        required: true
     }
 }, {
     collection: 'item'
