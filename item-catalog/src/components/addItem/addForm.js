@@ -9,7 +9,6 @@ const AddForm = () => {
     const [name, setName] = useState("")
     const [price, setPrice] = useState("")
     const [desc, setDesc] = useState("")
-    const [rating, setRating] = useState(0)
     // const [quantity, setQuantity] = useState(null)
     
 
@@ -19,16 +18,19 @@ const AddForm = () => {
             
         if (name !== "" && desc !== "" && price !== "")
         {
-            const response = await fetch("http://localhost:4000/items/insertItems", {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                "Cache-Control": "no-cache",
-                body: JSON.stringify(data)
-            }).then(response=>response.json())
+            axios.post("http://localhost:4000/items/insertItems", data).then(res=>console.log(res)).catch((error) => {
+                console.log(error)
+              })
+            // const response = await fetch("http://localhost:4000/items/insertItems", {
+            //     method: 'POST',
+            //     headers: {
+            //         "Content-Type": "application/json"
+            //     },
+            //     "Cache-Control": "no-cache",
+            //     body: JSON.stringify(data)
+            // }).then(response=>response.json())
             
-            return response.json()
+            // return response.json()
         }
     }
 

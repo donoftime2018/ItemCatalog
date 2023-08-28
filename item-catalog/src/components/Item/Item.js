@@ -6,6 +6,7 @@ import Delete from "@mui/icons-material/Delete";
 // import AddCircleIcon from '@mui/icons-material/AddCircle';
 import StarIcon from '@mui/icons-material/Star';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import axios from 'axios';
 
 
 const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID}) => {
@@ -29,10 +30,18 @@ const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID}) => {
 
     const deleteItem = async() => {
         let id = dbID;
-        await fetch("http://localhost:4000/items/deleteItems/" + id, {
-            method: "DELETE",
-            "Cache-Control": "no-cache"
-        })
+        // await fetch("http://localhost:4000/items/deleteItems/" + id, {
+        //     method: "DELETE",
+        //     "Cache-Control": "no-cache"
+        // })
+
+
+        axios.delete("http://localhost:4000/items/deleteItems/" + id).then((res) => {
+            console.log(res.data)
+            console.log('Student successfully updated')
+          }).catch((error) => {
+            console.log(error)
+          })
     }
 
     const increaseRating = async() => {

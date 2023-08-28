@@ -12,13 +12,10 @@ const Dashboard = () => {
 
     useEffect(()=>{
 
-        const getItems = async() => {
-            try {
-                const response = await axios.get("http://localhost:4000/items/")
-                setItems(response.data)
-            } catch(error){
-                console.error(error)
-            }
+        const getItems = () => {
+            axios.get("http://localhost:4000/items/").then(res=>setItems(res.data)).catch((error) => {
+                console.log(error)
+              })
     }
         getItems()
     }, [items.length, items])
