@@ -12,13 +12,10 @@ const Dashboard = () => {
 
     useEffect(()=>{
 
-        const getItems = async() => {
-            try {
-                const response = await axios.get("http://localhost:4000/items/")
-                setItems(response.data)
-            } catch(error){
-                console.error(error)
-            }
+        const getItems = () => {
+            axios.get("http://localhost:4000/items/").then(res=>setItems(res.data)).catch((error) => {
+                console.log(error)
+              })
     }
         getItems()
     }, [items.length, items])
@@ -34,7 +31,7 @@ const Dashboard = () => {
                         if(items.length>0)
                         {
                             return(<>
-                                <Item itemName={item.name} itemDesc={item.desc} itemPrice={item.price} id={index} dbID={item._id}></Item>
+                                <Item itemName={item.name} itemDesc={item.desc} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id}></Item>
                             </>)
                         }
 

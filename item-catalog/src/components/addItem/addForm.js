@@ -9,6 +9,7 @@ const AddForm = () => {
     const [name, setName] = useState("")
     const [price, setPrice] = useState("")
     const [desc, setDesc] = useState("")
+    // const [quantity, setQuantity] = useState(null)
     
 
     const addItemToDB = async() => {
@@ -17,16 +18,19 @@ const AddForm = () => {
             
         if (name !== "" && desc !== "" && price !== "")
         {
-            const response = await fetch("http://localhost:4000/items/insertItems", {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                "Cache-Control": "no-cache",
-                body: JSON.stringify(data)
-            }).then(response=>response.json())
+            axios.post("http://localhost:4000/items/insertItems", data).then(res=>console.log(res)).catch((error) => {
+                console.log(error)
+              })
+            // const response = await fetch("http://localhost:4000/items/insertItems", {
+            //     method: 'POST',
+            //     headers: {
+            //         "Content-Type": "application/json"
+            //     },
+            //     "Cache-Control": "no-cache",
+            //     body: JSON.stringify(data)
+            // }).then(response=>response.json())
             
-            return response.json()
+            // return response.json()
         }
     }
 
@@ -40,6 +44,10 @@ const AddForm = () => {
             <Divider></Divider>
             <CardContent>Item Desc: <Input sx={{overflowX: 'auto', backgroundColor: 'white', border: '1px black solid', borderRadius: '25px'}} disableUnderline="true" type="text" onChange={(event)=>setDesc(event.currentTarget.value)}></Input></CardContent>
             <Divider></Divider>
+            {/* <CardContent>Item Quantity: <Input sx={{overflowX: 'auto', width: '70px', backgroundColor: 'white', border: '1px black solid', borderRadius: '25px'}} disableUnderline="true" type="text" onChange={(event)=>setQuantity(event.currentTarget.value)}></Input></CardContent>
+            <Divider></Divider> */}
+            {/* <CardContent>Item Rating (between 0 and 10): <Input sx={{overflowX: 'auto', width: '40px', backgroundColor: 'white', border: '1px black solid', borderRadius: '25px'}} disableUnderline="true" type="text" onChange={(event)=>setRating(event.currentTarget.value)}></Input></CardContent>
+            <Divider></Divider> */}
             <CardContent sx={{display: 'flex', justifyContent: 'center'}}><Button onClick={addItemToDB} variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black'}}>Add Item to List</Button></CardContent>
         </Card>
    
