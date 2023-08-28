@@ -24,7 +24,7 @@ const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID}) => {
     const checkRating = () => {
         if (itemRating != null)
         {
-            return itemRating + " out of 10"
+            return "Currently rated " + itemRating + " stars out of 10"
         }
     }
 
@@ -46,24 +46,30 @@ const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID}) => {
 
     const increaseRating = async() => {
         let id = dbID;
-        await fetch("http://localhost:4000/items/increaseRating/" + id, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            "Cache-Control": "no-cache"
-        })
+
+        axios.put("http://localhost:4000/items/increaseRating/" + id).then((res)=>{console.log(res)}
+        ).catch((error)=>{console.error(error)})
+        // await fetch("http://localhost:4000/items/increaseRating/" + id, {
+        //     method: "PUT",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     "Cache-Control": "no-cache"
+        // })
     }
 
     const decreaseRating = async() => {
         let id = dbID;
-        await fetch("http://localhost:4000/items/decreaseRating/" + id, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            "Cache-Control": "no-cache"
-        })
+
+        axios.put("http://localhost:4000/items/decreaseRating/" + id).then((res)=>{console.log(res)}
+        ).catch((error)=>{console.error(error)})
+        // await fetch("http://localhost:4000/items/decreaseRating/" + id, {
+        //     method: "PUT",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     "Cache-Control": "no-cache"
+        // })
     }
 
     return(<>
@@ -73,7 +79,7 @@ const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID}) => {
             </CardContent>
             <Divider/>
             <CardContent>
-                <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>${itemPrice.toFixed(2)}</span>
+                <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Avg. Market Price: ${itemPrice.toFixed(2)}</span>
             </CardContent>
             <Divider/>
             <>
