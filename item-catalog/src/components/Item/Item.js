@@ -8,7 +8,7 @@ import StarIcon from '@mui/icons-material/Star';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 
-const Item = ({itemName, itemDesc, itemPrice, itemQuantity, itemRating, id, dbID}) => {
+const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID}) => {
 
     const [open, setOpen] = useState(false);
 

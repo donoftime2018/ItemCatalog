@@ -4,13 +4,11 @@ const router = express.Router()
 const Item = require('./Item.js');
 
 mongoose.set('runValidators', true);
+mongoose.set('setDefaultsOnInsert', true);
 // mongoose.set('debug', true);
 //Read all items
 router.route('/').get(async(req, res)=>{
-    Item.find({}).sort({rating: -1, price: 1}, {  upsert: true,
-        new: true,
-        runValidators: true,
-        setDefaultsOnInsert: true}).then(function(data) {
+    Item.find({}).sort({rating: -1, price: 1, name: 1}).then(function(data) {
      
             res.json(data)
             res.send(data)
@@ -24,10 +22,7 @@ router.route('/').get(async(req, res)=>{
 //add items 
 router.route("/insertItems").post(async(req, res)=>{
 
-    Item.find({name: req.body.name}, {desc: req.body.desc}, {price: req.body.price}, {  upsert: true,
-        new: true,
-        runValidators: true,
-        setDefaultsOnInsert: true}).then(function(data){
+    Item.find({name: req.body.name}, {desc: req.body.desc}, {price: req.body.price}).then(function(data){
         console.log(data)
         if(data.length > 0)
         {
@@ -45,27 +40,16 @@ router.route("/insertItems").post(async(req, res)=>{
 
 //delete items
 router.route("/deleteItems/:id").delete(async(req, res)=>{
-    Item.deleteOne({_id: req.params.id}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
+   Item.deleteOne({_id: req.params.id}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
 })
 
 //update rating
 router.route("/increaseRating/:id").put(async(req, res)=>{
-    Item.updateOne({_id: req.params.id}, {$inc: {rating: 1}}, 
-        {
-            upsert: true,
-            new: true,
-            runValidators: true,
-            setDefaultsOnInsert: true
-        }).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
+   Item.updateOne({_id: req.params.id}, {$inc: {rating: 1}}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
 })
 
 router.route("/decreaseRating/:id").put(async(req, res)=>{
-    Item.updateOne({_id: req.params.id}, {$inc: {rating:-1}},  {
-        upsert: true,
-        new: true,
-        runValidators: true,
-        setDefaultsOnInsert: true
-      }).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
+    Item.updateOne({_id: req.params.id}, {$inc: {rating:-1}}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
 })
 
 module.exports = router
