@@ -3,9 +3,9 @@ const express = require('express');
 const router = express.Router()
 const Item = require('./Item.js');
 
-mongoose.set('runValidators', true);
 mongoose.set('setDefaultsOnInsert', true);
 // mongoose.set('debug', true);
+
 //Read all items
 router.route('/').get(async(req, res)=>{
     Item.find({}).sort({rating: -1, price: 1, name: 1}).then(function(data) {
@@ -45,11 +45,50 @@ router.route("/deleteItems/:id").delete(async(req, res)=>{
 
 //update rating
 router.route("/increaseRating/:id").put(async(req, res)=>{
-   Item.updateOne({_id: req.params.id}, {$inc: {rating: 1}}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
+    // const validator = {upsert: true, new: true};
+//    Item.findOneAndUpdate({_id: req.params.id}, {$inc: {rating: 1}}, {new: true}).then((result)=>{
+//     // console.log(result)
+//     return result.validate().then(()=>result)
+// }).then(
+//     (validatedDoc)=>{return validatedDoc.save()}
+//     ).then(
+//         (savedDoc)=>{console.log(savedDoc)}
+//         ).catch(
+//             (err)=>{console.error(err)
+//             })
+
+Item.findOne({_id: req.params.id}).then((doc)=>{
+    doc.rating+=1
+    return doc.validate().then(()=>doc)
+}).then((validatedDoc)=>{
+    return Item.findOneAndUpdate({_id: req.params.id}, {rating: validatedDoc.rating}, {new: true, runValidators: true})
+}).then((updatedDoc)=>{
+    console.log(updatedDoc)
+}).catch(err=>{console.error(err)})
+
 })
 
 router.route("/decreaseRating/:id").put(async(req, res)=>{
-    Item.updateOne({_id: req.params.id}, {$inc: {rating:-1}}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
+    // const validator = {upsert: true, new: true};
+    // Item.findOneAndUpdate({_id: req.params.id}, {$inc: {rating:-1}}, {new: true}).then((result)=>{
+    //     // console.log(result)
+    //     return result.validate().then(()=>result)
+    // }).then(
+    //     (validatedDoc)=>{return validatedDoc.save()}
+    //     ).then(
+    //         (savedDoc)=>{console.log(savedDoc)}
+    //         ).catch(
+    //             (err)=>{console.error(err)
+    //             })
+
+    Item.findOne({_id: req.params.id}).then((doc)=>{
+        doc.rating-=1
+        return doc.validate().then(()=>doc)
+    }).then((validatedDoc)=>{
+        return Item.findOneAndUpdate({_id: req.params.id}, {rating: validatedDoc.rating}, {new: true, runValidators: true})
+    }).then((updatedDoc)=>{
+        console.log(updatedDoc)
+    }).catch(err=>{console.error(err)})
 })
 
 module.exports = router
