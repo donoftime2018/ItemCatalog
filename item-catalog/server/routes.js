@@ -22,7 +22,13 @@ router.route('/').get(async(req, res)=>{
 //add items 
 router.route("/insertItems").post(async(req, res)=>{
 
-    Item.find({name: req.body.name}, {desc: req.body.desc}, {price: req.body.price}).then(function(data){
+    Item.find({$or: [
+        {name: req.body.name, desc: req.body.desc, price: req.body.price},
+        {name: req.body.name, desc: req.body.desc},
+        {name: req.body.name, price: req.body.price},
+        {name: req.body.name}
+    ]
+    }).then(function(data){
         console.log(data)
         if(data.length > 0)
         {

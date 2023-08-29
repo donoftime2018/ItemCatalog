@@ -5,10 +5,28 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/${file}",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+
+        {
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/${file}"
+        },
+
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Server",
+            "url": "http://localhost:4000",
             "webRoot": "${workspaceFolder}/${file}"
         }
     ]
