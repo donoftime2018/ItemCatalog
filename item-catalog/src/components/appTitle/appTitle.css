@@ -1,0 +1,10 @@
+.titleBadge {
+    border-radius: 25px;
+    color: white;
+    margin-bottom: 5%;
+    margin-top: 2%;
+    display: flex;
+    justify-content: center;
+    text-decoration: underline;
+    text-align: center;
+}
