@@ -5,6 +5,7 @@ import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
 // import AddCircleIcon from '@mui/icons-material/AddCircle';
 import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import axios from 'axios';
 
@@ -24,7 +25,10 @@ const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID}) => {
     const checkRating = () => {
         if (itemRating != null)
         {
-            return "Currently rated " + itemRating + " stars out of 10"
+               
+            return (<>
+                <StarBorderIcon fontSize="large" color="success"></StarBorderIcon>{itemRating}
+            </>)
         }
     }
 
