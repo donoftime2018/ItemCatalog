@@ -4,6 +4,7 @@ import "./Dashboard.css"
 import Item from "../Item/Item";
 import AddForm from "../addItem/addForm";
 import ItemContext from "../context/context";
+import Title from "../appTitle/appTitle";
 import axios from 'axios'
 
 const Dashboard = () => {
@@ -23,9 +24,10 @@ const Dashboard = () => {
     return(<>
 
         <ItemContext>
+            <Title title={"Put a Price On It!"}></Title>
             <div class="itemLayout">
-                {
 
+                {
                     items.map((item, index)=>{
 
                         if(items.length>0)
