@@ -35,7 +35,7 @@ const AddForm = () => {
     const addItemToDB = async(itemName, itemPrice, itemDesc) => {
         
         setName(itemName)
-        setPrice(itemPrice)
+        setPrice(parseFloat(itemPrice).toFixed(2))
         setDesc(itemDesc)
 
         const data = {name, price, desc}
