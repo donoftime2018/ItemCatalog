@@ -3,22 +3,45 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useState } from "react"
 import "./addForm.css";
 import {useFormik} from "formik";
+import * as yup from "yup"
 import axios from "axios";
 
 const AddForm = () => {
 
     const [name, setName] = useState("")
-    const [price, setPrice] = useState("")
+    const [price, setPrice] = useState(0)
     const [desc, setDesc] = useState("")
     // const [quantity, setQuantity] = useState(null)
 
-    
+    const validation = yup.object({
+        name: yup.string("Enter name of item").required("Item name required"),
+        price: yup.number().required("Item price required"),
+        desc: yup.string("Enter description of item").required("Item description required")
+    })
 
-    const addItemToDB = async() => {
+    const formik = useFormik({
+        initialValues: {
+            name: "",
+            price: 0,
+            desc: ""
+        },
+        validationSchema: validation,
+        onSubmit: (values)=>{
+            addItemToDB(values.name, values.price, values.desc);
+        }
+    }, {})
+
+
+    const addItemToDB = async(itemName, itemPrice, itemDesc) => {
+        
+        setName(itemName)
+        setPrice(itemPrice)
+        setDesc(itemDesc)
+
         const data = {name, price, desc}
 
             
-        if (name !== "" && desc !== "" && price !== "")
+        if (name !== "" && desc !== "" && price !== 0)
         {
             axios.post("http://localhost:4000/items/insertItems", data).then(res=>console.log(res)).catch((error) => {
                 console.log(error)
@@ -40,17 +63,17 @@ const AddForm = () => {
        <Card class="addFormStyle">
             <CardHeader sx={{textAlign: 'center'}} title="Add Items"></CardHeader>
             <Divider></Divider>
-            <CardContent>Item Name: <Input sx={{border: '1px black solid', backgroundColor: 'white', borderRadius: '25px'}} disableUnderline="true" type="text" onChange={(event)=>setName(event.currentTarget.value)}></Input></CardContent>
+            <CardContent>Item Name: <Input sx={{border: '1px black solid', backgroundColor: 'white', borderRadius: '25px'}} disableUnderline="true" type="text"/></CardContent>
             <Divider></Divider>
-            <CardContent>Item Price: <Input sx={{border: '1px black solid',  backgroundColor: 'white', width:'100px', borderRadius: '25px'}} disableUnderline="true" type="text" onChange={(event)=>setPrice(event.currentTarget.value)}></Input></CardContent>
+            <CardContent>Item Price: <Input inputProps={{step: 0.01}} sx={{border: '1px black solid',  backgroundColor: 'white', width:'60px', borderRadius: '25px'}} disableUnderline="true" type="number"></Input></CardContent>
             <Divider></Divider>
-            <CardContent>Item Desc: <Input sx={{overflowX: 'auto', backgroundColor: 'white', border: '1px black solid', borderRadius: '25px'}} disableUnderline="true" type="text" onChange={(event)=>setDesc(event.currentTarget.value)}></Input></CardContent>
+            <CardContent>Item Desc: <Input sx={{overflowX: 'auto', backgroundColor: 'white', border: '1px black solid', borderRadius: '25px'}} disableUnderline="true" type="text"></Input></CardContent>
             <Divider></Divider>
             {/* <CardContent>Item Quantity: <Input sx={{overflowX: 'auto', width: '70px', backgroundColor: 'white', border: '1px black solid', borderRadius: '25px'}} disableUnderline="true" type="text" onChange={(event)=>setQuantity(event.currentTarget.value)}></Input></CardContent>
             <Divider></Divider> */}
             {/* <CardContent>Item Rating (between 0 and 10): <Input sx={{overflowX: 'auto', width: '40px', backgroundColor: 'white', border: '1px black solid', borderRadius: '25px'}} disableUnderline="true" type="text" onChange={(event)=>setRating(event.currentTarget.value)}></Input></CardContent>
             <Divider></Divider> */}
-            <CardContent sx={{display: 'flex', justifyContent: 'center'}}><Button onClick={addItemToDB} variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black'}}>Add Item to List</Button></CardContent>
+            <CardContent sx={{display: 'flex', justifyContent: 'center'}}><Button onClick={formik.handleSubmit} variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black'}}>Add Item to List</Button></CardContent>
         </Card>
    
    </>)
