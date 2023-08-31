@@ -2,14 +2,16 @@ import {Card, CardHeader, CardContent, Divider, Input, Icon, IconButton, Button,
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useState } from "react"
 import "./addForm.css";
+import {useFormik} from "formik";
 import axios from "axios";
 
 const AddForm = () => {
-        
+
     const [name, setName] = useState("")
     const [price, setPrice] = useState("")
     const [desc, setDesc] = useState("")
     // const [quantity, setQuantity] = useState(null)
+
     
 
     const addItemToDB = async() => {
