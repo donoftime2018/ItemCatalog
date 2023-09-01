@@ -4,3 +4,7 @@
     width: 30%;
     background-color: whitesmoke;
 }
+
+form div {
+    margin-bottom: 2%;
+}
