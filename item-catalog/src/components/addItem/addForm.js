@@ -8,9 +8,9 @@ import axios from "axios";
 
 const AddForm = () => {
 
-    const [name, setName] = useState('')
-    const [price, setPrice] = useState(0)
-    const [desc, setDesc] = useState('')
+    // const [name, setName] = useState('')
+    // const [price, setPrice] = useState(0)
+    // const [desc, setDesc] = useState('')
     // const [quantity, setQuantity] = useState(null)
 
     const validation = yup.object({
@@ -20,23 +20,20 @@ const AddForm = () => {
     })
 
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
             item_name: "",
             item_price: 0,
             item_desc: ""
         },
         validationSchema: validation,
-        onSubmit: (values)=>{
+        onSubmit: (values, actions)=>{
             addItemToDB(values.item_name, values.item_price, values.item_desc);
         }
     }, {})
 
 
-    const addItemToDB =(itemName, itemPrice, itemDesc) => {
-        
-        setName(itemName)
-        setPrice(itemPrice)
-        setDesc(itemDesc)
+    const addItemToDB = (name, price, desc) => {
 
         const data = {name, price, desc}
 
@@ -70,6 +67,7 @@ const AddForm = () => {
                         id="item_name"
                         name="item_name"
                         variant="outlined"
+                        type="text"
                         label="Item Name"
                         value={formik.values.item_name}
                         onChange={formik.handleChange}
@@ -87,6 +85,7 @@ const AddForm = () => {
                         id="item_price"
                         name="item_price"
                         variant="outlined"
+                        type="number"
                         value={formik.values.item_price}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -97,7 +96,6 @@ const AddForm = () => {
                         placeholder="Item Price goes here..." 
                         label="Item Price"
                         disableUnderline="true" 
-                        type="number"
                     />
                 </div>
             {/* <Divider></Divider> */}
@@ -106,6 +104,7 @@ const AddForm = () => {
                         id="item_desc"
                         name="item_desc"
                         variant="outlined"
+                        type="text"
                         value={formik.values.item_desc}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -115,7 +114,6 @@ const AddForm = () => {
                         placeholder="Item Desc goes here..." 
                         label="Item Description"
                         disableUnderline="true" 
-                        type="text"
                     />
                 </div>
             {/* <Divider></Divider> */}
