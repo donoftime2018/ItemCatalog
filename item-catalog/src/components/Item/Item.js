@@ -25,12 +25,9 @@ const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID}) => {
     const checkRating = () => {
         if (itemRating != null)
         {
-            for (let i = 0; i < itemRating; i++)
-            {
-                return (<>
-                    <StarBorderIcon fontSize="large" color="success"></StarBorderIcon>
-                </>)
-            }
+            return (<>
+                <StarBorderIcon fontSize="large" color="success"></StarBorderIcon> {itemRating}
+            </>)
         }
     }
 
