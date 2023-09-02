@@ -3,4 +3,9 @@
     border: 2px solid black;
     width: 30%;
     background-color: whitesmoke;
+    margin-bottom: 3%;
+}
+
+form div {
+    margin-bottom: 2%;
 }

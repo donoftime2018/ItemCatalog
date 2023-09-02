@@ -25,6 +25,11 @@ const Dashboard = () => {
 
         <ItemContext>
             <Title title={"Put a Price On It!"}></Title>
+
+            <div class="formLayout">
+                <AddForm></AddForm>
+            </div>
+            
             <div class="itemLayout">
 
                 {
@@ -45,9 +50,9 @@ const Dashboard = () => {
             </div>
         </ItemContext>
 
-        <div class="formLayout">
+        {/* <div class="formLayout">
             <AddForm></AddForm>
-        </div>
+        </div> */}
     </>)
 }
 
