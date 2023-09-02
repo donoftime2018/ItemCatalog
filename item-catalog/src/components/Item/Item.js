@@ -26,7 +26,7 @@ const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID}) => {
         if (itemRating != null)
         {
             return (<>
-                <StarBorderIcon fontSize="large" color="success"></StarBorderIcon> {itemRating}
+                <StarBorderIcon fontSize="large" color="success"></StarBorderIcon>{itemRating}
             </>)
         }
     }
