@@ -15,7 +15,7 @@ const AddForm = () => {
 
     const validation = yup.object({
         item_name: yup.string("Enter name of item").required("Item name required"),
-        item_price: yup.number().min(10.00).required("Item price required"),
+        item_price: yup.number().min(10.00).positive().required("Item price required"),
         item_desc: yup.string("Enter description of item").required("Item description required")
     })
 
@@ -23,7 +23,7 @@ const AddForm = () => {
         enableReinitialize: true,
         initialValues: {
             item_name: "",
-            item_price: 0,
+            item_price: null,
             item_desc: ""
         },
         validationSchema: validation,
