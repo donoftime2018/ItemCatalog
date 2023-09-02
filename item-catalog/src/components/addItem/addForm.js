@@ -62,7 +62,7 @@ const AddForm = () => {
             <Divider></Divider>
             <CardContent>
                 <form onSubmit={formik.handleSubmit}>
-                <div>
+                <div style={{display: "flex", justifyContent: 'center'}}>
                     <TextField 
                         id="item_name"
                         name="item_name"
@@ -80,7 +80,7 @@ const AddForm = () => {
                     />
                 </div>
             {/* <Divider></Divider> */}
-                <div>
+                <div style={{display: "flex", justifyContent: 'center'}}>
                     <TextField 
                         id="item_price"
                         name="item_price"
@@ -99,7 +99,7 @@ const AddForm = () => {
                     />
                 </div>
             {/* <Divider></Divider> */}
-                <div>
+                <div style={{display: "flex", justifyContent: 'center'}}>
                     <TextField
                         id="item_desc"
                         name="item_desc"
@@ -121,7 +121,7 @@ const AddForm = () => {
             <Divider></Divider> */}
             {/* <CardContent>Item Rating (between 0 and 10): <Input sx={{overflowX: 'auto', width: '40px', backgroundColor: 'white', border: '1px black solid', borderRadius: '25px'}} disableUnderline="true" type="text" onChange={(event)=>setRating(event.currentTarget.value)}></Input></CardContent>
             <Divider></Divider> */}
-                <div>
+                <div style={{display: "flex", justifyContent: 'center'}}>
                     <Button type="Submit" variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Add Item to List</Button>
                 </div>
             </form>
