@@ -10,7 +10,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import axios from 'axios';
 
 
-const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID}) => {
+const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID, lastUpdate}) => {
 
     const [open, setOpen] = useState(false);
 
@@ -122,6 +122,10 @@ const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID}) => {
             </CardContent>
 
             </div>
+            <Divider/>
+            <CardContent style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
+                <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Last Updated: {lastUpdate}</span>
+            </CardContent>
             <>
             {
                 itemRating < 4 ?
