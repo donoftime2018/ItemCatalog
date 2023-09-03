@@ -122,10 +122,10 @@ const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID, lastUpdate})
             </CardContent>
 
             </div>
-            <Divider/>
+            {/* <Divider/>
             <CardContent style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
                 <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Last Updated: {lastUpdate}</span>
-            </CardContent>
+            </CardContent> */}
             <>
             {
                 itemRating < 4 ?
