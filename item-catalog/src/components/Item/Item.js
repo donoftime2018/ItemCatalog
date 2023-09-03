@@ -14,6 +14,8 @@ const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID}) => {
 
     const [open, setOpen] = useState(false);
 
+    // console.log(recentUpdate)
+
     const openDesc = () => {
         setOpen(true);
     }

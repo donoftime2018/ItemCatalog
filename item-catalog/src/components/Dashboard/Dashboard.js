@@ -38,7 +38,7 @@ const Dashboard = () => {
                         if(items.length>0)
                         {
                             return(<>
-                                <Item itemName={item.name} itemDesc={item.desc} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id}></Item>
+                                <Item itemName={item.name} itemDesc={item.desc} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} recentUpdate={item.lastUpdated}></Item>
                             </>)
                         }
 

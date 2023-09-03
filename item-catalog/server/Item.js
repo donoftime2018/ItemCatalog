@@ -24,7 +24,8 @@ const itemSchema = new mongoose.Schema({
         required: true
     }
 }, {
-    collection: 'item'
+    collection: 'item',
+    timestamps: true
 })
 
 module.exports = mongoose.model("Item", itemSchema);
