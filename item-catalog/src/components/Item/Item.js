@@ -124,7 +124,7 @@ const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID, lastUpdate})
             </div>
             {/* <Divider/>
             <CardContent style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
-                <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Last Updated: {lastUpdate}</span>
+                <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Last Updated: {Date(lastUpdate)}</span>
             </CardContent> */}
             <>
             {
