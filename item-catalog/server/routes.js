@@ -29,6 +29,7 @@ router.route("/insertItems").post(async(req, res)=>{
         {name: req.body.name}
     ]
     }).then(function(data){
+        console.log(req.body)
         console.log(data)
         if(data.length > 0)
         {
@@ -36,7 +37,9 @@ router.route("/insertItems").post(async(req, res)=>{
             // Item.findOneAndUpdate({name: req.body.name, desc: req.body.desc, price: req.body.price, rating: req.body.rating}, {quantity: ++data.length}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
         }
         else {
-            Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
+            Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price}).then((result)=>{
+                console.log(result); 
+                res.status(200).send()}).catch((err)=>{console.error(err)})
         }
     }).catch(function(err){
         // console.log(err);
@@ -69,7 +72,8 @@ Item.findOne({_id: req.params.id}).then((doc)=>{
 }).then((validatedDoc)=>{
     return Item.findOneAndUpdate({_id: req.params.id}, {rating: validatedDoc.rating}, {new: true, runValidators: true})
 }).then((updatedDoc)=>{
-    console.log(updatedDoc)
+    console.log(updatedDoc);
+    res.status(200).send()
 }).catch(err=>{console.error(err)})
 
 })
@@ -93,7 +97,8 @@ router.route("/decreaseRating/:id").put(async(req, res)=>{
     }).then((validatedDoc)=>{
         return Item.findOneAndUpdate({_id: req.params.id}, {rating: validatedDoc.rating}, {new: true, runValidators: true})
     }).then((updatedDoc)=>{
-        console.log(updatedDoc)
+        console.log(updatedDoc);
+        res.status(200).send()
     }).catch(err=>{console.error(err)})
 })
 
