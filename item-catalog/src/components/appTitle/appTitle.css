@@ -8,3 +8,7 @@
     text-decoration: underline;
     text-align: center;
 }
+
+h1::first-letter {
+    font-size: 3rem;
+}
