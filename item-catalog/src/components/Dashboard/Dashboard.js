@@ -24,7 +24,9 @@ const Dashboard = () => {
     return(<>
 
         <ItemContext>
-            <Title title={"Put a Price On It!"}></Title>
+            <Title title={"Put a Price On It!"} 
+                titleDesc={"You can view the market prices, descriptions, and ratings of items to see which ones are worth buying! You can rate items as you please, and add new items."}>
+            </Title>
 
             <div class="formLayout">
                 <AddForm></AddForm>

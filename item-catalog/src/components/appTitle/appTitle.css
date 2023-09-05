@@ -3,12 +3,19 @@
     color: white;
     margin-bottom: 3%;
     margin-top: 2%;
+    /* margin-right: 50%;
+    margin-left: 50%; */
     display: flex;
     justify-content: center;
-    text-decoration: underline;
     text-align: center;
 }
 
 h1::first-letter {
     font-size: 3rem;
+}
+
+p {
+    font-size: 1.5rem;
+    /* text-shadow: none; */
+    font-weight: normal;
 }
