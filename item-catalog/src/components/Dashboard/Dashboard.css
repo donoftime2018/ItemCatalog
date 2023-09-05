@@ -11,8 +11,13 @@
     align-items: center;
 }
 
+.itemLayout:nth-child(even)
+{
+    background-color: beige;
+}
+
 .itemLayout>*{
-    flex: 0 0 33%;
+    flex: 0 0 25%;
     margin-right: 2%;
 }
 
