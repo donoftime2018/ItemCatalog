@@ -128,19 +128,19 @@ const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID, lastUpdate})
             </CardContent> */}
             <>
             {
-                itemRating < 4 ?
-                <div key={id}>
-                <Divider></Divider>
-                <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <IconButton onClick={deleteItem}><Delete color="error"></Delete></IconButton>
-                </CardContent>
+                // itemRating < 4 ?
+                // <div key={id}>
+                // <Divider></Divider>
+                // <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                //     <IconButton onClick={deleteItem}><Delete color="error"></Delete></IconButton>
+                // </CardContent>
 
-                </div>
-                :
+                // </div>
+                // :
                 
-                <div>
+                // <div>
 
-                </div>
+                // </div>
 
             }
             </>
