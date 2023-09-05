@@ -14,7 +14,7 @@ const Dashboard = () => {
     useEffect(()=>{
 
         const getItems = () => {
-            axios.get("http://localhost:4000/items/").then((res)=>{setItems(res.data);}).catch((error) => {
+            axios.get("http://localhost:4000/items/").then((res)=>{setItems(res.data)}).catch((error) => {
                 console.log(error)
               })
     }

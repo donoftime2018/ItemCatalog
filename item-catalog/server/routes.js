@@ -10,10 +10,8 @@ mongoose.set('setDefaultsOnInsert', true);
 router.route('/').get(async(req, res)=>{
     Item.find({}).sort({rating: -1, price: 1, name: 1}).then(function(data) {
      
-            res.json(data)
-            res.send(data)
-            res.render(data)
-            res.status(200)
+            // res.json(data)
+            res.json(data).status(200).send()
     }).catch(function(err){
         // console.log(err);
     })
