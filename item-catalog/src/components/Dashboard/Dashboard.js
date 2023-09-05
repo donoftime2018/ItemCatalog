@@ -5,6 +5,7 @@ import Item from "../Item/Item";
 import AddForm from "../addItem/addForm";
 import ItemContext from "../context/context";
 import Title from "../appTitle/appTitle";
+import { AppTitle } from "../appTitle/appTitle";
 import axios from 'axios'
 
 const Dashboard = () => {
@@ -24,7 +25,8 @@ const Dashboard = () => {
     return(<>
 
         <ItemContext>
-            <Title title={"Put a Price On It!"} 
+            <Title 
+                title={"Put a Price On It!"} 
                 titleDesc={"You can view the market prices, descriptions, and ratings of items to see which ones are worth buying! You can rate items as you please, and add new items."}>
             </Title>
 
