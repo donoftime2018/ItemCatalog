@@ -11,9 +11,10 @@ export const ItemContext = ({children}) => {
     const [rating, setItemRating] = useState(0);
     const [id, setID] = useState("");
     const [dbID, setDBID] = useState("")
+    const [lastUpdate, setLastUpdate] = useState(Date);
 
     return(<>
-        <context.Provider value={[{name, setItemName}, {price, setItemPrice}, {desc, setItemDesc}, {rating, setItemRating}, {id, setID}, {dbID, setDBID}]}>
+        <context.Provider value={[{name, setItemName}, {price, setItemPrice}, {desc, setItemDesc}, {rating, setItemRating}, {id, setID}, {dbID, setDBID}, {lastUpdate, setLastUpdate}]}>
             {children}
         </context.Provider>
     </>)

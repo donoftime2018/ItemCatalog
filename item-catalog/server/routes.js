@@ -10,10 +10,8 @@ mongoose.set('setDefaultsOnInsert', true);
 router.route('/').get(async(req, res)=>{
     Item.find({}).sort({rating: -1, price: 1, name: 1}).then(function(data) {
      
-            res.json(data)
-            res.send(data)
-            res.render(data)
-            res.status(200)
+            // res.json(data)
+            res.json(data).status(200).send()
     }).catch(function(err){
         // console.log(err);
     })
@@ -29,6 +27,7 @@ router.route("/insertItems").post(async(req, res)=>{
         {name: req.body.name}
     ]
     }).then(function(data){
+        console.log(req.body)
         console.log(data)
         if(data.length > 0)
         {
@@ -36,7 +35,9 @@ router.route("/insertItems").post(async(req, res)=>{
             // Item.findOneAndUpdate({name: req.body.name, desc: req.body.desc, price: req.body.price, rating: req.body.rating}, {quantity: ++data.length}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
         }
         else {
-            Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
+            Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price}).then((result)=>{
+                console.log(result); 
+                res.status(200).send()}).catch((err)=>{console.error(err)})
         }
     }).catch(function(err){
         // console.log(err);
@@ -46,7 +47,7 @@ router.route("/insertItems").post(async(req, res)=>{
 
 //delete items
 router.route("/deleteItems/:id").delete(async(req, res)=>{
-   Item.deleteOne({_id: req.params.id}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
+   Item.deleteOne({_id: req.params.id}).then((result)=>{console.log(result); res.status(200).send()}).catch((err)=>{console.error(err)})
 })
 
 //update rating
@@ -69,7 +70,8 @@ Item.findOne({_id: req.params.id}).then((doc)=>{
 }).then((validatedDoc)=>{
     return Item.findOneAndUpdate({_id: req.params.id}, {rating: validatedDoc.rating}, {new: true, runValidators: true})
 }).then((updatedDoc)=>{
-    console.log(updatedDoc)
+    console.log(updatedDoc);
+    res.status(200).send()
 }).catch(err=>{console.error(err)})
 
 })
@@ -93,7 +95,8 @@ router.route("/decreaseRating/:id").put(async(req, res)=>{
     }).then((validatedDoc)=>{
         return Item.findOneAndUpdate({_id: req.params.id}, {rating: validatedDoc.rating}, {new: true, runValidators: true})
     }).then((updatedDoc)=>{
-        console.log(updatedDoc)
+        console.log(updatedDoc);
+        res.status(200).send()
     }).catch(err=>{console.error(err)})
 })
 

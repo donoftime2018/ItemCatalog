@@ -14,17 +14,19 @@ const Dashboard = () => {
     useEffect(()=>{
 
         const getItems = () => {
-            axios.get("http://localhost:4000/items/").then(res=>setItems(res.data)).catch((error) => {
+            axios.get("http://localhost:4000/items/").then((res)=>{setItems(res.data)}).catch((error) => {
                 console.log(error)
               })
     }
         getItems()
     }, [items.length, items])
-
+    // console.log(items)
     return(<>
 
         <ItemContext>
-            <Title title={"Put a Price On It!"}></Title>
+            <Title title={"Put a Price On It!"} 
+                titleDesc={"You can view the market prices, descriptions, and ratings of items to see which ones are worth buying! You can rate items as you please, and add new items."}>
+            </Title>
 
             <div class="formLayout">
                 <AddForm></AddForm>
@@ -38,7 +40,7 @@ const Dashboard = () => {
                         if(items.length>0)
                         {
                             return(<>
-                                <Item itemName={item.name} itemDesc={item.desc} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id}></Item>
+                                <Item itemName={item.name} itemDesc={item.desc} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
                             </>)
                         }
 

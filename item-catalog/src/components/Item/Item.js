@@ -10,9 +10,11 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import axios from 'axios';
 
 
-const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID}) => {
+const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID, lastUpdate}) => {
 
     const [open, setOpen] = useState(false);
+
+    // console.log(recentUpdate)
 
     const openDesc = () => {
         setOpen(true);
@@ -120,21 +122,25 @@ const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID}) => {
             </CardContent>
 
             </div>
+            {/* <Divider/>
+            <CardContent style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
+                <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Last Updated: {Date(lastUpdate)}</span>
+            </CardContent> */}
             <>
             {
-                itemRating < 4 ?
-                <div key={id}>
-                <Divider></Divider>
-                <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <IconButton onClick={deleteItem}><Delete color="error"></Delete></IconButton>
-                </CardContent>
+                // itemRating < 4 ?
+                // <div key={id}>
+                // <Divider></Divider>
+                // <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                //     <IconButton onClick={deleteItem}><Delete color="error"></Delete></IconButton>
+                // </CardContent>
 
-                </div>
-                :
+                // </div>
+                // :
                 
-                <div>
+                // <div>
 
-                </div>
+                // </div>
 
             }
             </>
