@@ -47,7 +47,7 @@ router.route("/insertItems").post(async(req, res)=>{
 
 //delete items
 router.route("/deleteItems/:id").delete(async(req, res)=>{
-   Item.deleteOne({_id: req.params.id}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
+   Item.deleteOne({_id: req.params.id}).then((result)=>{console.log(result); res.status(200).send()}).catch((err)=>{console.error(err)})
 })
 
 //update rating

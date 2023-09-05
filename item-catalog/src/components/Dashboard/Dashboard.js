@@ -20,7 +20,7 @@ const Dashboard = () => {
     }
         getItems()
     }, [items.length, items])
-
+    // console.log(items)
     return(<>
 
         <ItemContext>
