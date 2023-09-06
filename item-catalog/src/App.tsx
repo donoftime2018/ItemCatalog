@@ -2,6 +2,7 @@
 import React from "react";
 import {Routes, Route, BrowserRouter} from 'react-router-dom';
 import Dashboard from "./components/Dashboard/Dashboard";
+import { classDashboard } from "./components/Dashboard/Dashboard";
 // import Login from "./components/Login/Login";
 import { ItemContext, OfficialItem } from "./components/context/context"
 import "./App.css";
