@@ -60,4 +60,58 @@ const Dashboard = () => {
     </>)
 }
 
+export class classDashboard extends React.Component {
+
+    constructor()
+    {
+        super();
+        this.state = {
+            items: []
+        }
+    }
+
+    componentDidMount() {
+        axios.get("http://localhost:4000/items/").then((res)=>{this.setState({items: res.data()})}).catch((error) => {
+            console.log(error)
+          })
+    }
+
+    render() {
+        return(<>
+            
+        <ItemContext>
+            <Title 
+                title={"Put a Price On It!"} 
+                titleDesc={"You can view the market prices, descriptions, and ratings of items to see which ones are worth buying! You can rate items as you please, and add new items."}>
+            </Title>
+
+            <div class="formLayout">
+                <AddForm></AddForm>
+            </div>
+            
+            <div class="itemLayout">
+
+                {
+                    this.state.items.map((item, index)=>{
+
+                        if(this.state.items.length>0)
+                        {
+                            return(<>
+                                <Item itemName={item.name} itemDesc={item.desc} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                            </>)
+                        }
+
+                        else {
+                            return(<>Error occured :/</>)
+                        }
+                    })
+                }
+            </div>
+        </ItemContext>
+        </>)
+    }
+
+
+}
+
 export default Dashboard;
