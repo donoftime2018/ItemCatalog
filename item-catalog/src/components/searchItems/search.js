@@ -7,6 +7,20 @@ import {Card, CardHeader, CardContent, Divider, Input, Icon, IconButton, Button,
 
 const SearchBar = () => {
 
+    const validation = () => yup.object({
+        searchQuery: yup.string().required("Query must be filled out")
+    })
+
+    const formik = useFormik({
+        initialValues: {
+            searchQuery: ""
+        },
+        validationSchema: validation,
+        onSubmit: (values)=>{
+            
+        }
+    })
+
     
     return(<>
         <div class="searchBar">
