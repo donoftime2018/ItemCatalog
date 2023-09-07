@@ -10,9 +10,29 @@ const SearchBar = () => {
     
     return(<>
         <div class="searchBar">
-            <div style={{display: 'flex', flexDirection: 'row'}}>
-                <SearchIcon/>
-                <TextField/>
+            <div>
+                <Card class="searchCard">
+                    <CardHeader sx={{display: 'flex', textAlign: 'center'}} title="Search Items"></CardHeader>
+                    <Divider/>
+                    <CardContent>
+                        <IconButton><SearchIcon fontSize='large'/></IconButton>
+                        <TextField
+                            id="item_name"
+                            name="item_name"
+                            variant="outlined"
+                            type="text"
+                            label="Search"
+                            // value={formik.values.item_name}
+                            // onChange={formik.handleChange}
+                            // onBlur={formik.handleBlur}
+                            // error={formik.touched.item_name && Boolean(formik.errors.item_name)}
+                            // helperText={formik.touched.item_name && formik.errors.item_name}
+                            sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
+                            placeholder="Search query goes here..." 
+                            disableUnderline="true" 
+                        />
+                    </CardContent>
+                </Card>
             </div>
         </div>"
     </>)

@@ -2,3 +2,9 @@
     display: flex;
     justify-content: center;
 }
+
+.searchCard {
+    border-radius: 25px;
+    border: 1px solid black;
+    background-color: whitesmoke;
+}

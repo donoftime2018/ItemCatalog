@@ -5,6 +5,7 @@ import Item from "../Item/Item";
 import AddForm from "../addItem/addForm";
 import ItemContext from "../context/context";
 import Title from "../appTitle/appTitle";
+import SearchBar from "../searchItems/search";
 import { AppTitle } from "../appTitle/appTitle";
 import axios from 'axios'
 
@@ -33,6 +34,8 @@ const Dashboard = () => {
             <div class="formLayout">
                 <AddForm></AddForm>
             </div>
+
+            <SearchBar/>
             
             <div class="itemLayout">
 
