@@ -14,9 +14,9 @@ const AddForm = () => {
     // const [quantity, setQuantity] = useState(null)
 
     const validation = () => yup.object({
-        item_name: yup.string().max(40, "Item name must be maximum 40 characters long").required("Item name required"),
+        item_name: yup.string().max(40, "Item name cannot be over 40 characters long").required("Item name required"),
         item_price: yup.number().positive("Item price must be positive").required("Item price required"),
-        item_desc: yup.string().required("Item description required")
+        item_desc: yup.string().max(60, "Item description cannot be over 60 characters long").required("Item description required")
     })
 
     const formik = useFormik({
