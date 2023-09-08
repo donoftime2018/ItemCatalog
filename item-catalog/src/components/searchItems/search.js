@@ -32,8 +32,8 @@ const SearchBar = () => {
                         <form onSubmit={formik.handleSubmit}>
                             <IconButton type='Submit'><SearchIcon fontSize='large'/></IconButton>
                             <TextField
-                                id="item_name"
-                                name="item_name"
+                                id="searchQuery"
+                                name="searchQuery"
                                 variant="outlined"
                                 type="text"
                                 label="Search"
