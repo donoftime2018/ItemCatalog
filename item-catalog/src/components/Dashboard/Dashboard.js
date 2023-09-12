@@ -27,7 +27,7 @@ const Dashboard = () => {
             axios.get("http://localhost:4000/items/").then((res)=>{setItems(res.data)}).catch((error) => {
                 console.log(error)
               })
-    }
+        }
         getItems()
     }, [items.length, items])
 
@@ -42,7 +42,7 @@ const Dashboard = () => {
         },
         validationSchema: validation,
         onSubmit: (values)=>{
-            
+            items.filter(item=>item.name.includes(values.searchQuery))
         }
     })
 
