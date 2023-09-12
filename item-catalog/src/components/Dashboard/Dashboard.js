@@ -20,6 +20,8 @@ import * as yup from "yup"
 const Dashboard = () => {
 
     const [items, setItems] = useState([])
+    const [filteredItems, setFilteredItems] = useState([])
+    const [isQueried, setIsQueried] = useState(false);
 
     useEffect(()=>{
 
@@ -32,19 +34,68 @@ const Dashboard = () => {
     }, [items.length, items])
 
 
-    const validation = () => yup.object({
-        searchQuery: yup.string().required("Query must be filled out")
-    })
+    // const validation = () => yup.object({
+    //     searchQuery: yup.string().required("Query must be filled out")
+    // })
 
     const formik = useFormik({
         initialValues: {
             searchQuery: ""
         },
-        validationSchema: validation,
+        // validationSchema: validation,
         onSubmit: (values)=>{
-            items.filter(item=>item.name.includes(values.searchQuery))
+            searchQuery(values.searchQuery);
         }
     })
+
+    const searchQuery = (query) => {
+        // let queriedItem = query.;
+        console.log(query);
+
+        if (query !== "")
+        {
+            setFilteredItems(items.filter(item=>item.name.includes(query)))
+            setIsQueried(true);
+        }
+
+        else {
+            setIsQueried(false);
+            setFilteredItems([])
+        }
+    }
+
+    const displayItems = () => {
+        return(<>
+            {
+                items.map((item, index)=>{
+
+                    // if(items.length>0)
+                    // {
+                    return(<>
+                        <Item itemName={item.name} itemDesc={item.desc} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                    </>)
+                    // }
+             
+                    // else {
+                    //     return(<>Error occured :/</>)
+                    // }
+                })
+            }
+        </>)
+    }
+
+
+    const displayQueriedItems = () => {
+        return(<>
+            {
+                filteredItems.map((item, index)=>{
+                    return(<>
+                        <Item itemName={item.name} itemDesc={item.desc} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                    </>)
+                })
+            }
+        </>)
+    }
 
     // console.log(items)
     return(<>
@@ -66,13 +117,14 @@ const Dashboard = () => {
                     <Divider/>
                     <CardContent>
                         <form onSubmit={formik.handleSubmit}>
-                            <IconButton type='Submit'><SearchIcon fontSize='large'/></IconButton>
+                            <IconButton type="submit"><SearchIcon fontSize='large'/></IconButton>
                             <TextField
                                 id="searchQuery"
                                 name="searchQuery"
                                 variant="outlined"
                                 type="text"
                                 label="Search"
+                                // onChange={(e)=>{setQuery(e.target.value)}}
                                 value={formik.values.searchQuery}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -91,22 +143,17 @@ const Dashboard = () => {
         </div>
             
             <div class="itemLayout">
-
+                <>
                 {
-                    items.map((item, index)=>{
+                   isQueried ? 
+                   
 
-                        if(items.length>0)
-                        {
-                            return(<>
-                                <Item itemName={item.name} itemDesc={item.desc} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
-                            </>)
-                        }
-
-                        else {
-                            return(<>Error occured :/</>)
-                        }
-                    })
+                    displayQueriedItems()
+                   :
+                  
+                    displayItems()
                 }
+                </>
             </div>
         </ItemContext>
 
