@@ -1,7 +1,8 @@
-import { READ_ITEMS } from "./actionTypes";
+import { READ_ITEMS, SEARCH_ITEMS } from "./actionTypes";
 
 const initialState = {
-    items: []
+    items: [],
+    searchKeyword: ''
 }
 
 const itemReducer = (state=initialState, action) => {
@@ -12,6 +13,11 @@ const itemReducer = (state=initialState, action) => {
                 items: action.payload
             }
 
+        case SEARCH_ITEMS:
+            return {
+                ...state,
+                searchKeyword: action.payload
+            }
         default:
             return state;
     }
