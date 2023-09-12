@@ -7,9 +7,15 @@ import Item from "../Item/Item";
 import AddForm from "../addItem/addForm";
 import ItemContext from "../context/context";
 import Title from "../appTitle/appTitle";
-import SearchBar from "../searchItems/search";
+// import SearchBar from "../searchItems/search";
 import { AppTitle } from "../appTitle/appTitle";
 import axios from 'axios'
+import "./searchBar.css"
+import {Card, CardHeader, CardContent, Divider, Input, Icon, IconButton, Button, TextField} from "@mui/material"
+import SearchIcon from '@mui/icons-material/Search';
+import {useFormik} from "formik";
+import * as yup from "yup"
+
 
 const Dashboard = () => {
 
@@ -24,6 +30,22 @@ const Dashboard = () => {
     }
         getItems()
     }, [items.length, items])
+
+
+    const validation = () => yup.object({
+        searchQuery: yup.string().required("Query must be filled out")
+    })
+
+    const formik = useFormik({
+        initialValues: {
+            searchQuery: ""
+        },
+        validationSchema: validation,
+        onSubmit: (values)=>{
+            
+        }
+    })
+
     // console.log(items)
     return(<>
 
@@ -37,7 +59,36 @@ const Dashboard = () => {
                 <AddForm></AddForm>
             </div>
 
-            <SearchBar/>
+            <div class="searchBar">
+            <div>
+                <Card class="searchCard">
+                    <CardHeader sx={{display: 'flex', textAlign: 'center'}} title="Search Items"></CardHeader>
+                    <Divider/>
+                    <CardContent>
+                        <form onSubmit={formik.handleSubmit}>
+                            <IconButton type='Submit'><SearchIcon fontSize='large'/></IconButton>
+                            <TextField
+                                id="searchQuery"
+                                name="searchQuery"
+                                variant="outlined"
+                                type="text"
+                                label="Search"
+                                value={formik.values.searchQuery}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.searchQuery && Boolean(formik.errors.searchQuery)}
+                                helperText={formik.touched.searchQuery && formik.errors.searchQuery}
+                                sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
+                                placeholder="Search query goes here..." 
+                                disableUnderline="true" 
+                            />
+                        </form>
+                    </CardContent>
+                </Card>
+            </div>
+
+
+        </div>
             
             <div class="itemLayout">
 
