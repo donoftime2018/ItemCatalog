@@ -20,8 +20,9 @@ import * as yup from "yup"
 const Dashboard = () => {
 
     const [items, setItems] = useState([])
-    const [filteredItems, setFilteredItems] = useState([])
+    // const [filteredItems, setFilteredItems] = useState([])
     const [isQueried, setIsQueried] = useState(false);
+    const [queriedItems, setQueriedItems] = useState("");
 
     useEffect(()=>{
 
@@ -54,13 +55,15 @@ const Dashboard = () => {
 
         if (query !== "")
         {
-            setFilteredItems(items.filter(item=>item.name.includes(query)))
+            // setFilteredItems(items.filter(item=>item.name.includes(query)))
             setIsQueried(true);
+            setQueriedItems(query);
         }
 
         else {
             setIsQueried(false);
-            setFilteredItems([])
+            setQueriedItems("")
+            // setFilteredItems([])
         }
     }
 
@@ -85,10 +88,10 @@ const Dashboard = () => {
     }
 
 
-    const displayQueriedItems = () => {
+    const displayQueriedItems = (query) => {
         return(<>
             {
-                filteredItems.map((item, index)=>{
+                items.filter(item=>item.name.includes(query)).map((item, index)=>{
                     return(<>
                         <Item itemName={item.name} itemDesc={item.desc} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
                     </>)
@@ -145,10 +148,10 @@ const Dashboard = () => {
             <div class="itemLayout">
                 <>
                 {
-                   isQueried ? 
+                   isQueried && queriedItems !== "" ? 
                    
 
-                    displayQueriedItems()
+                    displayQueriedItems(queriedItems)
                    :
                   
                     displayItems()
