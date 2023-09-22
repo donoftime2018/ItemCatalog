@@ -8,7 +8,7 @@
     flex-wrap: wrap;
     font-family: "Inter";
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .itemLayout>*{
