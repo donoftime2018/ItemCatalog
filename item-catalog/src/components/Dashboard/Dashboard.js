@@ -141,7 +141,7 @@ const Dashboard = () => {
                                 error={formik.touched.searchQuery && Boolean(formik.errors.searchQuery)}
                                 helperText={formik.touched.searchQuery && formik.errors.searchQuery}
                                 sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
-                                placeholder="Search query goes here..." 
+                                placeholder="Search query for name of specific goes here..." 
                                 disableUnderline="true" 
                             />
                         </form>
