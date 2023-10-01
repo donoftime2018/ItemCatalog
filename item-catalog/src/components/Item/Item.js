@@ -91,7 +91,7 @@ const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID, lastUpdate})
             {open ? 
                 <div key={id}>
                     <CardContent>
-                        <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>{itemDesc}</span>
+                        <span style={{fontSize: '20px', display: 'flex', textAlign: 'center', justifyContent: 'center'}}>{itemDesc}</span>
                     </CardContent>
                     <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                         <Button sx={{borderRadius: '25px', border: "1px solid black"}} variant="contained" color="success" onClick={closeDesc}>Hide Description</Button>
