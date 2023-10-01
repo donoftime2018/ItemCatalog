@@ -131,7 +131,7 @@ const Dashboard = () => {
                     <Divider/>
                     <CardContent>
                         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                        {/*<Tooltip title="Search Catalog">*/}{/*<IconButton type="submit">*/}<SearchIcon style={{ marginRight: '10px'}} fontSize='large'/>{/*</IconButton>*/}{/*</Tooltip>*/}
+                        {/*<Tooltip title="Search Catalog">*/}{/*<IconButton type="submit">*/}<SearchIcon style={{marginTop: '10px', marginRight: '10px'}} fontSize='large'/>{/*</IconButton>*/}{/*</Tooltip>*/}
                             {/* <Tooltip title="Clear Search"><IconButton type="submit"><ClearAllIcon fontSize="large"></ClearAllIcon></IconButton></Tooltip> */}
                             <TextField
                                 id="searchQuery"
