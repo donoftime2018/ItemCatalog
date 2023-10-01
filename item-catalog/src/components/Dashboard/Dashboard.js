@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import {useSelector, useDispatch} from "react-redux"
 import { readItems } from "../../store/actionTypes";
 import "./Dashboard.css"
@@ -11,8 +11,9 @@ import Title from "../appTitle/appTitle";
 import { AppTitle } from "../appTitle/appTitle";
 import axios from 'axios'
 import "./searchBar.css"
-import {Card, CardHeader, CardContent, Divider, Input, Icon, IconButton, Button, TextField} from "@mui/material"
+import {Card, CardHeader, CardContent, Divider, Input, Icon, IconButton, Button, TextField, Tooltip} from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search';
+import ClearAllIcon from '@mui/icons-material/ClearAll';
 import {useFormik} from "formik";
 import * as yup from "yup"
 
@@ -48,6 +49,11 @@ const Dashboard = () => {
             searchQuery(values.searchQuery);
         }
     })
+        
+    const clearQuery = () => {
+        setQueriedItems("")
+
+    }
 
     const searchQuery = (query) => {
         // let queriedItem = query.;
@@ -120,7 +126,8 @@ const Dashboard = () => {
                     <Divider/>
                     <CardContent>
                         <form onSubmit={formik.handleSubmit}>
-                            <IconButton type="submit"><SearchIcon fontSize='large'/></IconButton>
+                            <Tooltip title="Search Catalog"><IconButton type="submit"><SearchIcon fontSize='large'/></IconButton></Tooltip>
+                            <Tooltip title="Clear Search"><IconButton type="submit"><ClearAllIcon fontSize="large"></ClearAllIcon></IconButton></Tooltip>
                             <TextField
                                 id="searchQuery"
                                 name="searchQuery"
