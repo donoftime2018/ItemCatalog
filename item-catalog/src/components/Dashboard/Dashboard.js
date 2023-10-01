@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useEffect, useRef } from "react";
+// import { useSearchParams } from "next/navigation";
 import {useSelector, useDispatch} from "react-redux"
 import { readItems } from "../../store/actionTypes";
 import "./Dashboard.css"
@@ -24,6 +25,10 @@ const Dashboard = () => {
     // const [filteredItems, setFilteredItems] = useState([])
     const [isQueried, setIsQueried] = useState(false);
     const [queriedItems, setQueriedItems] = useState("");
+
+    // const [queriedItems, setQueriedItems] = useSearchParams({q: ""})
+
+    
 
     useEffect(()=>{
 
@@ -125,8 +130,8 @@ const Dashboard = () => {
                     <CardHeader sx={{display: 'flex', textAlign: 'center'}} title="Search Items"></CardHeader>
                     <Divider/>
                     <CardContent>
-                        <form onSubmit={formik.handleSubmit}>
-                            <Tooltip title="Search Catalog"><IconButton type="submit"><SearchIcon fontSize='large'/></IconButton></Tooltip>
+                        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                        {/*<Tooltip title="Search Catalog">*/}{/*<IconButton type="submit">*/}<SearchIcon style={{ marginRight: '10px'}} fontSize='large'/>{/*</IconButton>*/}{/*</Tooltip>*/}
                             {/* <Tooltip title="Clear Search"><IconButton type="submit"><ClearAllIcon fontSize="large"></ClearAllIcon></IconButton></Tooltip> */}
                             <TextField
                                 id="searchQuery"
@@ -134,17 +139,11 @@ const Dashboard = () => {
                                 variant="outlined"
                                 type="text"
                                 label="Search"
-                                // onChange={(e)=>{setQuery(e.target.value)}}
-                                value={formik.values.searchQuery}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                error={formik.touched.searchQuery && Boolean(formik.errors.searchQuery)}
-                                helperText={formik.touched.searchQuery && formik.errors.searchQuery}
-                                sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
-                                placeholder="Search query for name of specific goes here..." 
+                                placeholder="Query item name "
                                 disableUnderline="true" 
-                            />
-                        </form>
+                                onChange={(event)=>{setQueriedItems(event.target.value)}}
+                            ></TextField>
+                        </div>
                     </CardContent>
                 </Card>
             </div>
@@ -155,7 +154,7 @@ const Dashboard = () => {
             <div class="itemLayout">
                 <>
                 {
-                   isQueried && queriedItems !== "" ? 
+                   queriedItems !== "" ? 
                    
 
                     displayQueriedItems(queriedItems)
