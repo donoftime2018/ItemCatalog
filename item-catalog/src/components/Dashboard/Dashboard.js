@@ -50,10 +50,10 @@ const Dashboard = () => {
         }
     })
         
-    const clearQuery = () => {
-        setQueriedItems("")
+    // const clearQuery = () => {
+    //     setQueriedItems("")
 
-    }
+    // }
 
     const searchQuery = (query) => {
         // let queriedItem = query.;
@@ -127,7 +127,7 @@ const Dashboard = () => {
                     <CardContent>
                         <form onSubmit={formik.handleSubmit}>
                             <Tooltip title="Search Catalog"><IconButton type="submit"><SearchIcon fontSize='large'/></IconButton></Tooltip>
-                            <Tooltip title="Clear Search"><IconButton type="submit"><ClearAllIcon fontSize="large"></ClearAllIcon></IconButton></Tooltip>
+                            {/* <Tooltip title="Clear Search"><IconButton type="submit"><ClearAllIcon fontSize="large"></ClearAllIcon></IconButton></Tooltip> */}
                             <TextField
                                 id="searchQuery"
                                 name="searchQuery"
