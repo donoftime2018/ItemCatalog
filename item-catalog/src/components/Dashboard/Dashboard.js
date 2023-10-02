@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect, useRef } from "react";
-// import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux"
 import { readItems } from "../../store/actionTypes";
 import "./Dashboard.css"
@@ -24,11 +24,10 @@ const Dashboard = () => {
     const [items, setItems] = useState([])
     // const [filteredItems, setFilteredItems] = useState([])
     const [isQueried, setIsQueried] = useState(false);
-    const [queriedItems, setQueriedItems] = useState("");
-
+    const [queriedItems, setQueriedItems] = useSearchParams({q: ""})
     // const [queriedItems, setQueriedItems] = useSearchParams({q: ""})
 
-    
+    const itemQuery = queriedItems.get("q")
 
     useEffect(()=>{
 
@@ -141,7 +140,10 @@ const Dashboard = () => {
                                 label="Search"
                                 placeholder="Query item name "
                                 disableUnderline="true" 
-                                onChange={(event)=>{setQueriedItems(event.target.value)}}
+                                onChange={(event)=>{setQueriedItems(prev=>{
+                                    prev.set("q", event.target.value);
+                                    return prev
+                                }, {replace: true})}}
                             ></TextField>
                         </div>
                     </CardContent>
@@ -154,10 +156,10 @@ const Dashboard = () => {
             <div class="itemLayout">
                 <>
                 {
-                   queriedItems !== "" ? 
+                   itemQuery !== "" ? 
                    
 
-                    displayQueriedItems(queriedItems)
+                    displayQueriedItems(itemQuery)
                    :
                   
                     displayItems()
