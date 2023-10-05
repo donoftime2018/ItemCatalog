@@ -30,12 +30,19 @@ router.route("/login").post((req, res) => {
 })
 
 router.route("/register").post((req, res) => {
-    let name = req.body.userName
-    let pwd = req.body.passWord
+    let name = req.body.name
+    let pwd = req.body.pwd
     let email = req.body.email
 
-    User.find({username: name, password: pwd, email: email}).then(
+    User.find({$or: [
+            {username: name, password: pwd, email: email},
+            {username: name},
+            {password: pwd},
+            {email: email}
+        ]}).then(
         function(data){
+            console.log(name + " " + pwd + " " + email)
+            console.log(data)
             if(data.length>0)
             {
                 console.log("User already exists")
