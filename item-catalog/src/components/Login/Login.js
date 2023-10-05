@@ -4,10 +4,12 @@ import {useFormik} from "formik";
 import { useNavigate, Link } from "react-router-dom";
 import * as yup from "yup"
 import axios from "axios";
+import { useAuth } from "../context/user";
 import "./Login.css";
 
 const LoginPage = () => {
     const navigate = useNavigate()
+    const auth = useAuth()
 
     const validation = () => yup.object({
         userName: yup.string().min(10, "Username must be at least 10 characters long").max(20, "Username cannot be more than 20 characters").required("Username required"),
@@ -32,6 +34,7 @@ const LoginPage = () => {
         axios.post("http://localhost:4000/login", data).then((res)=>{
             if(res.status===200)
             {
+                auth.login(name)
                 navigate("/")
             }
 
