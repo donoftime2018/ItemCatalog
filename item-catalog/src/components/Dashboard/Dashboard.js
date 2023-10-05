@@ -7,6 +7,7 @@ import Item from "../Item/Item";
 import AddForm from "../addItem/addForm";
 import ItemContext from "../context/context";
 import Title from "../appTitle/appTitle";
+import AppNav from "../NavBar/NavBar";
 // import SearchBar from "../searchItems/search";
 import { AppTitle } from "../appTitle/appTitle";
 import axios from 'axios'
@@ -108,7 +109,7 @@ const Dashboard = () => {
 
     // console.log(items)
     return(<>
-
+            <AppNav></AppNav>
         {/* <ItemContext> */}
             <Title 
                 title={"Put a Price On It!"} 
