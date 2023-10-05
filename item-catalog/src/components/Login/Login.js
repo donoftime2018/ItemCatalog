@@ -30,13 +30,13 @@ const LoginPage = () => {
     const checkLogin = (name, pwd) => {
         const data = {name, pwd}
         axios.post("http://localhost:4000/login", data).then((res)=>{
-            if(res.status===404)
+            if(res.status===200)
             {
-                alert("User doesn't exist")
+                navigate("/")
             }
 
             else {
-                navigate("/")
+                
             }
         })
     }
