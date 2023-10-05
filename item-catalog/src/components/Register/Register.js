@@ -8,6 +8,8 @@ import "./Register.css";
 
 const Register = () => {
 
+    const navigate=useNavigate()
+
     const validation = () => yup.object({
         userName: yup.string().min(10, "Username must be at least 10 characters long").max(20, "Username cannot be more than 20 characters").required("Username required"),
         passWord: yup.string().min(8, "Password must be at least 8 characters long").max(12, "Password cannot be over 12 characters long").required("Password required"),
@@ -33,7 +35,7 @@ const Register = () => {
         axios.post("http://localhost:4000/register", data).then((res)=>{
             if(res.status===200)
             {
-                // navigate("/")
+                navigate("/login")
             }
 
             else {

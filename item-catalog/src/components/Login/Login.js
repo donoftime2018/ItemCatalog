@@ -1,7 +1,7 @@
 import {React, useState} from "react";
 import {Card, CardContent, Divider, TextField, Button, CardHeader} from "@mui/material"
 import {useFormik} from "formik";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import * as yup from "yup"
 import axios from "axios";
 import "./Login.css";
@@ -92,8 +92,8 @@ const LoginPage = () => {
             </CardContent>
             <Divider></Divider>
             <CardContent style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center'}}>
-                <p>Forgot Password? Click here.</p>
-                <p>Register? Click here</p>
+                <p>Forgot Password? <Link to="/updatePassword">Click here.</Link></p>
+                <p>Register? <Link to="/register">Click here.</Link></p>
             </CardContent>
         </Card>
         </div>
