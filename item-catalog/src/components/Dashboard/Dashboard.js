@@ -109,7 +109,7 @@ const Dashboard = () => {
     // console.log(items)
     return(<>
 
-        <ItemContext>
+        {/* <ItemContext> */}
             <Title 
                 title={"Put a Price On It!"} 
                 titleDesc={"You can view the market prices, descriptions, and ratings of items to see which ones are worth buying! You can rate items as you please, and add new items."}>
@@ -165,7 +165,7 @@ const Dashboard = () => {
                 }
                 </>
             </div>
-        </ItemContext>
+        {/* </ItemContext> */}
 
         {/* <div class="formLayout">
             <AddForm></AddForm>
