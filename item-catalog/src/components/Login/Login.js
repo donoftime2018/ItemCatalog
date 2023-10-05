@@ -1,11 +1,14 @@
 import {React, useState} from "react";
 import {Card, CardContent, Divider, TextField, Button, CardHeader} from "@mui/material"
 import {useFormik} from "formik";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup"
+import axios from "axios";
 import "./Login.css";
 
 const LoginPage = () => {
-    
+    const navigate = useNavigate()
+
     const validation = () => yup.object({
         userName: yup.string().min(10, "Username must be at least 10 characters long").max(20, "Username cannot be more than 20 characters").required("Username required"),
         passWord: yup.string().min(8, "Password must be at least 8 characters long").max(12, "Password cannot be over 12 characters long").required("Password required")
@@ -20,8 +23,23 @@ const LoginPage = () => {
         validationSchema: validation,
         onSubmit: (values, actions)=>{
             // addItemToDB(values.item_name, values.item_price, values.item_desc);
+            checkLogin(values.userName, values.passWord)
         }
     }, {})
+
+    const checkLogin = (name, pwd) => {
+        const data = {name, pwd}
+        axios.post("http://localhost:4000/login", data).then((res)=>{
+            if(res.status===404)
+            {
+                alert("User doesn't exist")
+            }
+
+            else {
+                navigate("/")
+            }
+        })
+    }
 
     return(<>
         <div class="loginLayout">
