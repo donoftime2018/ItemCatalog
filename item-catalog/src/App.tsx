@@ -4,6 +4,7 @@ import {Routes, Route, BrowserRouter} from 'react-router-dom';
 import Dashboard from "./components/Dashboard/Dashboard";
 import LoginPage from "./components/Login/Login";
 import Register from "./components/Register/Register";
+import UpdatePassword from "./components/updatePassword/updatePassword";
 import { classDashboard } from "./components/Dashboard/Dashboard";
 // import Login from "./components/Login/Login";
 import { ItemContext, OfficialItem } from "./components/context/context"
@@ -19,6 +20,7 @@ const App = () =>
                     <Route element={<Dashboard/>} path="/"></Route>
                     <Route element={<LoginPage/>} path="/login"></Route>
                     <Route element={<Register/>} path="/register"></Route>
+                    <Route element={<UpdatePassword/>} path="/updatePassword"></Route>
                 </Routes>
                 </ItemContext>
             </div>

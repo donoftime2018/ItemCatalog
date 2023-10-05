@@ -19,7 +19,7 @@ router.route("/login").post((req, res) => {
 
     User.find({username: name, password: pwd}).then(function(data){
         console.log(data)
-
+        console.log(name + " " + pwd)
         if(data.length>0){
             res.json(data).status(200).send()
         }
@@ -57,28 +57,29 @@ router.route("/register").post((req, res) => {
     ).catch(function(error) {console.error(error)})
 })
 
-router.route("/updatePassword").post((req, res) => {
+router.route("/updatePassword").put((req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
 
-    User.find({username: name, password: pwd}).then(
+    User.find({username: name}).then(
         function(data){
+            console.log(data)
             if(data.length>0)
             {
-                User.updateOne({username: name, password: pwd}).then(function(docs){
-                    console.log(docs);
-                    res.status(200).send()
-                }).catch((err)=>{console.error(err)})
+                User.find({password: pwd}).then((function(data){
+                    console.log(data);
+                    if(data.length===0)
+                    {   User.updateOne({username: name, password: pwd}).then(function(docs){
+                            console.log(docs);
+                            res.status(200).send()
+                        }).catch((err)=>{console.error(err)})
+                    }
+                    else {
+                        console.log(pwd + " exists in db")
+                    }
+                }))
             }
-            else {
-                console.log("User doesn't exist")
-                // res.status(405).send()
-            }
-        }
-    ).catch(function(error) {console.error(error)})
-})
-
-
+    })})
 
 
 app.use(router)
