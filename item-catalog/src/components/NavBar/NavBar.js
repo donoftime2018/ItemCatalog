@@ -11,7 +11,7 @@ const AppNav = () => {
 
     return(<>
         <AppBar sx={{paddingBottom: '10px', paddingTop:'0.4%', display: 'flex', flexDirection: 'row', alignItems: 'center'}}  position="static">
-            <Box sx={{marginLeft: '5%'}}>
+            <Box sx={{marginLeft: '5%', fontSize: '20px'}}>
                 {auth.user}
             </Box>
             <Box sx={{flexGrow: '1'}}/>
