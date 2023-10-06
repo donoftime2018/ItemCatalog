@@ -9,6 +9,7 @@ import { AuthProvider } from "./components/context/user";
 import { classDashboard } from "./components/Dashboard/Dashboard";
 // import Login from "./components/Login/Login";
 import { ItemContext, OfficialItem } from "./components/context/context"
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import "./App.css";
 
 const App = () =>
@@ -19,7 +20,9 @@ const App = () =>
                 <AuthProvider>
                         <ItemContext>
                             <Routes>
-                                <Route element={<Dashboard/>} path="/"></Route>
+                                <Route element={<ProtectedRoute>
+                                        <Dashboard/>
+                                    </ProtectedRoute>} path="/"></Route>
                                 <Route element={<LoginPage/>} path="/login"></Route>
                                 <Route element={<Register/>} path="/register"></Route>
                                 <Route element={<UpdatePassword/>} path="/updatePassword"></Route>
