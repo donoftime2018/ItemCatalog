@@ -12,7 +12,7 @@ const AppNav = () => {
     return(<>
         <AppBar sx={{paddingBottom: '10px', paddingTop:'0.4%', display: 'flex', flexDirection: 'row', alignItems: 'center'}}  position="static">
             <Box sx={{marginLeft: '5%', fontSize: '20px'}}>
-                Welcome, {auth.user}
+                Welcome, <span style={{fontWeight: 'bold'}}>{auth.user}</span>
             </Box>
             <Box sx={{flexGrow: '1'}}/>
             <Box sx={{marginRight: '5%', display: {xs: 'none', md: 'flex'}}}>
