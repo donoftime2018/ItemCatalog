@@ -1,7 +1,7 @@
 import {React, useState} from "react";
 import {Card, CardContent, Divider, TextField, Button, CardHeader} from "@mui/material"
 import {useFormik} from "formik";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import * as yup from "yup"
 import axios from "axios";
 import { useAuth } from "../context/user";
@@ -9,7 +9,10 @@ import "./Login.css";
 
 const LoginPage = () => {
     const navigate = useNavigate()
+    const location = useLocation()
     const auth = useAuth()
+
+    const redirect = location.state?.path || '/'
 
     const validation = () => yup.object({
         userName: yup.string().min(10, "Username must be at least 10 characters long").max(20, "Username cannot be more than 20 characters").required("Username required"),
@@ -36,7 +39,7 @@ const LoginPage = () => {
             {
                 let username = res.data[0].username
                 auth.login(username)
-                navigate("/")
+                navigate(redirect, {replace: true})
             }
 
             else {
