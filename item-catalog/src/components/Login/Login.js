@@ -34,7 +34,8 @@ const LoginPage = () => {
         axios.post("http://localhost:4000/login", data).then((res)=>{
             if(res.status===200)
             {
-                auth.login(name)
+                let username = res.data[0].username
+                auth.login(username)
                 navigate("/")
             }
 
