@@ -3,6 +3,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useState } from "react"
 import "./addForm.css";
 import {useFormik} from "formik";
+import { useAuth } from "../context/user";
 import * as yup from "yup"
 import axios from "axios";
 
@@ -12,6 +13,8 @@ const AddForm = () => {
     // const [price, setPrice] = useState(0)
     // const [desc, setDesc] = useState('')
     // const [quantity, setQuantity] = useState(null)
+
+    const auth = useAuth()
 
     const validation = () => yup.object({
         item_name: yup.string().max(40, "Item name cannot be over 40 characters long").required("Item name required"),
@@ -35,7 +38,8 @@ const AddForm = () => {
 
     const addItemToDB = (name, price, desc) => {
 
-        const data = {name, price, desc}
+        const user = auth.user
+        const data = {name, price, desc, user}
 
             
         if (name !== "" && desc !== "" && price !== 0)

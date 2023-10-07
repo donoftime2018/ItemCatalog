@@ -15,6 +15,11 @@ const itemSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+
+    poster : {
+        type: String,
+        required: true
+    },
     
     rating: {
         type: Number,
