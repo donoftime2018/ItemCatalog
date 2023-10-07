@@ -35,7 +35,9 @@ router.route("/insertItems").post(async(req, res)=>{
             // Item.findOneAndUpdate({name: req.body.name, desc: req.body.desc, price: req.body.price, rating: req.body.rating}, {quantity: ++data.length}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
         }
         else {
-            Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price}).then((result)=>{
+            Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price}).then(()=>{
+                Item.findOneAndUpdate({name: req.body.name, desc: req.body.desc, price: req.body.price }, {poster: req.body.user})}).then(
+                (result)=>{
                 console.log(result); 
                 res.status(200).send()}).catch((err)=>{console.error(err)})
         }
