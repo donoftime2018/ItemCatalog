@@ -7,6 +7,7 @@ import Item from "../Item/Item";
 import AddForm from "../addItem/addForm";
 import ItemContext from "../context/context";
 import Title from "../appTitle/appTitle";
+import AppNav from "../NavBar/NavBar";
 // import SearchBar from "../searchItems/search";
 import { AppTitle } from "../appTitle/appTitle";
 import axios from 'axios'
@@ -108,8 +109,8 @@ const Dashboard = () => {
 
     // console.log(items)
     return(<>
-
-        <ItemContext>
+            <AppNav></AppNav>
+        {/* <ItemContext> */}
             <Title 
                 title={"Put a Price On It!"} 
                 titleDesc={"You can view the market prices, descriptions, and ratings of items to see which ones are worth buying! You can rate items as you please, and add new items."}>
@@ -165,7 +166,7 @@ const Dashboard = () => {
                 }
                 </>
             </div>
-        </ItemContext>
+        {/* </ItemContext> */}
 
         {/* <div class="formLayout">
             <AddForm></AddForm>
