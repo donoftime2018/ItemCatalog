@@ -78,19 +78,19 @@ Item.findOne({_id: req.params.id}).then((doc)=>{
     doc.rating+=1
     return doc.validate().then(()=>doc)
 }).then((validatedDoc)=>{
-    if(!validatedDoc.usersRated.includes(req.body.user))
+    if(validatedDoc.usersRated.includes(req.body.user))
     {
+        console.log("You already rated for this item!")
+    }
+    else {
         return Item.findOneAndUpdate({_id: req.params.id}, 
             {rating: validatedDoc.rating, $addToSet: {usersRated: req.body.user}}, 
             {new: true, upsert: true, runValidators: true}).then((updatedDoc)=>{
                 console.log(updatedDoc);
                 res.status(200).send()})
     }
-    else {
-        console.log("You already rated for this item!")
-    }
 }).then(()=>{
-    console.log("Flop")
+    // console.log("Flop")
 }).catch(err=>{console.error(err)})
 
 })
@@ -127,7 +127,7 @@ router.route("/decreaseRating/:id").put(async(req, res, next)=>{
             console.log("You haven't even rated this item yet dude!");
         }
     }).then(()=>{
-       console.log("Flop")
+    //    console.log("Flop")
     }).catch(err=>{console.error(err)})
 })
 
