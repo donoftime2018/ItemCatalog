@@ -25,6 +25,7 @@ const Dashboard = () => {
     // const [filteredItems, setFilteredItems] = useState([])
     const [isQueried, setIsQueried] = useState(false);
     const [queriedItems, setQueriedItems] = useState("");
+    const [queriedPoster, setQueriedPoster] = useState("");
 
     useEffect(()=>{
 
@@ -43,11 +44,12 @@ const Dashboard = () => {
 
     const formik = useFormik({
         initialValues: {
-            searchQuery: ""
+            itemQuery: "",
+            posterQuery: ""
         },
         // validationSchema: validation,
         onSubmit: (values)=>{
-            searchQuery(values.searchQuery);
+            searchQuery(values.itemQuery, values.posterQuery);
         }
     })
         
@@ -56,22 +58,47 @@ const Dashboard = () => {
 
     // }
 
-    const searchQuery = (query) => {
+    const searchQuery = (itemQuery, posterQuery) => {
         // let queriedItem = query.;
-        console.log(query);
+        console.log(itemQuery);
+        console.log(posterQuery);
 
-        if (query !== "")
+        if (itemQuery !== "")
         {
             // setFilteredItems(items.filter(item=>item.name.includes(query)))
             setIsQueried(true);
-            setQueriedItems(query);
+            setQueriedItems(itemQuery);
         }
 
-        else {
-            setIsQueried(false);
-            setQueriedItems("")
-            // setFilteredItems([])
+        if (posterQuery !== "")
+        {
+            setIsQueried(true);
+            setQueriedPoster(posterQuery);
         }
+
+        // else {
+           
+
+            if (posterQuery === "")
+            {
+                setQueriedPoster("")
+            }
+
+            if (itemQuery === "")
+            {
+                // setIsQueried(false);
+                setQueriedItems("")
+                // setQueriedPoster("")
+            }
+
+            if (itemQuery === "" && posterQuery === "")
+            {
+                setIsQueried(false)
+            }
+            
+            
+            // setFilteredItems([])
+        // }
     }
 
     const displayItems = () => {
@@ -95,16 +122,47 @@ const Dashboard = () => {
     }
 
 
-    const displayQueriedItems = (query) => {
-        return(<>
-            {
-                items.filter(item=>item.name.includes(query) || item.poster.includes(query)).map((item, index)=>{
-                    return(<>
-                        <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
-                    </>)
-                })
-            }
-        </>)
+    const displayQueriedItems = (itemQuery, posterQuery) => {
+
+        if (itemQuery !== "" && posterQuery === "")
+        {
+            return(<>
+                {
+                    items.filter(item=>item.name.includes(itemQuery)).map((item, index)=>{
+                        return(<>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                        </>)
+                    })
+                }
+            </>)
+        }
+
+        if (posterQuery !== "" && itemQuery === "") 
+        {
+            return(<>
+                {
+                    items.filter(item=>item.poster.includes(posterQuery)).map((item, index)=>{
+                        return(<>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                        </>)
+                    })
+                }
+            </>)
+        }
+
+        if (posterQuery !== "" && itemQuery !== "")
+        {
+            return(<>
+                {
+                    items.filter(item=>item.poster.includes(posterQuery) && item.name.includes(itemQuery)).map((item, index)=>{
+                        return(<>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                        </>)
+                    })
+                }
+            </>)
+        }
+        
     }
 
     // console.log(items)
@@ -127,24 +185,46 @@ const Dashboard = () => {
                     <Divider/>
                     <CardContent>
                         <form onSubmit={formik.handleSubmit}>
-                            <Tooltip title="Search Catalog"><IconButton type="submit"><SearchIcon fontSize='large'/></IconButton></Tooltip>
+                            <div>
+                            <Tooltip title="Search Items"><IconButton type="submit"><SearchIcon fontSize='large'/></IconButton></Tooltip>
                             {/* <Tooltip title="Clear Search"><IconButton type="submit"><ClearAllIcon fontSize="large"></ClearAllIcon></IconButton></Tooltip> */}
                             <TextField
-                                id="searchQuery"
-                                name="searchQuery"
+                                id="itemQuery"
+                                name="itemQuery"
                                 variant="outlined"
                                 type="text"
-                                label="Search By Name or Poster"
+                                label="Search Item by Name"
                                 // onChange={(e)=>{setQuery(e.target.value)}}
-                                value={formik.values.searchQuery}
+                                value={formik.values.itemQuery}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                error={formik.touched.searchQuery && Boolean(formik.errors.searchQuery)}
-                                helperText={formik.touched.searchQuery && formik.errors.searchQuery}
+                                error={formik.touched.itemQuery && Boolean(formik.errors.itemQuery)}
+                                helperText={formik.touched.itemQuery && formik.errors.itemQuery}
                                 sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
-                                placeholder="Name and/or poster here..." 
+                                placeholder="Item name here..." 
                                 disableUnderline="true" 
                             />
+                            </div>
+
+                            <div style={{display: 'flex', justifyContent: 'end'}}>
+                            {/* <Tooltip title="Search Users"><IconButton type="submit"><SearchIcon fontSize='large'/></IconButton></Tooltip> */}
+                            <TextField
+                                id="posterQuery"
+                                name="posterQuery"
+                                variant="outlined"
+                                type="text"
+                                label="Search Item by Poster"
+                                // onChange={(e)=>{setQuery(e.target.value)}}
+                                value={formik.values.posterQuery}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.posterQuery && Boolean(formik.errors.posterQuery)}
+                                helperText={formik.touched.posterQuery && formik.errors.posterQuery}
+                                sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
+                                placeholder="Item poster here..." 
+                                disableUnderline="true" 
+                            />
+                            </div>
                         </form>
                     </CardContent>
                 </Card>
@@ -156,10 +236,10 @@ const Dashboard = () => {
             <div class="itemLayout">
                 <>
                 {
-                   isQueried && queriedItems !== "" ? 
+                   isQueried && (queriedItems !== "" || queriedPoster !== "") ? 
                    
 
-                    displayQueriedItems(queriedItems)
+                    displayQueriedItems(queriedItems, queriedPoster)
                    :
                   
                     displayItems()
