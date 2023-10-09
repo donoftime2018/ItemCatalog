@@ -1,0 +1,12 @@
+.profileInfo {
+    align-items: flex-start;
+    margin-left: 4%;
+    margin-top: 3%;
+}
+
+.profileCard {
+    border-radius: 25px;
+    background-color: aliceblue;
+    border: 1px solid black;
+    width: 20%;
+}

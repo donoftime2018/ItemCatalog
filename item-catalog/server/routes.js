@@ -52,7 +52,7 @@ router.route("/deleteItems/:id").delete(async(req, res)=>{
 })
 
 //update rating
-router.route("/increaseRating/:id").put(async(req, res)=>{
+router.route("/increaseRating/:id").put(async(req, res, next)=>{
     // const validator = {upsert: true, new: true};
 //    Item.findOneAndUpdate({_id: req.params.id}, {$inc: {rating: 1}}, {new: true}).then((result)=>{
 //     // console.log(result)
@@ -69,7 +69,7 @@ Item.findOne({_id: req.params.id}).then((doc)=>{
     doc.rating+=1
     return doc.validate().then(()=>doc)
 }).then((validatedDoc)=>{
-    return Item.findOneAndUpdate({_id: req.params.id}, {rating: validatedDoc.rating}, {new: true, runValidators: true})
+    return Item.findOneAndUpdate({_id: req.params.id}, {rating: validatedDoc.rating, $push: {usersRated: req.body.user}}, {new: true, upsert: true, runValidators: true})
 }).then((updatedDoc)=>{
     console.log(updatedDoc);
     res.status(200).send()
@@ -77,7 +77,7 @@ Item.findOne({_id: req.params.id}).then((doc)=>{
 
 })
 
-router.route("/decreaseRating/:id").put(async(req, res)=>{
+router.route("/decreaseRating/:id").put(async(req, res, next)=>{
     // const validator = {upsert: true, new: true};
     // Item.findOneAndUpdate({_id: req.params.id}, {$inc: {rating:-1}}, {new: true}).then((result)=>{
     //     // console.log(result)
@@ -94,7 +94,7 @@ router.route("/decreaseRating/:id").put(async(req, res)=>{
         doc.rating-=1
         return doc.validate().then(()=>doc)
     }).then((validatedDoc)=>{
-        return Item.findOneAndUpdate({_id: req.params.id}, {rating: validatedDoc.rating}, {new: true, runValidators: true})
+        return Item.findOneAndUpdate({_id: req.params.id}, {rating: validatedDoc.rating}, {new: true, upsert: true, runValidators: true})
     }).then((updatedDoc)=>{
         console.log(updatedDoc);
         res.status(200).send()

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const User = require('./User.js')
 
 const itemSchema = new mongoose.Schema({
     name: {
@@ -26,8 +27,10 @@ const itemSchema = new mongoose.Schema({
         min: 0,
         max: 10,
         default: 0,
-        required: true
-    }
+        required: true,
+    },
+
+    usersRated: [String]
 }, {
     collection: 'item',
     timestamps: true

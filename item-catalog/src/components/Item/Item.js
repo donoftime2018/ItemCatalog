@@ -8,12 +8,13 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import axios from 'axios';
+import { useAuth } from "../context/user";
 
 
 const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, lastUpdate}) => {
 
     const [open, setOpen] = useState(false);
-
+    const auth=useAuth();
     // console.log(recentUpdate)
 
     const openDesc = () => {
@@ -51,8 +52,11 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
 
     const increaseRating = async() => {
         let id = dbID;
+        
+        let user = auth.user
+        let data = {user}
 
-        axios.put("http://localhost:4000/items/increaseRating/" + id).then((res)=>{console.log(res)}
+        axios.put("http://localhost:4000/items/increaseRating/" + id, data).then((res)=>{console.log(res)}
         ).catch((error)=>{console.error(error)})
         // await fetch("http://localhost:4000/items/increaseRating/" + id, {
         //     method: "PUT",
@@ -65,8 +69,11 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
 
     const decreaseRating = async() => {
         let id = dbID;
+        let user = auth.user
 
-        axios.put("http://localhost:4000/items/decreaseRating/" + id).then((res)=>{console.log(res)}
+        let data = {user}
+
+        axios.put("http://localhost:4000/items/decreaseRating/" + id, data).then((res)=>{console.log(res)}
         ).catch((error)=>{console.error(error)})
         // await fetch("http://localhost:4000/items/decreaseRating/" + id, {
         //     method: "PUT",
