@@ -98,7 +98,7 @@ const Dashboard = () => {
     const displayQueriedItems = (query) => {
         return(<>
             {
-                items.filter(item=>item.name.includes(query)).map((item, index)=>{
+                items.filter(item=>item.name.includes(query) || item.poster.includes(query)).map((item, index)=>{
                     return(<>
                         <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
                     </>)
@@ -134,7 +134,7 @@ const Dashboard = () => {
                                 name="searchQuery"
                                 variant="outlined"
                                 type="text"
-                                label="Search"
+                                label="Search By Name or Poster"
                                 // onChange={(e)=>{setQuery(e.target.value)}}
                                 value={formik.values.searchQuery}
                                 onChange={formik.handleChange}
@@ -142,7 +142,7 @@ const Dashboard = () => {
                                 error={formik.touched.searchQuery && Boolean(formik.errors.searchQuery)}
                                 helperText={formik.touched.searchQuery && formik.errors.searchQuery}
                                 sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
-                                placeholder="Search query for name of specific goes here..." 
+                                placeholder="Name and/or poster here..." 
                                 disableUnderline="true" 
                             />
                         </form>
