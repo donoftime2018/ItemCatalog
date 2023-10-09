@@ -3,6 +3,15 @@ const express = require('express');
 const router = express.Router()
 const Item = require('./Item.js');
 
+const app = express()
+
+// function checkDuplicateRaters(req, res, next)
+// {
+
+// }
+
+// app.use(checkDuplicateRaters)
+
 mongoose.set('setDefaultsOnInsert', true);
 // mongoose.set('debug', true);
 
@@ -69,10 +78,19 @@ Item.findOne({_id: req.params.id}).then((doc)=>{
     doc.rating+=1
     return doc.validate().then(()=>doc)
 }).then((validatedDoc)=>{
-    return Item.findOneAndUpdate({_id: req.params.id}, {rating: validatedDoc.rating, $push: {usersRated: req.body.user}}, {new: true, upsert: true, runValidators: true})
-}).then((updatedDoc)=>{
-    console.log(updatedDoc);
-    res.status(200).send()
+    if(!validatedDoc.usersRated.includes(req.body.user))
+    {
+        return Item.findOneAndUpdate({_id: req.params.id}, 
+            {rating: validatedDoc.rating, $addToSet: {usersRated: req.body.user}}, 
+            {new: true, upsert: true, runValidators: true}).then((updatedDoc)=>{
+                console.log(updatedDoc);
+                res.status(200).send()})
+    }
+    else {
+        console.log("You already rated for this item!")
+    }
+}).then(()=>{
+    console.log("Flop")
 }).catch(err=>{console.error(err)})
 
 })
@@ -94,10 +112,22 @@ router.route("/decreaseRating/:id").put(async(req, res, next)=>{
         doc.rating-=1
         return doc.validate().then(()=>doc)
     }).then((validatedDoc)=>{
-        return Item.findOneAndUpdate({_id: req.params.id}, {rating: validatedDoc.rating}, {new: true, upsert: true, runValidators: true})
-    }).then((updatedDoc)=>{
-        console.log(updatedDoc);
-        res.status(200).send()
+        if(validatedDoc.usersRated.includes(req.body.user))
+        {
+            return Item.findOneAndUpdate({_id: req.params.id}, 
+                {rating: validatedDoc.rating, 
+                $pull: {usersRated: req.body.user}}, 
+                {new: true, upsert: true, runValidators: true}).then((updatedDoc)=>{
+                    console.log(updatedDoc);
+                    res.status(200).send()
+                })
+        }
+        else
+        {
+            console.log("You haven't even rated this item yet dude!");
+        }
+    }).then(()=>{
+       console.log("Flop")
     }).catch(err=>{console.error(err)})
 })
 
