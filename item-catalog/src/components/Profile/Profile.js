@@ -7,8 +7,45 @@ import "./Profile.css";
 
 const Profile = () => {
     const auth = useAuth()
-    const user = auth.user
+    const loggedInUser = auth.user
     
+    const [email, setEmail] = useState("")
+    const [likedItems, setLikedItems] = useState([])
+    const [postedItems, setPostedItems] = useState([])
+
+    useEffect(()=>{
+        const getEmail = () => {
+            const data = {loggedInUser}
+            axios.post("http://localhost:4000/profile/", data).then((res)=>{
+                // setEmail(res.data)
+                setEmail(res.data[0].email);
+            })
+        }
+    
+        const getLikedItems = () => {
+            const data = {loggedInUser}
+            axios.post("http://localhost:4000/profile/getLikedItems", data).then((res)=>{
+                // setEmail(res.data)
+                setLikedItems(res.data)
+                console.log(res);
+            })
+        }
+    
+        const getPostedItems = () => {
+            const data = {loggedInUser}
+            axios.post("http://localhost:4000/profile/getPostedItems", data).then((res)=>{
+                // setEmail(res.data)
+                setPostedItems(res.data)
+                console.log(res);
+            })
+    
+        }
+
+        getEmail()
+        getLikedItems()
+        getPostedItems()
+
+    }, [email, loggedInUser, likedItems, postedItems])
 
     return(<>
         {/* <AppNav></AppNav> */}
@@ -16,9 +53,9 @@ const Profile = () => {
             <Card class="profileCard">
                 <CardHeader title="User Profile" sx={{textAlign: 'center'}}></CardHeader>
                 <Divider></Divider>
-                <CardContent>Username: {user}</CardContent>
+                <CardContent>Username: {loggedInUser}</CardContent>
                 <Divider></Divider>
-                <CardContent></CardContent>
+                <CardContent>Email: {email}</CardContent>
             </Card>
         </div>
     </>)
