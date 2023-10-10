@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const itemRoute = require("./routes.js")
 const userRoute = require("./authRoutes.js")
+const profileRoute = require("./profileRoutes.js")
 const app = express()
 
 
@@ -13,6 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())
 app.use("/items", itemRoute)
 app.use(userRoute)
+app.use("/profile", profileRoute)
 
 const port = 4000
 

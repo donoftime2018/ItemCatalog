@@ -17,7 +17,7 @@ const itemSchema = new mongoose.Schema({
         required: true
     },
 
-    poster : {
+    poster: {
         type: String,
         required: true
     },
