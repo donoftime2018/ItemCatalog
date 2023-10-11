@@ -1,12 +1,23 @@
 .profileInfo {
     align-items: flex-start;
-    margin-left: 4%;
+    display: flex;
+    /* margin-left: 4%; */
     margin-top: 3%;
 }
 
-.profileCard {
+.profileInfo>*{
+    width: 20%;
+    flex-direction: row;
+    /* flex-grow: 0.4; */
     border-radius: 25px;
     background-color: aliceblue;
     border: 1px solid black;
-    width: 20%;
+}
+
+.profileInfo:first-child {
+    margin-left: 4%;
+}
+
+.profileCard {
+    /* width: 20%; */
 }

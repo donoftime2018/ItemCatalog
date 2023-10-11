@@ -13,30 +13,34 @@ const Profile = () => {
     const [likedItems, setLikedItems] = useState([])
     const [postedItems, setPostedItems] = useState([])
 
-    useEffect(()=>{
+    // useEffect(()=>{
         const getEmail = () => {
             const data = {loggedInUser}
-            axios.post("http://localhost:4000/profile/", data).then((res)=>{
+            axios.post("http://localhost:4000/userProfile/getCredentials", data).then((res)=>{
+                if(res.statusCode === 200)
+                {
+                    setEmail(res.data[0].email);
+                }
                 // setEmail(res.data)
-                setEmail(res.data[0].email);
             })
         }
     
         const getLikedItems = () => {
             const data = {loggedInUser}
-            axios.post("http://localhost:4000/profile/getLikedItems", data).then((res)=>{
+            axios.post("http://localhost:4000/userProfile/getLikedItems", data).then((res)=>{
+                
                 // setEmail(res.data)
                 setLikedItems(res.data)
-                console.log(res);
+                // console.log(res);
             })
         }
     
         const getPostedItems = () => {
             const data = {loggedInUser}
-            axios.post("http://localhost:4000/profile/getPostedItems", data).then((res)=>{
+            axios.post("http://localhost:4000/userProfile/getPostedItems", data).then((res)=>{
                 // setEmail(res.data)
                 setPostedItems(res.data)
-                console.log(res);
+                // console.log(res);
             })
     
         }
@@ -45,7 +49,7 @@ const Profile = () => {
         getLikedItems()
         getPostedItems()
 
-    }, [email, loggedInUser, likedItems, postedItems])
+    // }, [email, loggedInUser, likedItems, postedItems])
 
     return(<>
         {/* <AppNav></AppNav> */}
@@ -57,6 +61,9 @@ const Profile = () => {
                 <Divider></Divider>
                 <CardContent>Email: {email}</CardContent>
             </Card>
+
+
+
         </div>
     </>)
 }

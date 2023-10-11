@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())
 app.use("/items", itemRoute)
 app.use(userRoute)
-app.use("/profile", profileRoute)
+app.use("/userProfile", profileRoute)
 
 const port = 4000
 
