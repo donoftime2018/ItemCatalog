@@ -8,8 +8,8 @@ import "./Profile.css";
 const Profile = () => {
     const auth = useAuth()
     const user = auth.user
-    
-    const [email, setEmail] = useState("")
+    const email = auth.email
+
     const [likedItems, setLikedItems] = useState([])
     const [postedItems, setPostedItems] = useState([])
 
@@ -17,10 +17,10 @@ const Profile = () => {
         const getEmail = () => {
             const data = {user}
             axios.post("http://localhost:4000/userProfile/getCredentials", data).then((res)=>{
-                if(res.statusCode === 200)
-                {
-                    setEmail(res.data[0].email);
-                }
+                // if(res.statusCode === 200)
+                // {
+                //     setEmail(res.data[0].email);
+                // }
                 // setEmail(res.data)
             }).catch((error) => {
                 console.log(error)
