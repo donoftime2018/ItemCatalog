@@ -34,30 +34,30 @@ const Profile = () => {
         <Title title={user + "'s Profile"}></Title>
 
         <div class="profileInfo">
-            <Card>
+            <Card class="itemCard">
                 <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Liked Items:"></CardHeader>
-                <Divider></Divider>
                 <>
                     {
-                        likedItems.map((item)=>{
-                            return(<>
-                                <CardContent>{item.name}</CardContent>
-                                <Divider></Divider>
+                        likedItems.map((item, index)=>{
+                                return(<>
+                                    <Divider></Divider>
+                                    <CardContent sx={{textAlign: 'center'}}>{item.name}</CardContent>
                             </>)
+                           
                         })
                     }
                 </>
+                
             </Card>
 
-            <Card>
+            <Card class="itemCard">
                 <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Posted Items:"></CardHeader>
-                <Divider></Divider>
                 <>
                     {
                         postedItems.map((item)=>{
                             return(<>
-                                <CardContent>{item.name}</CardContent>
                                 <Divider></Divider>
+                                <CardContent sx={{textAlign: 'center'}}>{item.name}</CardContent>
                             </>)
                         })
                     }
