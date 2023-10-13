@@ -46,7 +46,7 @@ router.route("/getLikedItems").post((req, res) => {
 router.route("/getRecommendedItems").post((req, res) => {
     let user = req.body.user
 
-    Item.find({$and: [{poster: {$ne: user}}, {usersRated: {$nin: user}}]}).sort({rating: -1, name: 1}).then(function (data) {
+    Item.find({$and: [{poster: {$ne: user}}, {usersRated: {$nin: user}}]}).sort({rating: -1, name: 1}).limit(4).then(function (data) {
         res.json(data).status(200).send()
     }).catch(function(error) {console.error(error)})
 })
