@@ -41,7 +41,7 @@ const Profile = () => {
         <Title title={user + "'s Profile"}></Title>
 
         <div class="profileInfo">
-            <Card class="itemCard">
+            <Card class="infoCard">
                 <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Liked Items:"></CardHeader>
                 <>
                     {
@@ -57,7 +57,7 @@ const Profile = () => {
                 
             </Card>
 
-            <Card class="itemCard">
+            <Card class="infoCard">
                 <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Posted Items:"></CardHeader>
                 <>
                     {
@@ -71,7 +71,13 @@ const Profile = () => {
                 </>
             </Card>
         </div>
-        
+
+
+        <div class="recommendedInfo">
+            <Card class="recommendedCard">
+                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Other Items You Might Enjoy:"></CardHeader>
+            </Card>
+        </div>
     </>)
 }
 

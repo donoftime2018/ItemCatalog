@@ -16,11 +16,25 @@
     margin-right: 10%;
     /* margin-right: 20%; */
     border-radius: 25px;
-    background-color: aliceblue;
+    background-color: antiquewhite;
     border: 1px solid black;
 }
 
-.itemCard{
+.infoCard{
     border: 1px solid black;
     border-radius: 25px;
+    font-size: 18px;
+}
+
+.recommendedInfo {
+    margin-top: 4%;
+    display: flex;
+    justify-content: center;
+}
+
+.recommendedCard {
+    width: 20%;
+    background-color: antiquewhite;
+    border-radius: 25px;
+    border: 1px solid black;
 }
