@@ -1,7 +1,7 @@
 .profileInfo {
     align-items: flex-start;
     display: flex;
-    /* margin-left: 4%; */
+    margin-left: 4%;
     margin-top: 3%;
 }
 
@@ -15,7 +15,7 @@
 }
 
 .profileInfo:first-child {
-    margin-left: 4%;
+    /* margin-left: 4%; */
 }
 
 .profileCard {

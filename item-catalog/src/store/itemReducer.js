@@ -1,7 +1,8 @@
 import { READ_ITEMS, SEARCH_ITEMS } from "./actionTypes";
+import axios from "axios";
 
 const initialState = {
-    items: [],
+    items: axios.get("http://localhost:4000/items/"),
     searchKeyword: ''
 }
 
