@@ -2,9 +2,6 @@ const mongoose = require('mongoose')
 const express = require('express');
 const router = express.Router()
 const Item = require('./Item.js');
-
-const app = express()
-
 // function checkDuplicateRaters(req, res, next)
 // {
 
