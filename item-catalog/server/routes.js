@@ -30,10 +30,8 @@ router.route("/getPostedItems").post(async(req, res)=>{
     let user = req.body.user;
 
     Item.find({poster: user}).then(function (data) {
-        if(data.length>0)
-        {
-            res.json(data).status(200).send()
-        }
+        res.json(data).status(200).send()
+        
     }).catch(function(error) {console.error(error)})
 
 })
@@ -43,10 +41,8 @@ router.route("/getLikedItems").post((req, res) => {
     Item.find({usersRated: user}).then(function (data) {
         // console.log(req.body)
         // console.log(data)
-        if(data.length>0)
-        {
-            res.json(data).status(200).send()
-        }
+         res.json(data).status(200).send()
+        
     }).catch(function(error) {console.error(error)})
 })
 
@@ -65,6 +61,7 @@ router.route("/insertItems").post(async(req, res)=>{
         if(data.length > 0)
         {
             console.log("Item exists")
+            res.status(200).send()
             // Item.findOneAndUpdate({name: req.body.name, desc: req.body.desc, price: req.body.price, rating: req.body.rating}, {quantity: ++data.length}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
         }
         else {
@@ -119,6 +116,7 @@ Item.findOne({_id: req.params.id}).then((doc)=>{
                 res.status(200).send()})
     }
 }).then(()=>{
+    res.status(200).send()
     // console.log("Flop")
 }).catch(err=>{console.error(err)})
 
@@ -160,6 +158,7 @@ router.route("/decreaseRating/:id").put(async(req, res, next)=>{
             console.log("You haven't even rated this item yet dude!");
         }
     }).then(()=>{
+        res.status(200).send()
     //    console.log("Flop")
     }).catch(err=>{console.error(err)})
 })
