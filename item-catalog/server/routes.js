@@ -106,6 +106,11 @@ Item.findOne({_id: req.params.id}).then((doc)=>{
     {
         console.log("You already rated for this item!")
     }
+
+    else if (validatedDoc.poster === req.body.user)
+    {
+        console.log("You cannot rate for an item you posted")
+    }
     else {
         return Item.findOneAndUpdate({_id: req.params.id}, 
             {rating: validatedDoc.rating, $addToSet: {usersRated: req.body.user}}, 
@@ -145,6 +150,10 @@ router.route("/decreaseRating/:id").put(async(req, res, next)=>{
                     console.log(updatedDoc);
                     res.status(200).send()
                 })
+        }
+        else if (validatedDoc.poster === req.body.user)
+        {
+            console.log("You cannot rate for an item you posted")
         }
         else
         {
