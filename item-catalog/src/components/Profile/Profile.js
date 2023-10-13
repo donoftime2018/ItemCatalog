@@ -12,6 +12,7 @@ const Profile = () => {
 
     const [likedItems, setLikedItems] = useState([])
     const [postedItems, setPostedItems] = useState([])
+    const [recommendedItems, setRecommendedItems] = useState([])
 
     useEffect(()=>{
         const getLikedItems = () => {
@@ -24,10 +25,16 @@ const Profile = () => {
             axios.post("http://localhost:4000/items/getPostedItems", data).then((res)=>{setPostedItems(res.data);}).catch((error)=>{console.error(error)});
         }
 
+        const getRecommendedItems = () => {
+            const data = {user}
+            axios.post("http://localhost:4000/items/getRecommendedItems", data).then((res)=>{setRecommendedItems(res.data); console.log(res.data)}).catch((error)=>{console.error(error)});
+        }
+
         getLikedItems()
         getPostedItems()
+        getRecommendedItems()
 
-    }, [likedItems, postedItems, likedItems.length, postedItems.length, user])
+    }, [likedItems, postedItems, likedItems.length, postedItems.length, recommendedItems, recommendedItems.length, user])
 
     return(<>
         <AppNav></AppNav>

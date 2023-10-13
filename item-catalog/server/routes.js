@@ -43,6 +43,14 @@ router.route("/getLikedItems").post((req, res) => {
     }).catch(function(error) {console.error(error)})
 })
 
+router.route("/getRecommendedItems").post((req, res) => {
+    let user = req.body.user
+
+    Item.find({$and: [{poster: {$ne: user}}, {usersRated: {$nin: user}}]}).then(function (data) {
+        res.json(data).status(200).send()
+    }).catch(function(error) {console.error(error)})
+})
+
 //add items 
 router.route("/insertItems").post(async(req, res)=>{
 
