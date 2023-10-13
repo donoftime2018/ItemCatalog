@@ -26,7 +26,7 @@ router.route('/').get(async(req, res)=>{
     })
 })
 
-router.route("/getLikedItems").post(async(req, res)=>{
+router.route("/getPostedItems").post(async(req, res)=>{
     let user = req.body.user;
 
     Item.find({poster: user}).then(function (data) {
