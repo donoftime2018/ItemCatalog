@@ -26,6 +26,30 @@ router.route('/').get(async(req, res)=>{
     })
 })
 
+router.route("/getLikedItems").post(async(req, res)=>{
+    let user = req.body.user;
+
+    Item.find({poster: user}).then(function (data) {
+        if(data.length>0)
+        {
+            res.json(data).status(200).send()
+        }
+    }).catch(function(error) {console.error(error)})
+
+})
+
+router.route("/getLikedItems").post((req, res) => {
+    let user = req.body.user
+    Item.find({usersRated: user}).then(function (data) {
+        // console.log(req.body)
+        // console.log(data)
+        if(data.length>0)
+        {
+            res.json(data).status(200).send()
+        }
+    }).catch(function(error) {console.error(error)})
+})
+
 //add items 
 router.route("/insertItems").post(async(req, res)=>{
 

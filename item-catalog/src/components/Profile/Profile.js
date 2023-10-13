@@ -3,7 +3,6 @@ import {Card, CardContent, CardHeader, Divider} from "@mui/material"
 import axios from "axios";
 import { useAuth } from "../context/user";
 import Title from "../appTitle/appTitle";
-import { useSelector } from "react-redux";
 import AppNav from "../NavBar/NavBar";
 import "./Profile.css";
 

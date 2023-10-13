@@ -1,7 +1,4 @@
-import React, { useState } from "react";
-import { useEffect, useRef } from "react";
-import {useSelector, useDispatch} from "react-redux"
-import { readItems } from "../../store/actionTypes";
+import React, { useState, useEffect } from "react";
 import "./Dashboard.css"
 import Item from "../Item/Item";
 import AddForm from "../addItem/addForm";
