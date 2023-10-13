@@ -36,6 +36,22 @@ const Profile = () => {
 
     }, [likedItems, postedItems, likedItems.length, postedItems.length, recommendedItems, recommendedItems.length, user])
 
+
+    const filterRecommendedItems = () => {
+        let filteredList = []
+        for (let i = 0; i < likedItems.length; i++)
+        {
+            if(recommendedItems[i].name.includes(likedItems[i].name) || recommendedItems[i].desc.includes(likedItems[i].desc))
+            {
+                filteredList.push(recommendedItems[i])
+            }
+        }
+
+        return(<>
+
+        </>)
+    }
+
     return(<>
         <AppNav></AppNav>
         <Title title={user + "'s Profile"}></Title>
@@ -75,7 +91,17 @@ const Profile = () => {
 
         <div class="recommendedInfo">
             <Card class="recommendedCard">
-                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Other Items You Might Enjoy:"></CardHeader>
+                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Items You Might Enjoy:"></CardHeader>
+                <>
+                    {
+                        recommendedItems.map((item, index)=>{
+                            return(<>
+                                <Divider></Divider>
+                                <CardContent sx={{textAlign: 'center'}}>{item.name}, {item.rating} stars</CardContent>
+                            </>)
+                        })
+                    }
+                </>
             </Card>
         </div>
     </>)
