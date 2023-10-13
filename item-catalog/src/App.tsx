@@ -11,12 +11,15 @@ import { classDashboard } from "./components/Dashboard/Dashboard";
 // import Login from "./components/Login/Login";
 import { ItemContext, OfficialItem } from "./components/context/context"
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 import "./App.css";
 
 const App = () =>
 {
     return(
         <>
+        <Provider store={store}>
             <div className="App">
                 <AuthProvider>
                         <ItemContext>
@@ -32,6 +35,8 @@ const App = () =>
                         </ItemContext>
                 </AuthProvider>
             </div>
+        </Provider>
+            
         </>
     )
 }
