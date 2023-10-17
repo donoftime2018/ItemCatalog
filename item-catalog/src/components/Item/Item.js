@@ -29,7 +29,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
         if (itemRating != null)
         {
             return (<>
-                <StarBorderIcon fontSize="large" color="success"></StarBorderIcon>{itemRating}
+                <StarIcon fontSize="large" color="warning"></StarIcon>{itemRating}
             </>)
         }
     }
@@ -125,8 +125,8 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
             <CardContent style={{display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center'}}>
                 <span>{checkRating()}</span>
                 <div>
-                    <IconButton onClick={increaseRating}><StarIcon color="primary" fontSize="large"></StarIcon></IconButton>
-                    <IconButton onClick={decreaseRating}><RemoveCircleIcon color="warning" fontSize="large"></RemoveCircleIcon></IconButton>
+                    <IconButton onClick={increaseRating}><StarBorderIcon color="primary" fontSize="large"></StarBorderIcon></IconButton>
+                    <IconButton onClick={decreaseRating}><RemoveCircleIcon color="error" fontSize="large"></RemoveCircleIcon></IconButton>
                 </div>
                
             </CardContent>

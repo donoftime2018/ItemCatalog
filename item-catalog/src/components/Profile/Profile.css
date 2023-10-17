@@ -16,7 +16,7 @@
     margin-right: 10%;
     /* margin-right: 20%; */
     border-radius: 25px;
-    background-color: antiquewhite;
+    background-color: whitesmoke;
     border: 1px solid black;
 }
 
@@ -35,7 +35,7 @@
 
 .recommendedCard {
     width: 20%;
-    background-color: antiquewhite;
+    background-color: whitesmoke;
     border-radius: 25px;
     border: 1px solid black;
     font-size: 18px;
