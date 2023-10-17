@@ -76,9 +76,10 @@ const AddForm = () => {
    return(<>
     
        <Card class="addFormStyle">
-            <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'nowrap'}}><CardHeader sx={{textAlign: 'center'}} title="Add Items"></CardHeader>    <Tooltip title="Close Add Form"><IconButton sx={{ paddingLeft: '4px'}} onClick={closeForm}><CloseIcon color="error" fontSize="large"></CloseIcon></IconButton></Tooltip></Box>
-            <Divider></Divider>
-            <CardContent>
+            {toggleForm? <>
+                <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'nowrap'}}><CardHeader sx={{textAlign: 'center', paddingRight: '4px'}} title="Add Items"></CardHeader>    <Tooltip title="Close Add Form"><IconButton sx={{ paddingLeft: '4px'}} onClick={closeForm}><CloseIcon color="error" fontSize="large"></CloseIcon></IconButton></Tooltip></Box>
+                <Divider></Divider>
+                <CardContent>
                 <form onSubmit={formik.handleSubmit}>
                 <div style={{display: "flex", justifyContent: 'center'}}>
                     <TextField 
@@ -155,6 +156,12 @@ const AddForm = () => {
             <Divider></Divider> */}
                 {/* <Button variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black'}}>Add Item to List</Button> */}
             </CardContent>
+            </> : <>
+            <CardContent style={{display: "flex", justifyContent: 'center'}}>
+                <Button variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={openForm}>Click here to toggle Add Items form!</Button>
+            </CardContent>
+            </>}
+          
         </Card>
         
         {/* <div class="toggleButton">
