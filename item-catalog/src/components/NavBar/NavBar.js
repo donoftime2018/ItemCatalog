@@ -15,7 +15,7 @@ const AppNav = () => {
 
     const dashBoardNav = () => {
        return(<>
-        <AppBar sx={{paddingBottom: '10px', paddingTop:'0.4%', display: 'flex', flexDirection: 'row', alignItems: 'center'}}  position="static">
+        <AppBar sx={{paddingBottom: '10px', paddingTop:'0.4%', display: 'flex', flexDirection: 'row', alignItems: 'center'}}  position="sticky">
             <Box sx={{marginLeft: '5%', fontSize: '20px'}}>
                 Welcome, <Link style={{fontWeight: 'bold', color: 'white'}} to="/profile">{auth.user}</Link>
             </Box>
@@ -30,7 +30,7 @@ const AppNav = () => {
 
     const profileNav = () => {
         return(<>
-        <AppBar sx={{paddingBottom: '10px', paddingTop:'0.4%', display: 'flex', flexDirection: 'row', alignItems: 'center'}}  position="static">
+        <AppBar sx={{paddingBottom: '10px', paddingTop:'0.4%', display: 'flex', flexDirection: 'row', alignItems: 'center'}}  position="sticky">
             <Box sx={{marginLeft: '5%', fontSize: '20px'}}>
                 <Link style={{fontWeight: 'bold', color: 'white'}} to="/">Return to Dashboard</Link>
             </Box>
