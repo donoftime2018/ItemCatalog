@@ -10,6 +10,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import InfoIcon from '@mui/icons-material/Info';
+import {Tooltip} from "@mui/material";
 import axios from 'axios';
 import { useAuth } from "../context/user";
 
@@ -102,23 +103,27 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
             <Divider/>
             <>
             {open ? 
-                <div key={id} style={{padding: '4px'}}>
-                    <CardContent>
+                // <div key={id}>
+                <>
+                    <CardContent key={id} sx={{paddingBottom: '1px'}}>
                         <span style={{fontSize: '20px', display: 'flex', textAlign: 'center', justifyContent: 'center'}}>{itemDesc}</span>
                     </CardContent>
-                    <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <IconButton onClick={closeDesc}><CloseIcon color="info" fontSize="large"></CloseIcon></IconButton>
+                    <CardContent sx={{display: 'flex', alignItems: 'center', paddingTop: '1px', justifyContent: 'center'}}>
+                        <Tooltip title="Close description"><IconButton onClick={closeDesc}><CloseIcon color="info" fontSize="large"></CloseIcon></IconButton></Tooltip>
                         {/* <Button sx={{borderRadius: '25px', border: "1px solid black"}} variant="contained" color="success" onClick={closeDesc}>Hide Description</Button> */}
                     </CardContent>
-                </div>
-                
+                {/* </div> */}
+                </>
                 : 
                 
-                <div key={id}>
-                    <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <IconButton onClick={openDesc}><InfoIcon color="info" fontSize="large"></InfoIcon></IconButton>
+                // <div key={id}>
+                <>
+                    <CardContent key={id} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px'}}>
+                    <Tooltip title="Open description"><IconButton onClick={openDesc}><InfoIcon color="info" fontSize="large"></InfoIcon></IconButton></Tooltip>
                     </CardContent>
-                </div>
+                </>
+                    
+                // </div>
                 
                 }
             </>
@@ -129,8 +134,8 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
             <CardContent style={{display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center'}}>
                 <span>{checkRating()}</span>
                 <div>
-                    <IconButton onClick={increaseRating}><AddCircleIcon color="primary" fontSize="large"></AddCircleIcon></IconButton>
-                    <IconButton onClick={decreaseRating}><RemoveCircleIcon color="error" fontSize="large"></RemoveCircleIcon></IconButton>
+                    <Tooltip title="Add Star"><IconButton onClick={increaseRating}><AddCircleIcon color="primary" fontSize="large"></AddCircleIcon></IconButton></Tooltip>
+                    <Tooltip title="Remove Star"><IconButton onClick={decreaseRating}><RemoveCircleIcon color="error" fontSize="large"></RemoveCircleIcon></IconButton></Tooltip>
                 </div>
                
             </CardContent>
