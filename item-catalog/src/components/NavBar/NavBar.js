@@ -1,26 +1,34 @@
 import {React} from "react";
 import { useAuth } from "../context/user";
-import { useLocation } from "react-router-dom";
-import { AppBar, Typography, IconButton, Box, Button } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
+import { AppBar, Typography, IconButton, Tooltip, Box, Button } from "@mui/material";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from "react-router-dom";
 
 const AppNav = () => {
     const auth = useAuth();
     const location = useLocation();
+    const navigate = useNavigate();
+    
+    const user = auth.user
 
     const signOut = () => {
         auth.logout()
     }
 
+    const goToProfile = () => {
+        navigate('/profile')
+    }
+
     const dashBoardNav = () => {
        return(<>
         <AppBar sx={{paddingBottom: '10px', paddingTop:'0.4%', display: 'flex', flexDirection: 'row', alignItems: 'center'}} color="primary" position="sticky">
-            <Box sx={{marginLeft: '5%', fontSize: '20px'}}>
-                Welcome, <Link style={{fontWeight: 'bold', color: 'white'}} to="/profile">{auth.user}</Link>
+            <Box sx={{marginLeft: '5%', fontSize: '20px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+               <Tooltip title="Go to Profile"><IconButton onClick={goToProfile} color="inherit"><AccountCircleIcon fontSize="large"></AccountCircleIcon></IconButton></Tooltip>
+               <div>Welcome, <span style={{fontWeight: 'bold'}}>{user}</span></div>
             </Box>
             <Box sx={{flexGrow: '1'}}/>
-            <Box sx={{marginRight: '5%', display: {xs: 'none', md: 'flex'}}}>
+            <Box sx={{marginRight: '5%', display: {xs: 'none', md: 'flex', alignItems: 'center'}}}>
                 {/* <IconButton sx={{justifyContent: 'space-between'}}><AccountCircleIcon color="success" fontSize='large'></AccountCircleIcon></IconButton> */}
                 <Button variant="contained" color="warning" sx={{border: '1px solid black', color: 'black', borderRadius: '25px'}} onClick={signOut}>Log Out</Button>
             </Box>
