@@ -7,6 +7,9 @@ import Delete from "@mui/icons-material/Delete";
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import CloseIcon from '@mui/icons-material/Close';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import InfoIcon from '@mui/icons-material/Info';
 import axios from 'axios';
 import { useAuth } from "../context/user";
 
@@ -99,12 +102,13 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
             <Divider/>
             <>
             {open ? 
-                <div key={id}>
+                <div key={id} style={{padding: '4px'}}>
                     <CardContent>
                         <span style={{fontSize: '20px', display: 'flex', textAlign: 'center', justifyContent: 'center'}}>{itemDesc}</span>
                     </CardContent>
                     <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <Button sx={{borderRadius: '25px', border: "1px solid black"}} variant="contained" color="success" onClick={closeDesc}>Hide Description</Button>
+                        <IconButton onClick={closeDesc}><CloseIcon color="info" fontSize="large"></CloseIcon></IconButton>
+                        {/* <Button sx={{borderRadius: '25px', border: "1px solid black"}} variant="contained" color="success" onClick={closeDesc}>Hide Description</Button> */}
                     </CardContent>
                 </div>
                 
@@ -112,7 +116,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
                 
                 <div key={id}>
                     <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <Button sx={{borderRadius: '25px', border: "1px solid black"}} variant="contained" color="success" onClick={openDesc}>Show Description</Button>
+                        <IconButton onClick={openDesc}><InfoIcon color="info" fontSize="large"></InfoIcon></IconButton>
                     </CardContent>
                 </div>
                 
@@ -125,7 +129,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
             <CardContent style={{display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center'}}>
                 <span>{checkRating()}</span>
                 <div>
-                    <IconButton onClick={increaseRating}><StarBorderIcon color="primary" fontSize="large"></StarBorderIcon></IconButton>
+                    <IconButton onClick={increaseRating}><AddCircleIcon color="primary" fontSize="large"></AddCircleIcon></IconButton>
                     <IconButton onClick={decreaseRating}><RemoveCircleIcon color="error" fontSize="large"></RemoveCircleIcon></IconButton>
                 </div>
                

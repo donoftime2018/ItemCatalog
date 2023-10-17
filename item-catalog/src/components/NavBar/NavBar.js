@@ -22,7 +22,7 @@ const AppNav = () => {
             <Box sx={{flexGrow: '1'}}/>
             <Box sx={{marginRight: '5%', display: {xs: 'none', md: 'flex'}}}>
                 {/* <IconButton sx={{justifyContent: 'space-between'}}><AccountCircleIcon color="success" fontSize='large'></AccountCircleIcon></IconButton> */}
-                <Button variant="contained" color="error" sx={{border: '1px solid black', borderRadius: '25px'}} onClick={signOut}>Log Out</Button>
+                <Button variant="contained" color="warning" sx={{border: '1px solid black', color: 'black', borderRadius: '25px'}} onClick={signOut}>Log Out</Button>
             </Box>
         </AppBar>
        </>)
@@ -37,7 +37,7 @@ const AppNav = () => {
             <Box sx={{flexGrow: '1'}}/>
             <Box sx={{marginRight: '5%', display: {xs: 'none', md: 'flex'}}}>
                 {/* <IconButton sx={{justifyContent: 'space-between'}}><AccountCircleIcon color="success" fontSize='large'></AccountCircleIcon></IconButton> */}
-                <Button variant="contained" color="error" sx={{border: '1px solid black', borderRadius: '25px'}} onClick={signOut}>Log Out</Button>
+                <Button variant="contained" color="warning" sx={{border: '1px solid black', color: 'black', borderRadius: '25px'}} onClick={signOut}>Log Out</Button>
             </Box>
         </AppBar>
         </>)
