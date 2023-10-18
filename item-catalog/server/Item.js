@@ -30,12 +30,7 @@ const itemSchema = new mongoose.Schema({
         required: true,
     },
 
-    usersRated: [String],
-    
-    category: [{
-        type: [String],
-        required: true
-    }]
+    usersRated: [String]
 }, {
     collection: 'item',
     timestamps: true
