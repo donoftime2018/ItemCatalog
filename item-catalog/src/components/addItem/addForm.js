@@ -1,5 +1,6 @@
-import {Card, CardHeader, CardContent, Divider, Input, Icon, IconButton, Button, TextField} from "@mui/material"
+import {Card, CardHeader, CardContent, Box, Divider, Input, Icon, Tooltip, IconButton, Button, TextField} from "@mui/material"
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import CloseIcon from '@mui/icons-material/Close';
 import { useState } from "react"
 import "./addForm.css";
 import {useFormik} from "formik";
@@ -15,6 +16,16 @@ const AddForm = () => {
     // const [quantity, setQuantity] = useState(null)
 
     const auth = useAuth()
+
+    const [toggleForm, setToggleForm] = useState(false);
+
+    const openForm = () => {
+        setToggleForm(true);
+    }
+
+    const closeForm = () => {
+        setToggleForm(false);
+    };
 
     const validation = () => yup.object({
         item_name: yup.string().max(40, "Item name cannot be over 40 characters long").required("Item name required"),
@@ -58,13 +69,17 @@ const AddForm = () => {
             
             // return response.json()
         }
+
+        closeForm();
     }
 
    return(<>
+    
        <Card class="addFormStyle">
-            <CardHeader sx={{textAlign: 'center'}} title="Add Items"></CardHeader>
-            <Divider></Divider>
-            <CardContent>
+            {toggleForm? <>
+                <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'nowrap'}}><CardHeader sx={{textAlign: 'center', paddingRight: '4px'}} title="Add Items"></CardHeader>    <Tooltip title="Close Add Form"><IconButton sx={{ paddingLeft: '4px'}} onClick={closeForm}><CloseIcon color="error" fontSize="large"></CloseIcon></IconButton></Tooltip></Box>
+                <Divider></Divider>
+                <CardContent>
                 <form onSubmit={formik.handleSubmit}>
                 <div style={{display: "flex", justifyContent: 'center'}}>
                     <TextField 
@@ -141,8 +156,18 @@ const AddForm = () => {
             <Divider></Divider> */}
                 {/* <Button variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black'}}>Add Item to List</Button> */}
             </CardContent>
+            </> : <>
+            <CardContent style={{display: "flex", justifyContent: 'center'}}>
+                <Button variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={openForm}>Click here to toggle Add Items form!</Button>
+            </CardContent>
+            </>}
+          
         </Card>
-   
+        
+        {/* <div class="toggleButton">
+            <Button variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center'}} onClick={openForm}>Click here to add an item!</Button>
+        </div>
+    */}
    </>)
 
 }

@@ -6,6 +6,7 @@ import LoginPage from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import UpdatePassword from "./components/updatePassword/updatePassword";
 import { AuthProvider } from "./components/context/user";
+import Profile from "./components/Profile/Profile";
 import { classDashboard } from "./components/Dashboard/Dashboard";
 // import Login from "./components/Login/Login";
 import { ItemContext, OfficialItem } from "./components/context/context"
@@ -26,6 +27,7 @@ const App = () =>
                                 <Route element={<LoginPage/>} path="/login"></Route>
                                 <Route element={<Register/>} path="/register"></Route>
                                 <Route element={<UpdatePassword/>} path="/updatePassword"></Route>
+                                <Route element={<Profile/>} path="/profile"></Route>
                             </Routes>
                         </ItemContext>
                 </AuthProvider>

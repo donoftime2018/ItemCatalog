@@ -7,7 +7,7 @@ import { Component } from "react";
 const Title = ({title}) => {
     return(<>
     <div class="titleBadge">   
-        <Badge pill bg="primary" style={{padding: "2% 5%", border: '3px solid black', textShadow: '3px 2px black'}}>
+        <Badge bg="primary" style={{padding: "2% 5%", border: '3px solid black', textShadow: '3px 2px black'}}>
             <div>
                 <h1 style={{textDecoration: 'underline'}}>{title}</h1>
                 {/* <p>{titleDesc}</p> */}

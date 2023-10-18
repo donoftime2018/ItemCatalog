@@ -2,6 +2,12 @@ const mongoose = require('mongoose')
 const express = require('express');
 const router = express.Router()
 const Item = require('./Item.js');
+// function checkDuplicateRaters(req, res, next)
+// {
+
+// }
+
+// app.use(checkDuplicateRaters)
 
 mongoose.set('setDefaultsOnInsert', true);
 // mongoose.set('debug', true);
@@ -15,6 +21,34 @@ router.route('/').get(async(req, res)=>{
     }).catch(function(err){
         // console.log(err);
     })
+})
+
+router.route("/getPostedItems").post(async(req, res)=>{
+    let user = req.body.user;
+
+    Item.find({poster: user}).sort({updatedAt: -1}).limit(5).then(function (data) {
+        res.json(data).status(200).send()
+        
+    }).catch(function(error) {console.error(error)})
+
+})
+
+router.route("/getLikedItems").post((req, res) => {
+    let user = req.body.user
+    Item.find({usersRated: user}).sort({updatedAt: -1}).limit(5).then(function (data) {
+        // console.log(req.body)
+        // console.log(data)
+         res.json(data).status(200).send()
+        
+    }).catch(function(error) {console.error(error)})
+})
+
+router.route("/getRecommendedItems").post((req, res) => {
+    let user = req.body.user
+
+    Item.find({$and: [{poster: {$ne: user}}, {usersRated: {$nin: user}}]}).sort({rating: -1, updatedAt: -1}).limit(5).then(function (data) {
+        res.json(data).status(200).send()
+    }).catch(function(error) {console.error(error)})
 })
 
 //add items 
@@ -32,6 +66,7 @@ router.route("/insertItems").post(async(req, res)=>{
         if(data.length > 0)
         {
             console.log("Item exists")
+            res.status(200).send()
             // Item.findOneAndUpdate({name: req.body.name, desc: req.body.desc, price: req.body.price, rating: req.body.rating}, {quantity: ++data.length}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
         }
         else {
@@ -52,7 +87,7 @@ router.route("/deleteItems/:id").delete(async(req, res)=>{
 })
 
 //update rating
-router.route("/increaseRating/:id").put(async(req, res)=>{
+router.route("/increaseRating/:id").put(async(req, res, next)=>{
     // const validator = {upsert: true, new: true};
 //    Item.findOneAndUpdate({_id: req.params.id}, {$inc: {rating: 1}}, {new: true}).then((result)=>{
 //     // console.log(result)
@@ -69,15 +104,30 @@ Item.findOne({_id: req.params.id}).then((doc)=>{
     doc.rating+=1
     return doc.validate().then(()=>doc)
 }).then((validatedDoc)=>{
-    return Item.findOneAndUpdate({_id: req.params.id}, {rating: validatedDoc.rating}, {new: true, runValidators: true})
-}).then((updatedDoc)=>{
-    console.log(updatedDoc);
+    if(validatedDoc.usersRated.includes(req.body.user))
+    {
+        console.log("You already rated for this item!")
+    }
+
+    else if (validatedDoc.poster === req.body.user)
+    {
+        console.log("You cannot rate for an item you posted")
+    }
+    else {
+        return Item.findOneAndUpdate({_id: req.params.id}, 
+            {rating: validatedDoc.rating, $addToSet: {usersRated: req.body.user}}, 
+            {new: true, upsert: true, runValidators: true}).then((updatedDoc)=>{
+                console.log(updatedDoc);
+                res.status(200).send()})
+    }
+}).then(()=>{
     res.status(200).send()
+    // console.log("Flop")
 }).catch(err=>{console.error(err)})
 
 })
 
-router.route("/decreaseRating/:id").put(async(req, res)=>{
+router.route("/decreaseRating/:id").put(async(req, res, next)=>{
     // const validator = {upsert: true, new: true};
     // Item.findOneAndUpdate({_id: req.params.id}, {$inc: {rating:-1}}, {new: true}).then((result)=>{
     //     // console.log(result)
@@ -94,10 +144,27 @@ router.route("/decreaseRating/:id").put(async(req, res)=>{
         doc.rating-=1
         return doc.validate().then(()=>doc)
     }).then((validatedDoc)=>{
-        return Item.findOneAndUpdate({_id: req.params.id}, {rating: validatedDoc.rating}, {new: true, runValidators: true})
-    }).then((updatedDoc)=>{
-        console.log(updatedDoc);
+        if(validatedDoc.usersRated.includes(req.body.user))
+        {
+            return Item.findOneAndUpdate({_id: req.params.id}, 
+                {rating: validatedDoc.rating, 
+                $pull: {usersRated: req.body.user}}, 
+                {new: true, upsert: true, runValidators: true}).then((updatedDoc)=>{
+                    console.log(updatedDoc);
+                    res.status(200).send()
+                })
+        }
+        else if (validatedDoc.poster === req.body.user)
+        {
+            console.log("You cannot rate for an item you posted")
+        }
+        else
+        {
+            console.log("You haven't even rated this item yet dude!");
+        }
+    }).then(()=>{
         res.status(200).send()
+    //    console.log("Flop")
     }).catch(err=>{console.error(err)})
 })
 

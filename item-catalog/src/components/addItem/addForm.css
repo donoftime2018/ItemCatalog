@@ -9,3 +9,8 @@
 form div {
     margin-bottom: 2%;
 }
+
+.toggleButton {
+    display: flex;
+    justify-content: center;
+}

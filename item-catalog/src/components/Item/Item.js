@@ -7,13 +7,18 @@ import Delete from "@mui/icons-material/Delete";
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import CloseIcon from '@mui/icons-material/Close';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import InfoIcon from '@mui/icons-material/Info';
+import {Tooltip} from "@mui/material";
 import axios from 'axios';
+import { useAuth } from "../context/user";
 
 
 const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, lastUpdate}) => {
 
     const [open, setOpen] = useState(false);
-
+    const auth=useAuth();
     // console.log(recentUpdate)
 
     const openDesc = () => {
@@ -28,7 +33,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
         if (itemRating != null)
         {
             return (<>
-                <StarBorderIcon fontSize="large" color="success"></StarBorderIcon>{itemRating}
+                <StarIcon fontSize="large" color="warning"></StarIcon>{itemRating}
             </>)
         }
     }
@@ -51,8 +56,11 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
 
     const increaseRating = async() => {
         let id = dbID;
+        
+        let user = auth.user
+        let data = {user}
 
-        axios.put("http://localhost:4000/items/increaseRating/" + id).then((res)=>{console.log(res)}
+        axios.put("http://localhost:4000/items/increaseRating/" + id, data).then((res)=>{console.log(res)}
         ).catch((error)=>{console.error(error)})
         // await fetch("http://localhost:4000/items/increaseRating/" + id, {
         //     method: "PUT",
@@ -65,8 +73,11 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
 
     const decreaseRating = async() => {
         let id = dbID;
+        let user = auth.user
 
-        axios.put("http://localhost:4000/items/decreaseRating/" + id).then((res)=>{console.log(res)}
+        let data = {user}
+
+        axios.put("http://localhost:4000/items/decreaseRating/" + id, data).then((res)=>{console.log(res)}
         ).catch((error)=>{console.error(error)})
         // await fetch("http://localhost:4000/items/decreaseRating/" + id, {
         //     method: "PUT",
@@ -92,22 +103,27 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
             <Divider/>
             <>
             {open ? 
-                <div key={id}>
-                    <CardContent>
+                // <div key={id}>
+                <>
+                    <CardContent key={id} sx={{paddingBottom: '1px'}}>
                         <span style={{fontSize: '20px', display: 'flex', textAlign: 'center', justifyContent: 'center'}}>{itemDesc}</span>
                     </CardContent>
-                    <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <Button sx={{borderRadius: '25px', border: "1px solid black"}} variant="contained" color="success" onClick={closeDesc}>Hide Description</Button>
+                    <CardContent sx={{display: 'flex', alignItems: 'center', paddingTop: '1px', justifyContent: 'center'}}>
+                        <Tooltip title="Close description"><IconButton onClick={closeDesc}><CloseIcon color="info" fontSize="large"></CloseIcon></IconButton></Tooltip>
+                        {/* <Button sx={{borderRadius: '25px', border: "1px solid black"}} variant="contained" color="success" onClick={closeDesc}>Hide Description</Button> */}
                     </CardContent>
-                </div>
-                
+                {/* </div> */}
+                </>
                 : 
                 
-                <div key={id}>
-                    <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <Button sx={{borderRadius: '25px', border: "1px solid black"}} variant="contained" color="success" onClick={openDesc}>Show Description</Button>
+                // <div key={id}>
+                <>
+                    <CardContent key={id} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px'}}>
+                    <Tooltip title="Open description"><IconButton onClick={openDesc}><InfoIcon color="info" fontSize="large"></InfoIcon></IconButton></Tooltip>
                     </CardContent>
-                </div>
+                </>
+                    
+                // </div>
                 
                 }
             </>
@@ -118,8 +134,8 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
             <CardContent style={{display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center'}}>
                 <span>{checkRating()}</span>
                 <div>
-                    <IconButton onClick={increaseRating}><StarIcon color="primary" fontSize="large"></StarIcon></IconButton>
-                    <IconButton onClick={decreaseRating}><RemoveCircleIcon color="warning" fontSize="large"></RemoveCircleIcon></IconButton>
+                    <Tooltip title="Add Star"><IconButton onClick={increaseRating}><AddCircleIcon color="primary" fontSize="large"></AddCircleIcon></IconButton></Tooltip>
+                    <Tooltip title="Remove Star"><IconButton onClick={decreaseRating}><RemoveCircleIcon color="error" fontSize="large"></RemoveCircleIcon></IconButton></Tooltip>
                 </div>
                
             </CardContent>
