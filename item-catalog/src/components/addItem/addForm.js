@@ -55,7 +55,13 @@ const AddForm = () => {
             
         if (name !== "" && desc !== "" && price !== 0)
         {
-            axios.post("http://localhost:4000/items/insertItems", data).then(res=>console.log(res)).catch((error) => {
+            axios.post("http://localhost:4000/items/insertItems", data).then((res)=>{console.log(res);
+                if (res.status === 400)
+                {
+                    window.alert(name + " already exists!")
+                }
+
+            }).catch((error) => {
                 console.log(error)
               })
             // const response = await fetch("http://localhost:4000/items/insertItems", {

@@ -15,6 +15,7 @@ router.route("/login").post((req, res) => {
         }
         else {
             console.log("User doesn't exist")
+            res.status(404).send()
         }
     }).catch(function(error) {console.error(error)})
 })
@@ -36,6 +37,7 @@ router.route("/register").post((req, res) => {
             if(data.length>0)
             {
                 console.log("User already exists")
+                res.status(400).send()
                 // res.status(405).send()
             }
             else {

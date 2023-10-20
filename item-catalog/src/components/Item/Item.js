@@ -60,7 +60,12 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
         let user = auth.user
         let data = {user}
 
-        axios.put("http://localhost:4000/items/increaseRating/" + id, data).then((res)=>{console.log(res)}
+        axios.put("http://localhost:4000/items/increaseRating/" + id, data).then((res)=>{console.log(res);
+            if(res.status === 400)
+            {
+                window.alert("You already rated this item!")
+            }
+        }
         ).catch((error)=>{console.error(error)})
         // await fetch("http://localhost:4000/items/increaseRating/" + id, {
         //     method: "PUT",
@@ -77,7 +82,12 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
 
         let data = {user}
 
-        axios.put("http://localhost:4000/items/decreaseRating/" + id, data).then((res)=>{console.log(res)}
+        axios.put("http://localhost:4000/items/decreaseRating/" + id, data).then((res)=>{console.log(res);
+            if(res.status === 400)
+            {
+                window.alert("You haven't rated this item yet!")
+            }
+        }
         ).catch((error)=>{console.error(error)})
         // await fetch("http://localhost:4000/items/decreaseRating/" + id, {
         //     method: "PUT",

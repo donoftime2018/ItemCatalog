@@ -65,8 +65,8 @@ router.route("/insertItems").post(async(req, res)=>{
         console.log(data)
         if(data.length > 0)
         {
-            console.log("Item exists")
-            res.status(200).send()
+            console.log("Item exists");
+            res.status(400).send();
             // Item.findOneAndUpdate({name: req.body.name, desc: req.body.desc, price: req.body.price, rating: req.body.rating}, {quantity: ++data.length}).then((result)=>{console.log(result)}).catch((err)=>{console.error(err)})
         }
         else {
@@ -106,12 +106,14 @@ Item.findOne({_id: req.params.id}).then((doc)=>{
 }).then((validatedDoc)=>{
     if(validatedDoc.usersRated.includes(req.body.user))
     {
-        console.log("You already rated for this item!")
+        console.log("You already rated for this item!");
+        res.status(400).send();
     }
 
     else if (validatedDoc.poster === req.body.user)
     {
-        console.log("You cannot rate for an item you posted")
+        console.log("You cannot rate for an item you posted");
+        res.status(400).send();
     }
     else {
         return Item.findOneAndUpdate({_id: req.params.id}, 
@@ -121,7 +123,7 @@ Item.findOne({_id: req.params.id}).then((doc)=>{
                 res.status(200).send()})
     }
 }).then(()=>{
-    res.status(200).send()
+   
     // console.log("Flop")
 }).catch(err=>{console.error(err)})
 
@@ -156,14 +158,16 @@ router.route("/decreaseRating/:id").put(async(req, res, next)=>{
         }
         else if (validatedDoc.poster === req.body.user)
         {
-            console.log("You cannot rate for an item you posted")
+            console.log("You cannot rate for an item you posted");
+            res.status(400).send();
         }
         else
         {
             console.log("You haven't even rated this item yet dude!");
+            res.status(400).send();
         }
     }).then(()=>{
-        res.status(200).send()
+       
     //    console.log("Flop")
     }).catch(err=>{console.error(err)})
 })
