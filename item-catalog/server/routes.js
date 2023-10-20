@@ -36,7 +36,7 @@ router.route("/getPostedItems").post(async(req, res)=>{
 router.route("/mostPopularItems").post(async(req, res)=>{
     let user = req.body.user;
 
-    Item.find({poster: user}).sort({rating: -1}).limit(5).then(function(data) {
+    Item.find({poster: user}).sort({rating: -1, updatedAt: -1}).limit(5).then(function(data) {
         res.json(data).status(200).send()
     }).catch(function(error) {console.error(error)})
 })
