@@ -1,19 +1,19 @@
 .profileInfo {
     display: flex;
-    flex-wrap: wrap;
-    align-items: start;
+    flex-wrap: nowrap;
+    align-items: center;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
     margin-left: 4%;
     margin-top: 5%;
 }
 
 .profileInfo>*{
     width: 20%;
-    justify-content: center;
+    justify-content: space-evenly;
     /* flex-grow: 0.4; */
     flex: 0 0 25%;
-    margin-right: 10%;
+    /* margin-right: 10%; */
     /* margin-right: 20%; */
     border-radius: 25px;
     background-color: #f5f5f5;
@@ -26,14 +26,14 @@
     font-size: 18px;
 }
 
-.recommendedInfo {
+.popularInfo {
     margin-top: 5%;
     display: flex;
     justify-content: center;
     margin-bottom: 4%;
 }
 
-.recommendedCard {
+.popularCard {
     width: 20%;
     background-color: whitesmoke;
     border-radius: 25px;
