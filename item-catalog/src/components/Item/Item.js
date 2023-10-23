@@ -74,7 +74,9 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
                 return res.data;
             }
         }
-        ).catch((error)=>{console.error(error); alert(error)})
+        ).catch((error)=>{
+            console.error(error); 
+            alert(error)})
     }
 
     return(<>

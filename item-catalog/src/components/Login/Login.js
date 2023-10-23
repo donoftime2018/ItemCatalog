@@ -45,7 +45,9 @@ const LoginPage = () => {
             else {
                 return res.data;
             }
-        }).catch((err)=>{console.error(err); alert(err)})
+        }).catch((err)=>{
+            console.error(err); 
+            alert(err)})
     }
 
     return(<>
