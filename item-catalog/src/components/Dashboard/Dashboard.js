@@ -5,7 +5,6 @@ import AddForm from "../addItem/addForm";
 import Title from "../appTitle/appTitle";
 import AppNav from "../NavBar/NavBar";
 import axios from 'axios'
-import "./searchBar.css"
 import {Card, CardHeader, CardContent, Divider, IconButton, TextField, Tooltip} from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search';
 import {useFormik} from "formik";
