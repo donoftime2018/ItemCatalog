@@ -42,7 +42,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
 
         axios.delete("http://localhost:4000/items/deleteItems/" + id).then((res) => {
             console.log(res.data)
-            console.log('Student successfully updated')
           }).catch((error) => {
             console.log(error)
           })
@@ -55,7 +54,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
         let data = {user}
 
         axios.put("http://localhost:4000/items/increaseRating/" + id, data).then((res)=>{console.log(res);
-            if(res.status === 400)
+            if(res.status !== 200)
             {
                 window.alert("You already rated this item!")
             }
@@ -70,7 +69,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
         let data = {user}
 
         axios.put("http://localhost:4000/items/decreaseRating/" + id, data).then((res)=>{console.log(res);
-            if(res.status === 400)
+            if(res.status !== 200)
             {
                 window.alert("You haven't rated this item yet!")
             }
