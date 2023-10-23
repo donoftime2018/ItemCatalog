@@ -13,7 +13,6 @@ import {useFormik} from "formik";
 const Dashboard = () => {
 
     const [items, setItems] = useState([])
-    // const [filteredItems, setFilteredItems] = useState([])
     const [isQueried, setIsQueried] = useState(false);
     const [queriedItems, setQueriedItems] = useState("");
     const [queriedPoster, setQueriedPoster] = useState("");
@@ -29,34 +28,23 @@ const Dashboard = () => {
     }, [items.length, items])
 
 
-    // const validation = () => yup.object({
-    //     searchQuery: yup.string().required("Query must be filled out")
-    // })
-
     const formik = useFormik({
         initialValues: {
             itemQuery: "",
             posterQuery: ""
         },
-        // validationSchema: validation,
         onSubmit: (values)=>{
             searchQuery(values.itemQuery, values.posterQuery);
         }
     })
-        
-    // const clearQuery = () => {
-    //     setQueriedItems("")
 
-    // }
 
     const searchQuery = (itemQuery, posterQuery) => {
-        // let queriedItem = query.;
         console.log(itemQuery);
         console.log(posterQuery);
 
         if (itemQuery !== "")
         {
-            // setFilteredItems(items.filter(item=>item.name.includes(query)))
             setIsQueried(true);
             setQueriedItems(itemQuery);
         }
@@ -67,46 +55,30 @@ const Dashboard = () => {
             setQueriedPoster(posterQuery);
         }
 
-        // else {
-           
+        if (posterQuery === "")
+        {
+            setQueriedPoster("")
+        }
 
-            if (posterQuery === "")
-            {
-                setQueriedPoster("")
-            }
+        if (itemQuery === "")
+        {
+            setQueriedItems("")
+        }
 
-            if (itemQuery === "")
-            {
-                // setIsQueried(false);
-                setQueriedItems("")
-                // setQueriedPoster("")
-            }
-
-            if (itemQuery === "" && posterQuery === "")
-            {
-                setIsQueried(false)
-            }
-            
-            
-            // setFilteredItems([])
-        // }
+        if (itemQuery === "" && posterQuery === "")
+        {
+            setIsQueried(false)
+        }
     }
 
     const displayItems = () => {
         return(<>
             {
                 items.map((item, index)=>{
-
-                    // if(items.length>0)
-                    // {
+                 
                     return(<>
                         <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
                     </>)
-                    // }
-             
-                    // else {
-                    //     return(<>Error occured :/</>)
-                    // }
                 })
             }
         </>)
@@ -155,20 +127,10 @@ const Dashboard = () => {
         }
         
     }
-
-    // console.log(items)
     return(<>
             <AppNav></AppNav>
-        {/* <ItemContext> */}
-            <Title 
-                title={"Put a Price On It!"} 
-                titleDesc={"You can view the market prices, descriptions, and ratings of items to see which ones are worth buying! You can rate items as you please, and add new items."}>
-            </Title>
-
-            <div class="formLayout">
-                <AddForm></AddForm>
-            </div>
-
+            <Title title={"Put a Price On It!"} ></Title>
+            
             <div class="searchBar">
             <div>
                 <Card class="searchCard">
@@ -178,14 +140,12 @@ const Dashboard = () => {
                         <form onSubmit={formik.handleSubmit}>
                             <div>
                             <Tooltip title="Search Items"><IconButton type="submit"><SearchIcon fontSize='large'/></IconButton></Tooltip>
-                            {/* <Tooltip title="Clear Search"><IconButton type="submit"><ClearAllIcon fontSize="large"></ClearAllIcon></IconButton></Tooltip> */}
                             <TextField
                                 id="itemQuery"
                                 name="itemQuery"
                                 variant="outlined"
                                 type="text"
                                 label="Search Item by Name"
-                                // onChange={(e)=>{setQuery(e.target.value)}}
                                 value={formik.values.itemQuery}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -198,14 +158,12 @@ const Dashboard = () => {
                             </div>
 
                             <div style={{display: 'flex', justifyContent: 'end'}}>
-                            {/* <Tooltip title="Search Users"><IconButton type="submit"><SearchIcon fontSize='large'/></IconButton></Tooltip> */}
                             <TextField
                                 id="posterQuery"
                                 name="posterQuery"
                                 variant="outlined"
                                 type="text"
                                 label="Search Item by Poster"
-                                // onChange={(e)=>{setQuery(e.target.value)}}
                                 value={formik.values.posterQuery}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -237,11 +195,6 @@ const Dashboard = () => {
                 }
                 </>
             </div>
-        {/* </ItemContext> */}
-
-        {/* <div class="formLayout">
-            <AddForm></AddForm>
-        </div> */}
     </>)
 }
 

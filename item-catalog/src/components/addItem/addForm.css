@@ -14,3 +14,10 @@ form div {
     display: flex;
     justify-content: center;
 }
+
+.formLayout {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+}
