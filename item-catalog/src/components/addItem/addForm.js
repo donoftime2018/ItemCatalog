@@ -10,22 +10,7 @@ import axios from "axios";
 
 const AddForm = () => {
 
-    // const [name, setName] = useState('')
-    // const [price, setPrice] = useState(0)
-    // const [desc, setDesc] = useState('')
-    // const [quantity, setQuantity] = useState(null)
-
     const auth = useAuth()
-
-    const [toggleForm, setToggleForm] = useState(false);
-
-    const openForm = () => {
-        setToggleForm(true);
-    }
-
-    const closeForm = () => {
-        setToggleForm(false);
-    };
 
     const validation = () => yup.object({
         item_name: yup.string().max(40, "Item name cannot be over 40 characters long").required("Item name required"),
@@ -69,17 +54,12 @@ const AddForm = () => {
                 console.log(error)
               })
         }
-
-        closeForm();
     }
 
    return(<>
         <div class="formLayout">
-        <Card class="addFormStyle">
-                <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'nowrap'}}>
-                    <CardHeader sx={{textAlign: 'center', paddingRight: '4px'}} title="Add Items"></CardHeader>    
-                    <Tooltip title="Close Add Form"><IconButton sx={{ paddingLeft: '4px'}} onClick={closeForm}><CloseIcon color="error" fontSize="large"></CloseIcon></IconButton></Tooltip>
-                </Box>
+            <Card class="addFormStyle">
+                <CardHeader sx={{textAlign: 'center', paddingRight: '4px'}} title="Add Items"></CardHeader>    
                 <Divider></Divider>
                 <CardContent>
                 <form onSubmit={formik.handleSubmit}>

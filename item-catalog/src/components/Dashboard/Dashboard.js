@@ -131,6 +131,8 @@ const Dashboard = () => {
             <AppNav></AppNav>
             <Title title={"Put a Price On It!"} ></Title>
             
+            <AddForm></AddForm>
+
             <div class="searchBar">
             <div>
                 <Card class="searchCard">
