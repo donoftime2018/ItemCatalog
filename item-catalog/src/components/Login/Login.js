@@ -41,13 +41,10 @@ const LoginPage = () => {
                 auth.login(username, email)
                 navigate(redirect, {replace: true})
             }
-
-            else {
-                return res.data;
-            }
         }).catch((err)=>{
-            console.error(err); 
-            alert("Can't find user " + name);})
+            const errorMessage = JSON.parse(err.request.response)
+            console.error(errorMessage.msg); 
+            alert(errorMessage.msg);})
     }
 
     return(<>

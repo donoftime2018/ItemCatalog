@@ -42,8 +42,9 @@ const Register = () => {
                 return res.data;
             }
         }).catch((err) => {
-            console.error(err); 
-            alert(name + " is a pre-existing user");});
+            const errorMessage = JSON.parse(err.request.response)
+            console.error(errorMessage.msg); 
+            alert(errorMessage.msg);})
     }
     return(<>
 

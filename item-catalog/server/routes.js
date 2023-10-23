@@ -55,7 +55,7 @@ router.route("/insertItems").post(async(req, res)=>{
         if(data.length > 0)
         {
             console.log("Item exists");
-            res.status(400).send(req.body.name + " already exists");
+            res.status(400).send({msg: req.body.name + " already exists"});
             
         }
         else {
@@ -84,13 +84,13 @@ router.route("/increaseRating/:id").put(async(req, res, next)=>{
         if(validatedDoc.usersRated.includes(req.body.user))
         {
             console.log("You already rated for this item!");
-            res.status(400).send("You already rated for this item!");
+            res.status(400).send({msg: 'You already rated for this item!'});
         }
 
         else if (validatedDoc.poster === req.body.user)
         {
             console.log("You cannot rate for an item you posted");
-            res.status(400).send("You cannot rate for an item you posted");
+            res.status(400).send({msg: 'You cannot rate for an item you posted'});
         }
         else {
             return Item.findOneAndUpdate({_id: req.params.id}, 
@@ -122,12 +122,12 @@ router.route("/decreaseRating/:id").put(async(req, res, next)=>{
         else if (validatedDoc.poster === req.body.user)
         {
             console.log("You cannot rate for an item you posted");
-            res.status(400).send("You cannot rate for an item you posted");
+            res.status(400).send({msg: 'You cannot rate for an item you posted'});
         }
         else
         {
-            console.log("You haven't even rated this item yet dude!");
-            res.status(400).send("You haven't even rated this item yet dude!");
+            console.log("You haven't even rated this item yet!");
+            res.status(400).send({msg: "You haven't even rated this item yet!"});
         }
     }).catch(err=>{console.error(err)})
 })
