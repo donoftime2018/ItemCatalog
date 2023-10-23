@@ -27,7 +27,6 @@ const LoginPage = () => {
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
-            // addItemToDB(values.item_name, values.item_price, values.item_desc);
             checkLogin(values.userName, values.passWord)
         }
     }, {})
@@ -68,7 +67,7 @@ const LoginPage = () => {
                             onBlur={formik.handleBlur}
                             error={formik.touched.userName && Boolean(formik.errors.userName)}
                             helperText={formik.touched.userName && formik.errors.userName}
-                            sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
+                            sx={{ backgroundColor: 'white'}} 
                             placeholder="User name goes here..." 
                             disableUnderline="true" 
                         ></TextField>
@@ -86,7 +85,7 @@ const LoginPage = () => {
                             onBlur={formik.handleBlur}
                             error={formik.touched.passWord && Boolean(formik.errors.passWord)}
                             helperText={formik.touched.passWord && formik.errors.passWord}
-                            sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
+                            sx={{ backgroundColor: 'white'}} 
                             placeholder="Password goes here..." 
                             disableUnderline="true" 
                         ></TextField>
@@ -100,7 +99,6 @@ const LoginPage = () => {
             </CardContent>
             <Divider></Divider>
             <CardContent style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center'}}>
-                {/* <p>Forgot Password? <Link to="/updatePassword">Click here.</Link></p> */}
                 <p><Link to="/register">Click here to sign up.</Link></p>
             </CardContent>
         </Card>
