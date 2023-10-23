@@ -20,7 +20,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
     const user = auth.user;
-    // console.log(recentUpdate)
 
     const openDesc = () => {
         setOpen(true);
@@ -41,11 +40,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
 
     const deleteItem = async() => {
         let id = dbID;
-        // await fetch("http://localhost:4000/items/deleteItems/" + id, {
-        //     method: "DELETE",
-        //     "Cache-Control": "no-cache"
-        // })
-
 
         axios.delete("http://localhost:4000/items/deleteItems/" + id).then((res) => {
             console.log(res.data)
@@ -68,13 +62,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
             }
         }
         ).catch((error)=>{console.error(error)})
-        // await fetch("http://localhost:4000/items/increaseRating/" + id, {
-        //     method: "PUT",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     "Cache-Control": "no-cache"
-        // })
     }
 
     const decreaseRating = async() => {
@@ -90,13 +77,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
             }
         }
         ).catch((error)=>{console.error(error)})
-        // await fetch("http://localhost:4000/items/decreaseRating/" + id, {
-        //     method: "PUT",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     "Cache-Control": "no-cache"
-        // })
     }
 
     return(<>
@@ -114,34 +94,23 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
             <Divider/>
             <>
             {open ? 
-                // <div key={id}>
                 <>
                     <CardContent key={id} sx={{paddingBottom: '1px'}}>
                         <span style={{fontSize: '20px', display: 'flex', textAlign: 'center', justifyContent: 'center'}}>{itemDesc}</span>
                     </CardContent>
                     <CardContent sx={{display: 'flex', alignItems: 'center', paddingTop: '1px', justifyContent: 'center'}}>
                         <Tooltip title="Close description"><IconButton onClick={closeDesc}><CloseIcon color="info" fontSize="large"></CloseIcon></IconButton></Tooltip>
-                        {/* <Button sx={{borderRadius: '25px', border: "1px solid black"}} variant="contained" color="success" onClick={closeDesc}>Hide Description</Button> */}
                     </CardContent>
-                {/* </div> */}
                 </>
                 : 
-                
-                // <div key={id}>
                 <>
                     <CardContent key={id} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px'}}>
                     <Tooltip title="Open description"><IconButton onClick={openDesc}><InfoIcon color="info" fontSize="large"></InfoIcon></IconButton></Tooltip>
                     </CardContent>
-                </>
-                    
-                // </div>
-                
+                </>         
                 }
             </>
-            {/* <Divider/>
-            <CardContent><span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>{itemQuantity} exist</span></CardContent> */}
             <Divider/>
-            {/* <div>   */}
             <CardContent style={{display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center'}}>
                 <span>{checkRating()}</span>
                 <div>
@@ -150,37 +119,18 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
                 </div>
                
             </CardContent>
-
-            {/* </div> */}
-            {/* <Divider/>
-            <CardContent style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
-                <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Last Updated: {Date(lastUpdate)}</span>
-            </CardContent> */}
-            {/* <>
-            { */}
-                {/* // itemRating < 4 ? */}
-                {/* <div key={id}> */}
-
-                
-                {
-                    user === itemPoster? <>
+            {
+                user === itemPoster? 
+                <>
                     
-                        <Divider></Divider>
-                        <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                            <Tooltip title="Delete item"><IconButton onClick={deleteItem} ><Delete color="error" size='large'></Delete></IconButton></Tooltip>
-                        </CardContent>
-                    </> : <></>
-                }
-{/* 
-                </div> */}
-                {/* // : */}
+                    <Divider></Divider>
+                    <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                        <Tooltip title="Delete item"><IconButton onClick={deleteItem} ><Delete color="error" size='large'></Delete></IconButton></Tooltip>
+                    </CardContent>
+                </> : 
                 
-                {/* <div>
-
-                </div> */}
-
-            {/* }
-            </> */}
+                <></>
+            }
          </Card>
     </>)
     

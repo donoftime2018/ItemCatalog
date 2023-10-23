@@ -68,16 +68,6 @@ const AddForm = () => {
             }).catch((error) => {
                 console.log(error)
               })
-            // const response = await fetch("http://localhost:4000/items/insertItems", {
-            //     method: 'POST',
-            //     headers: {
-            //         "Content-Type": "application/json"
-            //     },
-            //     "Cache-Control": "no-cache",
-            //     body: JSON.stringify(data)
-            // }).then(response=>response.json())
-            
-            // return response.json()
         }
 
         closeForm();
