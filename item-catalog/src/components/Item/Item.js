@@ -19,6 +19,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
+    const user = auth.user;
     // console.log(recentUpdate)
 
     const openDesc = () => {
@@ -140,7 +141,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
             {/* <Divider/>
             <CardContent><span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>{itemQuantity} exist</span></CardContent> */}
             <Divider/>
-            <div>  
+            {/* <div>   */}
             <CardContent style={{display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center'}}>
                 <span>{checkRating()}</span>
                 <div>
@@ -150,7 +151,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
                
             </CardContent>
 
-            </div>
+            {/* </div> */}
             {/* <Divider/>
             <CardContent style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
                 <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Last Updated: {Date(lastUpdate)}</span>
@@ -158,12 +159,19 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
             {/* <>
             { */}
                 {/* // itemRating < 4 ? */}
-                {/* <div key={id}>
-                <Divider></Divider>
-                    <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <IconButton onClick={deleteItem}><Delete color="error"></Delete></IconButton>
-                    </CardContent>
+                {/* <div key={id}> */}
 
+                
+                {
+                    user === itemPoster? <>
+                    
+                        <Divider></Divider>
+                        <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                            <Tooltip title="Delete item"><IconButton onClick={deleteItem} ><Delete color="error" size='large'></Delete></IconButton></Tooltip>
+                        </CardContent>
+                    </> : <></>
+                }
+{/* 
                 </div> */}
                 {/* // : */}
                 
