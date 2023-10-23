@@ -2,19 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./Dashboard.css"
 import Item from "../Item/Item";
 import AddForm from "../addItem/addForm";
-import ItemContext from "../context/context";
 import Title from "../appTitle/appTitle";
 import AppNav from "../NavBar/NavBar";
-// import SearchBar from "../searchItems/search";
-import { AppTitle } from "../appTitle/appTitle";
 import axios from 'axios'
 import "./searchBar.css"
-import {Card, CardHeader, CardContent, Divider, Input, Icon, IconButton, Button, TextField, Tooltip} from "@mui/material"
+import {Card, CardHeader, CardContent, Divider, IconButton, TextField, Tooltip} from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search';
-import ClearAllIcon from '@mui/icons-material/ClearAll';
 import {useFormik} from "formik";
-import * as yup from "yup"
-
 
 const Dashboard = () => {
 

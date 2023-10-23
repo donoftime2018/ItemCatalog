@@ -81,7 +81,7 @@ const Profile = () => {
             </Card>
 
             <Card class="infoCard">
-                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Your Most Popular Items"></CardHeader>
+                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Your Most Popular Items:"></CardHeader>
                 <>
                     {
                         popularItems.map((item, index)=>{
