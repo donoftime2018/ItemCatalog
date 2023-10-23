@@ -43,7 +43,7 @@ const Register = () => {
             }
         }).catch((err) => {
             console.error(err); 
-            alert(err);});
+            alert(name + " is a pre-existing user");});
     }
     return(<>
 

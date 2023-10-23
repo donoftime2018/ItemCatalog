@@ -47,7 +47,7 @@ const LoginPage = () => {
             }
         }).catch((err)=>{
             console.error(err); 
-            alert(err)})
+            alert("Can't find user " + name);})
     }
 
     return(<>

@@ -47,7 +47,7 @@ const AddForm = () => {
                 }
             }).catch((error) => {
                 console.log(error);
-                alert(error);
+                alert(name + " already exists");
               })
         }
     }
