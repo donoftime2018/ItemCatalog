@@ -54,12 +54,12 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
         let data = {user}
 
         axios.put("http://localhost:4000/items/increaseRating/" + id, data).then((res)=>{console.log(res);
-            if(res.status !== 200)
+            if (res.status === 400)
             {
-                window.alert("You already rated this item!")
+                return res.data;
             }
         }
-        ).catch((error)=>{console.error(error)})
+        ).catch((error)=>{console.error(error); alert(error)})
     }
 
     const decreaseRating = async() => {
@@ -69,12 +69,12 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
         let data = {user}
 
         axios.put("http://localhost:4000/items/decreaseRating/" + id, data).then((res)=>{console.log(res);
-            if(res.status !== 200)
+            if (res.status === 400)
             {
-                window.alert("You haven't rated this item yet!")
+                return res.data;
             }
         }
-        ).catch((error)=>{console.error(error)})
+        ).catch((error)=>{console.error(error); alert(error)})
     }
 
     return(<>

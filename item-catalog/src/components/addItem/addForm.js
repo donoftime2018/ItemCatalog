@@ -41,9 +41,9 @@ const AddForm = () => {
         if (name !== "" && desc !== "" && price !== 0)
         {
             axios.post("http://localhost:4000/items/insertItems", data).then((res)=>{console.log(res);
-                if (res.status !== 200)
+                if (res.status === 400)
                 {
-                    window.alert(name + " already exists!")
+                   return res.data;
                 }
             }).catch((error) => {
                 console.log(error)
