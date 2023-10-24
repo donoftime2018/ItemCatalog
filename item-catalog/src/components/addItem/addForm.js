@@ -43,9 +43,9 @@ const AddForm = () => {
                    return res.data;
                 }
             }).catch((error) => {
-                console.log(error);
-                alert(name + " already exists");
-              })
+                const errorMessage = JSON.parse(error.request.response)
+                console.error(errorMessage.msg); 
+                alert(errorMessage.msg);})
         }
     }
 
