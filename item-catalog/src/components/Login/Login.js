@@ -37,8 +37,7 @@ const LoginPage = () => {
             if(res.status===200)
             {
                 let username = res.data[0].username
-                let email = res.data[0].email
-                auth.login(username, email)
+                auth.login(username)
                 navigate(redirect, {replace: true})
             }
         }).catch((err)=>{

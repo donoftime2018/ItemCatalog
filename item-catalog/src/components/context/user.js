@@ -8,7 +8,7 @@ export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(sessionStorage.getItem("signedInUser"));
     const navigate = useNavigate()
 
-    const login = (user, email) => {
+    const login = (user) => {
         sessionStorage.setItem('signedInUser', user)
         setUser(user)
     }
