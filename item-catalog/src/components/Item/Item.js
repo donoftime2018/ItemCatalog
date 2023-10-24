@@ -1,16 +1,15 @@
 import React from "react";
-import {Card, CardContent, Divider, Button, IconButton} from "@mui/material";
+import {Card, CardContent, Divider, IconButton} from "@mui/material";
 import { useState } from "react";
 import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
-// import AddCircleIcon from '@mui/icons-material/AddCircle';
 import StarIcon from '@mui/icons-material/Star';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import InfoIcon from '@mui/icons-material/Info';
 import {Tooltip} from "@mui/material";
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { useAuth } from "../context/user";
 
 
@@ -54,10 +53,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
         let data = {user}
 
         axios.put("http://localhost:4000/items/increaseRating/" + id, data).then((res)=>{console.log(res);
-            // if (res.status === 400)
-            // {
-            //     return res.data;
-            // }
         }
         ).catch((error)=>{
             const errorMessage = JSON.parse(error.request.response)
@@ -72,10 +67,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
         let data = {user}
 
         axios.put("http://localhost:4000/items/decreaseRating/" + id, data).then((res)=>{console.log(res);
-            // if (res.status === 400)
-            // {
-            //     return res.data;
-            // }
         }
         ).catch((error)=>{
             const errorMessage = JSON.parse(error.request.response)
