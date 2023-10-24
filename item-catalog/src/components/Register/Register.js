@@ -115,10 +115,6 @@ const Register = () => {
             </form>
             </CardContent>
             <Divider></Divider>
-            {/* <CardContent style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center'}}> */}
-                {/* <p>Forgot Password? Click here.</p>
-                <p>Register? Click here</p> */}
-            {/* </CardContent> */}
         </Card>
         </div>
     </>)
