@@ -94,23 +94,6 @@ const Profile = () => {
                 </>
             </Card>
         </div>
-
-
-        {/* <div class="popularInfo">
-            <Card class="popularCard">
-                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Your Most Popular Items"></CardHeader>
-                <>
-                    {
-                        popularItems.map((item, index)=>{
-                            return(<>
-                                <Divider></Divider>
-                                <CardContent sx={{textAlign: 'center', alignItems: 'center'}}>{item.name}, {item.rating} <StarIcon color='warning' sx={{alignItems: 'start', fontSize: 'large'}}></StarIcon></CardContent>
-                            </>)
-                        })
-                    }
-                </>
-            </Card>
-        </div> */}
     </>)
 }
 
