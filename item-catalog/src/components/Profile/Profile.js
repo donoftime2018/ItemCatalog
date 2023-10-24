@@ -43,7 +43,7 @@ const Profile = () => {
                 console.log(res);
                 if(res.status === 200)
                 {
-                    alert(res.data.message)
+                    alert(res.data.msg)
                     navigate("/login")
                 }
             }).catch((err)=>{console.error(err)})
