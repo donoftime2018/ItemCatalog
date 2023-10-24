@@ -2,7 +2,6 @@ import React from "react";
 import Badge from "react-bootstrap/Badge"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./appTitle.css"
-import { Component } from "react";
 
 const Title = ({title}) => {
     return(<>
