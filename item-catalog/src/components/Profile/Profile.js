@@ -13,7 +13,8 @@ const Profile = () => {
 
     const [likedItems, setLikedItems] = useState([])
     const [postedItems, setPostedItems] = useState([])
-    const [recommendedItems, setRecommendedItems] = useState([])
+    const [popularItems, setPopularItems] = useState([])
+  
 
     useEffect(()=>{
         const getLikedItems = () => {
@@ -26,32 +27,17 @@ const Profile = () => {
             axios.post("http://localhost:4000/items/getPostedItems", data).then((res)=>{setPostedItems(res.data);}).catch((error)=>{console.error(error)});
         }
 
-        const getRecommendedItems = () => {
+        const getMostPopularItems = () => {
             const data = {user}
-            axios.post("http://localhost:4000/items/getRecommendedItems", data).then((res)=>{setRecommendedItems(res.data); console.log(res.data)}).catch((error)=>{console.error(error)});
+            axios.post("http://localhost:4000/items/mostPopularItems", data).then((res)=>{setPopularItems(res.data); console.log(res.data)}).catch((error)=>{console.error(error)});
         }
 
         getLikedItems()
         getPostedItems()
-        getRecommendedItems()
+        getMostPopularItems()
 
-    }, [likedItems, postedItems, likedItems.length, postedItems.length, recommendedItems, recommendedItems.length, user])
-
-
-    const filterRecommendedItems = () => {
-        let filteredList = []
-        for (let i = 0; i < likedItems.length; i++)
-        {
-            if(recommendedItems[i].name.includes(likedItems[i].name) || recommendedItems[i].desc.includes(likedItems[i].desc))
-            {
-                filteredList.push(recommendedItems[i])
-            }
-        }
-
-        return(<>
-
-        </>)
-    }
+    }, [likedItems, postedItems, popularItems, popularItems.length, 
+        likedItems.length, postedItems.length, user])
 
     return(<>
         <AppNav></AppNav>
@@ -87,15 +73,12 @@ const Profile = () => {
                     }
                 </>
             </Card>
-        </div>
 
-
-        <div class="recommendedInfo">
-            <Card class="recommendedCard">
-                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Items You Might Enjoy:"></CardHeader>
+            <Card class="infoCard">
+                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Your Most Popular Items:"></CardHeader>
                 <>
                     {
-                        recommendedItems.map((item, index)=>{
+                        popularItems.map((item, index)=>{
                             return(<>
                                 <Divider></Divider>
                                 <CardContent sx={{textAlign: 'center', alignItems: 'center'}}>{item.name}, {item.rating} <StarIcon color='warning' sx={{alignItems: 'start', fontSize: 'large'}}></StarIcon></CardContent>
@@ -105,6 +88,7 @@ const Profile = () => {
                 </>
             </Card>
         </div>
+        
     </>)
 }
 

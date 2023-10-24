@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import {React} from "react";
 import {Card, CardContent, Divider, TextField, Button, CardHeader} from "@mui/material"
 import {useFormik} from "formik";
 import { useNavigate, Link, useLocation } from "react-router-dom";
@@ -27,7 +27,6 @@ const LoginPage = () => {
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
-            // addItemToDB(values.item_name, values.item_price, values.item_desc);
             checkLogin(values.userName, values.passWord)
         }
     }, {})
@@ -42,11 +41,10 @@ const LoginPage = () => {
                 auth.login(username, email)
                 navigate(redirect, {replace: true})
             }
-
-            else {
-                
-            }
-        })
+        }).catch((err)=>{
+            const errorMessage = JSON.parse(err.request.response)
+            console.error(errorMessage.msg); 
+            alert(errorMessage.msg);})
     }
 
     return(<>
@@ -68,7 +66,7 @@ const LoginPage = () => {
                             onBlur={formik.handleBlur}
                             error={formik.touched.userName && Boolean(formik.errors.userName)}
                             helperText={formik.touched.userName && formik.errors.userName}
-                            sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
+                            sx={{ backgroundColor: 'white'}} 
                             placeholder="User name goes here..." 
                             disableUnderline="true" 
                         ></TextField>
@@ -86,7 +84,7 @@ const LoginPage = () => {
                             onBlur={formik.handleBlur}
                             error={formik.touched.passWord && Boolean(formik.errors.passWord)}
                             helperText={formik.touched.passWord && formik.errors.passWord}
-                            sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
+                            sx={{ backgroundColor: 'white'}} 
                             placeholder="Password goes here..." 
                             disableUnderline="true" 
                         ></TextField>
@@ -100,8 +98,7 @@ const LoginPage = () => {
             </CardContent>
             <Divider></Divider>
             <CardContent style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center'}}>
-                {/* <p>Forgot Password? <Link to="/updatePassword">Click here.</Link></p> */}
-                <p>Register? <Link to="/register">Click here.</Link></p>
+                <p><Link to="/register">Click here to sign up.</Link></p>
             </CardContent>
         </Card>
         </div>

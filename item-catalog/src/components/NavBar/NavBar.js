@@ -1,7 +1,7 @@
 import {React} from "react";
 import { useAuth } from "../context/user";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AppBar, Typography, IconButton, Tooltip, Box, Button } from "@mui/material";
+import { AppBar, IconButton, Tooltip, Box, Button } from "@mui/material";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from "react-router-dom";
 
@@ -28,8 +28,7 @@ const AppNav = () => {
                <div>Welcome, <span style={{fontWeight: 'bold'}}>{user}</span></div>
             </Box>
             <Box sx={{flexGrow: '1'}}/>
-            <Box sx={{marginRight: '5%', display: {xs: 'none', md: 'flex', alignItems: 'center'}}}>
-                {/* <IconButton sx={{justifyContent: 'space-between'}}><AccountCircleIcon color="success" fontSize='large'></AccountCircleIcon></IconButton> */}
+            <Box sx={{marginRight: '5%', display: {xs: 'none', md: 'flex', alignItems: 'center'}, alignItems: 'center'}}>
                 <Button variant="contained" color="warning" sx={{border: '1px solid black', color: 'black', borderRadius: '25px'}} onClick={signOut}>Log Out</Button>
             </Box>
         </AppBar>
@@ -43,8 +42,7 @@ const AppNav = () => {
                 <Link style={{fontWeight: 'bold', color: 'white'}} to="/">Return to Dashboard</Link>
             </Box>
             <Box sx={{flexGrow: '1'}}/>
-            <Box sx={{marginRight: '5%', display: {xs: 'none', md: 'flex'}}}>
-                {/* <IconButton sx={{justifyContent: 'space-between'}}><AccountCircleIcon color="success" fontSize='large'></AccountCircleIcon></IconButton> */}
+            <Box sx={{marginRight: '5%', display: {xs: 'none', md: 'flex', alignItems: 'center'}, alignItems: 'center'}}>
                 <Button variant="contained" color="warning" sx={{border: '1px solid black', color: 'black', borderRadius: '25px'}} onClick={signOut}>Log Out</Button>
             </Box>
         </AppBar>

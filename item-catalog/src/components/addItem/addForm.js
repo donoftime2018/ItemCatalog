@@ -1,7 +1,4 @@
-import {Card, CardHeader, CardContent, Box, Divider, Input, Icon, Tooltip, IconButton, Button, TextField} from "@mui/material"
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import CloseIcon from '@mui/icons-material/Close';
-import { useState } from "react"
+import {Card, CardHeader, CardContent, Divider, Button, TextField} from "@mui/material"
 import "./addForm.css";
 import {useFormik} from "formik";
 import { useAuth } from "../context/user";
@@ -10,22 +7,7 @@ import axios from "axios";
 
 const AddForm = () => {
 
-    // const [name, setName] = useState('')
-    // const [price, setPrice] = useState(0)
-    // const [desc, setDesc] = useState('')
-    // const [quantity, setQuantity] = useState(null)
-
     const auth = useAuth()
-
-    const [toggleForm, setToggleForm] = useState(false);
-
-    const openForm = () => {
-        setToggleForm(true);
-    }
-
-    const closeForm = () => {
-        setToggleForm(false);
-    };
 
     const validation = () => yup.object({
         item_name: yup.string().max(40, "Item name cannot be over 40 characters long").required("Item name required"),
@@ -55,29 +37,22 @@ const AddForm = () => {
             
         if (name !== "" && desc !== "" && price !== 0)
         {
-            axios.post("http://localhost:4000/items/insertItems", data).then(res=>console.log(res)).catch((error) => {
-                console.log(error)
+            axios.post("http://localhost:4000/items/insertItems", data).then((res)=>{console.log(res);
+                if (res.status === 400)
+                {
+                   return res.data;
+                }
+            }).catch((error) => {
+                console.log(error);
+                alert(name + " already exists");
               })
-            // const response = await fetch("http://localhost:4000/items/insertItems", {
-            //     method: 'POST',
-            //     headers: {
-            //         "Content-Type": "application/json"
-            //     },
-            //     "Cache-Control": "no-cache",
-            //     body: JSON.stringify(data)
-            // }).then(response=>response.json())
-            
-            // return response.json()
         }
-
-        closeForm();
     }
 
    return(<>
-    
-       <Card class="addFormStyle">
-            {toggleForm? <>
-                <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'nowrap'}}><CardHeader sx={{textAlign: 'center', paddingRight: '4px'}} title="Add Items"></CardHeader>    <Tooltip title="Close Add Form"><IconButton sx={{ paddingLeft: '4px'}} onClick={closeForm}><CloseIcon color="error" fontSize="large"></CloseIcon></IconButton></Tooltip></Box>
+        <div class="formLayout">
+            <Card class="addFormStyle">
+                <CardHeader sx={{textAlign: 'center', paddingRight: '4px'}} title="Add Items"></CardHeader>    
                 <Divider></Divider>
                 <CardContent>
                 <form onSubmit={formik.handleSubmit}>
@@ -98,7 +73,6 @@ const AddForm = () => {
                         disableUnderline="true" 
                     />
                 </div>
-            {/* <Divider></Divider> */}
                 <div style={{display: "flex", justifyContent: 'center'}}>
                     <TextField 
                         id="item_price"
@@ -117,7 +91,6 @@ const AddForm = () => {
                         disableUnderline="true" 
                     />
                 </div>
-            {/* <Divider></Divider> */}
                 <div style={{display: "flex", justifyContent: 'center'}}>
                     <TextField
                         id="item_desc"
@@ -135,39 +108,13 @@ const AddForm = () => {
                         disableUnderline="true" 
                     />
                 </div>
-            {/* <Divider></Divider> */}
-            {/* <CardContent>Item Quantity: <Input sx={{overflowX: 'auto', width: '70px', backgroundColor: 'white', border: '1px black solid', borderRadius: '25px'}} disableUnderline="true" type="text" onChange={(event)=>setQuantity(event.currentTarget.value)}></Input></CardContent>
-            <Divider></Divider> */}
-            {/* <CardContent>Item Rating (between 0 and 10): <Input sx={{overflowX: 'auto', width: '40px', backgroundColor: 'white', border: '1px black solid', borderRadius: '25px'}} disableUnderline="true" type="text" onChange={(event)=>setRating(event.currentTarget.value)}></Input></CardContent>
-            <Divider></Divider> */}
                 <div style={{display: "flex", justifyContent: 'center'}}>
                     <Button type="Submit" variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Add Item to List</Button>
                 </div>
             </form>
-                {/* <Input sx={{border: '1px black solid', backgroundColor: 'white', borderRadius: '25px'}} placeholder="Item Name" disableUnderline="true" type="text"/>
-            {/* <Divider></Divider> */}
-               {/* <Input inputProps={{step: 0.01}} sx={{border: '1px black solid',  backgroundColor: 'white', width:'60px', borderRadius: '25px'}} placeholder="Item Price" disableUnderline="true" type="number"></Input> */}
-            {/* <Divider></Divider> */}
-                {/* <Input sx={{overflowX: 'auto', backgroundColor: 'white', border: '1px black solid', borderRadius: '25px'}} disableUnderline="true" type="text"></Input> */}
-            {/* <Divider></Divider> */}
-            {/* <CardContent>Item Quantity: <Input sx={{overflowX: 'auto', width: '70px', backgroundColor: 'white', border: '1px black solid', borderRadius: '25px'}} disableUnderline="true" type="text" onChange={(event)=>setQuantity(event.currentTarget.value)}></Input></CardContent>
-            <Divider></Divider> */}
-            {/* <CardContent>Item Rating (between 0 and 10): <Input sx={{overflowX: 'auto', width: '40px', backgroundColor: 'white', border: '1px black solid', borderRadius: '25px'}} disableUnderline="true" type="text" onChange={(event)=>setRating(event.currentTarget.value)}></Input></CardContent>
-            <Divider></Divider> */}
-                {/* <Button variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black'}}>Add Item to List</Button> */}
             </CardContent>
-            </> : <>
-            <CardContent style={{display: "flex", justifyContent: 'center'}}>
-                <Button variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={openForm}>Click here to toggle Add Items form!</Button>
-            </CardContent>
-            </>}
-          
         </Card>
-        
-        {/* <div class="toggleButton">
-            <Button variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center'}} onClick={openForm}>Click here to add an item!</Button>
         </div>
-    */}
    </>)
 
 }

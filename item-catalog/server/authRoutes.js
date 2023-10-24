@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const express = require('express');
 const router = express.Router()
 const User = require("./User")
+const Item = require("./Item")
 
 router.route("/login").post((req, res) => {
     let name = req.body.name
@@ -13,8 +14,9 @@ router.route("/login").post((req, res) => {
         if(data.length>0){
             res.json(data).status(200).send()
         }
-        else {
-            console.log("User doesn't exist")
+        else if (data.length===0){
+            console.log("Can't find user " + name) 
+            res.status(400).send({msg: "Invalid username or password"});
         }
     }).catch(function(error) {console.error(error)})
 })
@@ -36,7 +38,7 @@ router.route("/register").post((req, res) => {
             if(data.length>0)
             {
                 console.log("User already exists")
-                // res.status(405).send()
+                res.status(400).send({msg: name + " already exists!"})
             }
             else {
                 User.create({username: name, password: pwd, email: email}).then((result)=>{
@@ -70,5 +72,4 @@ router.route("/updatePassword").put((req, res) => {
                 }))
             }
     })})
-
 module.exports = router;
