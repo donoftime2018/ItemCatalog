@@ -152,7 +152,7 @@ const Dashboard = () => {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.itemQuery && Boolean(formik.errors.itemQuery)}
                                 helperText={formik.touched.itemQuery && formik.errors.itemQuery}
-                                sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
+                                sx={{ backgroundColor: 'white'}} 
                                 placeholder="Item name here..." 
                                 disableUnderline="true" 
                             />
@@ -170,7 +170,7 @@ const Dashboard = () => {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.posterQuery && Boolean(formik.errors.posterQuery)}
                                 helperText={formik.touched.posterQuery && formik.errors.posterQuery}
-                                sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
+                                sx={{ backgroundColor: 'white'}} 
                                 placeholder="Item poster here..." 
                                 disableUnderline="true" 
                             />
