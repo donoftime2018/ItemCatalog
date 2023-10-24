@@ -40,6 +40,6 @@
     padding-bottom: 10px!important;
 }
 
-form:first-child div {
+.deleteProfile form div {
     margin-bottom: 3%;
 }
