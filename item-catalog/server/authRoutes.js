@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const express = require('express');
 const router = express.Router()
 const User = require("./User")
+const Item = require("./Item")
 
 router.route("/login").post((req, res) => {
     let name = req.body.name
@@ -71,18 +72,4 @@ router.route("/updatePassword").put((req, res) => {
                 }))
             }
     })})
-
-router.route("/deleteAccount").delete((req, res)=>{
-    let name = req.body.account; 
-
-    User.find({username: name}).then((function(data){
-        if (data.length>0)
-        {
-            User.deleteOne({username: name}).then(function(result){
-                console.log(result);
-                res.status(200).send({msg: "Account deleted successfully!"})
-            })
-        }
-    }))
-})
 module.exports = router;
