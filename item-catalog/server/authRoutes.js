@@ -72,4 +72,17 @@ router.route("/updatePassword").put((req, res) => {
             }
     })})
 
+router.route("/deleteAccount").delete((req, res)=>{
+    let name = req.body.name;
+
+    User.find({username: name}).then((function(data){
+        if (data.length>0)
+        {
+            User.deleteOne({username: name}).then(function(result){
+                console.log(result);
+                res.status(200).send("Account deleted successfully!")
+            })
+        }
+    }))
+})
 module.exports = router;

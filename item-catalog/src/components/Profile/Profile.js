@@ -94,6 +94,8 @@ const Profile = () => {
                 </>
             </Card>
         </div>
+
+        
     </>)
 }
 
