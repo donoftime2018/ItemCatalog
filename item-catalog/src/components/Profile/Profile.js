@@ -49,7 +49,7 @@ const Profile = () => {
             }).catch((err)=>{console.error(err)})
         }
         else {
-            alert("You are not logged in as " + user)
+            alert("Invalid username")
         }
     }
 
