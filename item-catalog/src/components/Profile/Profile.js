@@ -151,7 +151,7 @@ const Profile = () => {
                         </div>
                         
                         <div style={{display: 'flex', justifyContent: 'center'}}>
-                            <Button type="Submit" sx={{borderRadius: '25px', border: '1px black solid'}} variant="contained" color="error">Delete Profile</Button>
+                            <Button type="Submit" sx={{borderRadius: '25px', border: '1px black solid'}} variant="contained" color="error">Delete Account</Button>
                         </div>
                         
                     </form>
