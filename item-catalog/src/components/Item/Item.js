@@ -36,17 +36,21 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
         }
     }
 
-    const deleteItem = async() => {
+    const deleteItem = () => {
         let id = dbID;
+        let confirmDelete = window.confirm("Are you sure you want to delete " + itemName + "?")
 
-        axios.delete("http://localhost:4000/items/deleteItems/" + id).then((res) => {
-            console.log(res.data)
-          }).catch((error) => {
-            console.log(error)
-          })
+        if (confirmDelete === true)
+        {
+            axios.delete("http://localhost:4000/items/deleteItems/" + id).then((res) => {
+                console.log(res.data)
+                }).catch((error) => {
+                console.log(error)
+                })
+        }
     }
 
-    const increaseRating = async() => {
+    const increaseRating = () => {
         let id = dbID;
         
         let user = auth.user
@@ -60,7 +64,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
             alert(errorMessage.msg);})
     }
 
-    const decreaseRating = async() => {
+    const decreaseRating = () => {
         let id = dbID;
         let user = auth.user
 
@@ -119,7 +123,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
                 <>
                     
                     <Divider></Divider>
-                    <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <CardContent sx={{display: 'flex', paddingTop: '5px', paddingBottom: '10px!important', alignItems: 'center', justifyContent: 'center'}}>
                         <Tooltip title="Delete item"><IconButton onClick={deleteItem} ><Delete color="error" size='large'></Delete></IconButton></Tooltip>
                     </CardContent>
                 </> : 
