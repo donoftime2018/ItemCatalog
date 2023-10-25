@@ -24,6 +24,20 @@ router.route("/getPostedItems").post(async(req, res)=>{
 
 })
 
+router.route("/numPostedItems").post(async(req, res)=>{
+    let user = req.body.user;
+    const count = await Item.countDocuments({poster: user});
+    res.json(count).status(200).send()
+
+})
+
+router.route("/numLikedItems").post(async(req, res)=>{
+    let user = req.body.user;
+    const count = await Item.countDocuments({usersRated: user});
+    res.json(count).status(200).send()
+
+})
+
 router.route("/mostPopularItems").post(async(req, res)=>{
     let user = req.body.user;
 
