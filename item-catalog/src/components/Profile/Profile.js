@@ -14,6 +14,9 @@ const Profile = () => {
     const [likedItems, setLikedItems] = useState([])
     const [postedItems, setPostedItems] = useState([])
     const [popularItems, setPopularItems] = useState([])
+
+    const [numLikedItems, setNumLikedItems] = useState(0);
+    const [numPostedItems, setNumPostedItems] = useState(0);
   
 
     useEffect(()=>{
@@ -32,15 +35,35 @@ const Profile = () => {
             axios.post("http://localhost:4000/items/mostPopularItems", data).then((res)=>{setPopularItems(res.data); console.log(res.data)}).catch((error)=>{console.error(error)});
         }
 
+        const getNumLiked = () => {
+            const data = {user}
+            axios.post("http://localhost:4000/items/numLikedItems", data).then(
+                (res)=>{
+                    setNumLikedItems(res.data); 
+                    console.log(res.data)}).catch((error)=>{console.error(error)});
+        }
+
+        const getNumPosted = () => {
+            const data = {user}
+            axios.post("http://localhost:4000/items/numPostedItems", data).then(
+                (res)=>{
+                    setNumPostedItems(res.data); 
+                    console.log(res.data)}).catch((error)=>{console.error(error)});
+        }
+
         getLikedItems()
         getPostedItems()
         getMostPopularItems()
+        getNumLiked()
+        getNumPosted()
 
     }, [likedItems, postedItems, popularItems, popularItems.length, 
-        likedItems.length, postedItems.length, user])
+        likedItems.length, postedItems.length, user, numLikedItems, numPostedItems])
 
     return(<>
         <AppNav></AppNav>
+
+     
         <Title title={user + "'s Profile"}></Title>
 
         <div class="profileInfo">
