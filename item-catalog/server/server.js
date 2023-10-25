@@ -14,6 +14,11 @@ app.use(cors())
 app.use("/items", itemRoute)
 app.use(userRoute)
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    next();
+    });
+
 const port = 4000
 
 app.listen(port, ()=>{
