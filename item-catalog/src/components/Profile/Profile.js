@@ -111,6 +111,20 @@ const Profile = () => {
                 </>
             </Card>
         </div>
+
+        <div class="profileInfo">
+            <Card class="infoCard">
+                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Number of Items Liked:"></CardHeader>
+                <Divider></Divider>
+                <CardContent sx={{textAlign: 'center', padding: "4px!important", fontSize: "24px", alignItems: 'center'}}>{numLikedItems}</CardContent>
+            </Card>
+
+            <Card class="infoCard">
+                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Number of Items Posted:"></CardHeader>
+                <Divider></Divider>
+                <CardContent sx={{textAlign: 'center', padding: "4px!important", fontSize: "24px", alignItems: 'center'}}>{numPostedItems}</CardContent>
+            </Card>
+        </div>
         
     </>)
 }
