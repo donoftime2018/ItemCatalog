@@ -124,7 +124,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
                     
                     <Divider></Divider>
                     <CardContent sx={{display: 'flex', paddingTop: '5px', paddingBottom: '10px!important', alignItems: 'center', justifyContent: 'center'}}>
-                        <Tooltip title="Delete item"><IconButton onClick={deleteItem} ><Delete color="error" size='large'></Delete></IconButton></Tooltip>
+                        <Tooltip title="Delete item"><IconButton onClick={deleteItem} ><Delete color="error" fontSize='large'></Delete></IconButton></Tooltip>
                     </CardContent>
                 </> : 
                 
