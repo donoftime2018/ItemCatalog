@@ -1,4 +1,4 @@
-FROM node:10.16-alpine
+FROM node:18
 
 WORKDIR /item-catalog/app
 
@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["npm","start"]
