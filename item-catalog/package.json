@@ -24,6 +24,7 @@
     "mongodb": "^5.7.0",
     "mongoose": "^7.4.1",
     "next": "^13.4.12",
+    "node": "^21.1.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.0-beta.1",
     "react-dom": "^18.2.0",
