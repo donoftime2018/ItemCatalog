@@ -8,7 +8,8 @@ import "./updatePassword.css";
 
 const UpdatePassword = () => {
 
-    const navigate=useNavigate()
+    const navigate = useNavigate()
+
     const validation = () => yup.object({
         userName: yup.string().min(10, "Username must be at least 10 characters long").max(20, "Username cannot be more than 20 characters").required("Username required"),
         passWord: yup.string().min(8, "Password must be at least 8 characters long").max(12, "Password cannot be over 12 characters long").required("Password required"),
@@ -37,11 +38,15 @@ const UpdatePassword = () => {
                 {
                     navigate("/login")
                 }
-            })
+            }).catch((err)=>{
+                const errorMessage = JSON.parse(err.request.response)
+                console.error(errorMessage.msg); 
+                alert(errorMessage.msg);})
         }
 
         else {
             console.log("Passwords must match!")
+            alert("Passwords do not match!")
         }
     }
 
@@ -64,7 +69,7 @@ const UpdatePassword = () => {
                             onBlur={formik.handleBlur}
                             error={formik.touched.userName && Boolean(formik.errors.userName)}
                             helperText={formik.touched.userName && formik.errors.userName}
-                            sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
+                            sx={{ backgroundColor: 'white'}} 
                             placeholder="User name goes here..." 
                             disableUnderline="true" 
                         ></TextField>
@@ -77,12 +82,12 @@ const UpdatePassword = () => {
                             variant="outlined"
                             type="password"
                             label="Password"
-                            value={formik.values.passWord}
+                            value={formik.values.password}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.passWord && Boolean(formik.errors.passWord)}
                             helperText={formik.touched.passWord && formik.errors.passWord}
-                            sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
+                            sx={{ backgroundColor: 'white'}} 
                             placeholder="Password goes here..." 
                             disableUnderline="true" 
                         ></TextField>
@@ -91,7 +96,7 @@ const UpdatePassword = () => {
                     <div style={{display: "flex", justifyContent: 'center'}}>
                         <TextField
                             id="confirmPassword"
-                            name="confirmPassWord"
+                            name="confirmPassword"
                             variant="outlined"
                             type="password"
                             label="Confirm Password"
@@ -100,8 +105,8 @@ const UpdatePassword = () => {
                             onBlur={formik.handleBlur}
                             error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
                             helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
-                            sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
-                            placeholder="Password copy goes here..." 
+                            sx={{ backgroundColor: 'white'}} 
+                            placeholder="Confirm password goes here..." 
                             disableUnderline="true" 
                         ></TextField>
                     </div>
@@ -109,14 +114,8 @@ const UpdatePassword = () => {
                     <div style={{display: "flex", justifyContent: 'center'}}>
                         <Button type="Submit" variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Submit Info</Button>
                     </div>
-
             </form>
             </CardContent>
-            {/* <Divider></Divider> */}
-            {/* <CardContent style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center'}}>
-                <p>Forgot Password? Click here.</p>
-                <p>Register? Click here</p>
-            </CardContent> */}
         </Card>
         </div>
     </>)
