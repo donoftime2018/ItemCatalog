@@ -98,6 +98,7 @@ const LoginPage = () => {
             <Divider></Divider>
             <CardContent style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center'}}>
                 <p><Link to="/register">Click here to sign up.</Link></p>
+                <p><Link to="/updatePassword">Forgot Password?</Link></p>
             </CardContent>
         </Card>
         </div>

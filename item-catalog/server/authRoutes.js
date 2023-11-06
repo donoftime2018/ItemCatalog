@@ -68,8 +68,12 @@ router.route("/updatePassword").put((req, res) => {
                     }
                     else {
                         console.log(pwd + " exists in db")
+                        res.status(400).send({msg: "The password you entered is in use"})
                     }
                 }))
+            }
+            else {
+                res.status(400).send({msg: name + " is not a registered user"})
             }
     })})
 module.exports = router;
