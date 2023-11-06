@@ -1,4 +1,24 @@
 version: "3.7"
 services:
+  frontend:
+    image: item-catalog:latest
+    ports:
+      - "3000:3000"
+    networks: 
+      - frontend-network
+    volumes:
+      - global-volume:/frontend/frontend-volume:ro
+  backend:
+    image: item-catalog-server:latest
+    ports:
+      - "4000:4000"
+    networks:
+      - backend-network
+    volumes:
+      - global-volume:/backend/backend-volume:ro
 volumes:
+  global-volume:
+
 networks:
+  backend-network: {}
+  frontend-network : {}
