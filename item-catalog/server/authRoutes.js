@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router()
 const User = require("./User");
 const { castObject } = require('./Item');
-// const Item = require("./Item")
+const Item = require("./Item")
 
 router.route("/login").post(async(req, res) => {
     let name = req.body.name
@@ -153,4 +153,23 @@ router.route("/updatePassword").put(async(req, res) => {
     //         }
     // })
 })
+
+router.route("/deleteUser/:user").delete(async(req, res)=>{
+    let user = req.params.user
+
+    try
+    {
+        let deletePostedItems = await Item.deleteMany({poster: user})
+        console.log(deletePostedItems)
+        let removeFromRatings = await Item.updateMany({usersRated: user}, {$pull: {usersRated: user}, $inc: {rating: -1}}, {new: true, upsert: true, runValidators: true})
+        console.log(removeFromRatings.modifiedCount)
+        let removeUser = await User.deleteOne({username: user})
+        console.log(removeUser)
+        // res.status(200).send()
+    } catch(err) {
+
+    }
+   
+})
+
 module.exports = router;

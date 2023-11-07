@@ -3,6 +3,8 @@ import { useAuth } from "../context/user";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AppBar, IconButton, Tooltip, Box, Button } from "@mui/material";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 const AppNav = () => {
@@ -20,6 +22,22 @@ const AppNav = () => {
         navigate('/profile')
     }
 
+    const removeAccount = () => {
+        let confirmRemoval = window.confirm("Are you sure you want to delete your account? All your items and ratings will be gone permanently")
+        
+        if(confirmRemoval)
+        {
+            axios.delete("http://localhost:4000/deleteUser/"+user).then((res)=>{
+                if(res.status===200)
+                {
+                    navigate("/login")
+                }
+            }).catch((err)=>{
+                console.error(err)
+            })
+        }
+    }
+
     const dashBoardNav = () => {
        return(<>
         <AppBar sx={{paddingBottom: '10px', paddingTop:'0.4%', display: 'flex', flexDirection: 'row', alignItems: 'center'}} color="primary" position="sticky">
@@ -30,6 +48,7 @@ const AppNav = () => {
             <Box sx={{flexGrow: '1'}}/>
             <Box sx={{marginRight: '5%', display: {xs: 'none', md: 'flex', alignItems: 'center'}, alignItems: 'center'}}>
                 <Button variant="contained" color="warning" sx={{border: '1px solid black', color: 'black', borderRadius: '25px'}} onClick={signOut}>Log Out</Button>
+                <Tooltip title="Delete Account"><IconButton color="inherit" onClick={removeAccount}><DeleteForeverIcon fontSize="large"></DeleteForeverIcon></IconButton></Tooltip>
             </Box>
         </AppBar>
        </>)
@@ -38,12 +57,13 @@ const AppNav = () => {
     const profileNav = () => {
         return(<>
         <AppBar sx={{paddingBottom: '10px', paddingTop:'0.4%', display: 'flex', flexDirection: 'row', alignItems: 'center'}} color="primary" position="sticky">
-            <Box sx={{marginLeft: '5%', fontSize: '20px'}}>
+            <Box sx={{marginLeft: '5%', fontSize: '20px', display: 'flex', justifyContent: "space-between", alignItems: 'center'}}>
                 <Link style={{fontWeight: 'bold', color: 'white'}} to="/">Return to Dashboard</Link>
             </Box>
             <Box sx={{flexGrow: '1'}}/>
-            <Box sx={{marginRight: '5%', display: {xs: 'none', md: 'flex', alignItems: 'center'}, alignItems: 'center'}}>
+            <Box sx={{marginRight: '5%', display: {xs: 'none', md: 'flex', alignItems: 'center'}, justifyContent: "space-evenly", alignItems: 'center'}}>
                 <Button variant="contained" color="warning" sx={{border: '1px solid black', color: 'black', borderRadius: '25px'}} onClick={signOut}>Log Out</Button>
+                <Tooltip title="Delete Account"><IconButton color="inherit" onClick={removeAccount}><DeleteForeverIcon fontSize="large"></DeleteForeverIcon></IconButton></Tooltip>
             </Box>
         </AppBar>
         </>)

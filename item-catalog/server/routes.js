@@ -130,7 +130,7 @@ router.route("/insertItems").post(async(req, res)=>{
         ]
         })
     
-        if (findItem.length>1)
+        if (findItem.length>0)
         {
             res.status(400).send({msg: req.body.name + " already exists"});
         }
