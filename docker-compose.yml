@@ -16,6 +16,9 @@ services:
       - backend-network
     volumes:
       - global-volume:/backend/backend-volume:ro
+    environment:
+      PORT: 4000
+      MONGOURL: "mongodb://127.0.0.1/items"
 volumes:
   global-volume:
 
