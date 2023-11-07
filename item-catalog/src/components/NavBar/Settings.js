@@ -41,9 +41,6 @@ const Settings = () => {
             <MenuItem sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Tooltip title="Delete Profile"><DeleteForever fontSize="large" /></Tooltip>
             </MenuItem>
-            <MenuItem sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                {/* <Tooltip title="Edit Items"><Edit fontSize="large" /></Tooltip> */}
-            </MenuItem>
         </Menu>
     </>)
 }
