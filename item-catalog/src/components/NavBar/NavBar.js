@@ -3,7 +3,6 @@ import { useAuth } from "../context/user";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AppBar, IconButton, Tooltip, Box, Button } from "@mui/material";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import SettingsIcon from '@mui/icons-material/Settings'
 import { Link } from "react-router-dom";
 
 const AppNav = () => {
@@ -31,7 +30,6 @@ const AppNav = () => {
             <Box sx={{flexGrow: '1'}}/>
             <Box sx={{marginRight: '5%', display: {xs: 'none', md: 'flex', alignItems: 'center'}, alignItems: 'center'}}>
                 <Button variant="contained" color="warning" sx={{border: '1px solid black', color: 'black', borderRadius: '25px'}} onClick={signOut}>Log Out</Button>
-                <Tooltip title="Settings"><IconButton color="inherit"><SettingsIcon fontSize="large"></SettingsIcon></IconButton></Tooltip>
             </Box>
         </AppBar>
        </>)
@@ -46,7 +44,7 @@ const AppNav = () => {
             <Box sx={{flexGrow: '1'}}/>
             <Box sx={{marginRight: '5%', display: {xs: 'none', md: 'flex', alignItems: 'center'}, justifyContent: "space-evenly", alignItems: 'center'}}>
                 <Button variant="contained" color="warning" sx={{border: '1px solid black', color: 'black', borderRadius: '25px'}} onClick={signOut}>Log Out</Button>
-                <Tooltip title="Settings"><IconButton color="inherit"><SettingsIcon fontSize="large"></SettingsIcon></IconButton></Tooltip>
+                
             </Box>
         </AppBar>
         </>)
