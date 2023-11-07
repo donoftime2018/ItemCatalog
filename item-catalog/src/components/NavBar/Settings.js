@@ -2,7 +2,7 @@ import {React, useState} from "react"
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import SettingsIcon from '@mui/icons-material/Settings'
-import {DeleteForever, Edit} from '@mui/icons-material'
+import {DeleteForever, Edit, PersonRemove} from '@mui/icons-material'
 import { Tooltip, IconButton} from "@mui/material";
 
 
@@ -39,7 +39,7 @@ const Settings = () => {
             }}
         >
             <MenuItem sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Tooltip title="Delete Profile"><DeleteForever fontSize="large" /></Tooltip>
+                <Tooltip title="Delete Profile"><PersonRemove fontSize="large"/></Tooltip>
             </MenuItem>
         </Menu>
     </>)
