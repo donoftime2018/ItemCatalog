@@ -38,8 +38,8 @@ const Settings = () => {
             'aria-labelledby': 'basic-button',
             }}
         >
-            <MenuItem sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Tooltip title="Delete Profile"><PersonRemove fontSize="large"/></Tooltip>
+            <MenuItem sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                Delete Profile
             </MenuItem>
         </Menu>
     </>)
