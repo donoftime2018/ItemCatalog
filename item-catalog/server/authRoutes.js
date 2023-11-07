@@ -165,7 +165,7 @@ router.route("/deleteUser/:user").delete(async(req, res)=>{
         console.log(removeFromRatings.modifiedCount)
         let removeUser = await User.deleteOne({username: user})
         console.log(removeUser)
-        // res.status(200).send()
+        res.status(200).send()
     } catch(err) {
 
     }
