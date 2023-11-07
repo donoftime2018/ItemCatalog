@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AppBar, IconButton, Tooltip, Box, Button } from "@mui/material";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings'
-import AppMenu from "./Menu";
 import { Link } from "react-router-dom";
 
 const AppNav = () => {
