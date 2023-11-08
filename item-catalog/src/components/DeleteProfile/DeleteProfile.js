@@ -31,17 +31,17 @@ const DeleteProfile = () => {
     const handleDelete = (enteredUser) => {
         if (user===enteredUser)
         {
-            axios.delete("http://localhost:4000/deleteUser" + user).then((res)=>{
-                console.log(res);
+            axios.delete("http://localhost:4000/deleteUser/" + user).then((res)=>{
                 if (res.status===200)
                 {
+                    console.log(res)
                     navigate("/login")
                 }
             }).catch((err)=>{console.log(err)})
         }
 
         else {
-
+            alert("You must enter the user you are currently logged in as!")
         }
     }
 
