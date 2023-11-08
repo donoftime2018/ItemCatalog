@@ -1,6 +1,7 @@
 import {React, useState} from "react"
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from "react-router-dom";
 import SettingsIcon from '@mui/icons-material/Settings'
 import {DeleteForever, Edit, PersonRemove} from '@mui/icons-material'
 import { Tooltip, IconButton} from "@mui/material";
@@ -9,12 +10,19 @@ import { Tooltip, IconButton} from "@mui/material";
 const Settings = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+    const navigate = useNavigate()
+
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
     };
+
     const handleClose = () => {
       setAnchorEl(null);
     };
+
+    const deleteProfile = () => {
+        
+    }
   
 
     return (<>
