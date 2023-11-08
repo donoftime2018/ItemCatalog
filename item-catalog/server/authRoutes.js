@@ -156,7 +156,6 @@ router.route("/updatePassword").put(async(req, res) => {
 
 router.route("/deleteUser/:user").delete(async(req, res)=>{
     let user = req.params.user
-
     try
     {
         let deletePostedItems = await Item.deleteMany({poster: user})
