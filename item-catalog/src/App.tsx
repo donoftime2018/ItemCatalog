@@ -9,6 +9,7 @@ import { AuthProvider } from "./components/context/user";
 import Profile from "./components/Profile/Profile";
 import { ItemContext} from "./components/context/context"
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import DeleteProfile from "./components/DeleteProfile/DeleteProfile";
 import "./App.css";
 
 const App = () =>
@@ -26,6 +27,7 @@ const App = () =>
                                 <Route element={<Register/>} path="/register"></Route>
                                 <Route element={<UpdatePassword/>} path="/updatePassword"></Route>
                                 <Route element={<Profile/>} path="/profile"></Route>
+                                <Route element={<DeleteProfile/>} path="/deleteAccount"></Route>
                             </Routes>
                         </ItemContext>
                 </AuthProvider>
