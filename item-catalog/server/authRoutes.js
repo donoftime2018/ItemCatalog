@@ -170,11 +170,17 @@ async function deletePostedItems(req, res, next)
 async function removeLikes(req, res, next)
 {
     console.log(req.user)
-    let removeLikes = await Item.updateMany({usersRated: req.user}, 
-                {$inc: {rating: -1}, 
-                $pull: {usersRated: req.user}}, 
-                {new: true, upsert: true, runValidators: true})
-    console.log(removeLikes)
+    let checkUserLiked = await Item.find({usersRated: req.user})
+    console.log(checkUserLiked.length)
+
+    if (checkUserLiked.length>0)
+    {
+        let removeLikes = await Item.updateMany({usersRated: req.user}, 
+            {$inc: {rating: -1}, 
+            $pull: {usersRated: req.user}}, 
+            {new: true, upsert: true, runValidators: true})
+        console.log(removeLikes)
+    }
     next()
 }
 
