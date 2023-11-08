@@ -11,7 +11,6 @@ const DeleteProfile = () => {
 
     const auth = useAuth()
     const user = auth.user;
-    const navigate = useNavigate()
 
     const validation = () => yup.object({
         userName: yup.string().required("Username required")
@@ -32,12 +31,14 @@ const DeleteProfile = () => {
         if (user===enteredUser)
         {
             axios.delete("http://localhost:4000/deleteUser/" + user).then((res)=>{
-                if (res.status===200)
-                {
-                    console.log(res)
-                    navigate("/login")
-                }
-            }).catch((err)=>{console.log(err)})
+                console.log(res);
+                if(res.status===200)
+                    auth.logout()
+            }).catch((err)=>{
+                const errorMessage = JSON.parse(err.request.response)
+                console.error(errorMessage.msg); 
+                alert(errorMessage.msg);
+            })
         }
 
         else {
