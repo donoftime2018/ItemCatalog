@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 const express = require('express');
 const router = express.Router()
 const User = require("./User");
-const { castObject } = require('./Item');
 const Item = require("./Item")
+
 
 router.route("/login").post(async(req, res) => {
     let name = req.body.name
@@ -154,21 +154,41 @@ router.route("/updatePassword").put(async(req, res) => {
     // })
 })
 
-router.route("/deleteUser/:user").delete(async(req, res)=>{
-    let user = req.params.user
-    try
-    {
-        let deletePostedItems = await Item.deleteMany({poster: user})
-        console.log(deletePostedItems)
-        let removeFromRatings = await Item.updateMany({usersRated: user}, {$pull: {usersRated: user}, $inc: {rating: -1}}, {new: true, upsert: true, runValidators: true})
-        console.log(removeFromRatings.modifiedCount)
-        let removeUser = await User.deleteOne({username: user})
-        console.log(removeUser)
-        res.status(200).send()
-    } catch(err) {
-
-    }
-   
+router.route("/deleteUser/:user").delete(async(req, res, next)=>{
+    req.user = req.params.user
+    next()
 })
 
+async function deletePostedItems(req, res, next)
+{   
+    console.log(req.user)
+    let postedItems = await Item.deleteMany({poster: req.user})
+    console.log(postedItems.deletedCount)
+    next()
+}
+
+async function removeLikes(req, res, next)
+{
+    console.log(req.user)
+    let removeLikes = await Item.updateMany({usersRated: req.user}, 
+                {$inc: {rating: -1}, 
+                $pull: {usersRated: req.user}}, 
+                {new: true, upsert: true, runValidators: true})
+    console.log(removeLikes)
+    next()
+}
+
+async function deleteUser(req, res)
+{
+    console.log(req.user)
+    let deleteUser = await User.deleteOne({username: req.user})
+    console.log(deleteUser)
+    res.status(200).send()
+}
+
+
+
+router.use(deletePostedItems)
+router.use(removeLikes)
+router.use(deleteUser)
 module.exports = router;

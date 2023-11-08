@@ -32,8 +32,7 @@ const DeleteProfile = () => {
         {
             axios.delete("http://localhost:4000/deleteUser/" + user).then((res)=>{
                 console.log(res);
-                if(res.status===200)
-                    auth.logout()
+                auth.logout()
             }).catch((err)=>{
                 const errorMessage = JSON.parse(err.request.response)
                 console.error(errorMessage.msg); 
@@ -49,7 +48,7 @@ const DeleteProfile = () => {
     return(<>
         <div class="deleteLayout">
             <Card class="deleteCard">
-                <CardHeader  sx={{textAlign: 'center'}} title="Delete Profile"></CardHeader>
+                <CardHeader  sx={{textAlign: 'center'}} title="Deactivate Account"></CardHeader>
                 <Divider></Divider>
                 <CardContent>
                     <form onSubmit={formik.handleSubmit}>
@@ -73,7 +72,7 @@ const DeleteProfile = () => {
                         </div>
                         
                         <div style={{display: "flex", justifyContent: 'center'}}>
-                            <Button type="Submit" variant="contained" color="error" sx={{borderRadius: '25px', color: "black", border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Delete Account</Button>
+                            <Button type="Submit" variant="contained" color="error" sx={{borderRadius: '25px', color: "black", border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Deactivate</Button>
                         </div>
                     </form>
                 </CardContent>
