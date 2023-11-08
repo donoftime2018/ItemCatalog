@@ -21,7 +21,7 @@ const Settings = () => {
     };
 
     const deleteProfile = () => {
-        
+        navigate("/deleteProfile")
     }
   
 
