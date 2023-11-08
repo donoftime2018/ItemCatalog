@@ -46,8 +46,8 @@ const Settings = () => {
             'aria-labelledby': 'basic-button',
             }}
         >
-            <MenuItem sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                Delete Profile
+            <MenuItem onClick={deleteProfile} sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                Delete Account
             </MenuItem>
         </Menu>
     </>)
