@@ -9,7 +9,8 @@
     /* font-family: "Inter"; */
     justify-content: center;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
+    margin-bottom: 10%;
 }
 
 .itemLayout>*{
