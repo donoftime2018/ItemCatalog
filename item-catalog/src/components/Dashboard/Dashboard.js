@@ -129,8 +129,6 @@ const Dashboard = () => {
     return(<>
             <AppNav></AppNav>
             <Title title={"Put a Price On It!"} ></Title>
-            
-            <AddForm></AddForm>
 
             <div class="searchBar">
             <div>
@@ -183,19 +181,21 @@ const Dashboard = () => {
 
         </div>
             
-            <div class="itemLayout">
-                <>
-                {
-                   isQueried && (queriedItems !== "" || queriedPoster !== "") ? 
-                   
+        <div class="itemLayout">
+            <>
+            {
+                isQueried && (queriedItems !== "" || queriedPoster !== "") ? 
+                
 
-                    displayQueriedItems(queriedItems, queriedPoster)
-                   :
-                  
-                    displayItems()
-                }
-                </>
-            </div>
+                displayQueriedItems(queriedItems, queriedPoster)
+                :
+                
+                displayItems()
+            }
+            </>
+        </div>
+
+        <AddForm></AddForm>
     </>)
 }
 

@@ -21,31 +21,26 @@ const Profile = () => {
 
     useEffect(()=>{
         const getLikedItems = () => {
-            const data = {user}
-            axios.get("http://localhost:4000/items/getLikedItems/" +data).then((res)=>{setLikedItems(res.data);}).catch((error)=>{console.error(error)});
+            axios.get("http://localhost:4000/items/getLikedItems/" + user).then((res)=>{setLikedItems(res.data);}).catch((error)=>{console.error(error)});
         }
 
         const getPostedItems = () => {
-            const data = {user}
-            axios.get("http://localhost:4000/items/getPostedItems/" + data).then((res)=>{setPostedItems(res.data);}).catch((error)=>{console.error(error)});
+            axios.get("http://localhost:4000/items/getPostedItems/" + user).then((res)=>{setPostedItems(res.data);}).catch((error)=>{console.error(error)});
         }
 
         const getMostPopularItems = () => {
-            const data = {user}
-            axios.get("http://localhost:4000/items/mostPopularItems/" + data).then((res)=>{setPopularItems(res.data); console.log(res.data)}).catch((error)=>{console.error(error)});
+            axios.get("http://localhost:4000/items/mostPopularItems/" + user).then((res)=>{setPopularItems(res.data); console.log(res.data)}).catch((error)=>{console.error(error)});
         }
 
         const getNumLiked = () => {
-            const data = {user}
-            axios.get("http://localhost:4000/items/numLikedItems/" + data).then(
+            axios.get("http://localhost:4000/items/numLikedItems/" + user).then(
                 (res)=>{
                     setNumLikedItems(res.data); 
                     console.log(res.data)}).catch((error)=>{console.error(error)});
         }
 
         const getNumPosted = () => {
-            const data = {user}
-            axios.get("http://localhost:4000/items/numPostedItems/"+ data).then(
+            axios.get("http://localhost:4000/items/numPostedItems/" + user).then(
                 (res)=>{
                     setNumPostedItems(res.data); 
                     console.log(res.data)}).catch((error)=>{console.error(error)});
