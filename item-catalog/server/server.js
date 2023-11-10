@@ -11,7 +11,10 @@ const corsOption = {
     origin: "http://localhost:3000"
 }
 
-mongoose.connect(process.env.MONGOURL).then(()=>{console.log("Connected!")}).catch((err)=>{console.error(err)})
+const connectDB = async() => {
+    await mongoose.connect(process.env.MONGOURL).then(()=>{console.log("Connected!")}).catch((err)=>{console.error(err)})
+}
+connectDB()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors(corsOption))
