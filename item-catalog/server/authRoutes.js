@@ -156,40 +156,51 @@ router.route("/updatePassword").put(async(req, res) => {
 
 router.route("/deleteUser/:user").delete(async(req, res, next)=>{
     req.user = req.params.user
-    next()
+
+    if (req.user !== undefined || req.user !== null)
+        next()
 })
 
 async function deletePostedItems(req, res, next)
 {   
-    console.log(req.user)
-    let postedItems = await Item.deleteMany({poster: req.user})
-    console.log(postedItems.deletedCount)
-    next()
+    if (req.user !== undefined || req.user !== null)
+    {
+        console.log(req.user)
+        let postedItems = await Item.deleteMany({poster: req.user})
+        console.log(postedItems.deletedCount)
+        next()
+    }
 }
 
 async function removeLikes(req, res, next)
 {
-    console.log(req.user)
-    let checkUserLiked = await Item.find({usersRated: req.user})
-    console.log(checkUserLiked.length)
-
-    if (checkUserLiked.length>0)
+    if (req.user !== undefined || req.user !== null)
     {
-        let removeLikes = await Item.updateMany({usersRated: req.user}, 
-            {$inc: {rating: -1}, 
-            $pull: {usersRated: req.user}}, 
-            {new: true, upsert: true, runValidators: true})
-        console.log(removeLikes)
+        console.log(req.user)
+        let checkUserLiked = await Item.find({usersRated: req.user})
+        console.log(checkUserLiked.length)
+    
+        if (checkUserLiked.length>0)
+        {
+            let removeLikes = await Item.updateMany({usersRated: req.user}, 
+                {$inc: {rating: -1}, 
+                $pull: {usersRated: req.user}}, 
+                {new: true, upsert: true, runValidators: true})
+            console.log(removeLikes)
+        }
+        next()
     }
-    next()
 }
 
 async function deleteUser(req, res)
 {
-    console.log(req.user)
-    let deleteUser = await User.deleteOne({username: req.user})
-    console.log(deleteUser)
-    res.status(200).send()
+    if (req.user !== undefined || req.user !== null)
+    {
+        console.log(req.user)
+        let deleteUser = await User.deleteOne({username: req.user})
+        console.log(deleteUser)
+        res.status(200).send()
+    }
 }
 
 
