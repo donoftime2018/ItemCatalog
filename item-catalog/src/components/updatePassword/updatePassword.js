@@ -2,7 +2,6 @@ import {React, useState} from "react";
 import {Card, CardContent, Divider, TextField, Button, CardHeader} from "@mui/material"
 import {useFormik} from "formik";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/user";
 import * as yup from "yup"
 import axios from "axios";
 import "./updatePassword.css";
@@ -10,9 +9,6 @@ import "./updatePassword.css";
 const UpdatePassword = () => {
 
     const navigate = useNavigate()
-    const auth = useAuth()
-
-    const user = auth.user
 
     const validation = () => yup.object({
         userName: yup.string().min(10, "Username must be at least 10 characters long").max(20, "Username cannot be more than 20 characters").required("Username required"),
@@ -35,29 +31,22 @@ const UpdatePassword = () => {
     }, {})
 
     const changePassword = (name, pwd, confirmPwd) => {
-        if(user===name)
-        {
-            if(pwd===confirmPwd) {
-                const data = {name, pwd}
-                axios.put("http://localhost:4000/updatePassword", data).then((res)=>{
-                    if(res.status===200)
-                    {
-                        navigate("/login")
-                    }
-                }).catch((err)=>{
-                    const errorMessage = JSON.parse(err.request.response)
-                    console.error(errorMessage.msg); 
-                    alert(errorMessage.msg);})
-            }
-    
-            else {
-                console.log("Passwords must match!")
-                alert("Passwords do not match!")
-            }
+        if(pwd===confirmPwd) {
+            const data = {name, pwd}
+            axios.put("http://localhost:4000/updatePassword", data).then((res)=>{
+                if(res.status===200)
+                {
+                    navigate("/login")
+                }
+            }).catch((err)=>{
+                const errorMessage = JSON.parse(err.request.response)
+                console.error(errorMessage.msg); 
+                alert(errorMessage.msg);})
         }
 
         else {
-            alert("You are not signed in as " + name)
+            console.log("Passwords must match!")
+            alert("Passwords do not match!")
         }
     }
 
