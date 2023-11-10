@@ -12,7 +12,7 @@ const corsOption = {
 }
 
 const connectDB = async() => {
-    await mongoose.connect("mongodb://127.0.0.1:27017/items").then(()=>{console.log("Connected!")}).catch((err)=>{console.error(err)})
+    await mongoose.connect("mongodb://127.0.0.1/items").then(()=>{console.log("Connected!")}).catch((err)=>{console.error(err)})
 }
 connectDB()
 app.use(bodyParser.json())
