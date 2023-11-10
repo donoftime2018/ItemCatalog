@@ -1,69 +1,72 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import {useSelector, useDispatch} from "react-redux"
-import { readItems } from "../../store/actionTypes";
+import React, { useState, useEffect } from "react";
 import "./Dashboard.css"
 import Item from "../Item/Item";
 import AddForm from "../addItem/addForm";
-import ItemContext from "../context/context";
 import Title from "../appTitle/appTitle";
-// import SearchBar from "../searchItems/search";
-import { AppTitle } from "../appTitle/appTitle";
+import AppNav from "../NavBar/NavBar";
 import axios from 'axios'
-import "./searchBar.css"
-import {Card, CardHeader, CardContent, Divider, Input, Icon, IconButton, Button, TextField} from "@mui/material"
+import {Card, CardHeader, CardContent, Divider, IconButton, TextField, Tooltip} from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search';
 import {useFormik} from "formik";
-import * as yup from "yup"
-
 
 const Dashboard = () => {
 
     const [items, setItems] = useState([])
-    // const [filteredItems, setFilteredItems] = useState([])
     const [isQueried, setIsQueried] = useState(false);
     const [queriedItems, setQueriedItems] = useState("");
+    const [queriedPoster, setQueriedPoster] = useState("");
 
     useEffect(()=>{
 
         const getItems = () => {
             axios.get("http://localhost:4000/items/").then((res)=>{setItems(res.data)}).catch((error) => {
-                console.log(error)
+                // console.log(error)
               })
         }
         getItems()
     }, [items.length, items])
 
 
-    // const validation = () => yup.object({
-    //     searchQuery: yup.string().required("Query must be filled out")
-    // })
-
     const formik = useFormik({
         initialValues: {
-            searchQuery: ""
+            itemQuery: "",
+            posterQuery: ""
         },
-        // validationSchema: validation,
         onSubmit: (values)=>{
-            searchQuery(values.searchQuery);
+            searchQuery(values.itemQuery, values.posterQuery);
         }
     })
 
-    const searchQuery = (query) => {
-        // let queriedItem = query.;
-        console.log(query);
 
-        if (query !== "")
+    const searchQuery = (itemQuery, posterQuery) => {
+        console.log(itemQuery);
+        console.log(posterQuery);
+
+        if (itemQuery !== "")
         {
-            // setFilteredItems(items.filter(item=>item.name.includes(query)))
             setIsQueried(true);
-            setQueriedItems(query);
+            setQueriedItems(itemQuery);
         }
 
-        else {
-            setIsQueried(false);
+        if (posterQuery !== "")
+        {
+            setIsQueried(true);
+            setQueriedPoster(posterQuery);
+        }
+
+        if (posterQuery === "")
+        {
+            setQueriedPoster("")
+        }
+
+        if (itemQuery === "")
+        {
             setQueriedItems("")
-            // setFilteredItems([])
+        }
+
+        if (itemQuery === "" && posterQuery === "")
+        {
+            setIsQueried(false)
         }
     }
 
@@ -71,47 +74,63 @@ const Dashboard = () => {
         return(<>
             {
                 items.map((item, index)=>{
-
-                    // if(items.length>0)
-                    // {
+                 
                     return(<>
-                        <Item itemName={item.name} itemDesc={item.desc} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
-                    </>)
-                    // }
-             
-                    // else {
-                    //     return(<>Error occured :/</>)
-                    // }
-                })
-            }
-        </>)
-    }
-
-
-    const displayQueriedItems = (query) => {
-        return(<>
-            {
-                items.filter(item=>item.name.includes(query)).map((item, index)=>{
-                    return(<>
-                        <Item itemName={item.name} itemDesc={item.desc} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                        <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
                     </>)
                 })
             }
         </>)
     }
 
-    // console.log(items)
+
+    const displayQueriedItems = (itemQuery, posterQuery) => {
+
+        if (itemQuery !== "" && posterQuery === "")
+        {
+            return(<>
+                {
+                    items.filter(item=>item.name.includes(itemQuery)).map((item, index)=>{
+                        return(<>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                        </>)
+                    })
+                }
+            </>)
+        }
+
+        if (posterQuery !== "" && itemQuery === "") 
+        {
+            return(<>
+                {
+                    items.filter(item=>item.poster.includes(posterQuery)).map((item, index)=>{
+                        return(<>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                        </>)
+                    })
+                }
+            </>)
+        }
+
+        if (posterQuery !== "" && itemQuery !== "")
+        {
+            return(<>
+                {
+                    items.filter(item=>item.poster.includes(posterQuery) && item.name.includes(itemQuery)).map((item, index)=>{
+                        return(<>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                        </>)
+                    })
+                }
+            </>)
+        }
+        
+    }
     return(<>
-
-        <ItemContext>
-            <Title 
-                title={"Put a Price On It!"} 
-                titleDesc={"You can view the market prices, descriptions, and ratings of items to see which ones are worth buying! You can rate items as you please, and add new items."}>
-            </Title>
-
-            <div class="formLayout">
-                <AddForm></AddForm>
-            </div>
+            <AppNav></AppNav>
+            <Title title={"Put a Price On It!"} ></Title>
+            
+            <AddForm></AddForm>
 
             <div class="searchBar">
             <div>
@@ -120,23 +139,42 @@ const Dashboard = () => {
                     <Divider/>
                     <CardContent>
                         <form onSubmit={formik.handleSubmit}>
-                            <IconButton type="submit"><SearchIcon fontSize='large'/></IconButton>
+                            <div>
+                            <Tooltip title="Search Items"><IconButton type="submit"><SearchIcon fontSize='large'/></IconButton></Tooltip>
                             <TextField
-                                id="searchQuery"
-                                name="searchQuery"
+                                id="itemQuery"
+                                name="itemQuery"
                                 variant="outlined"
                                 type="text"
-                                label="Search"
-                                // onChange={(e)=>{setQuery(e.target.value)}}
-                                value={formik.values.searchQuery}
+                                label="Search Item by Name"
+                                value={formik.values.itemQuery}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                error={formik.touched.searchQuery && Boolean(formik.errors.searchQuery)}
-                                helperText={formik.touched.searchQuery && formik.errors.searchQuery}
-                                sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
-                                placeholder="Search query goes here..." 
+                                error={formik.touched.itemQuery && Boolean(formik.errors.itemQuery)}
+                                helperText={formik.touched.itemQuery && formik.errors.itemQuery}
+                                sx={{ backgroundColor: 'white'}} 
+                                placeholder="Item name here..." 
                                 disableUnderline="true" 
                             />
+                            </div>
+
+                            <div style={{display: 'flex', justifyContent: 'end'}}>
+                            <TextField
+                                id="posterQuery"
+                                name="posterQuery"
+                                variant="outlined"
+                                type="text"
+                                label="Search Item by Poster"
+                                value={formik.values.posterQuery}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.posterQuery && Boolean(formik.errors.posterQuery)}
+                                helperText={formik.touched.posterQuery && formik.errors.posterQuery}
+                                sx={{ backgroundColor: 'white'}} 
+                                placeholder="Item poster here..." 
+                                disableUnderline="true" 
+                            />
+                            </div>
                         </form>
                     </CardContent>
                 </Card>
@@ -148,76 +186,17 @@ const Dashboard = () => {
             <div class="itemLayout">
                 <>
                 {
-                   isQueried && queriedItems !== "" ? 
+                   isQueried && (queriedItems !== "" || queriedPoster !== "") ? 
                    
 
-                    displayQueriedItems(queriedItems)
+                    displayQueriedItems(queriedItems, queriedPoster)
                    :
                   
                     displayItems()
                 }
                 </>
             </div>
-        </ItemContext>
-
-        {/* <div class="formLayout">
-            <AddForm></AddForm>
-        </div> */}
     </>)
-}
-
-export class classDashboard extends React.Component {
-
-    constructor()
-    {
-        super();
-        this.state = {
-            items: []
-        }
-    }
-
-    componentDidMount() {
-        axios.get("http://localhost:4000/items/").then((res)=>{this.setState({items: res.data()})}).catch((error) => {
-            console.log(error)
-          })
-    }
-
-    render() {
-        return(<>
-            
-        <ItemContext>
-            <Title 
-                title={"Put a Price On It!"} 
-                titleDesc={"You can view the market prices, descriptions, and ratings of items to see which ones are worth buying! You can rate items as you please, and add new items."}>
-            </Title>
-
-            <div class="formLayout">
-                <AddForm></AddForm>
-            </div>
-            
-            <div class="itemLayout">
-
-                {
-                    this.state.items.map((item, index)=>{
-
-                        if(this.state.items.length>0)
-                        {
-                            return(<>
-                                <Item itemName={item.name} itemDesc={item.desc} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
-                            </>)
-                        }
-
-                        else {
-                            return(<>Error occured :/</>)
-                        }
-                    })
-                }
-            </div>
-        </ItemContext>
-        </>)
-    }
-
-
 }
 
 export default Dashboard;

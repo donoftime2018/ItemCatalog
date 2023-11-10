@@ -15,14 +15,21 @@ const itemSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+
+    poster: {
+        type: String,
+        required: true
+    },
     
     rating: {
         type: Number,
         min: 0,
         max: 10,
         default: 0,
-        required: true
-    }
+        required: true,
+    },
+
+    usersRated: [String]
 }, {
     collection: 'item',
     timestamps: true
