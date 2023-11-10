@@ -6,9 +6,11 @@
 .itemLayout {
     display: flex;
     flex-wrap: wrap;
-    font-family: "Inter";
+    /* font-family: "Inter"; */
     justify-content: center;
+    flex-direction: row;
     align-items: flex-start;
+    margin-bottom: 10%;
 }
 
 .itemLayout>*{
@@ -21,6 +23,7 @@
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     margin-bottom: 2%;
 }
 

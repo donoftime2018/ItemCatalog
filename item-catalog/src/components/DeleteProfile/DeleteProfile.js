@@ -30,14 +30,18 @@ const DeleteProfile = () => {
     const handleDelete = (enteredUser) => {
         if (user===enteredUser)
         {
-            axios.delete("http://localhost:4000/deleteUser/" + user).then((res)=>{
-                console.log(res);
-                auth.logout()
-            }).catch((err)=>{
-                const errorMessage = JSON.parse(err.request.response)
-                console.error(errorMessage.msg); 
-                alert(errorMessage.msg);
-            })
+
+            if (window.confirm("Are you sure you want to deactivate your account? All your likes and items will be gone forever.")===true)
+            {
+                axios.delete("http://localhost:4000/deleteUser/" + user).then((res)=>{
+                    console.log(res);
+                    auth.logout()
+                }).catch((err)=>{
+                    const errorMessage = JSON.parse(err.request.response)
+                    console.error(errorMessage.msg); 
+                    alert(errorMessage.msg);
+                })
+            }
         }
 
         else {
