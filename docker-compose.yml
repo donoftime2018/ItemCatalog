@@ -1,45 +1,51 @@
 version: "3.8"
 services:
-  mongodb:
-    image: "mongo"
-    volumes:
-      - data:/data/db
-  server:
-    build: ./server
-    # image: item-catalog-server:latest
-    ports:
-      - "4000:4000"
-    # networks:
-    #   - backend-network
-    volumes:
-      # - global-volume:/backend/backend-volume:ro
-      - logs:/app/logs
-      - ./server:/app
-      - /app/node_modules
-    # environment:
-      # PORT: 4000
-      # MONGOURL: "mongodb+srv://donoftime2018:Godons2023!@itemsdb.ttafsh1.mongodb.net/?retryWrites=true&w=majority"
-    depends_on:
-      - mongodb
+  
   item-catalog:
-    # image: item-catalog:latest
-    build: ./item-catalog
-    tty: true
-    stdin_open: true
+    build: 
+      context: ./item-catalog
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    container_name: item-catalog
+    networks: 
+      - mern-network
+    volumes:
+      - ./item-catalog/src:/usr/app/src
+      - ./item-catalog/public:/usr/app/public
     depends_on:
       - server
+    tty: true
+    stdin_open: true
+  
+  server:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile.dev
     ports:
-      - "3000:3000"
-    # networks: 
-    #   - frontend-network
+      - 4000:4000
+    container_name: server
+    networks: 
+      - mern-network
     volumes:
-      - ./item-catalog/src:/app/src
-      # - global-volume:/frontend/frontend-volume:ro
+      - ./server/src:/usr/app/src
+    depends_on:
+      - mongodb
+  
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    container_name: mongo-db
+    networks:
+      - mern-network
+    volumes:
+      - mongo-data:/data/db
+
 volumes:
-  global-volume:
-  data:
-  logs:
+  mongo-data:
+    driver: local
 
 networks:
-  backend-network: {}
-  frontend-network : {}
+  mern-network: 
+    driver: local
