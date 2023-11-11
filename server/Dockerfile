@@ -1,10 +1,10 @@
 FROM node
 
-WORKDIR /item-catalog/server/app
+WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --silent
+RUN npm install
 
 COPY . .
 
