@@ -18,7 +18,7 @@ services:
       - global-volume:/backend/backend-volume:ro
     environment:
       PORT: 4000
-      MONGOURL: "mongodb://127.0.0.1/items"
+      MONGOURL: "mongodb+srv://donoftime2018:Godons2023!@itemsdb.ttafsh1.mongodb.net/?retryWrites=true&w=majority"
 volumes:
   global-volume:
 

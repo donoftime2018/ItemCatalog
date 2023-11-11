@@ -12,7 +12,7 @@ const corsOption = {
 }
 
 const connectDB = async() => {
-    await mongoose.connect("mongodb://127.0.0.1:27017/items").then(()=>{console.log("Connected!")}).catch((err)=>{console.error(err)})
+    await mongoose.connect(process.env.MONGODBURL).then(()=>{console.log("Connected!")}).catch((err)=>{console.error(err)})
 }
 connectDB()
 app.use(bodyParser.json())
@@ -21,7 +21,7 @@ app.use(cors(corsOption))
 app.use("/items", itemRoute)
 app.use(userRoute)
 
-const port = 4000
+const port = process.env.PORT | 4000
 
 app.listen(port, ()=>{
     console.log("Connected to port " + port)
