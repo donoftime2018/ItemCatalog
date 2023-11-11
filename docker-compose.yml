@@ -1,18 +1,18 @@
 version: "3.8"
 services:
   
-  item-catalog:
+  frontend:
     build: 
       context: ./item-catalog
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
       - 3000:3000
-    container_name: item-catalog
+    container_name: frontend
     networks: 
       - mern-network
-    volumes:
-      - ./item-catalog/src:/usr/app/src
-      - ./item-catalog/public:/usr/app/public
+    # volumes:
+      # - ./frontend/src:/usr/app/src
+      # - ./frontend/public:/usr/app/public
     depends_on:
       - server
     tty: true
@@ -21,14 +21,14 @@ services:
   server:
     build: 
       context: ./server
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
       - 4000:4000
     container_name: server
     networks: 
       - mern-network
-    volumes:
-      - ./server/src:/usr/app/src
+    # volumes:
+    #   - ./server/src:/usr/app/src
     depends_on:
       - mongodb
   
@@ -39,8 +39,8 @@ services:
     container_name: mongo-db
     networks:
       - mern-network
-    volumes:
-      - mongo-data:/data/db
+    # volumes:
+    #   - mongo-data:/data/db
 
 volumes:
   mongo-data:
@@ -48,4 +48,4 @@ volumes:
 
 networks:
   mern-network: 
-    driver: local
+    driver: bridge
