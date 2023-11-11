@@ -1,37 +1,44 @@
-version: "3.7"
+version: "3.8"
 services:
   mongodb:
     image: "mongo"
     volumes:
       - data:/data/db
-  backend:
-    image: item-catalog-server:latest
+  server:
+    build: ./server
+    # image: item-catalog-server:latest
     ports:
       - "4000:4000"
-    networks:
-      - backend-network
+    # networks:
+    #   - backend-network
     volumes:
-      - global-volume:/backend/backend-volume:ro
-    environment:
-      PORT: 4000
-      MONGOURL: "mongodb+srv://donoftime2018:Godons2023!@itemsdb.ttafsh1.mongodb.net/?retryWrites=true&w=majority"
+      # - global-volume:/backend/backend-volume:ro
+      - logs:/app/logs
+      - ./server:/app
+      - /app/node_modules
+    # environment:
+      # PORT: 4000
+      # MONGOURL: "mongodb+srv://donoftime2018:Godons2023!@itemsdb.ttafsh1.mongodb.net/?retryWrites=true&w=majority"
     depends_on:
       - mongodb
-  frontend:
-    image: item-catalog:latest
+  item-catalog:
+    # image: item-catalog:latest
+    build: ./item-catalog
     tty: true
     stdin_open: true
     depends_on:
-      - backend
+      - server
     ports:
       - "3000:3000"
-    networks: 
-      - frontend-network
+    # networks: 
+    #   - frontend-network
     volumes:
-      - global-volume:/frontend/frontend-volume:ro
+      - ./item-catalog/src:/app/src
+      # - global-volume:/frontend/frontend-volume:ro
 volumes:
   global-volume:
   data:
+  logs:
 
 networks:
   backend-network: {}
