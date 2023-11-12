@@ -120,8 +120,8 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemReviews, itemRatin
             <CardContent style={{display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center'}}>
                 <span>{checkRating()}</span>
                 <div>
-                    <Tooltip title="Add Star"><IconButton onClick={increaseRating}><AddCircleIcon color="primary" fontSize="large"></AddCircleIcon></IconButton></Tooltip>
-                    <Tooltip title="Remove Star"><IconButton onClick={decreaseRating}><RemoveCircleIcon color="error" fontSize="large"></RemoveCircleIcon></IconButton></Tooltip>
+                    <Tooltip title="Add Review"><IconButton onClick={increaseRating}><AddCircleIcon color="primary" fontSize="large"></AddCircleIcon></IconButton></Tooltip>
+                    <Tooltip title="Remove Review"><IconButton onClick={decreaseRating}><RemoveCircleIcon color="error" fontSize="large"></RemoveCircleIcon></IconButton></Tooltip>
                 </div>
                
             </CardContent>

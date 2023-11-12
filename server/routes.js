@@ -15,7 +15,7 @@ router.route('/').get(async(req, res)=>{
     // })
 
     try {
-        let allItems = await Item.find({}).sort({rating: -1, price:1})
+        let allItems = await Item.find({}).sort({rating: -1, reviews: -1, price:1})
         res.json(allItems).status(200).send()
     } catch (err) {
         console.error(err)
@@ -161,6 +161,7 @@ router.route("/deleteItems/:id").delete(async(req, res)=>{
 //update rating
 router.route("/increaseRating/:id").put(async(req, res, next)=>{
     Item.findOne({_id: req.params.id}).then((doc)=>{
+        doc.reviews+=1
         return doc.validate().then(()=>doc)
     }).then((validatedDoc)=>{
         if(validatedDoc.usersRated.includes(req.body.user))
@@ -176,7 +177,7 @@ router.route("/increaseRating/:id").put(async(req, res, next)=>{
         }
         else {
             return Item.findOneAndUpdate({_id: req.params.id}, 
-                {rating: validatedDoc.rating, $addToSet: {usersRated: req.body.user}}, 
+                {reviews: validatedDoc.reviews, $addToSet: {usersRated: req.body.user}}, 
                 {new: true, upsert: true, runValidators: true}).then((updatedDoc)=>{
                     console.log(updatedDoc);
                     res.status(200).send()})
@@ -190,13 +191,13 @@ router.route("/increaseRating/:id").put(async(req, res, next)=>{
 router.route("/decreaseRating/:id").put(async(req, res, next)=>{
 
     Item.findOne({_id: req.params.id}).then((doc)=>{
-        doc.rating-=1
+        doc.reviews-=1
         return doc.validate().then(()=>doc)
     }).then((validatedDoc)=>{
         if(validatedDoc.usersRated.includes(req.body.user))
         {
             return Item.findOneAndUpdate({_id: req.params.id}, 
-                {rating: validatedDoc.rating, 
+                {reviews: validatedDoc.reviews, 
                 $pull: {usersRated: req.body.user}}, 
                 {new: true, upsert: true, runValidators: true}).then((updatedDoc)=>{
                     console.log(updatedDoc);
