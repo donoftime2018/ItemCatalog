@@ -179,7 +179,6 @@ router.route("/increaseRating/:id").put(async(req, res, next)=>{
             return Item.findOneAndUpdate({_id: req.params.id}, 
                 {rating: validatedDoc.rating, $addToSet: {usersRated: req.body.user}, $inc: {numberOfRaters: 1}}, 
                 {new: true, upsert: true, runValidators: true}).then((updatedDoc)=>{
-                    
                     console.log(updatedDoc);
                     res.status(200).send()})
         }
