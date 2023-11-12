@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, CardContent, Divider, IconButton} from "@mui/material";
+import {Card, CardContent, Divider, IconButton, Box} from "@mui/material";
 import { useState } from "react";
 import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
@@ -31,7 +31,9 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
         if (itemRating != null)
         {
             return (<>
-                <StarIcon fontSize="large" color="warning"></StarIcon>{itemRating}
+                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                    <StarIcon fontSize="large" color="warning"></StarIcon><Box flexGrow='0.025'/>{itemRating} / 10
+                </div>
             </>)
         }
     }
