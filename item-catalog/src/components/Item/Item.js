@@ -13,7 +13,7 @@ import axios from 'axios';
 import { useAuth } from "../context/user";
 
 
-const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, lastUpdate}) => {
+const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemReviews, itemRating, id, dbID, lastUpdate}) => {
 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
@@ -31,8 +31,13 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
         if (itemRating != null)
         {
             return (<>
-                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    <StarIcon fontSize="large" color="warning"></StarIcon><Box flexGrow='0.025'/>{itemRating} / 10
+                <div>
+                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <StarIcon fontSize="large" color="warning"></StarIcon><Box flexGrow='0.025'/>{itemRating} / 10
+                    </div>
+                    <div style={{fontSize: '18px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        {itemReviews} Reviews
+                    </div>
                 </div>
             </>)
         }

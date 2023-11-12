@@ -161,7 +161,6 @@ router.route("/deleteItems/:id").delete(async(req, res)=>{
 //update rating
 router.route("/increaseRating/:id").put(async(req, res, next)=>{
     Item.findOne({_id: req.params.id}).then((doc)=>{
-        doc.rating+=1
         return doc.validate().then(()=>doc)
     }).then((validatedDoc)=>{
         if(validatedDoc.usersRated.includes(req.body.user))

@@ -29,6 +29,13 @@ const itemSchema = new mongoose.Schema({
         required: true,
     },
 
+    reviews: {
+        type: Number,
+        min: 0,
+        default: 0,
+        required: true
+    },
+
     usersRated: [String]
 }, {
     collection: 'item',
