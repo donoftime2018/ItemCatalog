@@ -33,10 +33,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemReviews, itemRatin
             return (<>
                 <div>
                     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                        <StarIcon fontSize="large" color="warning"></StarIcon><Box flexGrow='0.025'/>{itemRating} / 10
-                    </div>
-                    <div style={{fontSize: '18px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                        {itemReviews} Reviews
+                        <StarIcon fontSize="large" color="warning"></StarIcon><Box flexGrow='0.01'/>{itemRating}
                     </div>
                 </div>
             </>)
