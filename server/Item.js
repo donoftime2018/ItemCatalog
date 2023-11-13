@@ -24,16 +24,9 @@ const itemSchema = new mongoose.Schema({
     rating: {
         type: Number,
         min: 0,
-        max: 10,
+        max: 999,
         default: 0,
         required: true,
-    },
-
-    reviews: {
-        type: Number,
-        min: 0,
-        default: 0,
-        required: true
     },
 
     usersRated: [String]
