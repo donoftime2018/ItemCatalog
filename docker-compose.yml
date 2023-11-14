@@ -6,46 +6,51 @@ services:
       context: ./item-catalog
       dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - "3000:3000"
+    image: frontend-img
     container_name: frontend
+    command: npm start
     volumes:
-      - /usr/app
-    # networks: 
-    #   - mern-network
-    # volumes:
-      # - ./frontend/src:/usr/app/src
-      # - ./frontend/public:/usr/app/public
+      - ./item-catalog/:/usr/app
+      - /usr/app/node_modules
     depends_on:
       - server
     tty: true
     stdin_open: true
+    networks:
+      - mern-network
   
   server:
     build: 
       context: ./server
       dockerfile: Dockerfile
     ports:
-      - 4000:27017
+      - "4000:4000"
+    image: backend-img
     container_name: server
-    # networks: 
-    #   - mern-network
+    command: npm start
     volumes:
-      - /usr/app
+      - ./server/:/usr/app
+      - /usr/app/node_modules
     depends_on:
       - mongodb
+    networks:
+      - mern-network
   
   mongodb:
     image: mongo
     ports:
-      - 27017:27017
-    container_name: mongo-db
-    # networks:
-    #   - mern-network
+      - "27017:27017"
     volumes:
-      - /usr/app
+      - data-volume:/data/db
+    container_name: mongo-db
+    networks:
+      - mern-network
 
 volumes:
-  mongo-data:
+  data-volume:
+  node_modules:
+  web-root:
     driver: local
 
 networks:
