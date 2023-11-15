@@ -15,7 +15,7 @@ router.route('/').get(async(req, res)=>{
     // })
 
     try {
-        let allItems = await Item.find({}).sort({rating: -1, reviews: -1, price:1})
+        let allItems = await Item.find({}).sort({rating: -1, price:1})
         res.json(allItems).status(200).send()
     } catch (err) {
         console.error(err)
