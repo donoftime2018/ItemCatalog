@@ -1,56 +1,30 @@
 version: "3.8"
 services:
   
-  frontend:
-    build: 
-      context: ./item-catalog
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    image: frontend-img
-    container_name: frontend
-    command: npm start
-    volumes:
-      - ./item-catalog/:/usr/src/app
-      - /usr/src/app/node_modules
-    depends_on:
-      - server
-    networks:
-      - mern-network
-  
   server:
-    build: 
-      context: ./server
-      dockerfile: Dockerfile
-    ports:
-      - "4000:4000"
-    image: backend-img
+    build: ./server
     container_name: server
-    command: npm start
-    volumes:
-      - ./server/:/usr/src/app
-      - /usr/src/app/node_modules
-    depends_on:
-      - mongodb
-    networks:
-      - mern-network
-  
+    ports:
+      - 4000:4000
+  frontend:
+    build: ./item-catalog
+    container_name: frontend
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true
   mongodb:
     image: mongo
+    container_name: mongodb
     ports:
-      - "27017:27017"
-    volumes:
-      - data-volume:/data/db
-    container_name: mongo-db
-    networks:
-      - mern-network
+      - 27017:27017
+    
+# volumes:
+#   data-volume:
+#   node_modules:
+#   web-root:
+#     driver: local
 
-volumes:
-  data-volume:
-  node_modules:
-  web-root:
-    driver: local
-
-networks:
-  mern-network: 
-    driver: bridge
+# networks:
+#   mern-network: 
+#     driver: bridge
