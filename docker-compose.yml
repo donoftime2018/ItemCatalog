@@ -11,12 +11,10 @@ services:
     container_name: frontend
     command: npm start
     volumes:
-      - ./item-catalog/:/usr/app
-      - /usr/app/node_modules
+      - ./item-catalog/:/usr/src/app
+      - /usr/src/app/node_modules
     depends_on:
       - server
-    tty: true
-    stdin_open: true
     networks:
       - mern-network
   
@@ -30,8 +28,8 @@ services:
     container_name: server
     command: npm start
     volumes:
-      - ./server/:/usr/app
-      - /usr/app/node_modules
+      - ./server/:/usr/src/app
+      - /usr/src/app/node_modules
     depends_on:
       - mongodb
     networks:
