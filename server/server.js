@@ -11,7 +11,7 @@ require('dotenv').config()
 //     origin: "http://localhost:3000"
 // }
 
-mongoose.connect("mongodb://localhost:27017/items").then(()=>{console.log("Connected!")}).catch((err)=>{console.error(err)})
+mongoose.connect("mongodb://db:27017/items").then(()=>{console.log("Connected!")}).catch((err)=>{console.error(err)})
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())

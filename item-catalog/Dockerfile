@@ -1,5 +1,5 @@
 FROM node:21.1.0-alpine
-COPY . ./add
+COPY . ./app
 WORKDIR /app
 RUN npm install
 EXPOSE 3000
