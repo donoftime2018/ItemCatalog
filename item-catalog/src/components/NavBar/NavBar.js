@@ -3,6 +3,7 @@ import { useAuth } from "../context/user";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AppBar, IconButton, Tooltip, Box, Button } from "@mui/material";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link } from "react-router-dom";
 import Settings from "./Settings";
 
@@ -21,6 +22,10 @@ const AppNav = () => {
         navigate('/profile')
     }
 
+    const purchaseItems = () => {
+        navigate("/purchase")
+    }
+
     const dashBoardNav = () => {
        return(<>
         <AppBar sx={{paddingBottom: '10px', paddingTop:'0.4%', display: 'flex', flexDirection: 'row', alignItems: 'center'}} color="primary" position="sticky">
@@ -31,6 +36,7 @@ const AppNav = () => {
             <Box sx={{flexGrow: '1'}}/>
             <Box sx={{ marginRight: '5%', display: {xs: 'none', md: 'flex', alignItems: 'center'}, alignItems: 'center'}}>
                 <Button variant="contained" color="warning" sx={{border: '1px solid black', color: 'black', borderRadius: '25px'}} onClick={signOut}>Log Out</Button>
+                <Tooltip title="Purchase Items"><IconButton onClick={purchaseItems} color="inherit"><ShoppingCartIcon fontSize="large"></ShoppingCartIcon></IconButton></Tooltip>
             </Box>
         </AppBar>
        </>)

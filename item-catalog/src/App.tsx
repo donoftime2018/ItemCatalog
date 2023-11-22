@@ -4,6 +4,7 @@ import {Routes, Route} from 'react-router-dom';
 import Dashboard from "./components/Dashboard/Dashboard";
 import LoginPage from "./components/Login/Login";
 import Register from "./components/Register/Register";
+import Buying from "./components/Buying/Buying";
 import UpdatePassword from "./components/updatePassword/updatePassword";
 import { AuthProvider } from "./components/context/user";
 import Profile from "./components/Profile/Profile";
@@ -28,6 +29,7 @@ const App = () =>
                                 <Route element={<UpdatePassword/>} path="/updatePassword"></Route>
                                 <Route element={<Profile/>} path="/profile"></Route>
                                 <Route element={<DeleteProfile/>} path="/deleteAccount"></Route>
+                                <Route element={<Buying/>} path="/purchase"></Route>
                             </Routes>
                         </ItemContext>
                 </AuthProvider>
