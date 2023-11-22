@@ -5,17 +5,17 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({children}) => {
   
-    const [user, setUser] = useState(sessionStorage.getItem("signedInUser"));
+    const [user, setUser] = useState(localStorage.getItem("signedInUser"));
     const navigate = useNavigate()
 
     const login = (user) => {
-        sessionStorage.setItem('signedInUser', user)
+        localStorage.setItem('signedInUser', user)
         setUser(user)
     }
 
     const logout = () => {
         setUser(null)
-        sessionStorage.setItem('signedInUser', null)
+        localStorage.setItem('signedInUser', null)
         navigate("/login")
         
     }
