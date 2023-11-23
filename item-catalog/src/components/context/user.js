@@ -9,13 +9,13 @@ export const AuthProvider = ({children}) => {
     const navigate = useNavigate()
 
     const login = (user) => {
-        sessionStorageStorage.setItem('signedInUser', user)
+        sessionStorage.setItem('signedInUser', user)
         setUser(user)
     }
 
     const logout = () => {
         setUser(null)
-        localStorage.setItem('signedInUser', null)
+        sessionStorage.setItem('signedInUser', null)
         navigate("/login")
         
     }
