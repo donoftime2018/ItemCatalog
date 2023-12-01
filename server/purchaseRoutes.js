@@ -1,14 +1,25 @@
 const mongoose = require('mongoose')
 const express = require('express');
 const router = express.Router()
-const User = require('./User');
+const User = require("./User");
+
+mongoose.set('setDefaultsOnInsert', true);
+
+router.route("/numItemsInCart/:user").get(async(req, res) => {
+    
+})
+
+router.route("/itemsInCart/:user").get(async(req, res) => {
+
+})
+
+router.route("/removeFromCart/:user").delete(async(req, res) => {
+
+})
 
 router.route("/addToCart/:user").put(async(req, res, next) => {
-    console.log(req.body.name)
+    console.log(req.url)
     console.log(req.params.user)
-    console.log(req.body.price)
-    console.log(req.body.maxQuantity)
-    
     req.user = req.params.user
     req.item = req.body.name
     req.price = req.body.price
@@ -21,6 +32,7 @@ async function checkInCart(req, res, next) {
     console.log(req.user)
     console.log(req.item)
     console.log(req.price)
+    console.log(req.maxQuantity)
 
     let checkItemAdded = await User.findOne({username: req.user})
     console.log(checkItemAdded)
@@ -34,16 +46,13 @@ async function checkInCart(req, res, next) {
         if (itemsAdded[i].name === req.item) {
             if (itemsAdded[i].quantityAdded < itemsAdded[i].maximumQuantity)
             {
-                let updateQuantity = await User.updateOne({username: req.user}, {
-                    $inc: {'itemsInCart.$.quantityAdded': 1}
-                })
+                const doc = await User.findOne({username: req.user})
+                doc.itemsInCart[i].quantityAdded++;
+                await doc.save()
 
-                console.log(updateQuantity)
+                console.log(doc)
 
-                if (updateQuantity.modifiedCount>0)
-                {
-                    quantityEdited = true
-                }
+                res.status(200).send()
             }
 
             else
@@ -53,45 +62,30 @@ async function checkInCart(req, res, next) {
         }
     }
 
-    if (quantityEdited === true)
+    if(quantityEdited===false)
     {
         next()
     }
 
 }
 
-async function addItem(req, res, next)
+async function addItemToCart(req, res, next)
 {
     console.log(req.user)
     console.log(req.item)
     console.log(req.price)
+    console.log(req.maxQuantity)
 
-    var itemFields = {name: req.item, price: req.price}
+    var itemFields = {name: req.item, price: req.price, maximumQuantity: req.maxQuantity}
 
-    let updateItemsInCart = await User.updateOne({username: req.user}, {
-        $addToSet: {itemsInCart: itemFields}, $inc: {'itemsInCart.$.quantityAdded': 1}
-    }, {new: true, upsert: true, runValidators: true})
-
-    console.log(updateItemsInCart)
-    if (updateItemsInCart.modifiedCount>0)
-    {
-        res.json(updateItemsInCart).status(200).send()
-    }
+    const doc = await User.findOne({username: req.user})
+    doc.itemsInCart.push(itemFields)
+    await doc.save()
+    console.log(doc)
+    res.status(200).send()
 }
 
-router.use(checkInCart)
-router.use(addItem)
-
-router.route("/numItemsInCart/:user").get(async(req, res) => {
-    
-})
-
-router.route("/itemsInCart/:user").get(async(req, res) => {
-
-})
-
-router.route("/removeFromCart/:user").delete(async(req, res) => {
-
-})
+// router.use(checkInCart)
+router.use(addItemToCart)
 
 module.exports = router

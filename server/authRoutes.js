@@ -4,6 +4,7 @@ const router = express.Router()
 const User = require("./User");
 const Item = require("./Item")
 
+mongoose.set('setDefaultsOnInsert', true);
 
 router.route("/login").post(async(req, res) => {
     let name = req.body.name
