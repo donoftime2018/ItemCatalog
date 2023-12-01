@@ -28,14 +28,7 @@ const itemSchema = new mongoose.Schema({
         default: 0,
         required: true,
     },
-
-    quantity: {
-        type: Number,
-        min: 0,
-        default: 0,
-        required: true
-    },
-
+    
     usersRated: [String]
 }, {
     collection: 'item',

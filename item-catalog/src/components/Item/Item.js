@@ -27,18 +27,8 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemQuantity, itemRati
         setOpen(false);
     }
 
-    const addToCart = () => {
-        let name = itemName
-        let price = itemPrice
-        let maxQuantity = itemQuantity
-
-        let data = {name, price, maxQuantity}
-        axios.put("http://localhost:4000/purchase/addToCart/" + user, data).then((res)=>{
-            console.log(res);
-        }).catch((error)=>{
-            const errorMessage = JSON.parse(error.request.response)
-            console.error(errorMessage.msg); 
-            alert(errorMessage.msg);})
+    const addToBookmark = () => {
+        
     }
 
     const checkRating = () => {
@@ -102,7 +92,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemQuantity, itemRati
                     user !== itemPoster ? 
                     <>
                         <CardContent sx={{display: 'flex', paddingTop: '5px', paddingBottom: '10px!important', justifyContent: 'center'}}>
-                            <Tooltip title="Add to Cart"><IconButton onClick={addToCart}><AddCircleIcon color="success" fontSize="large"></AddCircleIcon></IconButton></Tooltip>
+                            <Tooltip title="Bookmark Item"><IconButton onClick={addToBookmark}><AddCircleIcon color="success" fontSize="large"></AddCircleIcon></IconButton></Tooltip>
                         </CardContent>
                     </> : 
                     <>
