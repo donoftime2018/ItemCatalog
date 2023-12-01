@@ -20,4 +20,4 @@ cartSchema.pre('validate', function() {
     }
 })
 
-module.exports = mongoose.model("Cart", userSchema);
+module.exports = mongoose.model("Cart", cartSchema);
