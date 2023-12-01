@@ -16,7 +16,7 @@ router.route('/').get(async(req, res)=>{
 
     try {
         let allItems = await Item.find({}).sort({rating: -1, price:1})
-        res.json(allItems).status(200).send()
+        res.status(200).json(allItems)
     } catch (err) {
         console.error(err)
     }
@@ -27,7 +27,7 @@ router.route("/getPostedItems/:user").get(async(req, res)=>{
 
     try {
         let itemsPosted = await Item.find({poster: user}).sort({updatedAt: -1}).limit(5)
-        res.json(itemsPosted).status(200).send()
+        res.status(200).json(itemsPosted)
     } catch(err)
     {
 
@@ -45,7 +45,7 @@ router.route("/numPostedItems/:user").get(async(req, res)=>{
     try {
         let user = req.params.user;
         const count = await Item.countDocuments({poster: user});
-        res.json(count).status(200).send()
+        res.status(200).json(count)
     } catch (error) {
         // console.error(error)
     }
@@ -57,7 +57,7 @@ router.route("/numLikedItems/:user").get(async(req, res)=>{
     try {
         let user = req.params.user;
         const count = await Item.countDocuments({usersRated: user});
-        res.json(count).status(200).send()
+        res.status(200).json(count)
     } catch(error){
         // console.error(error)
     }
@@ -72,7 +72,7 @@ router.route("/mostPopularItems/:user").get(async(req, res)=>{
     
     try {
         let popularItems = await Item.find({poster: user}).sort({rating: -1, updatedAt: -1}).limit(5)
-        res.json(popularItems).status(200).send()
+        res.status(200).json(popularItems)
     } catch(err) {
 
     }
@@ -87,7 +87,7 @@ router.route("/getLikedItems/:user").get(async(req, res) => {
     // }).catch(function(error) {console.error(error)})
     try {
         let likedItems = await Item.find({usersRated: user}).sort({updatedAt: -1}).limit(5)
-        res.json(likedItems).status(200).send()
+        res.status(200).json(likedItems)
     } catch(err){
 
     }

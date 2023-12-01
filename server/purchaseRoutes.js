@@ -75,7 +75,7 @@ async function addItem(req, res, next)
     console.log(updateItemsInCart)
     if (updateItemsInCart.modifiedCount>0)
     {
-        res.status(200).send()
+        res.json(updateItemsInCart).status(200).send()
     }
 }
 

@@ -26,7 +26,7 @@ router.route("/login").post(async(req, res) => {
         // console.log(findUser)
         if (findUser.length>0)
         {
-            res.json(findUser).status(200).send()
+            res.status(200).json(findUser)
         }
         else {
             res.status(400).send({msg: "Invalid username or password"})
