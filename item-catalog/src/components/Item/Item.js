@@ -91,9 +91,10 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemQuantity, itemRati
                 {
                     user !== itemPoster ? 
                     <>
-                        <CardContent sx={{display: 'flex', paddingTop: '5px', paddingBottom: '10px!important', justifyContent: 'center'}}>
+                        <CardContent sx={{display: 'flex', paddingTop: '4px', paddingBottom: '4px!important', alignItems: 'center', justifyContent: 'center'}}>
                             <Tooltip title="Bookmark Item"><IconButton onClick={addToBookmark}><BookmarkAddIcon color="success" fontSize="large"></BookmarkAddIcon></IconButton></Tooltip>
                         </CardContent>
+                        <Divider></Divider>
                     </> : 
                     <>
 
