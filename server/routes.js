@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const express = require('express');
 const router = express.Router()
 const Item = require('./Item.js');
-const User = require('./User.js');
 
 mongoose.set('setDefaultsOnInsert', true);
 
