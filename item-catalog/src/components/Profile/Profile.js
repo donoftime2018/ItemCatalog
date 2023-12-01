@@ -14,9 +14,11 @@ const Profile = () => {
     const [likedItems, setLikedItems] = useState([])
     const [postedItems, setPostedItems] = useState([])
     const [popularItems, setPopularItems] = useState([])
+    const [bookmarkedItems, setBookmarkedItems] = useState([])
 
     const [numLikedItems, setNumLikedItems] = useState(0);
     const [numPostedItems, setNumPostedItems] = useState(0);
+    const [numBookmarkedItems, setNumBookmarkedItems] = useState(0);
   
 
     useEffect(()=>{
@@ -53,7 +55,8 @@ const Profile = () => {
         getNumPosted()
 
     }, [likedItems, postedItems, popularItems, popularItems.length, 
-        likedItems.length, postedItems.length, user, numLikedItems, numPostedItems])
+        likedItems.length, postedItems.length, user, bookmarkedItems, bookmarkedItems.length,
+         numLikedItems, numBookmarkedItems, numPostedItems])
 
     return(<>
         <AppNav></AppNav>

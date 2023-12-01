@@ -263,7 +263,7 @@ router.route("/removeBookmark/:id").put(async(req, res, next)=>{
         {new: true, upsert: true})
     
     console.log(removeBookmark.usersBookmarked)
-
+    res.status(200).send()
 })
 
 
