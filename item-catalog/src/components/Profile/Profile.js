@@ -48,9 +48,25 @@ const Profile = () => {
                     console.log(res.data)}).catch((error)=>{console.error(error)});
         }
 
+        const getNumBookmarked = () => {
+            axios.get("http://localhost:4000/items/numBookmarkedItems/" + user).then(
+                (res)=>{
+                    setNumBookmarkedItems(res.data)
+                    console.log(res.data)}).catch((error)=>{console.error(error)});
+        }
+
+        const getBookmarkedItems = () => {
+            axios.get("http://localhost:4000/items/recentBookmarkedItems/" + user).then(
+                (res)=>{
+                    setBookmarkedItems(res.data); 
+                    console.log(res.data)}).catch((error)=>{console.error(error)});
+        }
+
         getLikedItems()
         getPostedItems()
         getMostPopularItems()
+        getBookmarkedItems()
+        getNumBookmarked()
         getNumLiked()
         getNumPosted()
 
@@ -108,6 +124,20 @@ const Profile = () => {
                     }
                 </>
             </Card>
+
+            <Card class="infoCard">
+            <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Recently Bookmarked Items:"></CardHeader>
+                <>
+                    {
+                        bookmarkedItems.map((item, index)=>{
+                            return(<>
+                                <Divider></Divider>
+                                <CardContent sx={{textAlign: 'center', alignItems: 'center'}}>{item.name}</CardContent>
+                            </>)
+                        })
+                    }
+                </>
+            </Card>
         </div>
 
         <div class="profileInfo">
@@ -115,6 +145,12 @@ const Profile = () => {
                 <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Number of Items Liked:"></CardHeader>
                 <Divider></Divider>
                 <CardContent sx={{textAlign: 'center', padding: "4px!important", fontSize: "24px", alignItems: 'center'}}>{numLikedItems}</CardContent>
+            </Card>
+
+            <Card class="infoCard">
+                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Number of Items Bookmarked:"></CardHeader>
+                <Divider></Divider>
+                <CardContent sx={{textAlign: 'center', padding: "4px!important", fontSize: "24px", alignItems: 'center'}}>{numBookmarkedItems}</CardContent>
             </Card>
 
             <Card class="infoCard">

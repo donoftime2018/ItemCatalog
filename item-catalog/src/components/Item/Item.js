@@ -28,7 +28,19 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemQuantity, itemRati
     }
 
     const addToBookmark = () => {
-        
+        let id = dbID;
+        let data = {user}
+        axios.put("http://localhost:4000/items/addBookmark/"+id, data).then((res)=>{
+            console.log(res);
+            if (res.status === 200)
+            {
+                alert(itemName + " bookmarked successfully")
+            }
+        }).catch((err)=>{
+            const errorMessage = JSON.parse(err.request.response)
+            console.error(errorMessage.msg); 
+            alert(errorMessage.msg);
+        })
     }
 
     const checkRating = () => {

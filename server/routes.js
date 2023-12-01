@@ -94,15 +94,25 @@ router.route("/getLikedItems/:user").get(async(req, res) => {
 })
 
 router.route("/getBookmarkedItems/:user").get(async(req, res)=>{
+    let user = req.params.user;
 
+    let bookmarkedItems = await Item.find({usersBookmarked: user})
+    // console.log(bookmarkedItems)
+
+    res.status(200).json(bookmarkedItems)
 })
 
 router.route("/numBookmarkedItems/:user").get(async(req, res)=>{
-    
+    let user = req.params.user
+    let numBookmarkedItems = await Item.countDocuments({usersBookmarked: user})
+    res.status(200).json(numBookmarkedItems)
 })
 
 router.route("/recentBookmarkedItems/:user").get(async(req, res)=>{
-    
+    let user = req.params.user
+    let bookmarkedItems = await Item.find({usersBookmarked: user}).sort({updatedAt: -1}).limit(5)
+    // console.log(bookmarkedItems)
+    res.status(200).json(bookmarkedItems)
 })
 
 //add items 
@@ -246,10 +256,10 @@ router.route("/addBookmark/:id").put(async(req, res, next)=>{
     else
     {
         let updateBookmark = await Item.findOneAndUpdate({_id: req.params.id}, 
-            {$addToSet: {usersBookmarked: {user}}}, 
+            {$addToSet: {usersBookmarked: user}}, 
             {new: true, upsert: true})
     
-        console.log(updateBookmark.usersBookmarked)
+        console.log(updateBookmark)
         res.status(200).send()
     }
 })
@@ -259,7 +269,7 @@ router.route("/removeBookmark/:id").put(async(req, res, next)=>{
     console.log(user)
 
     let removeBookmark = await Item.findOneAndUpdate({_id: req.params.id},
-        {$pull: {usersBookmarked: {user}}}, 
+        {$pull: {usersBookmarked: user}}, 
         {new: true, upsert: true})
     
     console.log(removeBookmark.usersBookmarked)

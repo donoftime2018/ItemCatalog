@@ -9,12 +9,17 @@ const Bookmark = () => {
 
     const auth = useAuth()
     const user = auth.user
+    const [bookmarkedItems, setBookmarkedItems] = useState([])
+
+    useEffect(()=>{
+        
+    }, [user, bookmarkedItems, bookmarkedItems.length])
 
     return(<>
         <AppNav></AppNav>
         <Title title={"Bookmarked Items"}></Title>
         <div class="layout">
-            <Card class="inCartItems">
+            <Card class="bookmarkedItems">
             </Card>
         </div>
     </>)
