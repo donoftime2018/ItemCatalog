@@ -14,7 +14,14 @@ const userSchema = new mongoose.Schema({
     email:  {
         type: String,
         required: true
-    }
+    },
+
+    itemsinCart: [
+        {
+            itemName: String,
+            addedBy: String
+        }
+    ]
 }, {
     collection: 'user',
     timestamps: true

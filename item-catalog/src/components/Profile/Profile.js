@@ -108,7 +108,7 @@ const Profile = () => {
         </div>
 
         <div class="profileInfo">
-            <Card class="infoCard">
+            <Card class="infoCard" style={{width: '50px'}}>
                 <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Number of Items Liked:"></CardHeader>
                 <Divider></Divider>
                 <CardContent sx={{textAlign: 'center', padding: "4px!important", fontSize: "24px", alignItems: 'center'}}>{numLikedItems}</CardContent>
