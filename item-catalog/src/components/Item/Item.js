@@ -5,7 +5,7 @@ import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import CloseIcon from '@mui/icons-material/Close';
 import InfoIcon from '@mui/icons-material/Info';
 import {Tooltip} from "@mui/material";
@@ -92,7 +92,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemQuantity, itemRati
                     user !== itemPoster ? 
                     <>
                         <CardContent sx={{display: 'flex', paddingTop: '5px', paddingBottom: '10px!important', justifyContent: 'center'}}>
-                            <Tooltip title="Bookmark Item"><IconButton onClick={addToBookmark}><AddCircleIcon color="success" fontSize="large"></AddCircleIcon></IconButton></Tooltip>
+                            <Tooltip title="Bookmark Item"><IconButton onClick={addToBookmark}><BookmarkAddIcon color="success" fontSize="large"></BookmarkAddIcon></IconButton></Tooltip>
                         </CardContent>
                     </> : 
                     <>

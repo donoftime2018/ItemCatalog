@@ -3,7 +3,7 @@ import { useAuth } from "../context/user";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AppBar, IconButton, Tooltip, Box, Button } from "@mui/material";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import { Link } from "react-router-dom";
 import Settings from "./Settings";
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -25,7 +25,7 @@ const AppNav = () => {
     }
 
     const purchaseItems = () => {
-        navigate("/purchase")
+        navigate("/bookmark")
     }
 
     const dashBoardNav = () => {
@@ -38,8 +38,7 @@ const AppNav = () => {
             <Box sx={{flexGrow: '1'}}/>
             <Box sx={{ marginRight: '5%', display: {xs: 'none', md: 'flex', alignItems: 'center'}, alignItems: 'center'}}>
                 <Button variant="contained" color="warning" sx={{border: '1px solid black', color: 'black', borderRadius: '25px'}} onClick={signOut}>Log Out</Button>
-                <Tooltip title="Purchase Items"><IconButton onClick={purchaseItems} color="inherit"><ShoppingCartIcon fontSize="large"></ShoppingCartIcon></IconButton></Tooltip>
-                <Badge pill bg="light" style={{fontFamily: 'Arial', marginLeft: '-2%', color: 'black', fontSize: 'large'}}>9</Badge>
+                <Tooltip title="See Bookmarked Items"><IconButton onClick={purchaseItems} color="inherit"><BookmarksIcon fontSize="large"></BookmarksIcon></IconButton></Tooltip>
             </Box>
         </AppBar>
        </>)

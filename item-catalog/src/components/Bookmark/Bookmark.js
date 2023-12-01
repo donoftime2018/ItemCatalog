@@ -12,7 +12,7 @@ const Bookmark = () => {
 
     return(<>
         <AppNav></AppNav>
-        <Title title={user+"'s Bookmarked Items"}></Title>
+        <Title title={"Bookmarked Items"}></Title>
         <div class="layout">
             <Card class="inCartItems">
             </Card>
