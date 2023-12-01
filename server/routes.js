@@ -245,10 +245,11 @@ router.route("/addBookmark/:id").put(async(req, res, next)=>{
     let user = req.body.user
     console.log(user)
 
-    let checkBookmarked = await Item.find({usersBookmarked: user})
+    let checkBookmarked = await Item.findOne({_id: req.params.id})
+
     console.log(checkBookmarked)
 
-    if (checkBookmarked.length>0)
+    if (checkBookmarked.usersBookmarked.includes(req.body.user))
     {
         res.status(400).send({msg: "You have already bookmarked this item!"})
     }
