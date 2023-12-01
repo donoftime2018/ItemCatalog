@@ -93,6 +93,18 @@ router.route("/getLikedItems/:user").get(async(req, res) => {
     }
 })
 
+router.route("/getBookmarkedItems/:user").get(async(req, res)=>{
+
+})
+
+router.route("/numBookmarkedItems/:user").get(async(req, res)=>{
+    
+})
+
+router.route("/recentBookmarkedItems/:user").get(async(req, res)=>{
+    
+})
+
 //add items 
 router.route("/insertItems").post(async(req, res)=>{
 
@@ -218,5 +230,42 @@ router.route("/decreaseRating/:id").put(async(req, res, next)=>{
         // console.error(err)
     })
 })
+
+router.route("/addBookmark/:id").put(async(req, res, next)=>{
+    let user = req.body.user
+    console.log(user)
+
+    let checkBookmarked = await Item.find({usersBookmarked: user})
+    console.log(checkBookmarked)
+
+    if (checkBookmarked.length>0)
+    {
+        res.status(400).send({msg: "You have already bookmarked this item!"})
+    }
+
+    else
+    {
+        let updateBookmark = await Item.findOneAndUpdate({_id: req.params.id}, 
+            {$addToSet: {usersBookmarked: {user}}}, 
+            {new: true, upsert: true})
+    
+        console.log(updateBookmark.usersBookmarked)
+        res.status(200).send()
+    }
+})
+
+router.route("/removeBookmark/:id").put(async(req, res, next)=>{
+    let user = req.body.user
+    console.log(user)
+
+    let removeBookmark = await Item.findOneAndUpdate({_id: req.params.id},
+        {$pull: {usersBookmarked: {user}}}, 
+        {new: true, upsert: true})
+    
+    console.log(removeBookmark.usersBookmarked)
+
+})
+
+
 
 module.exports = router
