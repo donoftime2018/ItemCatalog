@@ -28,8 +28,8 @@ const itemSchema = new mongoose.Schema({
         default: 0,
         required: true,
     },
-    
-    usersRated: [String]
+    usersRated: [String],
+    usersBookmarked: [String]
 }, {
     collection: 'item',
     timestamps: true
