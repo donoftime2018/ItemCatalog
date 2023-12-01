@@ -76,7 +76,7 @@ const Dashboard = () => {
                 items.map((item, index)=>{
                  
                     return(<>
-                        <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} itemQuantity={item.quantity} itemReviews={item.reviews} id={index} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                        <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
                     </>)
                 })
             }
@@ -92,7 +92,7 @@ const Dashboard = () => {
                 {
                     items.filter(item=>item.name.includes(itemQuery)).map((item, index)=>{
                         return(<>
-                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }
@@ -105,7 +105,7 @@ const Dashboard = () => {
                 {
                     items.filter(item=>item.poster.includes(posterQuery)).map((item, index)=>{
                         return(<>
-                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }
@@ -118,7 +118,7 @@ const Dashboard = () => {
                 {
                     items.filter(item=>item.poster.includes(posterQuery) && item.name.includes(itemQuery)).map((item, index)=>{
                         return(<>
-                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }

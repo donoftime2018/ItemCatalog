@@ -13,7 +13,7 @@ import axios from 'axios';
 import { useAuth } from "../context/user";
 
 
-const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemQuantity, itemRating, id, dbID}) => {
+const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID}) => {
 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
