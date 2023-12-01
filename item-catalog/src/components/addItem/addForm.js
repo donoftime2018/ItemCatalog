@@ -12,7 +12,8 @@ const AddForm = () => {
     const validation = () => yup.object({
         item_name: yup.string().max(40, "Item name cannot be over 40 characters long").required("Item name required"),
         item_price: yup.number().positive("Item price must be positive").required("Item price required"),
-        item_desc: yup.string().max(60, "Item description cannot be over 60 characters long").required("Item description required")
+        item_desc: yup.string().max(60, "Item description cannot be over 60 characters long").required("Item description required"),
+        item_quantity: yup.number().positive("Item quantity must be positive").required("Item quantity required")
     })
 
     const formik = useFormik({
@@ -20,28 +21,25 @@ const AddForm = () => {
         initialValues: {
             item_name: "",
             item_price: null,
-            item_desc: ""
+            item_desc: "",
+            item_quantity: null
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
-            addItemToDB(values.item_name, values.item_price, values.item_desc);
+            addItemToDB(values.item_name, values.item_price, values.item_desc, values.item_quantity);
         }
     }, {})
 
 
-    const addItemToDB = (name, price, desc) => {
+    const addItemToDB = (name, price, desc, quantity) => {
 
         const user = auth.user
-        const data = {name, price, desc, user}
+        const data = {name, price, desc, quantity, user}
 
             
-        if (name !== "" && desc !== "" && price !== 0)
+        if (name !== "" && desc !== "" && price !== 0 && quantity !== 0)
         {
             axios.post("http://localhost:4000/items/insertItems", data).then((res)=>{console.log(res);
-                if (res.status === 400)
-                {
-                   return res.data;
-                }
             }).catch((error) => {
                 const errorMessage = JSON.parse(error.request.response)
                 console.error(errorMessage.msg); 
@@ -84,7 +82,7 @@ const AddForm = () => {
                         onBlur={formik.handleBlur}
                         error={formik.touched.item_price && Boolean(formik.errors.item_price)}
                         helperText={formik.touched.item_price && formik.errors.item_price}
-                        inputProps={{step: 0.01}} 
+                        inputProps={{step: 0.01, min: 0.00}} 
                         sx={{backgroundColor: 'white'/*borderRadius: '25px'*/}} 
                         placeholder="Item Price goes here..." 
                         label="Item Price"
@@ -105,6 +103,24 @@ const AddForm = () => {
                         sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
                         placeholder="Item Desc goes here..." 
                         label="Item Description"
+                        disableUnderline="true" 
+                    />
+                </div>
+                <div style={{display: "flex", justifyContent: 'center'}}>
+                    <TextField 
+                        id="item_quantity"
+                        name="item_quantity"
+                        variant="outlined"
+                        type="number"
+                        value={formik.values.item_quantity}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.item_quantity && Boolean(formik.errors.item_quantity)}
+                        helperText={formik.touched.item_quantity && formik.errors.item_quantity}
+                        inputProps={{step: 1, min: 1}} 
+                        sx={{backgroundColor: 'white'/*borderRadius: '25px'*/}} 
+                        placeholder="Item Quantity goes here..." 
+                        label="Item Quantity"
                         disableUnderline="true" 
                     />
                 </div>

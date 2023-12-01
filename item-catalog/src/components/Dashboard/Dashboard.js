@@ -76,7 +76,7 @@ const Dashboard = () => {
                 items.map((item, index)=>{
                  
                     return(<>
-                        <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} itemReviews={item.reviews} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                        <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} itemQuantity={item.quantity} itemReviews={item.reviews} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
                     </>)
                 })
             }

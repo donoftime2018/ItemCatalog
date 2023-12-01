@@ -29,10 +29,11 @@ const itemSchema = new mongoose.Schema({
         required: true,
     },
 
-    addedToCart: {
-        type: Boolean,
-        required: true,
-        default: false
+    quantity: {
+        type: Number,
+        min: 0,
+        default: 0,
+        required: true
     },
 
     usersRated: [String]

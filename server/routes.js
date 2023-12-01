@@ -136,7 +136,7 @@ router.route("/insertItems").post(async(req, res)=>{
         }
     
         else {
-            let newItem = await Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price, poster: req.body.user})
+            let newItem = await Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price, poster: req.body.user, quantity: req.body.quantity})
             
             if(newItem)
             {

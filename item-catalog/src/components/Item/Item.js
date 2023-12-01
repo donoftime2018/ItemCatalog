@@ -5,6 +5,7 @@ import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import InfoIcon from '@mui/icons-material/Info';
 import {Tooltip} from "@mui/material";
@@ -12,7 +13,7 @@ import axios from 'axios';
 import { useAuth } from "../context/user";
 
 
-const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID}) => {
+const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemQuantity, itemRating, id, dbID}) => {
 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
@@ -83,6 +84,17 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
 
     return(<>
         <Card class="itemCard" key={id}>
+                {
+                    user !== itemPoster ? 
+                    <>
+                        <CardContent sx={{display: 'flex', paddingTop: '5px', paddingBottom: '10px!important', justifyContent: 'center'}}>
+                            <Tooltip title="Add to Cart"><IconButton><AddCircleIcon color="success" fontSize="large"></AddCircleIcon></IconButton></Tooltip>
+                        </CardContent>
+                    </> : 
+                    <>
+
+                    </>
+                }
             <CardContent>
                 <div style={{flexDirection: 'column'}}>
                     <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>{itemName}</span>
@@ -92,6 +104,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
             <Divider/>
             <CardContent>
                 <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Avg. Market Price: ${itemPrice.toFixed(2)}</span>
+                <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Quantity: {itemQuantity}</span>
             </CardContent>
             <Divider/>
             <>
