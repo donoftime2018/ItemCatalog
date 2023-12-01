@@ -4,7 +4,6 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const itemRoute = require("./routes.js")
 const userRoute = require("./authRoutes.js")
-const purchaseRoutes = require("./purchaseRoutes.js")
 const app = express()
 require('dotenv').config()
 
@@ -17,7 +16,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())
 app.use("/items", itemRoute)
-app.use("/purchase", purchaseRoutes)
 app.use(userRoute)
 
 const port = process.env.PORT | 4000
