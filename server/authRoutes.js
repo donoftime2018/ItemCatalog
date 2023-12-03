@@ -185,6 +185,11 @@ async function removeLikes(req, res, next)
     next()
 }
 
+async function removeBookmarks(req, res, next)
+{
+    next()
+}
+
 async function deleteUser(req, res)
 {
     console.log(req.user)
@@ -197,5 +202,6 @@ async function deleteUser(req, res)
 
 router.use(deletePostedItems)
 router.use(removeLikes)
+router.use(removeBookmarks)
 router.use(deleteUser)
 module.exports = router;

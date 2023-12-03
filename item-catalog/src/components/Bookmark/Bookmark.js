@@ -28,22 +28,17 @@ const Bookmark = () => {
         <Title title={"Bookmarked Items"}></Title>
             <>
                 {
-                    bookmarkedItems.length > 0 ? 
-                    <>
-                        <div class="layout">
-                        {
-                            bookmarkedItems.map((item)=>{
-                                return(<>
-                                    
-                                </>)
-                            })
-                        }
-                        </div>
-                    </> 
-                    : 
-                    <>
-                        <h1 style={{display:'flex', justifyContent: 'center'}}>You haven't bookmarked any items.</h1>
-                    </>
+                    
+                    <div class="layout">
+                    {
+                        bookmarkedItems.map((item)=>{
+                            return(<>
+                                
+                            </>)
+                        })
+                    }
+                    </div>
+                    
                 }
             </>
     </>)

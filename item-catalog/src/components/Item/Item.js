@@ -6,6 +6,7 @@ import Delete from "@mui/icons-material/Delete";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import BookmarkRemoveIcon from '@mui/icons-material/BookmarkRemove';
 import CloseIcon from '@mui/icons-material/Close';
 import InfoIcon from '@mui/icons-material/Info';
 import {Tooltip} from "@mui/material";
@@ -13,7 +14,7 @@ import axios from 'axios';
 import { useAuth } from "../context/user";
 
 
-const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID}) => {
+const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemBookmarked, itemRating, id, dbID}) => {
 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
@@ -35,6 +36,22 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
             if (res.status === 200)
             {
                 alert(itemName + " bookmarked successfully")
+            }
+        }).catch((err)=>{
+            const errorMessage = JSON.parse(err.request.response)
+            console.error(errorMessage.msg); 
+            alert(errorMessage.msg);
+        })
+    }
+
+    const removeBookmark = () => {
+        let id = dbID;
+        let data = {user}
+        axios.put("http://localhost:4000/items/removeBookmark/"+id, data).then((res)=>{
+            console.log(res);
+            if (res.status === 200)
+            {
+                alert(itemName + " removed from Bookmarks!")
             }
         }).catch((err)=>{
             const errorMessage = JSON.parse(err.request.response)
@@ -103,10 +120,24 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
                 {
                     user !== itemPoster ? 
                     <>
-                        <CardContent sx={{display: 'flex', paddingTop: '4px', paddingBottom: '4px!important', alignItems: 'center', justifyContent: 'center'}}>
-                            <Tooltip title="Bookmark Item"><IconButton onClick={addToBookmark}><BookmarkAddIcon color="success" fontSize="large"></BookmarkAddIcon></IconButton></Tooltip>
-                        </CardContent>
-                        <Divider></Divider>
+                        {
+                            itemBookmarked === false ? 
+                            <>
+                                <CardContent sx={{display: 'flex', paddingTop: '4px', paddingBottom: '4px!important', alignItems: 'center', justifyContent: 'center'}}>
+                                <Tooltip title="Bookmark Item"><IconButton onClick={addToBookmark}><BookmarkAddIcon color="success" fontSize="large"></BookmarkAddIcon></IconButton></Tooltip>
+                                </CardContent>
+                                <Divider></Divider>
+                            </>
+
+                            :
+
+                            <>
+                                <CardContent sx={{display: 'flex', paddingTop: '4px', paddingBottom: '4px!important', alignItems: 'center', justifyContent: 'center'}}>
+                                <Tooltip title="Remove Bookmark"><IconButton onClick={removeBookmark}><BookmarkRemoveIcon color="success" fontSize="large"></BookmarkRemoveIcon></IconButton></Tooltip>
+                                </CardContent>
+                                <Divider></Divider>
+                            </>
+                        }
                     </> : 
                     <>
 
