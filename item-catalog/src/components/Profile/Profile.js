@@ -112,20 +112,6 @@ const Profile = () => {
             </Card>
 
             <Card class="infoCard">
-                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Your Most Popular Items:"></CardHeader>
-                <>
-                    {
-                        popularItems.map((item, index)=>{
-                            return(<>
-                                <Divider></Divider>
-                                <CardContent sx={{textAlign: 'center', alignItems: 'center'}}>{item.name}, {item.rating} <ThumbUpIcon color='success' sx={{alignItems: 'start', fontSize: 'large'}}></ThumbUpIcon></CardContent>
-                            </>)
-                        })
-                    }
-                </>
-            </Card>
-
-            <Card class="infoCard">
             <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Recently Bookmarked Items:"></CardHeader>
                 <>
                     {
@@ -138,6 +124,21 @@ const Profile = () => {
                     }
                 </>
             </Card>
+
+            <Card class="infoCard">
+                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Your Most Popular Items:"></CardHeader>
+                <>
+                    {
+                        popularItems.map((item, index)=>{
+                            return(<>
+                                <Divider></Divider>
+                                <CardContent sx={{textAlign: 'center', alignItems: 'center'}}>{item.name}, {item.rating} <ThumbUpIcon color='success' sx={{alignItems: 'start', fontSize: 'large'}}></ThumbUpIcon></CardContent>
+                            </>)
+                        })
+                    }
+                </>
+            </Card>
+       
         </div>
 
         <div class="profileInfo">
