@@ -1,8 +1,8 @@
 import {React, useState, useEffect} from "react";
-import {Card, CardContent, Divider, CardHeader, Box} from "@mui/material"
 import AppNav from "../NavBar/NavBar";
 import Title from "../appTitle/appTitle";
 import { useAuth } from "../context/user";
+import TruncatedItem from "../Item/TruncatedItem";
 import axios from "axios";
 import "./Bookmark.css"
 
@@ -33,10 +33,7 @@ const Bookmark = () => {
                     {
                         bookmarkedItems.map((item)=>{
                             return(<>
-                                <Card sx={{display: 'flex'}}>
-                                    <Box sx={{ display: 'flex', flexDirection: 'column' }}></Box>
-                                        <CardContent sx={{ flex: '1 0 auto' }}></CardContent>
-                                </Card>
+                                
                             </>)
                         })
                     }
