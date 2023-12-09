@@ -1,5 +1,6 @@
 import React from "react";
-import {Card, CardContent, Divider, ThumbUpIcon, Box} from "@mui/material";
+import {Card, CardContent, Divider, Box} from "@mui/material";
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import "./Item.css"
 
 const TruncatedItem = ({itemName, itemDesc, itemPoster, itemPrice, itemRating}) => {

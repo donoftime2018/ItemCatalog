@@ -26,7 +26,7 @@ router.route("/getPostedItems/:user").get(async(req, res)=>{
     let user = req.params.user;
 
     try {
-        let itemsPosted = await Item.find({poster: user}).sort({updatedAt: -1}).limit(5)
+        let itemsPosted = await Item.find({poster: user}).select("name").sort({updatedAt: -1}).limit(5)
         res.status(200).json(itemsPosted)
     } catch(err)
     {
@@ -71,7 +71,7 @@ router.route("/mostPopularItems/:user").get(async(req, res)=>{
     // }).catch(function(error) {console.error(error)}
     
     try {
-        let popularItems = await Item.find({poster: user}).sort({rating: -1, updatedAt: -1}).limit(5)
+        let popularItems = await Item.find({poster: user}).select("name rating").sort({rating: -1, updatedAt: -1}).limit(5)
         res.status(200).json(popularItems)
     } catch(err) {
 
@@ -86,7 +86,7 @@ router.route("/getLikedItems/:user").get(async(req, res) => {
     //      res.json(data).status(200).send()
     // }).catch(function(error) {console.error(error)})
     try {
-        let likedItems = await Item.find({usersRated: user}).sort({updatedAt: -1}).limit(5)
+        let likedItems = await Item.find({usersRated: user}).select("name").sort({updatedAt: -1}).limit(5)
         res.status(200).json(likedItems)
     } catch(err){
 
@@ -96,7 +96,7 @@ router.route("/getLikedItems/:user").get(async(req, res) => {
 router.route("/getBookmarkedItems/:user").get(async(req, res)=>{
     let user = req.params.user;
 
-    let bookmarkedItems = await Item.find({usersBookmarked: user})
+    let bookmarkedItems = await Item.find({usersBookmarked: user}).sort({updatedAt: -1})
     // console.log(bookmarkedItems)
 
     res.status(200).json(bookmarkedItems)
@@ -110,7 +110,7 @@ router.route("/numBookmarkedItems/:user").get(async(req, res)=>{
 
 router.route("/recentBookmarkedItems/:user").get(async(req, res)=>{
     let user = req.params.user
-    let bookmarkedItems = await Item.find({usersBookmarked: user}).sort({updatedAt: -1}).limit(5)
+    let bookmarkedItems = await Item.find({usersBookmarked: user}).select("name").sort({updatedAt: -1}).limit(5)
     // console.log(bookmarkedItems)
     res.status(200).json(bookmarkedItems)
 })

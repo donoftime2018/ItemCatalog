@@ -23,11 +23,11 @@ const Profile = () => {
 
     useEffect(()=>{
         const getLikedItems = () => {
-            axios.get("http://localhost:4000/items/getLikedItems/" + user).then((res)=>{setLikedItems(res.data);}).catch((error)=>{console.error(error)});
+            axios.get("http://localhost:4000/items/getLikedItems/" + user).then((res)=>{setLikedItems(res.data); console.log(res.data)}).catch((error)=>{console.error(error)});
         }
 
         const getPostedItems = () => {
-            axios.get("http://localhost:4000/items/getPostedItems/" + user).then((res)=>{setPostedItems(res.data);}).catch((error)=>{console.error(error)});
+            axios.get("http://localhost:4000/items/getPostedItems/" + user).then((res)=>{setPostedItems(res.data); console.log(res.data)}).catch((error)=>{console.error(error)});
         }
 
         const getMostPopularItems = () => {
