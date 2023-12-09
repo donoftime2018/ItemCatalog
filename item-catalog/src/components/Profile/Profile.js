@@ -112,7 +112,7 @@ const Profile = () => {
             </Card>
 
             <Card class="infoCard">
-            <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Recently Bookmarked Items:"></CardHeader>
+                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Recently Bookmarked Items:"></CardHeader>
                 <>
                     {
                         bookmarkedItems.map((item, index)=>{

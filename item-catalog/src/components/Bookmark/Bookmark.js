@@ -1,5 +1,5 @@
 import {React, useState, useEffect} from "react";
-import {Card, CardContent, Divider, CardHeader} from "@mui/material"
+import {Card, CardContent, Divider, CardHeader, Box} from "@mui/material"
 import AppNav from "../NavBar/NavBar";
 import Title from "../appTitle/appTitle";
 import { useAuth } from "../context/user";
@@ -25,7 +25,7 @@ const Bookmark = () => {
 
     return(<>
         <AppNav></AppNav>
-        <Title title={"Bookmarked Items"}></Title>
+        <Title title={user + "'s Bookmarks"}></Title>
             <>
                 {
                     
@@ -33,7 +33,10 @@ const Bookmark = () => {
                     {
                         bookmarkedItems.map((item)=>{
                             return(<>
-                                
+                                <Card sx={{display: 'flex'}}>
+                                    <Box sx={{ display: 'flex', flexDirection: 'column' }}></Box>
+                                        <CardContent sx={{ flex: '1 0 auto' }}></CardContent>
+                                </Card>
                             </>)
                         })
                     }
