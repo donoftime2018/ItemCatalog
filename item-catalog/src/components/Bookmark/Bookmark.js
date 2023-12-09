@@ -16,7 +16,8 @@ const Bookmark = () => {
     useEffect(()=>{
         const getBookmarkedItems = () => {
             axios.get("http://localhost:4000/items/getBookmarkedItems/" + user).then((res)=>{
-                setBookmarkedItems(res.data)
+                setBookmarkedItems(res.data);
+                console.log(res.data);
             })
         }
         getBookmarkedItems()

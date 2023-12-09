@@ -247,11 +247,19 @@ router.route("/addBookmark/:id").put(async(req, res, next)=>{
 
     let checkBookmarked = await Item.findOne({_id: req.params.id})
 
+    let bookmarkedList = await Item.find({usersBookmarked: user}).select("usersBookmarked")
+
     console.log(checkBookmarked)
+    console.log(bookmarkedList)
 
     if (checkBookmarked.usersBookmarked.includes(req.body.user))
     {
         res.status(400).send({msg: "You have already bookmarked this item!"})
+    }
+
+    else if (bookmarkedList.length===30)
+    {
+        res.status(400).send({msg: "You have reached maximum bookmarks allowed for a user!"})
     }
 
     else
