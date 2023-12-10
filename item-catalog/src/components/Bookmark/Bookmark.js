@@ -2,12 +2,16 @@ import {React, useState, useEffect} from "react";
 import AppNav from "../NavBar/NavBar";
 import Title from "../appTitle/appTitle";
 import { useAuth } from "../context/user";
-import TruncatedItem from "../Item/TruncatedItem";
+import "bootstrap/dist/css/bootstrap.min.css"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
+import Container from "react-bootstrap/Container"
+
 import axios from "axios";
 import "./Bookmark.css"
 
 
-const Bookmark = () => {
+const Bookmark = (props) => {
 
     const auth = useAuth()
     const user = auth.user
@@ -21,8 +25,8 @@ const Bookmark = () => {
             })
         }
         getBookmarkedItems()
-
-    }, [user, bookmarkedItems, bookmarkedItems.length])
+        document.title = props.title
+    }, [user, bookmarkedItems, bookmarkedItems.length, props])
 
     return(<>
         <AppNav></AppNav>
@@ -32,11 +36,15 @@ const Bookmark = () => {
                     
                     <div class="layout">
                     {
-                        bookmarkedItems.map((item)=>{
-                            return(<>
-                                
-                            </>)
-                        })
+                        <Container>
+                            <Row>
+                                <Col></Col>
+                                <Col></Col>
+                                <Col></Col>
+                                <Col></Col>
+                            </Row>
+
+                        </Container>
                     }
                     </div>
                     

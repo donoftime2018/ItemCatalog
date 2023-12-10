@@ -1,13 +1,16 @@
-import {React} from "react"
+import {React, useEffect} from "react"
 import axios from "axios"
 import {Card, CardHeader, CardContent, TextField, Divider, Button} from "@mui/material"
 import { useFormik } from "formik"
 import { useAuth } from "../context/user"
 import "./DeleteProfile.css"
-import { useNavigate } from "react-router-dom"
 import * as yup from "yup"
 
-const DeleteProfile = () => {
+const DeleteProfile = (props) => {
+
+    useEffect(()=>{
+        document.title = props.title
+    }, [props])
 
     const auth = useAuth()
     const user = auth.user;

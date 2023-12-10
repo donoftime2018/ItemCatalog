@@ -22,14 +22,14 @@ const App = () =>
                         <ItemContext>
                             <Routes>
                                 <Route element={<ProtectedRoute>
-                                        <Dashboard/>
+                                        <Dashboard title="Put a Price On It!"/>
                                     </ProtectedRoute>} path="/"></Route>
-                                <Route element={<LoginPage/>} path="/login"></Route>
-                                <Route element={<Register/>} path="/register"></Route>
-                                <Route element={<UpdatePassword/>} path="/updatePassword"></Route>
-                                <Route element={<Profile/>} path="/profile"></Route>
-                                <Route element={<DeleteProfile/>} path="/deleteAccount"></Route>
-                                <Route element={<Bookmark/>} path="/bookmark"></Route>
+                                <Route element={<LoginPage title="Login"/>} path="/login"></Route>
+                                <Route element={<Register title="Sign Up"/>} path="/register"></Route>
+                                <Route element={<UpdatePassword title="Change Password"/>} path="/updatePassword"></Route>
+                                <Route element={<Profile title="User Profile"/>} path="/profile"></Route>
+                                <Route element={<DeleteProfile title="Delete Account"/>} path="/deleteAccount"></Route>
+                                <Route element={<Bookmark title="User Bookmarks"/>} path="/bookmark"></Route>
                             </Routes>
                         </ItemContext>
                 </AuthProvider>

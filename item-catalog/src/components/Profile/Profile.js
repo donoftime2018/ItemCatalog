@@ -7,7 +7,7 @@ import AppNav from "../NavBar/NavBar";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import "./Profile.css";
 
-const Profile = () => {
+const Profile = (props) => {
     const auth = useAuth()
     const user = auth.user
 
@@ -70,9 +70,11 @@ const Profile = () => {
         getNumLiked()
         getNumPosted()
 
+        document.title = props.title
+
     }, [likedItems, postedItems, popularItems, popularItems.length, 
         likedItems.length, postedItems.length, user, bookmarkedItems, bookmarkedItems.length,
-         numLikedItems, numBookmarkedItems, numPostedItems])
+         numLikedItems, numBookmarkedItems, numPostedItems, props])
 
     return(<>
         <AppNav></AppNav>

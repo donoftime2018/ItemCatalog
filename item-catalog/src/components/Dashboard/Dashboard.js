@@ -10,7 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import {useFormik} from "formik";
 import { useAuth } from "../context/user";
 
-const Dashboard = () => {
+const Dashboard = (props) => {
     const auth = useAuth()
     const user = auth.user
     
@@ -27,7 +27,8 @@ const Dashboard = () => {
               })
         }
         getItems()
-    }, [items.length, items])
+        document.title = props.title
+    }, [items.length, items, props])
 
 
     const formik = useFormik({
