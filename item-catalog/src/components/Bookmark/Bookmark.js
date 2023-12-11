@@ -52,7 +52,7 @@ const Bookmark = (props) => {
                     {
                         bookmarkedItems.map(item=>{
                             return(<>
-                                <div class="row align-items-center text-center" style={{fontSize: '18px', paddingTop: '10px'}}>
+                                <div class="row align-items-center text-center" style={{fontSize: '18px', paddingTop: '10px', lineHeight: '1.5rem'}}>
                                     <div class="col w-100">{item.name}</div>
                                     <div class="col">{item.poster}</div>
                                     <div class="col">${item.price.toFixed(2)}</div>
