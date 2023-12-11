@@ -3,9 +3,6 @@ import AppNav from "../NavBar/NavBar";
 import Title from "../appTitle/appTitle";
 import { useAuth } from "../context/user";
 import "bootstrap/dist/css/bootstrap.min.css"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
-import Container from "react-bootstrap/Container"
 
 import axios from "axios";
 import "./Bookmark.css"
@@ -31,25 +28,47 @@ const Bookmark = (props) => {
     return(<>
         <AppNav></AppNav>
         <Title title={user + "'s Bookmarks"}></Title>
-            <>
-                {
-                    
-                    <div class="layout">
-                    {
-                        <Container>
-                            <Row>
-                                <Col></Col>
-                                <Col></Col>
-                                <Col></Col>
-                                <Col></Col>
-                            </Row>
-
-                        </Container>
-                    }
+        <div class="layout">
+            <div class="container">
+                <div class="row align-items-center text-center" style={{fontSize: '24px', paddingTop: '5px'}}>
+                    <div class="col" style={{textDecoration: 'underline'}}>
+                        Name:
                     </div>
-                    
-                }
-            </>
+                    <div class="col" style={{textDecoration: 'underline'}}>
+                        Poster:
+                    </div>
+                    <div class="col" style={{textDecoration: 'underline'}}>
+                        Price:
+                    </div>
+                    <div class="col" style={{textDecoration: 'underline'}}>
+                        Description:
+                    </div>
+                    <div class="col" style={{textDecoration: 'underline'}}>
+                        Likes:
+                    </div>
+                </div>
+                
+                <>
+                    {
+                        bookmarkedItems.map(item=>{
+                            return(<>
+                                <div class="row align-items-center text-center" style={{fontSize: '18px', paddingTop: '10px'}}>
+                                    <div class="col w-100">{item.name}</div>
+                                    <div class="col">{item.poster}</div>
+                                    <div class="col">${item.price.toFixed(2)}</div>
+                                    <div class="col-xxl">{item.desc}</div>
+                                    <div class="col">{item.rating}</div>
+                                </div>
+                            </>)
+                        })
+                    }
+                </>
+
+            </div>
+            <>
+                {}
+            </>     
+        </div>
     </>)
 }
 

@@ -96,7 +96,7 @@ router.route("/getLikedItems/:user").get(async(req, res) => {
 router.route("/getBookmarkedItems/:user").get(async(req, res)=>{
     let user = req.params.user;
 
-    let bookmarkedItems = await Item.find({usersBookmarked: user}).select("name rating poster price").sort({updatedAt: -1})
+    let bookmarkedItems = await Item.find({usersBookmarked: user}).select("name rating poster desc price").sort({updatedAt: -1})
     // console.log(bookmarkedItems)
 
     res.status(200).json(bookmarkedItems)
