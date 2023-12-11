@@ -33,7 +33,7 @@ router.route("/login").post(async(req, res) => {
             res.status(400).send({msg: "Invalid username or password"})
         }
     } catch(err) {
-
+        console.log(err)
     }
 
 })
@@ -87,7 +87,7 @@ router.route("/register").post(async(req, res) => {
         }
     }
     } catch(err) {
-
+        console.log(err)
     }
     
 })
@@ -126,7 +126,7 @@ router.route("/updatePassword").put(async(req, res) => {
         }
     } catch(err)
     {
-
+        console.log(err)
     }
     
 

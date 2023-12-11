@@ -22,4 +22,28 @@ const userSchema = new Schema({
     timestamps: true
 })
 
+userSchema.pre('validate', function(){
+    if (this.password === this.username)
+    {
+        const validationError = this.invalidate('password', 'Password should be distinct from username');
+        throw validationError;
+    }
+
+    if (this.username === this.password)
+    {
+        const validationError = this.invalidate('username', 'Username should be distinct from password');
+        throw validationError;
+    }
+
+    const emailRegex = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "i")
+    
+    if (emailRegex.test(this.email)===false)
+    {
+        console.log(this.email);
+        const validationError = this.invalidate('email', 'Email should be formatted such as harrypotter@hogwarts.edu');
+        throw validationError;
+    }
+
+})
+
 module.exports = mongoose.model("User", userSchema);

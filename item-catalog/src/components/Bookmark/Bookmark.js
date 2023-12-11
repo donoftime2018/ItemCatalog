@@ -3,7 +3,8 @@ import AppNav from "../NavBar/NavBar";
 import Title from "../appTitle/appTitle";
 import { useAuth } from "../context/user";
 import "bootstrap/dist/css/bootstrap.min.css"
-
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import {Box} from "@mui/material"
 import axios from "axios";
 import "./Bookmark.css"
 
@@ -52,12 +53,12 @@ const Bookmark = (props) => {
                     {
                         bookmarkedItems.map(item=>{
                             return(<>
-                                <div class="row align-items-center text-center" style={{fontSize: '18px', paddingTop: '10px', lineHeight: '1.5rem'}}>
+                                <div class="row align-items-center text-center" style={{display: 'flex', fontSize: '18px', paddingTop: '10px', lineHeight: '1.5rem'}}>
                                     <div class="col w-100">{item.name}</div>
                                     <div class="col">{item.poster}</div>
                                     <div class="col">${item.price.toFixed(2)}</div>
                                     <div class="col-xxl">{item.desc}</div>
-                                    <div class="col">{item.rating}</div>
+                                    <div class="col"><div style={{display: 'flex'}}>{item.rating}<ThumbUpIcon fontSize="small" color="success"></ThumbUpIcon></div></div>
                                 </div>
                             </>)
                         })
