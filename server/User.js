@@ -16,12 +16,13 @@ const userSchema = new Schema({
     email:  {
         type: String,
         required: true
-    }
+    }  
 
 }, {
     collection: 'user',
     timestamps: true
 })
+
 
 userSchema.pre('validate', function(){
     if (this.password === this.username)
@@ -48,10 +49,10 @@ userSchema.pre('validate', function(){
 })
 
 userSchema.pre('save', async function(){
-    if (this.isNew)
+    if (this.isNew || this.isModified("password"))
     {
         console.log(this.password)
-        const salt = await bcrypt.genSalt()
+        const salt = await bcrypt.genSalt(this.password.length)
         const hashedPwd = await bcrypt.hash(this.password, salt);
         this.password = hashedPwd
         console.log(this.password)
@@ -59,7 +60,7 @@ userSchema.pre('save', async function(){
 
     else
     {
-
+        return next()
     }
 })
 
