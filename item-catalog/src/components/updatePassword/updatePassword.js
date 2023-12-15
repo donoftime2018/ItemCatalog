@@ -42,9 +42,11 @@ const UpdatePassword = (props) => {
                     navigate("/login")
                 }
             }).catch((err)=>{
-                const errorMessage = JSON.parse(err.request.response)
-                console.error(errorMessage.msg); 
-                alert(errorMessage.msg);})
+                const errorMessage = JSON.parse(err.request.response);
+                const validationMessage = err.response.data.msg.message;
+                const errorAlert = validationMessage===undefined ? errorMessage : validationMessage;
+                alert(errorAlert);
+            })
         }
 
         else {

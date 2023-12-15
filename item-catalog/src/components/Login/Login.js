@@ -6,6 +6,7 @@ import * as yup from "yup"
 import axios from "axios";
 import { useAuth } from "../context/user";
 import "./Login.css";
+import { error } from "console";
 
 const LoginPage = (props) => {
 
@@ -46,9 +47,10 @@ const LoginPage = (props) => {
                 navigate(redirect, {replace: true})
             }
         }).catch((err)=>{
-            const errorMessage = JSON.parse(err.request.response)
-            console.error(errorMessage.msg); 
-            alert(errorMessage.msg);})
+            const errorMessage = JSON.parse(err.request.response);
+            const validationMessage = err.response.data.msg.message;
+            const errorAlert = validationMessage===undefined ? errorMessage : validationMessage;
+            alert(errorAlert);})
     }
 
     return(<>
