@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Card, CardContent, CardHeader, Divider} from "@mui/material"
+import {Card, Box, CardContent, CardHeader, Divider} from "@mui/material"
 import axios from "axios";
 import { useAuth } from "../context/user";
 import Title from "../appTitle/appTitle";
@@ -134,7 +134,7 @@ const Profile = (props) => {
                         popularItems.map((item, index)=>{
                             return(<>
                                 <Divider></Divider>
-                                <CardContent sx={{textAlign: 'center', alignItems: 'center'}}>{item.name}, {item.rating} <ThumbUpIcon color='success' sx={{alignItems: 'start', fontSize: 'large'}}></ThumbUpIcon></CardContent>
+                                <CardContent sx={{textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center'}}><div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>{item.name}, {item.rating} <Box sx={{flexGrow: '0.02'}}/> <ThumbUpIcon color='success' sx={{alignItems: 'center', fontSize: 'large'}}></ThumbUpIcon></div></CardContent>
                             </>)
                         })
                     }
