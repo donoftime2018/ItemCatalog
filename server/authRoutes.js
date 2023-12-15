@@ -47,6 +47,8 @@ router.route("/login").post(async(req, res) => {
         }
     } catch(err) {
         console.log(err)
+        res.status(400).send({msg: err})
+        // res.status(400).send(err)
     }
 
 })
@@ -101,7 +103,9 @@ router.route("/register").post(async(req, res) => {
     }
     } catch(err) {
         console.log(err)
-        // res.status(400).send({msg: err})
+        // res.status(400).send(err)
+        // res.status(400).send(err.errors.password)
+        res.status(400).send({msg: err})
     }
     
 })
@@ -120,7 +124,7 @@ router.route("/updatePassword").put(async(req, res) => {
 
             if (findPwd.length===0)
             {
-                let updatedPwd = await User.updateOne({username: name, password: pwd})
+                let updatedPwd = await User.updateOne({username: name}, {password: pwd})
                 console.log(updatedPwd)
                 if (updatedPwd)
                 {
@@ -141,7 +145,8 @@ router.route("/updatePassword").put(async(req, res) => {
     } catch(err)
     {
         console.log(err)
-        // res.status(400).send({msg: err})
+        res.status(400).send({msg: err})
+        // res.status(400).send(err)
     }
     
 

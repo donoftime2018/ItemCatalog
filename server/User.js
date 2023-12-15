@@ -37,6 +37,12 @@ userSchema.pre('validate', function(){
         throw validationError;
     }
 
+    if (this.password === "password")
+    {
+        const validationError = this.invalidate('password', 'Password cannot be "pass" or "password"');
+        throw validationError;
+    }
+
     const emailRegex = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "i")
     
     if (emailRegex.test(this.email)===false)
@@ -52,7 +58,7 @@ userSchema.pre('save', async function(next){
     if (this.isNew)
     {
         console.log(this.password)
-        const salt = await bcrypt.genSalt(this.password.length)
+        const salt = await bcrypt.genSalt(10)
         const hashedPwd = await bcrypt.hash(this.password, salt);
         this.password = hashedPwd
         console.log(this.password)
@@ -64,7 +70,7 @@ userSchema.pre('save', async function(next){
 userSchema.pre('updateOne', async function(next){
     const update = this.getUpdate()
     console.log(update.password)
-    const salt = await bcrypt.genSalt(update.password.length)
+    const salt = await bcrypt.genSalt(10)
     const hashedPwd = await bcrypt.hash(update.password, salt);
     update.password = hashedPwd
     console.log(update.password)
