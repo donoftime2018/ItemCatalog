@@ -71,7 +71,7 @@ router.route("/mostPopularItems/:user").get(async(req, res)=>{
     // }).catch(function(error) {console.error(error)}
     
     try {
-        let popularItems = await Item.find({poster: user}).select("name rating").sort({rating: -1, updatedAt: -1}).limit(5)
+        let popularItems = await Item.find({poster: user, rating: {$gte: 1}}).select("name rating").sort({rating: -1, updatedAt: -1}).limit(5)
         res.status(200).json(popularItems)
     } catch(err) {
 

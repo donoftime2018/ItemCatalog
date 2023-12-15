@@ -58,7 +58,7 @@ const Bookmark = (props) => {
                                     <div class="col">{item.poster}</div>
                                     <div class="col">${item.price.toFixed(2)}</div>
                                     <div class="col-xxl">{item.desc}</div>
-                                    <div class="col"><div style={{display: 'flex'}}>{item.rating}<ThumbUpIcon fontSize="small" color="success"></ThumbUpIcon></div></div>
+                                    <div class="col"><div style={{display: 'flex', justifyContent: 'center'}}>{item.rating} <Box sx={{flexGrow: '0.02'}}/> <ThumbUpIcon fontSize="small" color="success"></ThumbUpIcon></div></div>
                                 </div>
                             </>)
                         })
