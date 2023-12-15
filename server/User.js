@@ -70,12 +70,20 @@ userSchema.pre('save', async function(next){
 userSchema.pre('updateOne', async function(next){
     const update = this.getUpdate()
     console.log(update.password)
-    const salt = await bcrypt.genSalt(10)
-    const hashedPwd = await bcrypt.hash(update.password, salt);
-    update.password = hashedPwd
-    console.log(update.password)
 
-    return next()
+    if (update.password === "password")
+    {
+        return(next(new Error('Password cannot be "pass" or "password"')));
+    }
+
+    else
+    {
+        const salt = await bcrypt.genSalt(10)
+        const hashedPwd = await bcrypt.hash(update.password, salt);
+        update.password = hashedPwd
+        console.log(update.password)
+        return next()
+    }
 })
 
 module.exports = mongoose.model("User", userSchema);
