@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const express = require('express');
 const router = express.Router()
+const bcrypt = require('bcrypt')
 const User = require("./User");
 const Item = require("./Item")
 
@@ -23,11 +24,23 @@ router.route("/login").post(async(req, res) => {
     // }).catch(function(error) {console.error(error)})
 
     try {
-        let findUser = await User.find({username: name, password: pwd})
-        // console.log(findUser)
+        let findUser = await User.find({username: name})
+        console.log(findUser)
         if (findUser.length>0)
         {
-            res.status(200).json(findUser)
+            console.log(pwd)
+            console.log(findUser[0].password)
+
+            let matches = await bcrypt.compare(pwd, findUser[0].password)
+            console.log(matches)
+            if (matches)
+            {
+                res.status(200).json(findUser)
+            }
+
+            else {
+                res.status(400).send({msg: "Password incorrect"})
+            }
         }
         else {
             res.status(400).send({msg: "Invalid username or password"})
@@ -88,6 +101,7 @@ router.route("/register").post(async(req, res) => {
     }
     } catch(err) {
         console.log(err)
+        // res.status(400).send({msg: err})
     }
     
 })
@@ -127,6 +141,7 @@ router.route("/updatePassword").put(async(req, res) => {
     } catch(err)
     {
         console.log(err)
+        // res.status(400).send({msg: err})
     }
     
 

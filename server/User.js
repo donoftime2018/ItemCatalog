@@ -48,8 +48,8 @@ userSchema.pre('validate', function(){
 
 })
 
-userSchema.pre('save', async function(){
-    if (this.isNew || this.isModified("password"))
+userSchema.pre('save', async function(next){
+    if (this.isNew)
     {
         console.log(this.password)
         const salt = await bcrypt.genSalt(this.password.length)
@@ -58,10 +58,18 @@ userSchema.pre('save', async function(){
         console.log(this.password)
     }
 
-    else
-    {
-        return next()
-    }
+    return next()
+})
+
+userSchema.pre('updateOne', async function(next){
+    const update = this.getUpdate()
+    console.log(update.password)
+    const salt = await bcrypt.genSalt(update.password.length)
+    const hashedPwd = await bcrypt.hash(update.password, salt);
+    update.password = hashedPwd
+    console.log(update.password)
+
+    return next()
 })
 
 module.exports = mongoose.model("User", userSchema);
