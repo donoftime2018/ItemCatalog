@@ -1,4 +1,4 @@
-import {Card, CardHeader, CardContent, Divider, Button, TextField} from "@mui/material"
+import {Card, CardHeader, CardContent, FormGroup, FormControlLabel, Divider, Button, TextField, Checkbox} from "@mui/material"
 import "./addForm.css";
 import {useFormik} from "formik";
 import { useAuth } from "../context/user";
@@ -12,7 +12,8 @@ const AddForm = () => {
     const validation = () => yup.object({
         item_name: yup.string().max(40, "Item name cannot be over 40 characters long").required("Item name required"),
         item_price: yup.number().positive("Item price must be positive").required("Item price required"),
-        item_desc: yup.string().max(60, "Item description cannot be over 60 characters long").required("Item description required")
+        item_desc: yup.string().max(60, "Item description cannot be over 60 characters long").required("Item description required"),
+        item_categories: yup.array().of(yup.string()).min(1, "Need at least one category selected")
     })
 
     const formik = useFormik({
@@ -20,7 +21,8 @@ const AddForm = () => {
         initialValues: {
             item_name: "",
             item_price: null,
-            item_desc: ""
+            item_desc: "",
+            item_categories: []
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
@@ -48,11 +50,11 @@ const AddForm = () => {
    return(<>
         <div class="formLayout">
             <Card class="addFormStyle">
-                <CardHeader sx={{textAlign: 'center', paddingRight: '4px'}} title="Add Items"></CardHeader>    
+                <CardHeader sx={{textAlign: 'center', marginTop: '-2%'}} title="Add Items"></CardHeader>    
                 <Divider></Divider>
                 <CardContent>
                 <form onSubmit={formik.handleSubmit}>
-                <div style={{display: "flex", justifyContent: 'center'}}>
+                <div style={{display: "flex", justifyContent: 'center', marginTop: '-5%'}}>
                     <TextField 
                         id="item_name"
                         name="item_name"
@@ -105,7 +107,15 @@ const AddForm = () => {
                     />
                 </div>
                 <div style={{display: "flex", justifyContent: 'center'}}>
-                    <Button type="Submit" variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Add Item to List</Button>
+                    <FormGroup sx={{justifyContent: 'center', flexDirection: 'row'}}>
+                        <FormControlLabel control={<Checkbox />} label="Collectibles & Hobbies" />
+                        <FormControlLabel control={<Checkbox />} label="Toys & Games" />
+                        <FormControlLabel control={<Checkbox />} label="Movies & TV" />
+                        <FormControlLabel control={<Checkbox />} label="Outdoors & Sports" />
+                    </FormGroup>
+                </div>
+                <div style={{display: "flex", justifyContent: 'center', marginBottom: '-3%', marginTop: '-2%'}}>
+                    <Button type="Submit" variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Add Item</Button>
                 </div>
             </form>
             </CardContent>

@@ -137,11 +137,11 @@ const Dashboard = (props) => {
             <div class="searchBar">
                 <div>
                     <Card class="searchCard">
-                        <CardHeader sx={{display: 'flex', textAlign: 'center'}} title="Search Items"></CardHeader>
+                        <CardHeader sx={{display: 'flex', textAlign: 'center', marginTop: '-2%'}} title="Search Items"></CardHeader>
                         <Divider/>
                         <CardContent>
                             <form onSubmit={formik.handleSubmit}>
-                                <div>
+                                <div style={{marginTop: '-5%'}}>
                                 <Tooltip title="Search Items"><IconButton type="submit"><SearchIcon fontSize='large'/></IconButton></Tooltip>
                                 <TextField
                                     id="itemQuery"
@@ -160,7 +160,7 @@ const Dashboard = (props) => {
                                 />
                                 </div>
 
-                                <div style={{display: 'flex', justifyContent: 'end'}}>
+                                <div style={{display: 'flex', justifyContent: 'end', marginBottom: '-3%'}}>
                                 <TextField
                                     id="posterQuery"
                                     name="posterQuery"
