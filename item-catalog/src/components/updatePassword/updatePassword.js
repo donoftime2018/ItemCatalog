@@ -44,7 +44,7 @@ const UpdatePassword = (props) => {
             }).catch((err)=>{
                 const errorMessage = JSON.parse(err.request.response);
                 const validationMessage = err.response.data.msg.message;
-                const errorAlert = validationMessage===undefined ? errorMessage : validationMessage;
+                const errorAlert = validationMessage===undefined ? errorMessage.msg : validationMessage;
                 alert(errorAlert);
             })
         }

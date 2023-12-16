@@ -73,7 +73,7 @@ userSchema.pre('updateOne', async function(next){
 
     if (update.password === "password")
     {
-        return(next(new Error('Password cannot be "pass" or "password"')));
+        return(next('Password cannot be "pass" or "password"'));
     }
 
     else
