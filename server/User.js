@@ -24,23 +24,26 @@ const userSchema = new Schema({
 })
 
 
-userSchema.pre('validate', function(){
+userSchema.pre('validate', function(next){
     if (this.password === this.username)
     {
-        const validationError = this.invalidate('password', 'Password should be distinct from username');
-        throw validationError;
+        return(next('Password should be distinct from username'))
+        // const validationError = this.invalidate('password', 'Password should be distinct from username');
+        // throw validationError;
     }
 
     if (this.username === this.password)
     {
-        const validationError = this.invalidate('username', 'Username should be distinct from password');
-        throw validationError;
+        return(next('Username should be distinct from password'))
+        // const validationError = this.invalidate('username', 'Username should be distinct from password');
+        // throw validationError;
     }
 
     if (this.password === "password")
     {
-        const validationError = this.invalidate('password', 'Password cannot be "pass" or "password"');
-        throw validationError;
+        return(next('Password cannot be "pass" or "password"'))
+        // const validationError = this.invalidate('password', 'Password cannot be "pass" or "password"');
+        // throw validationError;
     }
 
     const emailRegex = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "i")
@@ -48,8 +51,9 @@ userSchema.pre('validate', function(){
     if (emailRegex.test(this.email)===false)
     {
         console.log(this.email);
-        const validationError = this.invalidate('email', 'Email should be formatted such as harrypotter@hogwarts.edu');
-        throw validationError;
+        return(next('Email should be formatted such as harrypotter@hogwarts.edu'))
+        // const validationError = this.invalidate('email', 'Email should be formatted such as harrypotter@hogwarts.edu');
+        // throw validationError;
     }
 
 })
