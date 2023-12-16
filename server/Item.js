@@ -30,7 +30,8 @@ const itemSchema = new Schema({
         required: true,
     },
     usersRated: [String],
-    usersBookmarked: [String]
+    usersBookmarked: [String],
+    categories: [String]
 }, {
     collection: 'item',
     timestamps: true
