@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 const express = require('express');
-const router = express.Router()
-const Item = require('./Item.js');
+const app = express();
+const Item = require('../schemas/Item.js');
 
 mongoose.set('setDefaultsOnInsert', true);
 
 
 //Read all items
-router.route('/').get(async(req, res)=>{
+app.get("/", async(req, res)=>{
     // Item.find({}).sort({rating: -1, price: 1, name: 1}).then(function(data) {
     //         res.json(data).status(200).send()
     // }).catch(function(err){
@@ -22,7 +22,7 @@ router.route('/').get(async(req, res)=>{
     }
 })
 
-router.route("/getPostedItems/:user").get(async(req, res)=>{
+app.get("/getPostedItems/:user", async(req, res)=>{
     let user = req.params.user;
 
     try {
@@ -40,7 +40,7 @@ router.route("/getPostedItems/:user").get(async(req, res)=>{
 
 })
 
-router.route("/numPostedItems/:user").get(async(req, res)=>{
+app.get("/numPostedItems/:user", async(req, res)=>{
 
     try {
         let user = req.params.user;
@@ -52,7 +52,7 @@ router.route("/numPostedItems/:user").get(async(req, res)=>{
 
 })
 
-router.route("/numLikedItems/:user").get(async(req, res)=>{
+app.get("/numLikedItems/:user", async(req, res)=>{
 
     try {
         let user = req.params.user;
@@ -63,7 +63,7 @@ router.route("/numLikedItems/:user").get(async(req, res)=>{
     }
 })
 
-router.route("/mostPopularItems/:user").get(async(req, res)=>{
+app.get("/mostPopularItems/:user", async(req, res)=>{
     let user = req.params.user;
 
     // Item.find({poster: user}).sort({rating: -1, updatedAt: -1}).limit(5).then(function(data) {
@@ -78,7 +78,7 @@ router.route("/mostPopularItems/:user").get(async(req, res)=>{
     }
 })
 
-router.route("/getLikedItems/:user").get(async(req, res) => {
+app.get("/getLikedItems/:user", async(req, res) => {
 
 
     let user = req.params.user
@@ -93,7 +93,7 @@ router.route("/getLikedItems/:user").get(async(req, res) => {
     }
 })
 
-router.route("/getBookmarkedItems/:user").get(async(req, res)=>{
+app.get("/getBookmarkedItems/:user", async(req, res)=>{
     let user = req.params.user;
 
     let bookmarkedItems = await Item.find({usersBookmarked: user}).select("name rating poster desc price").sort({rating: -1, updatedAt: -1})
@@ -102,13 +102,13 @@ router.route("/getBookmarkedItems/:user").get(async(req, res)=>{
     res.status(200).json(bookmarkedItems)
 })
 
-router.route("/numBookmarkedItems/:user").get(async(req, res)=>{
+app.get("/numBookmarkedItems/:user", async(req, res)=>{
     let user = req.params.user
     let numBookmarkedItems = await Item.countDocuments({usersBookmarked: user})
     res.status(200).json(numBookmarkedItems)
 })
 
-router.route("/recentBookmarkedItems/:user").get(async(req, res)=>{
+app.get("/recentBookmarkedItems/:user", async(req, res)=>{
     let user = req.params.user
     let bookmarkedItems = await Item.find({usersBookmarked: user}).select("name").sort({updatedAt: -1}).limit(5)
     // console.log(bookmarkedItems)
@@ -116,7 +116,7 @@ router.route("/recentBookmarkedItems/:user").get(async(req, res)=>{
 })
 
 //add items 
-router.route("/insertItems").post(async(req, res)=>{
+app.post("/insertItems", async(req, res)=>{
 
     // Item.find({$or: [
     //     {name: req.body.name, desc: req.body.desc, price: req.body.price},
@@ -174,14 +174,14 @@ router.route("/insertItems").post(async(req, res)=>{
 })
 
 //delete items
-router.route("/deleteItems/:id").delete(async(req, res)=>{
+app.delete("/deleteItems/:id", async(req, res)=>{
    Item.deleteOne({_id: req.params.id}).then((result)=>{console.log(result); res.status(200).send()}).catch((err)=>{
         // console.error(err)
     })
 })
 
 //update rating
-router.route("/increaseRating/:id").put(async(req, res, next)=>{
+app.put("/increaseRating/:id", async(req, res, next)=>{
     Item.findOne({_id: req.params.id}).then((doc)=>{
         doc.rating+=1
         return doc.validate().then(()=>doc)
@@ -210,7 +210,7 @@ router.route("/increaseRating/:id").put(async(req, res, next)=>{
 
 })
 
-router.route("/decreaseRating/:id").put(async(req, res, next)=>{
+app.put("/decreaseRating/:id", async(req, res, next)=>{
 
     Item.findOne({_id: req.params.id}).then((doc)=>{
         doc.rating-=1
@@ -241,7 +241,7 @@ router.route("/decreaseRating/:id").put(async(req, res, next)=>{
     })
 })
 
-router.route("/addBookmark/:id").put(async(req, res, next)=>{
+app.put("/addBookmark/:id", async(req, res, next)=>{
     let user = req.body.user
     console.log(user)
 
@@ -256,12 +256,7 @@ router.route("/addBookmark/:id").put(async(req, res, next)=>{
     {
         res.status(400).send({msg: "You have already bookmarked this item!"})
     }
-
-    else if (bookmarkedList.length===30)
-    {
-        res.status(400).send({msg: "You have reached maximum bookmarks allowed for a user!"})
-    }
-
+    
     else
     {
         let updateBookmark = await Item.findOneAndUpdate({_id: req.params.id}, 
@@ -273,7 +268,7 @@ router.route("/addBookmark/:id").put(async(req, res, next)=>{
     }
 })
 
-router.route("/removeBookmark/:id").put(async(req, res, next)=>{
+app.put("/removeBookmark/:id", async(req, res, next)=>{
     let user = req.body.user
     console.log(user)
 
@@ -288,4 +283,4 @@ router.route("/removeBookmark/:id").put(async(req, res, next)=>{
 
 
 
-module.exports = router
+module.exports = app

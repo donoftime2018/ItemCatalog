@@ -1,10 +1,12 @@
 const mongoose = require('mongoose')
 const {Schema} = mongoose
+const User = require("./User")
 
 const itemSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     desc: {
@@ -30,8 +32,7 @@ const itemSchema = new Schema({
         required: true,
     },
     usersRated: [String],
-    usersBookmarked: [String],
-    categories: [String]
+    usersBookmarked: [String]
 }, {
     collection: 'item',
     timestamps: true

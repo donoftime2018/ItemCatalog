@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 const express = require('express');
-const router = express.Router()
+const app = express()
 const bcrypt = require('bcrypt')
-const User = require("./User");
-const Item = require("./Item")
+const User = require("../schemas/User");
+const Item = require("../schemas/Item")
 
 mongoose.set('setDefaultsOnInsert', true);
 
-router.route("/login").post(async(req, res) => {
+app.post("/login", async (req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
 
@@ -53,7 +53,7 @@ router.route("/login").post(async(req, res) => {
 
 })
 
-router.route("/register").post(async(req, res) => {
+app.post("/register", async(req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
     let email = req.body.email
@@ -110,7 +110,7 @@ router.route("/register").post(async(req, res) => {
     
 })
 
-router.route("/updatePassword").put(async(req, res) => {
+app.put("/updatePassword", async(req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
 
@@ -175,7 +175,7 @@ router.route("/updatePassword").put(async(req, res) => {
     // })
 })
 
-router.route("/deleteUser/:user").delete(async(req, res, next)=>{
+app.delete("/deleteUser/:user", async(req, res, next)=>{
     req.user = req.params.user
     next()
 })
@@ -232,8 +232,8 @@ async function deleteUser(req, res)
 
 
 
-router.use(deletePostedItems)
-router.use(removeLikes)
-router.use(removeBookmarks)
-router.use(deleteUser)
-module.exports = router;
+app.use(deletePostedItems)
+app.use(removeLikes)
+app.use(removeBookmarks)
+app.use(deleteUser)
+module.exports = app;
