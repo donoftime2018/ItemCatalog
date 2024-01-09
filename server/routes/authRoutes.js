@@ -87,20 +87,20 @@ app.post("/register", async(req, res) => {
             {password: pwd},
             {email: email}
         ]})
-        console.log(findUser)
-    if (findUser.length>0)
-    {  
-        res.status(400).send({msg: "Username, password, or email already in use!"})
-    }
+       // console.log(findUser)
+    // if (findUser.length>0)
+    // {  
+    //     res.status(400).send({msg: "Username, password, or email already in use!"})
+    // }
 
-    else {
+    // else {
         let newUser = await User.create({username: name, password: pwd, email: email})
         console.log(newUser)
         if (newUser)
         {
             res.status(200).send()
         }
-    }
+    // }
     } catch(err) {
         console.log(err)
         // res.status(400).send(err)

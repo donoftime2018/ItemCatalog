@@ -34,7 +34,7 @@ userSchema.pre('validate', function(next){
         // const validationError = this.invalidate('password', 'Password should be distinct from username');
         // throw validationError;
     }
-
+     
     if (this.username === this.password)
     {
         return(next('Username should be distinct from password'))
@@ -48,16 +48,16 @@ userSchema.pre('validate', function(next){
         // const validationError = this.invalidate('password', 'Password cannot be "pass" or "password"');
         // throw validationError;
     }
-
-    const emailRegex = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "i")
     
-    if (emailRegex.test(this.email)===false)
+    if (new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "i").test(this.email)===false)
     {
         console.log(this.email);
         return(next('Email should be formatted such as harrypotter@hogwarts.edu'))
         // const validationError = this.invalidate('email', 'Email should be formatted such as harrypotter@hogwarts.edu');
         // throw validationError;
     }
+
+    next()
 
 })
 
@@ -70,8 +70,18 @@ userSchema.pre('save', async function(next){
         this.password = hashedPwd
         console.log(this.password)
     }
+    next()
+    // return next()
+})
 
-    return next()
+userSchema.post('save', function(error, doc, next) {
+   
+    if(error.name === 'MongoServerError' && error.code === 11000)
+    {
+        return(next("Name, password, or email already exists used in the database"))
+    }
+
+    next()
 })
 
 userSchema.pre('updateOne', async function(next){
@@ -90,13 +100,6 @@ userSchema.pre('updateOne', async function(next){
         update.password = hashedPwd
         console.log(update.password)
         return next()
-    }
-})
-
-userSchema.post('save', function(error, doc, next) {
-    if(error.name === 'MongoServerError' && error.code === 11000)
-    {
-       return(next(new Error("Name, password, or email already exists used in the database")))
     }
 })
 

@@ -181,11 +181,6 @@ const Dashboard = (props) => {
                         </CardContent>
                     </Card>
                 </div>
-
-                <div style={{marginLeft: '3%'}}>
-                    <AddForm></AddForm>
-                </div>
-
         </div>
             
         <div class="itemLayout">
@@ -201,6 +196,9 @@ const Dashboard = (props) => {
             }
             </>
         </div>
+        
+        <AddForm></AddForm>
+        
     </>)
 }
 
