@@ -152,22 +152,23 @@ app.post("/insertItems", async(req, res)=>{
         ]
         })
     
-        if (findItem.length>0)
-        {
-            res.status(400).send({msg: req.body.name + " already exists"});
-        }
+        // if (findItem.length>0)
+        // {
+        //     res.status(400).send({msg: req.body.name + " already exists"});
+        // }
     
-        else {
-            let newItem = await Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price, poster: req.body.user, quantity: req.body.quantity})
-            
-            if(newItem)
-            {
-                res.status(200).send()
-            }
+        // else {
+        let newItem = await Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price, poster: req.body.user, quantity: req.body.quantity})
+        
+        if(newItem)
+        {
+            res.status(200).send()
         }
+        // }
     } catch(err)
     {
         console.log(err);
+        res.status(400).send({msg: err})
     }
   
     

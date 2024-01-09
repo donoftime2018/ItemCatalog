@@ -93,4 +93,11 @@ userSchema.pre('updateOne', async function(next){
     }
 })
 
+userSchema.post('save', function(error, doc, next) {
+    if(error.name === 'MongoServerError' && error.code === 11000)
+    {
+       return(next(new Error("Name, password, or email already exists used in the database")))
+    }
+})
+
 module.exports = mongoose.model("User", userSchema);

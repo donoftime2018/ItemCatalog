@@ -38,4 +38,11 @@ const itemSchema = new Schema({
     timestamps: true
 })
 
+itemSchema.post('save', function(error, doc, next) {
+    if(error.name === 'MongoServerError' && error.code === 11000)
+    {
+       return(next(this.name + " already exists in the catalog"))
+    }
+})
+
 module.exports = mongoose.model("Item", itemSchema);
