@@ -48,7 +48,6 @@ app.post("/login", async (req, res) => {
     } catch(err) {
         console.log(err)
         res.status(400).send({msg: err})
-        // res.status(400).send(err)
     }
 
 })
@@ -87,24 +86,15 @@ app.post("/register", async(req, res) => {
             {password: pwd},
             {email: email}
         ]})
-       // console.log(findUser)
-    // if (findUser.length>0)
-    // {  
-    //     res.status(400).send({msg: "Username, password, or email already in use!"})
-    // }
-
-    // else {
+   
         let newUser = await User.create({username: name, password: pwd, email: email})
         console.log(newUser)
         if (newUser)
         {
             res.status(200).send()
         }
-    // }
     } catch(err) {
         console.log(err)
-        // res.status(400).send(err)
-        // res.status(400).send(err.errors.password)
         res.status(400).send({msg: err})
     }
     
@@ -122,20 +112,17 @@ app.put("/updatePassword", async(req, res) => {
             let findPwd = await User.find({password: pwd})
             console.log(findPwd)
 
-            if (findPwd.length===0)
+            let matches = await bcrypt.compare(pwd, findUser[0].password)
+            console.log(matches)
+            
+            if (matches)
             {
-                let updatedPwd = await User.updateOne({username: name}, {password: pwd})
-                console.log(updatedPwd)
-                if (updatedPwd)
-                {
-                    res.status(200).send()
-                }
-            }
-
-            else {
                 res.status(400).send({msg: "The password you entered is in use"})
             }
-            
+          
+            let updatedPwd = await User.updateOne({username: name}, {password: pwd})
+            console.log(updatedPwd)
+            res.status(200).send()
         }
 
         else
@@ -146,7 +133,6 @@ app.put("/updatePassword", async(req, res) => {
     {
         console.log(err)
         res.status(400).send({msg: err})
-        // res.status(400).send(err)
     }
     
 
