@@ -1,27 +1,61 @@
-version: "3.7"
+version: "3.8"
 services:
-  frontend:
-    image: item-catalog:latest
-    ports:
-      - "3000:3000"
-    networks: 
-      - frontend-network
+  
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: myapp-server
+    container_name: myapp-node-server
+    command: npm start
+    env_file: ./server/.env
+    environment:
+      - MONGODBURL=mongodb+srv://donoftime2018:Godons2023!@itemsdb.ttafsh1.mongodb.net/?retryWrites=true&w=majority
+      - MONGO_LOCAL_URL=mongodb://db:27017/items
+      - PORT=4000
     volumes:
-      - global-volume:/frontend/frontend-volume:ro
-  backend:
-    image: item-catalog-server:latest
+      - ./server/:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
       - "4000:4000"
+    depends_on:
+      - mongo
     networks:
-      - backend-network
+      - mern-network
+  mongo:
+    image: mongo
+    container_name: db
     volumes:
-      - global-volume:/backend/backend-volume:ro
-    environment:
-      PORT: 4000
-      MONGOURL: "mongodb://127.0.0.1/items"
+      - data-volume:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - mern-network
+  frontend:
+    build:
+      context: ./item-catalog
+      dockerfile: Dockerfile
+    image: myapp-client
+    container_name: myapp-item-catalog
+    command: npm start
+    volumes:
+      - ./client/:/usr/app
+      - /usr/app/node_modules
+    depends_on: 
+      - server
+    ports:
+      - "3000:3000"
+    # stdin_open: true
+    # tty: true
+    networks:
+      - mern-network
+    
 volumes:
-  global-volume:
+  data-volume:
+  node_modules:
+  web-root:
+    driver: local
 
 networks:
-  backend-network: {}
-  frontend-network : {}
+  mern-network: 
+    driver: bridge

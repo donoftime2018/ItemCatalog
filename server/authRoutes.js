@@ -74,7 +74,7 @@ router.route("/register").post(async(req, res) => {
         console.log(findUser)
     if (findUser.length>0)
     {  
-        res.status(400).send({msg: name + " already exists!"})
+        res.status(400).send({msg: "Username, password, or email already in use!"})
     }
 
     else {

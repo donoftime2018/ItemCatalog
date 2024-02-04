@@ -4,7 +4,7 @@ import axios from "axios";
 import { useAuth } from "../context/user";
 import Title from "../appTitle/appTitle";
 import AppNav from "../NavBar/NavBar";
-import StarIcon from '@mui/icons-material/Star';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import "./Profile.css";
 
 const Profile = () => {
@@ -99,7 +99,7 @@ const Profile = () => {
                         popularItems.map((item, index)=>{
                             return(<>
                                 <Divider></Divider>
-                                <CardContent sx={{textAlign: 'center', alignItems: 'center'}}>{item.name}, {item.rating} <StarIcon color='warning' sx={{alignItems: 'start', fontSize: 'large'}}></StarIcon></CardContent>
+                                <CardContent sx={{textAlign: 'center', alignItems: 'center'}}>{item.name}, {item.rating} <ThumbUpIcon color='success' sx={{alignItems: 'start', fontSize: 'large'}}></ThumbUpIcon></CardContent>
                             </>)
                         })
                     }

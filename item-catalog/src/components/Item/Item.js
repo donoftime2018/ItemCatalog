@@ -1,19 +1,18 @@
 import React from "react";
-import {Card, CardContent, Divider, IconButton} from "@mui/material";
+import {Card, CardContent, Divider, IconButton, Box} from "@mui/material";
 import { useState } from "react";
 import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
-import StarIcon from '@mui/icons-material/Star';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import CloseIcon from '@mui/icons-material/Close';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import InfoIcon from '@mui/icons-material/Info';
 import {Tooltip} from "@mui/material";
 import axios from 'axios';
 import { useAuth } from "../context/user";
 
 
-const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, lastUpdate}) => {
+const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID}) => {
 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
@@ -31,7 +30,11 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
         if (itemRating != null)
         {
             return (<>
-                <StarIcon fontSize="large" color="warning"></StarIcon>{itemRating}
+                <div>
+                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <ThumbUpIcon fontSize="large" color="success"></ThumbUpIcon><Box flexGrow='0.02'/>{itemRating}
+                    </div>
+                </div>
             </>)
         }
     }
@@ -112,9 +115,10 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID, 
             <Divider/>
             <CardContent style={{display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center'}}>
                 <span>{checkRating()}</span>
-                <div>
-                    <Tooltip title="Add Star"><IconButton onClick={increaseRating}><AddCircleIcon color="primary" fontSize="large"></AddCircleIcon></IconButton></Tooltip>
-                    <Tooltip title="Remove Star"><IconButton onClick={decreaseRating}><RemoveCircleIcon color="error" fontSize="large"></RemoveCircleIcon></IconButton></Tooltip>
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <Tooltip title="Add Like"><IconButton onClick={increaseRating}><ThumbUpIcon color="primary" fontSize="large"></ThumbUpIcon></IconButton></Tooltip>
+                    <Box flexGrow='0.05'/>
+                    <Tooltip title="Remove Like"><IconButton onClick={decreaseRating}><ThumbDownIcon color="error" fontSize="large"></ThumbDownIcon></IconButton></Tooltip>
                 </div>
                
             </CardContent>
