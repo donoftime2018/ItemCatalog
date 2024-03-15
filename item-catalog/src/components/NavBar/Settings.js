@@ -22,6 +22,7 @@ const Settings = () => {
 
     const deleteProfile = () => {
         navigate("/deleteAccount")
+        // document.getElementById("body").style("overflow", "auto")
     }
   
 
@@ -42,11 +43,12 @@ const Settings = () => {
             anchorEl={anchorEl}
             open={open}
             onClose={handleClose}
+            disableScrollLock={true}
             MenuListProps={{
             'aria-labelledby': 'basic-button',
             }}
         >
-            <MenuItem onClick={deleteProfile} sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+            <MenuItem onClick={deleteProfile} sx={{boxSizing: 'border-box'}}>
                 Delete Account
             </MenuItem>
         </Menu>

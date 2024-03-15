@@ -93,28 +93,6 @@ app.get("/getLikedItems/:user", async(req, res) => {
     }
 })
 
-app.get("/getBookmarkedItems/:user", async(req, res)=>{
-    let user = req.params.user;
-
-    let bookmarkedItems = await Item.find({usersBookmarked: user}).select("name rating poster desc price").sort({rating: -1, updatedAt: -1})
-    // console.log(bookmarkedItems)
-
-    res.status(200).json(bookmarkedItems)
-})
-
-app.get("/numBookmarkedItems/:user", async(req, res)=>{
-    let user = req.params.user
-    let numBookmarkedItems = await Item.countDocuments({usersBookmarked: user})
-    res.status(200).json(numBookmarkedItems)
-})
-
-app.get("/recentBookmarkedItems/:user", async(req, res)=>{
-    let user = req.params.user
-    let bookmarkedItems = await Item.find({usersBookmarked: user}).select("name").sort({updatedAt: -1}).limit(5)
-    // console.log(bookmarkedItems)
-    res.status(200).json(bookmarkedItems)
-})
-
 //add items 
 app.post("/insertItems", async(req, res)=>{
 
@@ -144,13 +122,6 @@ app.post("/insertItems", async(req, res)=>{
     // })
 
     try {
-        let findItem = await Item.find({$or: [
-            {name: req.body.name, desc: req.body.desc, price: req.body.price},
-            {name: req.body.name, desc: req.body.desc},
-            {name: req.body.name, price: req.body.price},
-            {name: req.body.name}
-        ]
-        })
     
         // if (findItem.length>0)
         // {
@@ -158,8 +129,8 @@ app.post("/insertItems", async(req, res)=>{
         // }
     
         // else {
-        let newItem = await Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price, poster: req.body.user, quantity: req.body.quantity})
-        
+        let newItem = await Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price, poster: req.body.user})
+        console.log(newItem)
         if(newItem)
         {
             res.status(200).send()
@@ -183,6 +154,7 @@ app.delete("/deleteItems/:id", async(req, res)=>{
 
 //update rating
 app.put("/increaseRating/:id", async(req, res, next)=>{
+
     Item.findOne({_id: req.params.id}).then((doc)=>{
         doc.rating+=1
         return doc.validate().then(()=>doc)
@@ -205,9 +177,10 @@ app.put("/increaseRating/:id", async(req, res, next)=>{
                     console.log(updatedDoc);
                     res.status(200).send()})
         }
-}).catch(err=>{
-    // console.error(err)
-})
+    }).catch(err=>{
+        console.log(err)
+        res.status(400).send({msg: err})
+    })
 
 })
 
@@ -238,48 +211,9 @@ app.put("/decreaseRating/:id", async(req, res, next)=>{
             res.status(400).send({msg: "You haven't even rated this item yet!"});
         }
     }).catch(err=>{
-        // console.error(err)
+        console.error(err)
+            res.status(400).send({msg: err})
     })
-})
-
-app.put("/addBookmark/:id", async(req, res, next)=>{
-    let user = req.body.user
-    console.log(user)
-
-    let checkBookmarked = await Item.findOne({_id: req.params.id})
-
-    let bookmarkedList = await Item.find({usersBookmarked: user}).select("usersBookmarked")
-
-    console.log(checkBookmarked)
-    console.log(bookmarkedList)
-
-    if (checkBookmarked.usersBookmarked.includes(req.body.user))
-    {
-        res.status(400).send({msg: "You have already bookmarked this item!"})
-    }
-    
-    else
-    {
-        let updateBookmark = await Item.findOneAndUpdate({_id: req.params.id}, 
-            {$addToSet: {usersBookmarked: user}}, 
-            {new: true, upsert: true})
-    
-        console.log(updateBookmark)
-        res.status(200).send()
-    }
-})
-
-app.put("/removeBookmark/:id", async(req, res, next)=>{
-    let user = req.body.user
-    console.log(user)
-
-    let removeBookmark = await Item.findOneAndUpdate({_id: req.params.id},
-        {$pull: {usersBookmarked: user}}, 
-        {new: true, upsert: true})
-    
-    console.log(removeBookmark.usersBookmarked)
-    console.log(removeBookmark)
-    res.status(200).send()
 })
 
 

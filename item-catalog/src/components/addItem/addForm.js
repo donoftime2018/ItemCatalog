@@ -48,7 +48,7 @@ const AddForm = () => {
                 <Divider></Divider>
                 <CardContent>
                 <form onSubmit={formik.handleSubmit}>
-                <div style={{display: "flex", justifyContent: 'center', marginTop: '-5%'}}>
+                <div style={{display: "flex", justifyContent: 'center'}}>
                     <TextField 
                         id="item_name"
                         name="item_name"
@@ -100,7 +100,7 @@ const AddForm = () => {
                         disableUnderline="true" 
                     />
                 </div>
-                <div style={{display: "flex", justifyContent: 'center', marginBottom: '-3%'}}>
+                <div style={{display: "flex", justifyContent: 'center'}}>
                     <Button type="Submit" variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Add Item</Button>
                 </div>
             </form>

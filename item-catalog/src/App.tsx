@@ -4,7 +4,6 @@ import {Routes, Route} from 'react-router-dom';
 import Dashboard from "./components/Dashboard/Dashboard";
 import LoginPage from "./components/Login/Login";
 import Register from "./components/Register/Register";
-import Bookmark from "./components/Bookmark/Bookmark";
 import UpdatePassword from "./components/updatePassword/updatePassword";
 import { AuthProvider } from "./components/context/user";
 import Profile from "./components/Profile/Profile";
@@ -29,7 +28,6 @@ const App = () =>
                                 <Route element={<UpdatePassword title="Change Password"/>} path="/updatePassword"></Route>
                                 <Route element={<Profile title="User Profile"/>} path="/profile"></Route>
                                 <Route element={<DeleteProfile title="Delete Account"/>} path="/deleteAccount"></Route>
-                                <Route element={<Bookmark title="User Bookmarks"/>} path="/bookmark"></Route>
                             </Routes>
                         </ItemContext>
                 </AuthProvider>

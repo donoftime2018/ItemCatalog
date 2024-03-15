@@ -114,20 +114,6 @@ const Profile = (props) => {
             </Card>
 
             <Card class="infoCard">
-                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Recently Bookmarked Items:"></CardHeader>
-                <>
-                    {
-                        bookmarkedItems.map((item, index)=>{
-                            return(<>
-                                <Divider></Divider>
-                                <CardContent sx={{textAlign: 'center', alignItems: 'center'}}>{item.name}</CardContent>
-                            </>)
-                        })
-                    }
-                </>
-            </Card>
-
-            <Card class="infoCard">
                 <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Your Most Popular Items:"></CardHeader>
                 <>
                     {
@@ -148,12 +134,6 @@ const Profile = (props) => {
                 <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Number of Items Liked:"></CardHeader>
                 <Divider></Divider>
                 <CardContent sx={{textAlign: 'center', padding: "4px!important", fontSize: "24px", alignItems: 'center'}}>{numLikedItems}</CardContent>
-            </Card>
-
-            <Card class="infoCard">
-                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Number of Items Bookmarked:"></CardHeader>
-                <Divider></Divider>
-                <CardContent sx={{textAlign: 'center', padding: "4px!important", fontSize: "24px", alignItems: 'center'}}>{numBookmarkedItems}</CardContent>
             </Card>
 
             <Card class="infoCard">

@@ -191,23 +191,6 @@ async function removeLikes(req, res, next)
     next()
 }
 
-async function removeBookmarks(req, res, next)
-{
-    console.log(req.user)
-    let checkUserBookmarked = await Item.find({usersBookmarked: req.user})
-    console.log(checkUserBookmarked.length)
-
-    if (checkUserBookmarked.length>0)
-    {
-        let removeBookmarks = await Item.updateMany({usersBookmarked: req.user}, 
-            {$pull: {usersBookmarked: req.user}}, 
-            {new: true, upsert: true})
-        console.log(removeBookmarks)
-    
-    }
-    next()
-}
-
 async function deleteUser(req, res)
 {
     console.log(req.user)

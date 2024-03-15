@@ -31,11 +31,22 @@ const itemSchema = new Schema({
         default: 0,
         required: true,
     },
-    usersRated: [String],
-    usersBookmarked: [String]
+    usersRated: [String]
 }, {
     collection: 'item',
     timestamps: true
+})
+
+itemSchema.pre('validate', function(next) {
+    if (this.rating < 0)
+    {
+        return(next("Rating cannot be negative"))
+    }
+
+    if (this.rating > 999)
+    {
+        return(next("Rating cannot be greater than 999"))
+    }
 })
 
 itemSchema.post('save', function(error, doc, next) {

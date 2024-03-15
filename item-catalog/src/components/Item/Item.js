@@ -14,7 +14,7 @@ import axios from 'axios';
 import { useAuth } from "../context/user";
 
 
-const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemBookmarked, itemRating, id, dbID}) => {
+const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID}) => {
 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
@@ -117,32 +117,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemBookmarked, itemRa
 
     return(<>
         <Card class="itemCard" key={id}>
-                {
-                    user !== itemPoster ? 
-                    <>
-                        {
-                            itemBookmarked === false ? 
-                            <>
-                                <CardContent sx={{display: 'flex', paddingTop: '4px', paddingBottom: '4px!important', alignItems: 'center', justifyContent: 'center'}}>
-                                <Tooltip title="Bookmark Item"><IconButton onClick={addToBookmark}><BookmarkAddIcon color="success" fontSize="large"></BookmarkAddIcon></IconButton></Tooltip>
-                                </CardContent>
-                                <Divider></Divider>
-                            </>
-
-                            :
-
-                            <>
-                                <CardContent sx={{display: 'flex', paddingTop: '4px', paddingBottom: '4px!important', alignItems: 'center', justifyContent: 'center'}}>
-                                <Tooltip title="Remove Bookmark"><IconButton onClick={removeBookmark}><BookmarkRemoveIcon color="success" fontSize="large"></BookmarkRemoveIcon></IconButton></Tooltip>
-                                </CardContent>
-                                <Divider></Divider>
-                            </>
-                        }
-                    </> : 
-                    <>
-
-                    </>
-                }
             <CardContent>
                 <div style={{flexDirection: 'column'}}>
                     <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>{itemName}</span>
