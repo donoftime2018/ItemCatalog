@@ -203,6 +203,5 @@ async function deleteUser(req, res)
 
 app.use(deletePostedItems)
 app.use(removeLikes)
-app.use(removeBookmarks)
 app.use(deleteUser)
 module.exports = app;
