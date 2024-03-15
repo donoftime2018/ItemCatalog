@@ -15,8 +15,9 @@ mongoose.connect("mongodb://127.0.0.1/items").then(()=>{console.log("Connected!"
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())
-app.use("/items", itemRoute)
 app.use(userRoute)
+app.use("/items", itemRoute)
+
 
 const port = process.env.PORT | 4000
 

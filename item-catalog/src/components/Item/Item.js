@@ -5,8 +5,6 @@ import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import BookmarkRemoveIcon from '@mui/icons-material/BookmarkRemove';
 import CloseIcon from '@mui/icons-material/Close';
 import InfoIcon from '@mui/icons-material/Info';
 import {Tooltip} from "@mui/material";
@@ -26,38 +24,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
 
     const closeDesc = () => {
         setOpen(false);
-    }
-
-    const addToBookmark = () => {
-        let id = dbID;
-        let data = {user}
-        axios.put("http://localhost:4000/items/addBookmark/"+id, data).then((res)=>{
-            console.log(res);
-            if (res.status === 200)
-            {
-                alert(itemName + " bookmarked successfully")
-            }
-        }).catch((err)=>{
-            const errorMessage = JSON.parse(err.request.response)
-            console.error(errorMessage.msg); 
-            alert(errorMessage.msg);
-        })
-    }
-
-    const removeBookmark = () => {
-        let id = dbID;
-        let data = {user}
-        axios.put("http://localhost:4000/items/removeBookmark/"+id, data).then((res)=>{
-            console.log(res);
-            if (res.status === 200)
-            {
-                alert(itemName + " removed from Bookmarks!")
-            }
-        }).catch((err)=>{
-            const errorMessage = JSON.parse(err.request.response)
-            console.error(errorMessage.msg); 
-            alert(errorMessage.msg);
-        })
     }
 
     const checkRating = () => {
