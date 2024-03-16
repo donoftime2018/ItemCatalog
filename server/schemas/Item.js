@@ -47,6 +47,8 @@ itemSchema.pre('validate', function(next) {
     {
         return(next("Rating cannot be greater than 999"))
     }
+
+    next()
 })
 
 itemSchema.post('save', function(error, doc, next) {

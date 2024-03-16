@@ -8,12 +8,8 @@ import axios from 'axios'
 import {Card, CardHeader, CardContent, Divider, IconButton, TextField, Tooltip} from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search';
 import {useFormik} from "formik";
-import { useAuth } from "../context/user";
 
 const Dashboard = (props) => {
-    const auth = useAuth()
-    const user = auth.user
-    
     const [items, setItems] = useState([])
     const [isQueried, setIsQueried] = useState(false);
     const [queriedItems, setQueriedItems] = useState("");
@@ -80,7 +76,7 @@ const Dashboard = (props) => {
                 items.map((item, index)=>{
                  
                     return(<>
-                        <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemBookmarked={item.usersBookmarked.includes(user)} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
+                        <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
                     </>)
                 })
             }
@@ -96,7 +92,7 @@ const Dashboard = (props) => {
                 {
                     items.filter(item=>item.name.includes(itemQuery)).map((item, index)=>{
                         return(<>
-                            <Item itemName={item.name} itemDesc={item.desc} itemBookmarked={item.usersBookmarked.includes(user)} itemPoster={item.poster} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }
@@ -109,7 +105,7 @@ const Dashboard = (props) => {
                 {
                     items.filter(item=>item.poster.includes(posterQuery)).map((item, index)=>{
                         return(<>
-                            <Item itemName={item.name} itemDesc={item.desc} itemBookmarked={item.usersBookmarked.includes(user)} itemPoster={item.poster} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }
@@ -122,7 +118,7 @@ const Dashboard = (props) => {
                 {
                     items.filter(item=>item.poster.includes(posterQuery) && item.name.includes(itemQuery)).map((item, index)=>{
                         return(<>
-                            <Item itemName={item.name} itemDesc={item.desc} itemBookmarked={item.usersBookmarked.includes(user)} itemPoster={item.poster} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }
