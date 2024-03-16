@@ -80,13 +80,6 @@ app.post("/register", async(req, res) => {
     // ).catch(function(error) {console.error(error)})
 
     try {
-        let findUser = await User.find({$or: [
-            {username: name, password: pwd, email: email},
-            {username: name},
-            {password: pwd},
-            {email: email}
-        ]})
-   
         let newUser = await User.create({username: name, password: pwd, email: email})
         console.log(newUser)
         if (newUser)
@@ -191,7 +184,7 @@ async function removeLikes(req, res, next)
     next()
 }
 
-async function deleteUser(req, res)
+async function removeUser(req, res)
 {
     console.log(req.user)
     let deleteUser = await User.deleteOne({username: req.user})
@@ -199,9 +192,8 @@ async function deleteUser(req, res)
     res.status(200).send()
 }
 
-
-
 app.use(deletePostedItems)
 app.use(removeLikes)
-app.use(deleteUser)
+app.use(removeUser)
+
 module.exports = app;
