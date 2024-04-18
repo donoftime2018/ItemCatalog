@@ -157,7 +157,7 @@ app.put("/updatePassword", async(req, res) => {
 app.delete("/deleteUser/:user", async(req, res, next)=>{
     req.user = req.params.user
     next()
-})
+}, deletePostedItems, removeLikes, removeUser)
 
 async function deletePostedItems(req, res, next)
 {   
@@ -191,9 +191,4 @@ async function removeUser(req, res)
     console.log(deleteUser)
     res.status(200).send()
 }
-
-app.use(deletePostedItems)
-app.use(removeLikes)
-app.use(removeUser)
-
 module.exports = app;
