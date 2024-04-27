@@ -79,7 +79,7 @@ const AddForm = () => {
                         inputProps={{step: 0.01, min: 0.00}} 
                         sx={{backgroundColor: 'white', width: '100%'}} 
                         placeholder="Item Price goes here..." 
-                        label="Item Price"
+                        label="Item Price (USD)"
                         disableUnderline="true" 
                     />
                 </div>
