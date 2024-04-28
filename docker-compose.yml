@@ -11,7 +11,8 @@ services:
     env_file: ./server/.env
     environment:
       - MONGODBURL=mongodb+srv://donoftime2018:Godons2023!@itemsdb.ttafsh1.mongodb.net/?retryWrites=true&w=majority
-      - MONGO_LOCAL_URL=mongodb://db:27017/items
+      - MONGO_DOCKER_URL=mongodb://db:27017/items
+      - MONGO_LOCAL_URL=mongodb://127.0.0.1/items
       - PORT=4000
     volumes:
       - ./server/:/usr/src/app
