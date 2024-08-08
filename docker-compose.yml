@@ -5,7 +5,7 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
-    image: myapp-server
+    image: donoftime2018/item-catalog:myapp-server
     container_name: myapp-node-server
     command: npm start
     env_file: ./server/.env
@@ -23,7 +23,7 @@ services:
     networks:
       - mern-network
   mongo:
-    image: mongo
+    image: donoftime2018/item-catalog:mongo
     container_name: db
     volumes:
       - data-volume:/data/db
@@ -35,7 +35,7 @@ services:
     build:
       context: ./item-catalog
       dockerfile: Dockerfile
-    image: myapp-client
+    image: donoftime2018/item-catalog:myapp-client
     container_name: myapp-item-catalog
     command: npm start
     volumes:

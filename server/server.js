@@ -11,7 +11,7 @@ require('dotenv').config()
 //     origin: "http://localhost:3000"
 // }
 
-mongoose.connect(process.env.MONGO_LOCAL_URL).then(()=>{console.log("Connected!")}).catch((err)=>{console.error(err)})
+mongoose.connect(process.env.MONGO_DOCKER_URL).then(()=>{console.log("Connected!")}).catch((err)=>{console.error(err)})
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())
