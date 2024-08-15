@@ -10,8 +10,8 @@ services:
     command: npm start
     env_file: ./server/.env
     environment:
-      - MONGODBURL=mongodb+srv://donoftime2018:Godons2023!@itemsdb.ttafsh1.mongodb.net/?retryWrites=true&w=majority
-      - MONGO_LOCAL_URL=mongodb://db:27017/items
+      - MONGO_DOCKER_URL=mongodb://mongo:27017/items?directConnection=true&authSource=admin&replicaSet=replicaset&retryWrites=true
+      - MONGO_LOCAL_URL=mongodb://127.0.0.1/items
       - PORT=4000
     volumes:
       - ./server/:/usr/src/app
@@ -23,12 +23,12 @@ services:
     networks:
       - mern-network
   mongo:
-    image: donoftime2018/item-catalog:mongo
+    image: mongo:latest
     container_name: db
     volumes:
       - data-volume:/data/db
     ports:
-      - "27017:27017"
+      - 27017:27017
     networks:
       - mern-network
   frontend:
