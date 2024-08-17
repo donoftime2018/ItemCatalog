@@ -10,7 +10,7 @@ services:
     command: npm start
     env_file: ./server/.env
     environment:
-      - MONGO_DOCKER_URL=mongodb://mongo:27017/items?directConnection=true&authSource=admin&replicaSet=replicaset&retryWrites=true
+      - MONGO_DOCKER_URL=mongodb://mongo:27017/items
       - MONGO_LOCAL_URL=mongodb://127.0.0.1/items
       - PORT=4000
     volumes:
