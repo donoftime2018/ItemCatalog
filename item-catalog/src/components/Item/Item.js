@@ -91,7 +91,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
             </CardContent>
             <Divider/>
             <CardContent>
-                <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Avg. Market Price: ${itemPrice.toFixed(2)}</span>
+                <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Price Tag: ${itemPrice.toFixed(2)}</span>
             </CardContent>
             <Divider/>
             <>
