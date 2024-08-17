@@ -29,13 +29,13 @@ jobs:
         name: Build Client Image
         working-directory: ./item-catalog
         run: |
-          docker build -t donoftime2018/item-catalog:myapp-client
+          docker build -t donoftime2018/item-catalog:myapp-client .
 
       -
         name: Build Server Image
         working-directory: ./server
         run: |
-          docker build -t donoftime2018/item-catalog:myapp-server
+          docker build -t donoftime2018/item-catalog:myapp-server .
 
       -
         name: Login to Docker Hub
