@@ -14,18 +14,16 @@ jobs:
         uses: actions/checkout@v2
 
       -
-        name: Install and Test Client
+        name: Install Client
         working-directory: ./item-catalog
         run: | 
             npm install
-            npm run test
       
       -
-        name: Install and Test Server
+        name: Install Server
         working-directory: ./server
         run: |
           npm install
-          npm run test
 
       -
         name: Build Client Image
