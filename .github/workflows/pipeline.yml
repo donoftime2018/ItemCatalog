@@ -29,13 +29,13 @@ jobs:
         name: Build Client Image
         working-directory: ./item-catalog
         run: |
-          docker build -t donoftime2018/item-catalog:myapp-client-${{github.run_number}} .
+          docker build -t donoftime2018/item-catalog:myapp-client
 
       -
         name: Build Server Image
         working-directory: ./server
         run: |
-          docker build -t donoftime2018/item-catalog:myapp-server-${{github.run_number}} .
+          docker build -t donoftime2018/item-catalog:myapp-server
 
       -
         name: Login to Docker Hub
@@ -47,5 +47,5 @@ jobs:
       -
         name: Pushing Docker Images to Docker Hub
         run: |
-          docker push donoftime2018/item-catalog:myapp-client-${{github.run_number}}
-          docker push donoftime2018/item-catalog:myapp-server-${{github.run_number}}
+          docker push donoftime2018/item-catalog:myapp-client
+          docker push donoftime2018/item-catalog:myapp-server
