@@ -101,7 +101,7 @@ const AddForm = () => {
                     />
                 </div>
                 <div style={{display: "flex", justifyContent: 'center'}}>
-                    <Button type="Submit" variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Add Item</Button>
+                    <Button type="Submit" variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Add Item to Catalog</Button>
                 </div>
             </form>
             </CardContent>
