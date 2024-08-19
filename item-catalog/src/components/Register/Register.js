@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import {React, useEffect} from "react";
 import {Card, CardContent, Divider, TextField, Button, CardHeader} from "@mui/material"
 import {useFormik} from "formik";
 import { useNavigate } from "react-router-dom";
@@ -6,8 +6,11 @@ import * as yup from "yup"
 import axios from "axios";
 import "./Register.css";
 
-const Register = () => {
+const Register = (props) => {
 
+    useEffect(() =>{
+        document.title=props.title;
+    }, [props])
     const navigate=useNavigate()
 
     const validation = () => yup.object({
@@ -42,9 +45,12 @@ const Register = () => {
                 return res.data;
             }
         }).catch((err) => {
-            const errorMessage = JSON.parse(err.request.response)
-            console.error(errorMessage.msg); 
-            alert(errorMessage.msg);})
+            const errorMessage = JSON.parse(err.request.response);
+            const validationMessage = err.response.data.msg.message;
+            const errorAlert = validationMessage===undefined ? errorMessage.msg : validationMessage;
+            alert(errorAlert);
+            
+        })
     }
     return(<>
 

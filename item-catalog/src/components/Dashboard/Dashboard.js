@@ -9,8 +9,7 @@ import {Card, CardHeader, CardContent, Divider, IconButton, TextField, Tooltip} 
 import SearchIcon from '@mui/icons-material/Search';
 import {useFormik} from "formik";
 
-const Dashboard = () => {
-
+const Dashboard = (props) => {
     const [items, setItems] = useState([])
     const [isQueried, setIsQueried] = useState(false);
     const [queriedItems, setQueriedItems] = useState("");
@@ -24,7 +23,8 @@ const Dashboard = () => {
               })
         }
         getItems()
-    }, [items.length, items])
+        document.title = props.title
+    }, [items.length, items, props])
 
 
     const formik = useFormik({
@@ -76,7 +76,7 @@ const Dashboard = () => {
                 items.map((item, index)=>{
                  
                     return(<>
-                        <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} itemReviews={item.reviews} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                        <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
                     </>)
                 })
             }
@@ -92,7 +92,7 @@ const Dashboard = () => {
                 {
                     items.filter(item=>item.name.includes(itemQuery)).map((item, index)=>{
                         return(<>
-                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }
@@ -105,7 +105,7 @@ const Dashboard = () => {
                 {
                     items.filter(item=>item.poster.includes(posterQuery)).map((item, index)=>{
                         return(<>
-                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }
@@ -118,7 +118,7 @@ const Dashboard = () => {
                 {
                     items.filter(item=>item.poster.includes(posterQuery) && item.name.includes(itemQuery)).map((item, index)=>{
                         return(<>
-                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} id={index} itemQuantity={item.quantity} itemRating={item.rating} dbID={item._id} lastUpdate={item.updatedAt}></Item>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }
@@ -156,7 +156,7 @@ const Dashboard = () => {
                                 />
                                 </div>
 
-                                <div style={{display: 'flex', justifyContent: 'end'}}>
+                                <div style={{display: 'flex', justifyContent: 'end', marginBottom: '-3%'}}>
                                 <TextField
                                     id="posterQuery"
                                     name="posterQuery"
@@ -177,11 +177,6 @@ const Dashboard = () => {
                         </CardContent>
                     </Card>
                 </div>
-
-                <div style={{marginLeft: '3%'}}>
-                    <AddForm></AddForm>
-                </div>
-
         </div>
             
         <div class="itemLayout">
@@ -197,6 +192,9 @@ const Dashboard = () => {
             }
             </>
         </div>
+        
+        <AddForm></AddForm>
+        
     </>)
 }
 

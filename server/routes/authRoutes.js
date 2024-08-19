@@ -1,11 +1,13 @@
 const mongoose = require('mongoose')
 const express = require('express');
-const router = express.Router()
-const User = require("./User");
-const Item = require("./Item")
+const app = express()
+const bcrypt = require('bcrypt')
+const User = require("../schemas/User");
+const Item = require("../schemas/Item")
 
+mongoose.set('setDefaultsOnInsert', true);
 
-router.route("/login").post(async(req, res) => {
+app.post("/login", async (req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
 
@@ -22,22 +24,35 @@ router.route("/login").post(async(req, res) => {
     // }).catch(function(error) {console.error(error)})
 
     try {
-        let findUser = await User.find({username: name, password: pwd})
-        // console.log(findUser)
+        let findUser = await User.find({username: name})
+        console.log(findUser)
         if (findUser.length>0)
         {
-            res.json(findUser).status(200).send()
+            console.log(pwd)
+            console.log(findUser[0].password)
+
+            let matches = await bcrypt.compare(pwd, findUser[0].password)
+            console.log(matches)
+            if (matches)
+            {
+                res.status(200).json(findUser)
+            }
+
+            else {
+                res.status(400).send({msg: "Password incorrect"})
+            }
         }
         else {
             res.status(400).send({msg: "Invalid username or password"})
         }
     } catch(err) {
-
+        console.log(err)
+        res.status(400).send({msg: err})
     }
 
 })
 
-router.route("/register").post(async(req, res) => {
+app.post("/register", async(req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
     let email = req.body.email
@@ -65,33 +80,20 @@ router.route("/register").post(async(req, res) => {
     // ).catch(function(error) {console.error(error)})
 
     try {
-        let findUser = await User.find({$or: [
-            {username: name, password: pwd, email: email},
-            {username: name},
-            {password: pwd},
-            {email: email}
-        ]})
-        console.log(findUser)
-    if (findUser.length>0)
-    {  
-        res.status(400).send({msg: "Username, password, or email already in use!"})
-    }
-
-    else {
         let newUser = await User.create({username: name, password: pwd, email: email})
         console.log(newUser)
         if (newUser)
         {
             res.status(200).send()
         }
-    }
     } catch(err) {
-
+        console.log(err)
+        res.status(400).send({msg: err})
     }
     
 })
 
-router.route("/updatePassword").put(async(req, res) => {
+app.put("/updatePassword", async(req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
 
@@ -103,20 +105,17 @@ router.route("/updatePassword").put(async(req, res) => {
             let findPwd = await User.find({password: pwd})
             console.log(findPwd)
 
-            if (findPwd.length===0)
+            let matches = await bcrypt.compare(pwd, findUser[0].password)
+            console.log(matches)
+            
+            if (matches)
             {
-                let updatedPwd = await User.updateOne({username: name, password: pwd})
-                console.log(updatedPwd)
-                if (updatedPwd)
-                {
-                    res.status(200).send()
-                }
-            }
-
-            else {
                 res.status(400).send({msg: "The password you entered is in use"})
             }
-            
+          
+            let updatedPwd = await User.updateOne({username: name}, {password: pwd})
+            console.log(updatedPwd)
+            res.status(200).send()
         }
 
         else
@@ -125,7 +124,8 @@ router.route("/updatePassword").put(async(req, res) => {
         }
     } catch(err)
     {
-
+        console.log(err)
+        res.status(400).send({msg: err})
     }
     
 
@@ -154,10 +154,10 @@ router.route("/updatePassword").put(async(req, res) => {
     // })
 })
 
-router.route("/deleteUser/:user").delete(async(req, res, next)=>{
+app.delete("/deleteUser/:user", async(req, res, next)=>{
     req.user = req.params.user
     next()
-})
+}, deletePostedItems, removeLikes, removeUser)
 
 async function deletePostedItems(req, res, next)
 {   
@@ -184,17 +184,11 @@ async function removeLikes(req, res, next)
     next()
 }
 
-async function deleteUser(req, res)
+async function removeUser(req, res)
 {
     console.log(req.user)
     let deleteUser = await User.deleteOne({username: req.user})
     console.log(deleteUser)
     res.status(200).send()
 }
-
-
-
-router.use(deletePostedItems)
-router.use(removeLikes)
-router.use(deleteUser)
-module.exports = router;
+module.exports = app;

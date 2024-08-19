@@ -1,4 +1,4 @@
-import {React} from "react";
+import {React, useEffect} from "react";
 import {Card, CardContent, Divider, TextField, Button, CardHeader} from "@mui/material"
 import {useFormik} from "formik";
 import { useNavigate, Link, useLocation } from "react-router-dom";
@@ -7,7 +7,12 @@ import axios from "axios";
 import { useAuth } from "../context/user";
 import "./Login.css";
 
-const LoginPage = () => {
+const LoginPage = (props) => {
+
+    useEffect(()=>{
+        document.title = props.title
+    }, [props])
+    
     const navigate = useNavigate()
     const location = useLocation()
     const auth = useAuth()
@@ -41,9 +46,10 @@ const LoginPage = () => {
                 navigate(redirect, {replace: true})
             }
         }).catch((err)=>{
-            const errorMessage = JSON.parse(err.request.response)
-            console.error(errorMessage.msg); 
-            alert(errorMessage.msg);})
+            const errorMessage = JSON.parse(err.request.response);
+            const validationMessage = err.response.data.msg.message;
+            const errorAlert = validationMessage===undefined ? errorMessage.msg : validationMessage;
+            alert(errorAlert);})
     }
 
     return(<>

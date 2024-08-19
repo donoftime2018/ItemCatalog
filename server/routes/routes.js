@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 const express = require('express');
-const router = express.Router()
-const Item = require('./Item.js');
+const app = express();
+const Item = require('../schemas/Item.js');
 
 mongoose.set('setDefaultsOnInsert', true);
 
 
 //Read all items
-router.route('/').get(async(req, res)=>{
+app.get("/", async(req, res)=>{
     // Item.find({}).sort({rating: -1, price: 1, name: 1}).then(function(data) {
     //         res.json(data).status(200).send()
     // }).catch(function(err){
@@ -15,19 +15,19 @@ router.route('/').get(async(req, res)=>{
     // })
 
     try {
-        let allItems = await Item.find({}).sort({rating: -1, price:1})
-        res.json(allItems).status(200).send()
+        let allItems = await Item.find({}).sort({ rating: -1, updatedAt: -1, createdAt: 1})
+        res.status(200).json(allItems)
     } catch (err) {
         console.error(err)
     }
 })
 
-router.route("/getPostedItems/:user").get(async(req, res)=>{
+app.get("/getPostedItems/:user", async(req, res)=>{
     let user = req.params.user;
 
     try {
-        let itemsPosted = await Item.find({poster: user}).sort({updatedAt: -1}).limit(5)
-        res.json(itemsPosted).status(200).send()
+        let itemsPosted = await Item.find({poster: user}).select("name").sort({updatedAt: -1}).limit(5)
+        res.status(200).json(itemsPosted)
     } catch(err)
     {
 
@@ -40,30 +40,30 @@ router.route("/getPostedItems/:user").get(async(req, res)=>{
 
 })
 
-router.route("/numPostedItems/:user").get(async(req, res)=>{
+app.get("/numPostedItems/:user", async(req, res)=>{
 
     try {
         let user = req.params.user;
         const count = await Item.countDocuments({poster: user});
-        res.json(count).status(200).send()
+        res.status(200).json(count)
     } catch (error) {
         // console.error(error)
     }
 
 })
 
-router.route("/numLikedItems/:user").get(async(req, res)=>{
+app.get("/numLikedItems/:user", async(req, res)=>{
 
     try {
         let user = req.params.user;
         const count = await Item.countDocuments({usersRated: user});
-        res.json(count).status(200).send()
+        res.status(200).json(count)
     } catch(error){
         // console.error(error)
     }
 })
 
-router.route("/mostPopularItems/:user").get(async(req, res)=>{
+app.get("/mostPopularItems/:user", async(req, res)=>{
     let user = req.params.user;
 
     // Item.find({poster: user}).sort({rating: -1, updatedAt: -1}).limit(5).then(function(data) {
@@ -71,14 +71,14 @@ router.route("/mostPopularItems/:user").get(async(req, res)=>{
     // }).catch(function(error) {console.error(error)}
     
     try {
-        let popularItems = await Item.find({poster: user}).sort({rating: -1, updatedAt: -1}).limit(5)
-        res.json(popularItems).status(200).send()
+        let popularItems = await Item.find({poster: user, rating: {$gte: 1}}).select("name rating").sort({rating: -1, updatedAt: -1}).limit(5)
+        res.status(200).json(popularItems)
     } catch(err) {
 
     }
 })
 
-router.route("/getLikedItems/:user").get(async(req, res) => {
+app.get("/getLikedItems/:user", async(req, res) => {
 
 
     let user = req.params.user
@@ -86,15 +86,15 @@ router.route("/getLikedItems/:user").get(async(req, res) => {
     //      res.json(data).status(200).send()
     // }).catch(function(error) {console.error(error)})
     try {
-        let likedItems = await Item.find({usersRated: user}).sort({updatedAt: -1}).limit(5)
-        res.json(likedItems).status(200).send()
+        let likedItems = await Item.find({usersRated: user}).select("name").sort({updatedAt: -1}).limit(5)
+        res.status(200).json(likedItems)
     } catch(err){
 
     }
 })
 
 //add items 
-router.route("/insertItems").post(async(req, res)=>{
+app.post("/insertItems", async(req, res)=>{
 
     // Item.find({$or: [
     //     {name: req.body.name, desc: req.body.desc, price: req.body.price},
@@ -122,44 +122,39 @@ router.route("/insertItems").post(async(req, res)=>{
     // })
 
     try {
-        let findItem = await Item.find({$or: [
-            {name: req.body.name, desc: req.body.desc, price: req.body.price},
-            {name: req.body.name, desc: req.body.desc},
-            {name: req.body.name, price: req.body.price},
-            {name: req.body.name}
-        ]
-        })
     
-        if (findItem.length>0)
+        // if (findItem.length>0)
+        // {
+        //     res.status(400).send({msg: req.body.name + " already exists"});
+        // }
+    
+        // else {
+        let newItem = await Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price, poster: req.body.user})
+        console.log(newItem)
+        if(newItem)
         {
-            res.status(400).send({msg: req.body.name + " already exists"});
+            res.status(200).send()
         }
-    
-        else {
-            let newItem = await Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price, poster: req.body.user})
-            
-            if(newItem)
-            {
-                res.status(200).send()
-            }
-        }
+        // }
     } catch(err)
     {
-
+        console.log(err);
+        res.status(400).send({msg: err})
     }
   
     
 })
 
 //delete items
-router.route("/deleteItems/:id").delete(async(req, res)=>{
+app.delete("/deleteItems/:id", async(req, res)=>{
    Item.deleteOne({_id: req.params.id}).then((result)=>{console.log(result); res.status(200).send()}).catch((err)=>{
         // console.error(err)
     })
 })
 
 //update rating
-router.route("/increaseRating/:id").put(async(req, res, next)=>{
+app.put("/increaseRating/:id", async(req, res, next)=>{
+
     Item.findOne({_id: req.params.id}).then((doc)=>{
         doc.rating+=1
         return doc.validate().then(()=>doc)
@@ -182,13 +177,14 @@ router.route("/increaseRating/:id").put(async(req, res, next)=>{
                     console.log(updatedDoc);
                     res.status(200).send()})
         }
-}).catch(err=>{
-    // console.error(err)
-})
+    }).catch(err=>{
+        console.log(err)
+        res.status(400).send({msg: err})
+    })
 
 })
 
-router.route("/decreaseRating/:id").put(async(req, res, next)=>{
+app.put("/decreaseRating/:id", async(req, res, next)=>{
 
     Item.findOne({_id: req.params.id}).then((doc)=>{
         doc.rating-=1
@@ -215,8 +211,11 @@ router.route("/decreaseRating/:id").put(async(req, res, next)=>{
             res.status(400).send({msg: "You haven't even rated this item yet!"});
         }
     }).catch(err=>{
-        // console.error(err)
+        console.error(err)
+            res.status(400).send({msg: err})
     })
 })
 
-module.exports = router
+
+
+module.exports = app

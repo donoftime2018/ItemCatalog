@@ -5,6 +5,7 @@ import { AppBar, IconButton, Tooltip, Box, Button } from "@mui/material";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from "react-router-dom";
 import Settings from "./Settings";
+import "bootstrap/dist/css/bootstrap.min.css"
 
 const AppNav = () => {
     const auth = useAuth();
@@ -45,7 +46,14 @@ const AppNav = () => {
             <Box sx={{flexGrow: '1'}}/>
             <Box sx={{marginRight: '5%', display: {xs: 'none', md: 'flex', alignItems: 'center'}}}>
                 <Button variant="contained" color="warning" sx={{border: '1px solid black', color: 'black', borderRadius: '25px'}} onClick={signOut}>Log Out</Button>
-                <Settings></Settings>
+                {
+                    location.pathname === '/profile' ? 
+                    <>
+                        <Settings></Settings>
+                    </> 
+                    : 
+                    <></>
+                }
             </Box>
         </AppBar>
         </>)
@@ -53,7 +61,7 @@ const AppNav = () => {
 
     return(<>
         {
-            location.pathname === '/' ? 
+            location.pathname === '/'  ? 
             dashBoardNav()
             :
             profileNav()

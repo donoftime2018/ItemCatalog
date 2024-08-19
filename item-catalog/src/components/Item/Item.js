@@ -116,9 +116,18 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
             <CardContent style={{display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center'}}>
                 <span>{checkRating()}</span>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
-                    <Tooltip title="Add Like"><IconButton onClick={increaseRating}><ThumbUpIcon color="primary" fontSize="large"></ThumbUpIcon></IconButton></Tooltip>
-                    <Box flexGrow='0.05'/>
-                    <Tooltip title="Remove Like"><IconButton onClick={decreaseRating}><ThumbDownIcon color="error" fontSize="large"></ThumbDownIcon></IconButton></Tooltip>
+                    {
+                        user !== itemPoster ? 
+                        <>
+                            <Tooltip title="Add Like"><IconButton onClick={increaseRating}><ThumbUpIcon color="primary" fontSize="large"></ThumbUpIcon></IconButton></Tooltip>
+                            <Box flexGrow='0.05'/>
+                            <Tooltip title="Remove Like"><IconButton onClick={decreaseRating}><ThumbDownIcon color="error" fontSize="large"></ThumbDownIcon></IconButton></Tooltip>
+                        </> : 
+                        
+                        <>
+                        
+                        </>
+                    }
                 </div>
                
             </CardContent>
@@ -127,7 +136,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
                 <>
                     
                     <Divider></Divider>
-                    <CardContent sx={{display: 'flex', paddingTop: '5px', paddingBottom: '10px!important', alignItems: 'center', justifyContent: 'center'}}>
+                    <CardContent sx={{display: 'flex', flexDirection: 'row', paddingTop: '5px', paddingBottom: '10px!important', alignItems: 'center', justifyContent: 'center'}}>
                         <Tooltip title="Delete item"><IconButton onClick={deleteItem} ><Delete color="error" fontSize='large'></Delete></IconButton></Tooltip>
                     </CardContent>
                 </> : 
