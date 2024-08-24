@@ -14,13 +14,6 @@ const AddForm = () => {
     const [open, setOpen] = useState(false);
     const auth = useAuth()
 
-    const handleOpen = () => {
-        setOpen(true)
-    }
-
-    const handleClose = () => {
-        setOpen(false)
-    }
 
     const validation = () => yup.object({
         item_name: yup.string().max(65, "Item name cannot be over 65 characters long").required("Item name required"),
@@ -41,6 +34,14 @@ const AddForm = () => {
         }
     }, {})
 
+    const handleOpen = () => {
+        setOpen(true)
+    }
+
+    const handleClose = () => {
+        formik.setTouched({}, false)
+        setOpen(false)
+    }
 
     const addItemToDB = (name, price, desc) => {
 
@@ -68,7 +69,7 @@ const AddForm = () => {
         <div class="formLayout">
             <Tooltip title="Close Add Items"><IconButton onClick={handleClose}><Close sx={{fontSize: 60, color: 'white'}}></Close></IconButton></Tooltip>
             <Card class="addFormStyle">
-                <CardHeader sx={{textAlign: 'center'}} title="Add Items"></CardHeader>    
+                <CardHeader sx={{textAlign: 'center'}} title="Add Item"></CardHeader>    
                 <Divider></Divider>
                 <CardContent>
                 <form onSubmit={formik.handleSubmit}>
