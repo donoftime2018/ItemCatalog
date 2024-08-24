@@ -15,7 +15,7 @@ app.get("/", async(req, res)=>{
     // })
 
     try {
-        let allItems = await Item.find({}).sort({ rating: -1, updatedAt: -1, createdAt: 1})
+        let allItems = await Item.find({}).sort({ rating: -1, price: 1, name: 1})
         res.status(200).json(allItems)
     } catch (err) {
         console.error(err)

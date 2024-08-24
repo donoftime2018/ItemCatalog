@@ -10,9 +10,9 @@ const AddForm = () => {
     const auth = useAuth()
 
     const validation = () => yup.object({
-        item_name: yup.string().max(55, "Item name cannot be over 40 characters long").required("Item name required"),
+        item_name: yup.string().max(65, "Item name cannot be over 40 characters long").required("Item name required"),
         item_price: yup.number().positive("Item price must be positive").required("Item price required"),
-        item_desc: yup.string().max(80, "Item description cannot be over 60 characters long").required("Item description required"),
+        item_desc: yup.string().max(85, "Item description cannot be over 60 characters long").required("Item description required"),
     })
 
     const formik = useFormik({
@@ -94,7 +94,9 @@ const AddForm = () => {
                         onBlur={formik.handleBlur}
                         error={formik.touched.item_desc && Boolean(formik.errors.item_desc)}
                         helperText={formik.touched.item_desc && formik.errors.item_desc}
-                        sx={{ backgroundColor: 'white', width: '100%'}} 
+                        sx={{ backgroundColor: 'white', width: '100%'}}
+                        multiline
+                        rows="4"
                         placeholder="Item Desc goes here..." 
                         label="Item Description"
                         disableUnderline="true" 
