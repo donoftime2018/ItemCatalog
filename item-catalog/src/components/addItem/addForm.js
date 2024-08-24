@@ -25,7 +25,7 @@ const AddForm = () => {
         enableReinitialize: true,
         initialValues: {
             item_name: "",
-            item_price: null,
+            item_price: 0.00,
             item_desc: ""
         },
         validationSchema: validation,
@@ -40,6 +40,7 @@ const AddForm = () => {
 
     const handleClose = () => {
         formik.setTouched({}, false)
+        formik.resetForm()
         setOpen(false)
     }
 
@@ -49,7 +50,7 @@ const AddForm = () => {
         const data = {name, price, desc, user}
 
         axios.post("http://localhost:4000/items/insertItems", data).then((res)=>{console.log(res);
-            handleClose();
+            handleClose()
             }).catch((error) => {
             const errorMessage = JSON.parse(error.request.response)
             console.error(errorMessage.msg); 
@@ -61,7 +62,8 @@ const AddForm = () => {
         onClick={handleOpen}
         variant="contained" 
         color="primary" 
-        sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', top: '12%', position: 'fixed',
+         justifyContent: 'center', alignItems: 'center' }}>
             Open Add Items
         </Button>
 
