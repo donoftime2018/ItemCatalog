@@ -8,7 +8,7 @@ import {useFormik} from "formik";
 import { useAuth } from "../context/user";
 import * as yup from "yup"
 import axios from "axios";
-import { Close } from "@mui/icons-material";
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const AddForm = () => {
     const [open, setOpen] = useState(false);
@@ -69,7 +69,7 @@ const AddForm = () => {
 
         <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 100 }} open={open}>
         <div class="formLayout">
-            <Tooltip title="Close Add Items"><IconButton onClick={handleClose}><Close sx={{fontSize: 60, color: 'white'}}></Close></IconButton></Tooltip>
+            <Tooltip title="Close Add Items"><IconButton onClick={handleClose}><CancelIcon sx={{fontSize: 60, color: 'white'}}></CancelIcon></IconButton></Tooltip>
             <Card class="addFormStyle">
                 <CardHeader sx={{textAlign: 'center'}} title="Add Item"></CardHeader>    
                 <Divider></Divider>
