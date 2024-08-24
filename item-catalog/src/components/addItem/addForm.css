@@ -5,6 +5,11 @@
     width: 438px;
     background-color: whitesmoke;
     margin-bottom: 6%;
+    margin-top: 6%;
+}
+
+.openAddForms {
+
 }
 
 form div {
@@ -19,7 +24,7 @@ form div {
 .formLayout {
     display: flex;
     flex-wrap:nowrap;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
 }
 

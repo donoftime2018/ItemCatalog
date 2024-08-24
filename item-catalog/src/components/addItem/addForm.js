@@ -1,13 +1,26 @@
-import {Card, CardHeader, CardContent, FormGroup, FormControlLabel, Divider, Button, TextField, Checkbox} from "@mui/material"
+import { useState } from "react";
+import {Card, CardHeader, CardContent, Divider, Button, TextField} from "@mui/material"
+import Backdrop from "@mui/material/Backdrop";
+import {Tooltip} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 import "./addForm.css";
 import {useFormik} from "formik";
 import { useAuth } from "../context/user";
 import * as yup from "yup"
 import axios from "axios";
+import { Close } from "@mui/icons-material";
 
 const AddForm = () => {
-
+    const [open, setOpen] = useState(false);
     const auth = useAuth()
+
+    const handleOpen = () => {
+        setOpen(true)
+    }
+
+    const handleClose = () => {
+        setOpen(false)
+    }
 
     const validation = () => yup.object({
         item_name: yup.string().max(65, "Item name cannot be over 65 characters long").required("Item name required"),
@@ -35,6 +48,7 @@ const AddForm = () => {
         const data = {name, price, desc, user}
 
         axios.post("http://localhost:4000/items/insertItems", data).then((res)=>{console.log(res);
+            handleClose();
             }).catch((error) => {
             const errorMessage = JSON.parse(error.request.response)
             console.error(errorMessage.msg); 
@@ -42,7 +56,17 @@ const AddForm = () => {
     }
 
    return(<>
+        <Button
+        onClick={handleOpen}
+        variant="contained" 
+        color="primary" 
+        sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            Open Add Items
+        </Button>
+
+        <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 100 }} open={open}>
         <div class="formLayout">
+            <Tooltip title="Close Add Items"><IconButton onClick={handleClose}><Close sx={{fontSize: 60, color: 'white'}}></Close></IconButton></Tooltip>
             <Card class="addFormStyle">
                 <CardHeader sx={{textAlign: 'center'}} title="Add Items"></CardHeader>    
                 <Divider></Divider>
@@ -109,6 +133,8 @@ const AddForm = () => {
             </CardContent>
         </Card>
         </div>
+        </Backdrop>
+        
    </>)
 
 }
