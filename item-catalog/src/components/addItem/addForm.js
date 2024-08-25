@@ -1,25 +1,31 @@
-import {Card, CardHeader, CardContent, FormGroup, FormControlLabel, Divider, Button, TextField, Checkbox} from "@mui/material"
+import { useState } from "react";
+import {Card, CardHeader, CardContent, Divider, Button, TextField} from "@mui/material"
+import Backdrop from "@mui/material/Backdrop";
+import {Tooltip} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 import "./addForm.css";
 import {useFormik} from "formik";
 import { useAuth } from "../context/user";
 import * as yup from "yup"
 import axios from "axios";
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const AddForm = () => {
-
+    const [open, setOpen] = useState(false);
     const auth = useAuth()
 
+
     const validation = () => yup.object({
-        item_name: yup.string().max(55, "Item name cannot be over 40 characters long").required("Item name required"),
+        item_name: yup.string().max(65, "Item name cannot be over 65 characters long").required("Item name required"),
         item_price: yup.number().positive("Item price must be positive").required("Item price required"),
-        item_desc: yup.string().max(80, "Item description cannot be over 60 characters long").required("Item description required"),
+        item_desc: yup.string().max(85, "Item description cannot be over 85 characters long").required("Item description required"),
     })
 
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
             item_name: "",
-            item_price: null,
+            item_price: 0.00,
             item_desc: ""
         },
         validationSchema: validation,
@@ -28,6 +34,15 @@ const AddForm = () => {
         }
     }, {})
 
+    const handleOpen = () => {
+        setOpen(true)
+    }
+
+    const handleClose = () => {
+        formik.setTouched({}, false)
+        formik.resetForm()
+        setOpen(false)
+    }
 
     const addItemToDB = (name, price, desc) => {
 
@@ -35,6 +50,7 @@ const AddForm = () => {
         const data = {name, price, desc, user}
 
         axios.post("http://localhost:4000/items/insertItems", data).then((res)=>{console.log(res);
+            handleClose()
             }).catch((error) => {
             const errorMessage = JSON.parse(error.request.response)
             console.error(errorMessage.msg); 
@@ -42,9 +58,20 @@ const AddForm = () => {
     }
 
    return(<>
+        <Button
+        onClick={handleOpen}
+        variant="contained" 
+        color="primary" 
+        sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', top: '12%', left: '5%', position: 'fixed',
+         justifyContent: 'center', alignItems: 'center' }}>
+            Open Add Items
+        </Button>
+
+        <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 100 }} open={open}>
         <div class="formLayout">
+            <Tooltip title="Close Add Items"><IconButton onClick={handleClose}><CancelIcon sx={{fontSize: 60, color: 'white'}}></CancelIcon></IconButton></Tooltip>
             <Card class="addFormStyle">
-                <CardHeader sx={{textAlign: 'center'}} title="Add Items"></CardHeader>    
+                <CardHeader sx={{textAlign: 'center'}} title="Add Item"></CardHeader>    
                 <Divider></Divider>
                 <CardContent>
                 <form onSubmit={formik.handleSubmit}>
@@ -94,7 +121,9 @@ const AddForm = () => {
                         onBlur={formik.handleBlur}
                         error={formik.touched.item_desc && Boolean(formik.errors.item_desc)}
                         helperText={formik.touched.item_desc && formik.errors.item_desc}
-                        sx={{ backgroundColor: 'white', width: '100%'}} 
+                        sx={{ backgroundColor: 'white', width: '100%'}}
+                        multiline
+                        rows="4"
                         placeholder="Item Desc goes here..." 
                         label="Item Description"
                         disableUnderline="true" 
@@ -107,6 +136,8 @@ const AddForm = () => {
             </CardContent>
         </Card>
         </div>
+        </Backdrop>
+        
    </>)
 
 }
