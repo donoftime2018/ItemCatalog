@@ -20,7 +20,6 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'azure',
-    border: '2px solid #000',
     borderRadius: '25px',
     boxShadow: 24,
     p: 3,
@@ -28,7 +27,7 @@ const style = {
     alignItems: 'center'
   };
 
-const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID}) => {
+const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemRating, id, dbID}) => {
 
 
     const [open, setOpen] = useState(false);
@@ -41,19 +40,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
 
     const closeDesc = () => {
         setOpen(false);
-    }
-
-    const checkRating = () => {
-        if (itemRating != null)
-        {
-            return (<>
-                <div>
-                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                        <ThumbUpIcon fontSize="large" color="success"></ThumbUpIcon><Box flexGrow='0.02'/>{itemRating}
-                    </div>
-                </div>
-            </>)
-        }
     }
 
     const deleteItem = () => {
@@ -116,22 +102,11 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
             </CardContent>
             <Divider/>
             <CardContent style={{display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center'}}>
-                <span>{checkRating()}</span>
-                <div style={{display: 'flex', justifyContent: 'center'}}>
-                    {
-                        user !== itemPoster ? 
-                        <>
-                            <Tooltip title="Add Like"><IconButton onClick={increaseRating}><ThumbUpIcon color="primary" fontSize="large"></ThumbUpIcon></IconButton></Tooltip>
-                            <Box flexGrow='0.05'/>
-                            <Tooltip title="Remove Like"><IconButton onClick={decreaseRating}><ThumbDownIcon color="error" fontSize="large"></ThumbDownIcon></IconButton></Tooltip>
-                        </> : 
-                        
-                        <>
-                        
-                        </>
-                    }
+                <div>
+                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}><IconButton></IconButton></FavoriteIcon>{itemRating}
+                    </div>
                 </div>
-               
             </CardContent>
             {
                 user === itemPoster? 
@@ -142,7 +117,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
                         <Tooltip title="Delete item"><IconButton onClick={deleteItem} ><Delete color="error" fontSize='large'></Delete></IconButton></Tooltip>
                     </CardContent>
                 </> : 
-                
                 <></>
             }
          </Card>
@@ -157,7 +131,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
                     <Divider></Divider>
                     <Typography id="modal-modal-description" style={{margin: '5px 0px', lineHeight: '1.25'}}>{itemDesc}</Typography>
                     <Divider></Divider>
-                    <Typography variant="h6" style={{margin: '5px 0px', lineHeight: '1.25'}}>{itemRating}</Typography>
+                    <Typography variant="h6" style={{margin: '5px 0px', lineHeight: '1.25'}}><FavoriteIcon sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}</Typography>
                 </Box>
          </Modal>
     </>)
