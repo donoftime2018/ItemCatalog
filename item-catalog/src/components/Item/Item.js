@@ -1,18 +1,35 @@
 import React from "react";
-import {Card, CardContent, Divider, IconButton, Box} from "@mui/material";
+import {Card, CardContent, Divider, IconButton, Box, Typography} from "@mui/material";
 import { useState } from "react";
 import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import CloseIcon from '@mui/icons-material/Close';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import Modal from "@mui/material/Modal"
 import InfoIcon from '@mui/icons-material/Info';
 import {Tooltip} from "@mui/material";
 import axios from 'axios';
 import { useAuth } from "../context/user";
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'azure',
+    border: '2px solid #000',
+    borderRadius: '25px',
+    boxShadow: 24,
+    p: 3,
+    textAlign: 'center',
+    alignItems: 'center'
+  };
 
 const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID}) => {
+
 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
@@ -94,24 +111,9 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
                 <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Price Tag: ${itemPrice.toFixed(2)}</span>
             </CardContent>
             <Divider/>
-            <>
-            {open ? 
-                <>
-                    <CardContent key={id} sx={{paddingBottom: '1px'}}>
-                        <span style={{fontSize: '20px', display: 'flex', textAlign: 'center', justifyContent: 'center'}}>{itemDesc}</span>
-                    </CardContent>
-                    <CardContent sx={{display: 'flex', alignItems: 'center', paddingTop: '1px', justifyContent: 'center'}}>
-                        <Tooltip title="Close description"><IconButton onClick={closeDesc}><CloseIcon color="info" fontSize="large"></CloseIcon></IconButton></Tooltip>
-                    </CardContent>
-                </>
-                : 
-                <>
-                    <CardContent key={id} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px'}}>
-                    <Tooltip title="Open description"><IconButton onClick={openDesc}><InfoIcon color="info" fontSize="large"></InfoIcon></IconButton></Tooltip>
-                    </CardContent>
-                </>         
-                }
-            </>
+            <CardContent key={id} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px'}}>
+            <Tooltip title="View Full Description"><IconButton onClick={openDesc}><InfoIcon color="info" fontSize="large"></InfoIcon></IconButton></Tooltip>
+            </CardContent>
             <Divider/>
             <CardContent style={{display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center'}}>
                 <span>{checkRating()}</span>
@@ -144,6 +146,20 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
                 <></>
             }
          </Card>
+
+         <Modal open={open} 
+            onClose={closeDesc}
+            >
+                <Box sx={style}>
+                    <Typography id="modal-modal-title" variant="h5" style={{margin: '5px 0px', lineHeight: '1.25'}}>{itemName}</Typography>
+                    <Divider></Divider>
+                    <Typography id="modal-modal-description" style={{margin: '5px 0px'}}>Posted by: {itemPoster}</Typography>
+                    <Divider></Divider>
+                    <Typography id="modal-modal-description" style={{margin: '5px 0px', lineHeight: '1.25'}}>{itemDesc}</Typography>
+                    <Divider></Divider>
+                    <Typography variant="h6" style={{margin: '5px 0px', lineHeight: '1.25'}}>{itemRating}</Typography>
+                </Box>
+         </Modal>
     </>)
     
    
