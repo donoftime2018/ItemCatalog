@@ -25,7 +25,7 @@ const AddForm = () => {
         enableReinitialize: true,
         initialValues: {
             item_name: "",
-            item_price: 0.00,
+            item_price: "",
             item_desc: ""
         },
         validationSchema: validation,

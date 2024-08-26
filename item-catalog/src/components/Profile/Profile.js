@@ -5,6 +5,7 @@ import { useAuth } from "../context/user";
 import Title from "../appTitle/appTitle";
 import AppNav from "../NavBar/NavBar";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import "./Profile.css";
 
 const Profile = (props) => {
@@ -120,7 +121,7 @@ const Profile = (props) => {
                         popularItems.map((item, index)=>{
                             return(<>
                                 <Divider></Divider>
-                                <CardContent sx={{textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>{item.name}, {item.rating}<ThumbUpIcon color='success' sx={{alignItems: 'center', fontSize: 'large', display: 'flex', justifyContent: 'center'}}/></CardContent>
+                                <CardContent sx={{textAlign: 'center', display: 'flex-inline', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>{item.name}, {item.rating}<FavoriteIcon sx={{color:'#c70e0e', fontSize: 'large'}}/></CardContent>
                             </>)
                         })
                     }

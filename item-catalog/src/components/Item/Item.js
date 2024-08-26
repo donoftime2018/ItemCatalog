@@ -1,18 +1,32 @@
 import React from "react";
-import {Card, CardContent, Divider, IconButton, Box} from "@mui/material";
+import {Card, CardContent, Divider, IconButton, Box, Typography} from "@mui/material";
 import { useState } from "react";
 import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import CloseIcon from '@mui/icons-material/Close';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import Modal from "@mui/material/Modal"
 import InfoIcon from '@mui/icons-material/Info';
 import {Tooltip} from "@mui/material";
 import axios from 'axios';
 import { useAuth } from "../context/user";
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'azure',
+    borderRadius: '25px',
+    boxShadow: 24,
+    p: 3,
+    textAlign: 'center',
+    alignItems: 'center'
+  };
 
-const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID}) => {
+const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemRating, id, dbID}) => {
+
 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
@@ -24,19 +38,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
 
     const closeDesc = () => {
         setOpen(false);
-    }
-
-    const checkRating = () => {
-        if (itemRating != null)
-        {
-            return (<>
-                <div>
-                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                        <ThumbUpIcon fontSize="large" color="success"></ThumbUpIcon><Box flexGrow='0.02'/>{itemRating}
-                    </div>
-                </div>
-            </>)
-        }
     }
 
     const deleteItem = () => {
@@ -94,42 +95,41 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
                 <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Price Tag: ${itemPrice.toFixed(2)}</span>
             </CardContent>
             <Divider/>
-            <>
-            {open ? 
-                <>
-                    <CardContent key={id} sx={{paddingBottom: '1px'}}>
-                        <span style={{fontSize: '20px', display: 'flex', textAlign: 'center', justifyContent: 'center'}}>{itemDesc}</span>
-                    </CardContent>
-                    <CardContent sx={{display: 'flex', alignItems: 'center', paddingTop: '1px', justifyContent: 'center'}}>
-                        <Tooltip title="Close description"><IconButton onClick={closeDesc}><CloseIcon color="info" fontSize="large"></CloseIcon></IconButton></Tooltip>
-                    </CardContent>
-                </>
-                : 
-                <>
-                    <CardContent key={id} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px'}}>
-                    <Tooltip title="Open description"><IconButton onClick={openDesc}><InfoIcon color="info" fontSize="large"></InfoIcon></IconButton></Tooltip>
-                    </CardContent>
-                </>         
-                }
-            </>
+            <CardContent key={id} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px'}}>
+            <Tooltip title="View Full Description"><IconButton onClick={openDesc}><InfoIcon color="info" fontSize="large"></InfoIcon></IconButton></Tooltip>
+            </CardContent>
             <Divider/>
-            <CardContent style={{display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center'}}>
-                <span>{checkRating()}</span>
-                <div style={{display: 'flex', justifyContent: 'center'}}>
+            <CardContent style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>
+            {
+                itemRatedByUser ? 
+                <>
+                    <div>
+                        <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}>
+                            <IconButton onClick={decreaseRating}><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon></IconButton>{itemRating}
+                        </div>
+                    </div>
+                </> :                 
+                <>
                     {
-                        user !== itemPoster ? 
+                        itemPoster !== user ? 
                         <>
-                            <Tooltip title="Add Like"><IconButton onClick={increaseRating}><ThumbUpIcon color="primary" fontSize="large"></ThumbUpIcon></IconButton></Tooltip>
-                            <Box flexGrow='0.05'/>
-                            <Tooltip title="Remove Like"><IconButton onClick={decreaseRating}><ThumbDownIcon color="error" fontSize="large"></ThumbDownIcon></IconButton></Tooltip>
-                        </> : 
-                        
+                            <div>
+                                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                    <IconButton onClick={increaseRating}><FavoriteBorderIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteBorderIcon></IconButton>{itemRating}
+                                </div>
+                            </div>
+                        </> :
                         <>
-                        
+                            <div>
+                                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                    <FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}
+                                </div>
+                            </div>
                         </>
                     }
-                </div>
-               
+                    
+                </>
+            }
             </CardContent>
             {
                 user === itemPoster? 
@@ -140,10 +140,23 @@ const Item = ({itemName, itemDesc, itemPoster, itemPrice, itemRating, id, dbID})
                         <Tooltip title="Delete item"><IconButton onClick={deleteItem} ><Delete color="error" fontSize='large'></Delete></IconButton></Tooltip>
                     </CardContent>
                 </> : 
-                
                 <></>
             }
          </Card>
+
+         <Modal open={open} 
+            onClose={closeDesc}
+            >
+                <Box sx={style}>
+                    <Typography id="modal-modal-title" variant="h5" style={{margin: '5px 0px', lineHeight: '1.25'}}>{itemName}</Typography>
+                    <Divider></Divider>
+                    <Typography id="modal-modal-description" style={{margin: '5px 0px'}}>Posted by: {itemPoster}</Typography>
+                    <Divider></Divider>
+                    <Typography id="modal-modal-description" style={{margin: '5px 0px', lineHeight: '1.25'}}>{itemDesc}</Typography>
+                    <Divider></Divider>
+                    <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6" style={{margin: '5px 0px', lineHeight: '1.25'}}><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}</Typography></div>
+                </Box>
+         </Modal>
     </>)
     
    
