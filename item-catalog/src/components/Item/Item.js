@@ -3,8 +3,6 @@ import {Card, CardContent, Divider, IconButton, Box, Typography} from "@mui/mate
 import { useState } from "react";
 import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Modal from "@mui/material/Modal"
@@ -117,7 +115,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
                         <>
                             <div>
                                 <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                                    <IconButton onClick={increaseRating}><FavoriteBorderIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteBorderIcon></IconButton>{itemRating}
+                                    <IconButton onClick={increaseRating}><FavoriteBorderIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteBorderIcon></IconButton>{itemRating}
                                 </div>
                             </div>
                         </> :
