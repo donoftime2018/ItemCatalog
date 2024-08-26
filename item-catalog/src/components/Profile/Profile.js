@@ -121,7 +121,7 @@ const Profile = (props) => {
                         popularItems.map((item, index)=>{
                             return(<>
                                 <Divider></Divider>
-                                <CardContent sx={{textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>{item.name}, {item.rating}<FavoriteIcon sx={{color:'#c70e0e', fontSize: 'large', display: 'flex', justifyContent: 'center', alignItems: 'center'}}/></CardContent>
+                                <CardContent sx={{textAlign: 'center', display: 'flex-inline', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>{item.name}, {item.rating}<FavoriteIcon sx={{color:'#c70e0e', fontSize: 'large'}}/></CardContent>
                             </>)
                         })
                     }
