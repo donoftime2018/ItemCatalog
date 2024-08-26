@@ -103,7 +103,8 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
             <Divider/>
             <CardContent style={{display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center'}}>
             {
-                itemRatedByUser? <>
+                itemRatedByUser ? 
+                <>
                     <div>
                         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                             <IconButton onClick={decreaseRating}><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon></IconButton>{itemRating}
@@ -111,11 +112,24 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
                     </div>
                 </> :                 
                 <>
-                    <div>
-                        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                            <IconButton onClick={increaseRating}><FavoriteBorderIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteBorderIcon></IconButton>{itemRating}
-                        </div>
-                    </div>
+                    {
+                        itemPoster !== user ? 
+                        <>
+                            <div>
+                                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                                    <IconButton onClick={increaseRating}><FavoriteBorderIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteBorderIcon></IconButton>{itemRating}
+                                </div>
+                            </div>
+                        </> :
+                        <>
+                            <div>
+                                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                    <FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}
+                                </div>
+                            </div>
+                        </>
+                    }
+                    
                 </>
             }
             </CardContent>
