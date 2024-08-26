@@ -102,11 +102,22 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
             </CardContent>
             <Divider/>
             <CardContent style={{display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center'}}>
-                <div>
-                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                        <FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}><IconButton></IconButton></FavoriteIcon>{itemRating}
+            {
+                itemRatedByUser? <>
+                    <div>
+                        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                            <IconButton onClick={decreaseRating}><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon></IconButton>{itemRating}
+                        </div>
                     </div>
-                </div>
+                </> :                 
+                <>
+                    <div>
+                        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                            <IconButton onClick={increaseRating}><FavoriteBorderIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteBorderIcon></IconButton>{itemRating}
+                        </div>
+                    </div>
+                </>
+            }
             </CardContent>
             {
                 user === itemPoster? 
@@ -131,7 +142,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
                     <Divider></Divider>
                     <Typography id="modal-modal-description" style={{margin: '5px 0px', lineHeight: '1.25'}}>{itemDesc}</Typography>
                     <Divider></Divider>
-                    <Typography variant="h6" style={{margin: '5px 0px', lineHeight: '1.25'}}><FavoriteIcon sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}</Typography>
+                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6" style={{margin: '5px 0px', lineHeight: '1.25'}}><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}</Typography></div>
                 </Box>
          </Modal>
     </>)
