@@ -80,7 +80,7 @@ const Dashboard = (props) => {
                 items.map((item, index)=>{
                  
                     return(<>
-                        <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
+                        <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                     </>)
                 })
             }
@@ -94,9 +94,9 @@ const Dashboard = (props) => {
         {
             return(<>
                 {
-                    items.filter(item=>item.name.includes(itemQuery)).map((item, index)=>{
+                    items.filter(item=>new RegExp(itemQuery, 'i').test(item.name)).map((item, index)=>{
                         return(<>
-                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }
@@ -109,7 +109,7 @@ const Dashboard = (props) => {
                 {
                     items.filter(item=>item.poster.includes(posterQuery)).map((item, index)=>{
                         return(<>
-                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }
@@ -120,9 +120,9 @@ const Dashboard = (props) => {
         {
             return(<>
                 {
-                    items.filter(item=>item.poster.includes(posterQuery) && item.name.includes(itemQuery)).map((item, index)=>{
+                    items.filter(item=>item.poster.includes(posterQuery) && new RegExp(itemQuery, 'i').test(item.name)).map((item, index)=>{
                         return(<>
-                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} id={index} dbID={item._id}></Item>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }
