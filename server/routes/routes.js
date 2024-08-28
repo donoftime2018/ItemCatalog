@@ -93,7 +93,6 @@ app.post("/insertItems", async(req, res)=>{
 
 app.delete("/deleteItems/:id", async(req, res)=>{
    Item.deleteOne({_id: req.params.id}).then((result)=>{console.log(result); res.status(200).send()}).catch((err)=>{
-        // console.error(err)
     })
 })
 
