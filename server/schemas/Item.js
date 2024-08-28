@@ -37,20 +37,6 @@ const itemSchema = new Schema({
     timestamps: true
 })
 
-itemSchema.pre('validate', function(next) {
-    if (this.rating < 0)
-    {
-        return(next("Rating cannot be negative"))
-    }
-
-    if (this.rating > 999)
-    {
-        return(next("Rating cannot be greater than 999"))
-    }
-
-    next()
-})
-
 itemSchema.post('save', function(error, doc, next) {
     if(error.name === 'MongoServerError' && error.code === 11000)
     {
