@@ -1,0 +1,61 @@
+version: "3.8"
+services:
+  
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: donoftime2018/item-catalog:myapp-server
+    container_name: myapp-node-server
+    command: npm start
+    env_file: ./server/.env
+    environment:
+      - MONGO_DOCKER_URL=mongodb://mongo:27017/items
+      - MONGO_LOCAL_URL=mongodb://127.0.0.1/items
+      - PORT=4000
+    volumes:
+      - ./server/:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mongo
+    networks:
+      - mern-network
+  mongo:
+    image: mongo:latest
+    container_name: db
+    volumes:
+      - data-volume:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - mern-network
+  frontend:
+    build:
+      context: ./item-catalog
+      dockerfile: Dockerfile
+    image: donoftime2018/item-catalog:myapp-client
+    container_name: myapp-item-catalog
+    command: npm start
+    volumes:
+      - ./client/:/usr/app
+      - /usr/app/node_modules
+    depends_on: 
+      - server
+    ports:
+      - "3000:3000"
+    # stdin_open: true
+    # tty: true
+    networks:
+      - mern-network
+    
+volumes:
+  data-volume:
+  node_modules:
+  web-root:
+    driver: local
+
+networks:
+  mern-network: 
+    driver: bridge

@@ -1,20 +1,36 @@
 import React from "react";
-import {Card, CardContent, Divider, Button, IconButton} from "@mui/material";
+import {Card, CardContent, Divider, IconButton, Box, Typography} from "@mui/material";
 import { useState } from "react";
 import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
-// import AddCircleIcon from '@mui/icons-material/AddCircle';
-import StarIcon from '@mui/icons-material/Star';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import Modal from "@mui/material/Modal"
+import InfoIcon from '@mui/icons-material/Info';
+import {Tooltip} from "@mui/material";
 import axios from 'axios';
+import { useAuth } from "../context/user";
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'azure',
+    borderRadius: '25px',
+    boxShadow: 24,
+    p: 3,
+    textAlign: 'center',
+    alignItems: 'center'
+  };
 
-const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID, lastUpdate}) => {
+const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemRating, dateCreated, lastUpdated, id, dbID}) => {
+
 
     const [open, setOpen] = useState(false);
-
-    // console.log(recentUpdate)
+    const auth=useAuth();
+    const user = auth.user;
 
     const openDesc = () => {
         setOpen(true);
@@ -24,127 +40,128 @@ const Item = ({itemName, itemDesc, itemPrice, itemRating, id, dbID, lastUpdate})
         setOpen(false);
     }
 
-    const checkRating = () => {
-        if (itemRating != null)
+    const deleteItem = () => {
+        let id = dbID;
+        let confirmDelete = window.confirm("Are you sure you want to delete " + itemName + "?")
+
+        if (confirmDelete === true)
         {
-            return (<>
-                <StarBorderIcon fontSize="large" color="success"></StarBorderIcon>{itemRating}
-            </>)
+            axios.delete("http://localhost:4000/items/deleteItems/" + id).then((res) => {
+                console.log(res.data)
+                }).catch((error) => {
+                console.log(error)
+                })
         }
     }
 
-    const deleteItem = async() => {
+    const increaseRating = () => {
         let id = dbID;
-        // await fetch("http://localhost:4000/items/deleteItems/" + id, {
-        //     method: "DELETE",
-        //     "Cache-Control": "no-cache"
-        // })
+        
+        let user = auth.user
+        let data = {user}
 
-
-        axios.delete("http://localhost:4000/items/deleteItems/" + id).then((res) => {
-            console.log(res.data)
-            console.log('Student successfully updated')
-          }).catch((error) => {
-            console.log(error)
-          })
+        axios.put("http://localhost:4000/items/increaseRating/" + id, data).then((res)=>{console.log(res);
+        }
+        ).catch((error)=>{
+            const errorMessage = JSON.parse(error.request.response)
+            console.error(errorMessage.msg); 
+            alert(errorMessage.msg);})
     }
 
-    const increaseRating = async() => {
+    const decreaseRating = () => {
         let id = dbID;
+        let user = auth.user
 
-        axios.put("http://localhost:4000/items/increaseRating/" + id).then((res)=>{console.log(res)}
-        ).catch((error)=>{console.error(error)})
-        // await fetch("http://localhost:4000/items/increaseRating/" + id, {
-        //     method: "PUT",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     "Cache-Control": "no-cache"
-        // })
-    }
+        let data = {user}
 
-    const decreaseRating = async() => {
-        let id = dbID;
-
-        axios.put("http://localhost:4000/items/decreaseRating/" + id).then((res)=>{console.log(res)}
-        ).catch((error)=>{console.error(error)})
-        // await fetch("http://localhost:4000/items/decreaseRating/" + id, {
-        //     method: "PUT",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     "Cache-Control": "no-cache"
-        // })
+        axios.put("http://localhost:4000/items/decreaseRating/" + id, data).then((res)=>{console.log(res);
+        }
+        ).catch((error)=>{
+            const errorMessage = JSON.parse(error.request.response)
+            console.error(errorMessage.msg); 
+            alert(errorMessage.msg);})
     }
 
     return(<>
         <Card class="itemCard" key={id}>
             <CardContent>
-                <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>{itemName}</span>
+                <div style={{flexDirection: 'column'}}>
+                    <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>{itemName}</span>
+                    <span style={{fontSize: '20px', display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Posted by: {itemPoster}</span>
+                </div>
             </CardContent>
             <Divider/>
             <CardContent>
-                <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Avg. Market Price: ${itemPrice.toFixed(2)}</span>
+                <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Price Tag: ${itemPrice.toFixed(2)}</span>
             </CardContent>
             <Divider/>
-            <>
-            {open ? 
-                <div key={id}>
-                    <CardContent>
-                        <span style={{fontSize: '20px', display: 'flex', textAlign: 'center', justifyContent: 'center'}}>{itemDesc}</span>
-                    </CardContent>
-                    <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <Button sx={{borderRadius: '25px', border: "1px solid black"}} variant="contained" color="success" onClick={closeDesc}>Hide Description</Button>
-                    </CardContent>
-                </div>
-                
-                : 
-                
-                <div key={id}>
-                    <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <Button sx={{borderRadius: '25px', border: "1px solid black"}} variant="contained" color="success" onClick={openDesc}>Show Description</Button>
-                    </CardContent>
-                </div>
-                
-                }
-            </>
-            {/* <Divider/>
-            <CardContent><span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>{itemQuantity} exist</span></CardContent> */}
-            <Divider/>
-            <div>  
-            <CardContent style={{display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center'}}>
-                <span>{checkRating()}</span>
-                <div>
-                    <IconButton onClick={increaseRating}><StarIcon color="primary" fontSize="large"></StarIcon></IconButton>
-                    <IconButton onClick={decreaseRating}><RemoveCircleIcon color="warning" fontSize="large"></RemoveCircleIcon></IconButton>
-                </div>
-               
+            <CardContent key={id} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px'}}>
+            <Tooltip title="View Full Description"><IconButton onClick={openDesc}><InfoIcon color="info" fontSize="large"></InfoIcon></IconButton></Tooltip>
             </CardContent>
-
-            </div>
-            {/* <Divider/>
-            <CardContent style={{display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
-                <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Last Updated: {Date(lastUpdate)}</span>
-            </CardContent> */}
-            {/* <>
-            { */}
-                {/* // itemRating < 4 ? */}
-                {/* <div key={id}>
-                <Divider></Divider>
-                    <CardContent sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <IconButton onClick={deleteItem}><Delete color="error"></Delete></IconButton>
+            <Divider/>
+            <CardContent style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>
+            {
+                itemRatedByUser ? 
+                <>
+                    <div>
+                        <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}>
+                            <IconButton onClick={decreaseRating}><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon></IconButton>{itemRating}
+                        </div>
+                    </div>
+                </> :                 
+                <>
+                    {
+                        itemPoster !== user ? 
+                        <>
+                            <div>
+                                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                    <IconButton onClick={increaseRating}><FavoriteBorderIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteBorderIcon></IconButton>{itemRating}
+                                </div>
+                            </div>
+                        </> :
+                        <>
+                            <div>
+                                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                    <FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}
+                                </div>
+                            </div>
+                        </>
+                    }
+                    
+                </>
+            }
+            </CardContent>
+            {
+                user === itemPoster? 
+                <>
+                    
+                    <Divider></Divider>
+                    <CardContent sx={{display: 'flex', flexDirection: 'row', paddingTop: '5px', paddingBottom: '10px!important', alignItems: 'center', justifyContent: 'center'}}>
+                        <Tooltip title="Delete item"><IconButton onClick={deleteItem} ><Delete color="error" fontSize='large'></Delete></IconButton></Tooltip>
                     </CardContent>
-
-                </div> */}
-                {/* // : */}
-                
-                {/* <div>
-
-                </div> */}
-
-            {/* }
-            </> */}
+                </> : 
+                <></>
+            }
          </Card>
+
+         <Modal open={open} 
+            onClose={closeDesc}
+            >
+                <Box sx={style}>
+                    <Typography id="modal-modal-title" variant="h5" style={{margin: '5px 0px', lineHeight: '1.25'}}>{itemName}</Typography>
+                    <Divider></Divider>
+                    <Typography id="modal-modal-description" style={{margin: '5px 0px'}}>Posted by: {itemPoster}</Typography>
+                    <Divider></Divider>
+                    <Typography id="modal-modal-description" style={{margin: '5px 0px'}}>Price Tag: ${itemPrice.toFixed(2)}</Typography>
+                    <Divider></Divider>
+                    <Typography id="modal-modal-description" style={{margin: '5px 0px', lineHeight: '1.25'}}>{itemDesc}</Typography>
+                    <Divider></Divider>
+                    <Typography id="modal-modal-description" style={{margin: '5px 0px', lineHeight: '1.25'}}>Date Added: {new Date(dateCreated).toDateString()}</Typography>
+                    <Divider></Divider>
+                    <Typography id="modal-modal-description" style={{margin: '5px 0px', lineHeight: '1.25'}}>Date Last Updated: {new Date(lastUpdated).toDateString()}</Typography>
+                    <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6" style={{margin: '5px 0px', lineHeight: '1.25'}}><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}</Typography></div>
+                </Box>
+         </Modal>
     </>)
     
    

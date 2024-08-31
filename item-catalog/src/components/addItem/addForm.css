@@ -1,11 +1,18 @@
 .addFormStyle {
     border-radius: 25px;
-    border: 2px solid black;
-    width: 30%;
-    background-color: whitesmoke;
-    margin-bottom: 3%;
+    width: 438px;
+    background-color: whitesmoke;;
+    margin-top: 1%;
 }
 
 form div {
     margin-bottom: 2%;
+}
+
+.formLayout {
+    display: flex;
+    top: 0%;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
 }
