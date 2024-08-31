@@ -25,13 +25,8 @@
     "formik": "^2.4.3",
     "mdb-react-ui-kit": "^6.2.0",
     "mongodb": "^5.7.0",
-<<<<<<< HEAD
-    "mongoose": "^7.4.1",
-    "next": "^13.5.3",
-=======
     "mongoose": "^8.1.0",
     "next": "^13.4.12",
->>>>>>> a2bc3e0af710ebca9ea8f50d8bfb29fb2e7bceca
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.0-beta.1",
     "react-dom": "^18.2.0",
