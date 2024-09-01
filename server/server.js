@@ -7,18 +7,12 @@ const userRoute = require("./routes/authRoutes.js")
 const app = express()
 require('dotenv').config()
 
-// const corsOption = {
-//     origin: "http://localhost:3000"
-// }
-//process.env.MONGO_LOCAL_URL
-
 mongoose.connect(process.env.MONGO_DOCKER_URL).then(()=>{console.log("Connected!")}).catch((err)=>{console.error(err)})
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())
 app.use("/items", itemRoute)
 app.use(userRoute)
-
 
 const port = process.env.PORT | 4000
 
