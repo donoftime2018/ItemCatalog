@@ -88,6 +88,12 @@ const Dashboard = (props) => {
         if (itemQuery === "" && posterQuery === "")
         {
             setIsQueried(false)
+            setSearchParams(prev => {
+                prev.delete("items")
+                prev.delete("poster")
+                return prev
+            },{replace: true})
+            
         }
     }
 
@@ -203,12 +209,9 @@ const Dashboard = (props) => {
         <div class="itemLayout">
             <>
             {
-                isQueried && (itemName !== "" || posterName !== "") ? 
-                
-
+                isQueried ? 
                 displayQueriedItems(itemName, posterName)
                 :
-                
                 displayItems()
             }
             </>
