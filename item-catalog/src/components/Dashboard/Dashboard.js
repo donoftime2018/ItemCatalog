@@ -15,8 +15,10 @@ import { useAuth } from "../context/user";
 const Dashboard = (props) => {
     const [items, setItems] = useState([])
     const [isQueried, setIsQueried] = useState(false);
-    const [queriedItems, setQueriedItems] = useState("");
-    const [queriedPoster, setQueriedPoster] = useState("");
+
+    const [searchParams, setSearchParams] = useSearchParams({items: "", poster: ""})
+    const itemName = searchParams.get("items")
+    const posterName = searchParams.get("poster")
 
     const auth = useAuth()
     const user = auth.user
@@ -47,27 +49,40 @@ const Dashboard = (props) => {
     const searchQuery = (itemQuery, posterQuery) => {
         console.log(itemQuery);
         console.log(posterQuery);
+      
 
         if (itemQuery !== "")
         {
             setIsQueried(true);
-            setQueriedItems(itemQuery);
+            setSearchParams(prev => {
+                prev.set("items", itemQuery)
+                return prev
+            }, {replace: true})
         }
 
         if (posterQuery !== "")
         {
             setIsQueried(true);
-            setQueriedPoster(posterQuery);
+            setSearchParams(prev => {
+                prev.set("poster", posterQuery)
+                    return prev
+            }, {replace: true})
         }
 
         if (posterQuery === "")
         {
-            setQueriedPoster("")
+            setSearchParams(prev => {
+                prev.set("poster", posterQuery)
+                    return prev
+            }, {replace: true})
         }
 
         if (itemQuery === "")
         {
-            setQueriedItems("")
+            setSearchParams(prev => {
+                prev.set("items", itemQuery)
+                return prev
+            }, {replace: true})
         }
 
         if (itemQuery === "" && posterQuery === "")
@@ -188,10 +203,10 @@ const Dashboard = (props) => {
         <div class="itemLayout">
             <>
             {
-                isQueried && (queriedItems !== "" || queriedPoster !== "") ? 
+                isQueried && (itemName !== "" || posterName !== "") ? 
                 
 
-                displayQueriedItems(queriedItems, queriedPoster)
+                displayQueriedItems(itemName, posterName)
                 :
                 
                 displayItems()
