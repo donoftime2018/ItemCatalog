@@ -1,10 +1,9 @@
 import {useEffect, useState} from "react";
-import {Card, Box, CardContent, CardHeader, Divider} from "@mui/material"
+import {Card, CardContent, CardHeader, Divider} from "@mui/material"
 import axios from "axios";
 import { useAuth } from "../context/user";
 import Title from "../appTitle/appTitle";
 import AppNav from "../NavBar/NavBar";
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import "./Profile.css";
 

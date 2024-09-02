@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, CardContent, Divider, IconButton, Box, Typography} from "@mui/material";
+import {Card, CardContent, Divider, IconButton, Box, Typography, Tooltip} from "@mui/material";
 import { useState } from "react";
 import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
@@ -7,7 +7,6 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Modal from "@mui/material/Modal"
 import InfoIcon from '@mui/icons-material/Info';
-import {Tooltip} from "@mui/material";
 import axios from 'axios';
 import { useAuth } from "../context/user";
 
@@ -105,7 +104,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
                 <>
                     <div>
                         <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}>
-                            <IconButton onClick={decreaseRating}><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon></IconButton>{itemRating}
+                            <Tooltip title="Unlike Item"><IconButton onClick={decreaseRating}><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon></IconButton>{itemRating}</Tooltip>
                         </div>
                     </div>
                 </> :                 
@@ -115,7 +114,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
                         <>
                             <div>
                                 <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                    <IconButton onClick={increaseRating}><FavoriteBorderIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteBorderIcon></IconButton>{itemRating}
+                                    <Tooltip title="Like Item"><IconButton onClick={increaseRating}><FavoriteBorderIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteBorderIcon></IconButton>{itemRating}</Tooltip>
                                 </div>
                             </div>
                         </> :
