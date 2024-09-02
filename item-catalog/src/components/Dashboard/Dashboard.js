@@ -33,6 +33,15 @@ const Dashboard = (props) => {
               })
         }
         getItems()
+
+        window.onload = () => {
+            setIsQueried(false)
+            setSearchParams(prev => {
+                prev.delete("items")
+                prev.delete("poster")
+                return prev
+            },{replace: true})
+        }
         document.title = props.title
     }, [items.length, items, props])
 
