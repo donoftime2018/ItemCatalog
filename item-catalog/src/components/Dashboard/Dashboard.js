@@ -168,6 +168,11 @@ const Dashboard = (props) => {
             <AppNav></AppNav>
             <Title title={"Put a Price On It!"} ></Title>
 
+            <div class="queryText">
+                <div ref={itemResults}>{itemResults.current}</div>
+                <div ref={posterResults}>{posterResults.current}</div>
+            </div>
+            
             <div class="searchBar">
                 <div>
                     <Card class="searchCard">
@@ -215,11 +220,6 @@ const Dashboard = (props) => {
                         </CardContent>
                     </Card>
                 </div>
-        </div>
-
-        <div class="queryText">
-            <div ref={itemResults}>{itemResults.current}</div>
-            <div ref={posterResults}>{posterResults.current}</div>
         </div>
             
         <div class="itemLayout">
