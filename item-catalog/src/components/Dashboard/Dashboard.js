@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useEffect} from "react";
+import { useSearchParams } from "react-router-dom";
 import "./Dashboard.css"
 import Item from "../Item/Item";
 import AddForm from "../addItem/addForm";
@@ -13,8 +15,10 @@ import { useAuth } from "../context/user";
 const Dashboard = (props) => {
     const [items, setItems] = useState([])
     const [isQueried, setIsQueried] = useState(false);
-    const [queriedItems, setQueriedItems] = useState("");
-    const [queriedPoster, setQueriedPoster] = useState("");
+
+    const [searchParams, setSearchParams] = useSearchParams({items: "", poster: ""})
+    const itemName = searchParams.get("items")
+    const posterName = searchParams.get("poster")
 
     const auth = useAuth()
     const user = auth.user
@@ -44,32 +48,51 @@ const Dashboard = (props) => {
     const searchQuery = (itemQuery, posterQuery) => {
         console.log(itemQuery);
         console.log(posterQuery);
+      
 
         if (itemQuery !== "")
         {
             setIsQueried(true);
-            setQueriedItems(itemQuery);
+            setSearchParams(prev => {
+                prev.set("items", itemQuery)
+                return prev
+            }, {replace: true})
         }
 
         if (posterQuery !== "")
         {
             setIsQueried(true);
-            setQueriedPoster(posterQuery);
+            setSearchParams(prev => {
+                prev.set("poster", posterQuery)
+                    return prev
+            }, {replace: true})
         }
 
         if (posterQuery === "")
         {
-            setQueriedPoster("")
+            setSearchParams(prev => {
+                prev.set("poster", posterQuery)
+                    return prev
+            }, {replace: true})
         }
 
         if (itemQuery === "")
         {
-            setQueriedItems("")
+            setSearchParams(prev => {
+                prev.set("items", itemQuery)
+                return prev
+            }, {replace: true})
         }
 
         if (itemQuery === "" && posterQuery === "")
         {
             setIsQueried(false)
+            setSearchParams(prev => {
+                prev.delete("items")
+                prev.delete("poster")
+                return prev
+            },{replace: true})
+            
         }
     }
 
@@ -106,7 +129,7 @@ const Dashboard = (props) => {
         {
             return(<>
                 {
-                    items.filter(item=>item.poster.includes(posterQuery)).map((item, index)=>{
+                    items.filter(item=>new RegExp(posterQuery, 'i').test(item.poster)).map((item, index)=>{
                         return(<>
                             <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
@@ -119,7 +142,7 @@ const Dashboard = (props) => {
         {
             return(<>
                 {
-                    items.filter(item=>item.poster.includes(posterQuery) && new RegExp(itemQuery, 'i').test(item.name)).map((item, index)=>{
+                    items.filter(item=>new RegExp(posterQuery, 'i').test(item.poster) && new RegExp(itemQuery, 'i').test(item.name)).map((item, index)=>{
                         return(<>
                             <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
@@ -185,12 +208,9 @@ const Dashboard = (props) => {
         <div class="itemLayout">
             <>
             {
-                isQueried && (queriedItems !== "" || queriedPoster !== "") ? 
-                
-
-                displayQueriedItems(queriedItems, queriedPoster)
+                isQueried ? 
+                displayQueriedItems(itemName, posterName)
                 :
-                
                 displayItems()
             }
             </>
