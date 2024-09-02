@@ -120,7 +120,7 @@ const Dashboard = (props) => {
         if (itemQuery !== "" && posterQuery === "")
         {
             posterResults.current = ""
-            itemResults.current = "Results for item: " + itemQuery
+            itemResults.current = "Showing results for item: " + itemQuery
             return(<>
                 {
                     items.filter(item=>new RegExp(itemQuery, 'i').test(item.name)).map((item, index)=>{
@@ -135,7 +135,7 @@ const Dashboard = (props) => {
         if (posterQuery !== "" && itemQuery === "") 
         {
             itemResults.current = ""
-            posterResults.current = "Results for poster: " + posterQuery
+            posterResults.current = "Showing results for poster: " + posterQuery
             return(<>
                 {
                     items.filter(item=>new RegExp(posterQuery, 'i').test(item.poster)).map((item, index)=>{
@@ -149,8 +149,8 @@ const Dashboard = (props) => {
 
         if (posterQuery !== "" && itemQuery !== "")
         {
-            itemResults.current = "Results for item: " + itemQuery
-            posterResults.current = "Results for poster: " + posterQuery
+            itemResults.current = "Showing results for item: " + itemQuery
+            posterResults.current = "Showing results for poster: " + posterQuery
 
             return(<>
                 {
@@ -167,11 +167,6 @@ const Dashboard = (props) => {
     return(<>
             <AppNav></AppNav>
             <Title title={"Put a Price On It!"} ></Title>
-
-            <div class="queryText">
-                <div ref={itemResults}>{itemResults.current}</div>
-                <div ref={posterResults}>{posterResults.current}</div>
-            </div>
             
             <div class="searchBar">
                 <div>
@@ -221,7 +216,12 @@ const Dashboard = (props) => {
                     </Card>
                 </div>
         </div>
-            
+        
+        <div class="queryText">
+                <div ref={itemResults}>{typeof itemResults.current === 'string' ? itemResults.current : null}</div>
+                <div ref={posterResults}>{typeof posterResults.current === 'string' ? posterResults.current: null}</div>
+        </div>
+        
         <div class="itemLayout">
             <>
             {
