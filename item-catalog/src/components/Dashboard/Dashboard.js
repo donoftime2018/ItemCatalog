@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useEffect} from "react";
 import { useSearchParams } from "react-router-dom";
 import "./Dashboard.css"
@@ -15,6 +15,9 @@ import { useAuth } from "../context/user";
 const Dashboard = (props) => {
     const [items, setItems] = useState([])
     const [isQueried, setIsQueried] = useState(false);
+
+    const itemResults = useRef("")
+    const posterResults = useRef("")
 
     const [searchParams, setSearchParams] = useSearchParams({items: "", poster: ""})
     const itemName = searchParams.get("items")
@@ -97,6 +100,8 @@ const Dashboard = (props) => {
     }
 
     const displayItems = () => {
+        posterResults.current = ""
+        itemResults.current = ""
         return(<>
             {
                 items.map((item, index)=>{
@@ -114,6 +119,8 @@ const Dashboard = (props) => {
 
         if (itemQuery !== "" && posterQuery === "")
         {
+            posterResults.current = ""
+            itemResults.current = "Results for item: " + itemQuery
             return(<>
                 {
                     items.filter(item=>new RegExp(itemQuery, 'i').test(item.name)).map((item, index)=>{
@@ -127,6 +134,8 @@ const Dashboard = (props) => {
 
         if (posterQuery !== "" && itemQuery === "") 
         {
+            itemResults.current = ""
+            posterResults.current = "Results for poster: " + posterQuery
             return(<>
                 {
                     items.filter(item=>new RegExp(posterQuery, 'i').test(item.poster)).map((item, index)=>{
@@ -140,6 +149,9 @@ const Dashboard = (props) => {
 
         if (posterQuery !== "" && itemQuery !== "")
         {
+            itemResults.current = "Results for item: " + itemQuery
+            posterResults.current = "Results for poster: " + posterQuery
+
             return(<>
                 {
                     items.filter(item=>new RegExp(posterQuery, 'i').test(item.poster) && new RegExp(itemQuery, 'i').test(item.name)).map((item, index)=>{
@@ -203,6 +215,11 @@ const Dashboard = (props) => {
                         </CardContent>
                     </Card>
                 </div>
+        </div>
+
+        <div class="queryText">
+            <div ref={itemResults}>{itemResults.current}</div>
+            <div ref={posterResults}>{posterResults.current}</div>
         </div>
             
         <div class="itemLayout">
