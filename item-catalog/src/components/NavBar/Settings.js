@@ -1,9 +1,7 @@
 import {React, useState} from "react"
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from "react-router-dom";
 import SettingsIcon from '@mui/icons-material/Settings'
-import { Tooltip, IconButton} from "@mui/material";
+import { Tooltip, IconButton, MenuItem, Menu} from "@mui/material";
 
 
 const Settings = () => {
