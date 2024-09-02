@@ -104,7 +104,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
                 <>
                     <div>
                         <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}>
-                            <Tooltip><IconButton onClick={decreaseRating}><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon></IconButton>{itemRating}</Tooltip>
+                            <Tooltip title="Unlike Item"><IconButton onClick={decreaseRating}><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon></IconButton>{itemRating}</Tooltip>
                         </div>
                     </div>
                 </> :                 
@@ -114,7 +114,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
                         <>
                             <div>
                                 <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                    <IconButton onClick={increaseRating}><FavoriteBorderIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteBorderIcon></IconButton>{itemRating}
+                                    <Tooltip title="Like Item"><IconButton onClick={increaseRating}><FavoriteBorderIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteBorderIcon></IconButton>{itemRating}</Tooltip>
                                 </div>
                             </div>
                         </> :
