@@ -15,7 +15,6 @@
 }
 
 .profileInfo:last-child>* {
-    /* width: 10%; */
     flex: 0 0 20%;
     border-radius: 25px;
     background-color: #f5f5f5;
