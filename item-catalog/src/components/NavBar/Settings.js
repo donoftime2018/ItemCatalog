@@ -21,7 +21,6 @@ const Settings = () => {
 
     const deleteProfile = () => {
         navigate("/deleteAccount")
-        // document.getElementById("body").style("overflow", "auto")
     }
   
 
