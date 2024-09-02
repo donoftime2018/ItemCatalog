@@ -28,7 +28,6 @@ const Register = (props) => {
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
-            // addItemToDB(values.item_name, values.item_price, values.item_desc);
             registerUser(values.userName, values.passWord, values.email)
         }
     }, {})
