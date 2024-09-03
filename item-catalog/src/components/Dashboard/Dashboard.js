@@ -26,7 +26,7 @@ const Dashboard = (props) => {
     const auth = useAuth()
     const user = auth.user
 
-    const searchQuery = useCallback((itemQuery, posterQuery) => {
+    const searchQuery = useCallback((itemQuery="", posterQuery="") => {
         console.log(itemQuery);
         console.log(posterQuery);
       
@@ -73,7 +73,6 @@ const Dashboard = (props) => {
                 prev.delete("poster")
                 return prev
             },{replace: true})
-            
         }
     }, [setSearchParams])
 
@@ -84,12 +83,21 @@ const Dashboard = (props) => {
               })
         }
         getItems()
-
+        
         window.onload = () => {
-            searchQuery("", "")
+             searchQuery()
+        }
+
+        if (isQueried === false && (itemName !== "" || posterName !== ""))
+        {
+            setSearchParams(prev => {
+                prev.delete("items")
+                prev.delete("poster")
+                return prev
+            },{replace: true})
         }
         document.title = props.title
-    }, [items.length, items, searchQuery, props])
+    }, [items.length, items, setSearchParams, searchQuery, isQueried, itemName, posterName, props])
 
 
     const formik = useFormik({
