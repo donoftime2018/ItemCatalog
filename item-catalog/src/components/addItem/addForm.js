@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {Card, CardHeader, CardContent, Divider, Button, TextField} from "@mui/material"
 import AppAlert from "../Alert/Alert";
 import Backdrop from "@mui/material/Backdrop";
@@ -14,10 +14,19 @@ import CancelIcon from '@mui/icons-material/Cancel';
 const AddForm = () => {
     const [open, setOpen] = useState(false);
     const [alertOpen, setAlertOpen] = useState(false);
-    const [alertMessage, setAlertMessage] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
 
     const auth = useAuth()
 
+    useEffect(()=>{
+        if (alertOpen === true)
+        {
+            setTimeout(()=>{
+                setAlertOpen(false);
+                setAlertMessage("");
+            }, 5000)
+        }
+    }, [alertOpen])
 
     const validation = () => yup.object({
         item_name: yup.string().max(65, "Item name cannot be over 65 characters long").required("Item name required"),
