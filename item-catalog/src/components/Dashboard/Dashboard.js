@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { useEffect} from "react";
 import { useSearchParams } from "react-router-dom";
 import "./Dashboard.css"
@@ -26,38 +26,7 @@ const Dashboard = (props) => {
     const auth = useAuth()
     const user = auth.user
 
-    useEffect(()=>{
-
-        const getItems = () => {
-            axios.get("http://localhost:4000/items/").then((res)=>{setItems(res.data)}).catch((error) => {
-              })
-        }
-        getItems()
-
-        window.onload = () => {
-            setIsQueried(false)
-            setSearchParams(prev => {
-                prev.delete("items")
-                prev.delete("poster")
-                return prev
-            },{replace: true})
-        }
-        document.title = props.title
-    }, [items.length, items, props])
-
-
-    const formik = useFormik({
-        initialValues: {
-            itemQuery: "",
-            posterQuery: ""
-        },
-        onSubmit: (values)=>{
-            searchQuery(values.itemQuery, values.posterQuery);
-        }
-    })
-
-
-    const searchQuery = (itemQuery, posterQuery) => {
+    const searchQuery = useCallback((itemQuery, posterQuery) => {
         console.log(itemQuery);
         console.log(posterQuery);
       
@@ -106,7 +75,32 @@ const Dashboard = (props) => {
             },{replace: true})
             
         }
-    }
+    }, [setSearchParams])
+
+    useEffect(()=>{
+
+        const getItems = () => {
+            axios.get("http://localhost:4000/items/").then((res)=>{setItems(res.data)}).catch((error) => {
+              })
+        }
+        getItems()
+
+        window.onload = () => {
+            searchQuery("", "")
+        }
+        document.title = props.title
+    }, [items.length, items, searchQuery, props])
+
+
+    const formik = useFormik({
+        initialValues: {
+            itemQuery: "",
+            posterQuery: ""
+        },
+        onSubmit: (values)=>{
+            searchQuery(values.itemQuery, values.posterQuery);
+        }
+    })
 
     const displayItems = () => {
         posterResults.current = ""
