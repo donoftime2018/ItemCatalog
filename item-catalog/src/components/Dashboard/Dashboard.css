@@ -12,6 +12,14 @@
     margin-right: 2%;
 }
 
+.queryText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 22px;
+    margin-bottom: 2%;
+}
+
 .searchBar {
     display: flex;
     flex-wrap: wrap;

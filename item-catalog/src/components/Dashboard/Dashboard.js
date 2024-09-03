@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useEffect} from "react";
 import { useSearchParams } from "react-router-dom";
 import "./Dashboard.css"
@@ -16,6 +16,9 @@ const Dashboard = (props) => {
     const [items, setItems] = useState([])
     const [isQueried, setIsQueried] = useState(false);
 
+    const itemResults = useRef("")
+    const posterResults = useRef("")
+
     const [searchParams, setSearchParams] = useSearchParams({items: "", poster: ""})
     const itemName = searchParams.get("items")
     const posterName = searchParams.get("poster")
@@ -23,29 +26,7 @@ const Dashboard = (props) => {
     const auth = useAuth()
     const user = auth.user
 
-    useEffect(()=>{
-
-        const getItems = () => {
-            axios.get("http://localhost:4000/items/").then((res)=>{setItems(res.data)}).catch((error) => {
-              })
-        }
-        getItems()
-        document.title = props.title
-    }, [items.length, items, props])
-
-
-    const formik = useFormik({
-        initialValues: {
-            itemQuery: "",
-            posterQuery: ""
-        },
-        onSubmit: (values)=>{
-            searchQuery(values.itemQuery, values.posterQuery);
-        }
-    })
-
-
-    const searchQuery = (itemQuery, posterQuery) => {
+    const searchQuery = (itemQuery="", posterQuery="") => {
         console.log(itemQuery);
         console.log(posterQuery);
       
@@ -92,11 +73,42 @@ const Dashboard = (props) => {
                 prev.delete("poster")
                 return prev
             },{replace: true})
-            
         }
     }
 
+    useEffect(()=>{
+
+        const getItems = () => {
+            axios.get("http://localhost:4000/items/").then((res)=>{setItems(res.data)}).catch((error) => {
+              })
+        }
+        getItems()
+    
+        if (isQueried === false && (itemName !== "" || posterName !== ""))
+        {
+            setSearchParams(prev => {
+                prev.delete("items")
+                prev.delete("poster")
+                return prev
+            },{replace: true})
+        }
+        document.title = props.title
+    }, [items.length, items, setSearchParams, isQueried, itemName, posterName, props])
+
+
+    const formik = useFormik({
+        initialValues: {
+            itemQuery: "",
+            posterQuery: ""
+        },
+        onSubmit: (values)=>{
+            searchQuery(values.itemQuery, values.posterQuery);
+        }
+    })
+
     const displayItems = () => {
+        posterResults.current = ""
+        itemResults.current = ""
         return(<>
             {
                 items.map((item, index)=>{
@@ -114,6 +126,8 @@ const Dashboard = (props) => {
 
         if (itemQuery !== "" && posterQuery === "")
         {
+            posterResults.current = ""
+            itemResults.current = "Showing results for item: " + itemQuery
             return(<>
                 {
                     items.filter(item=>new RegExp(itemQuery, 'i').test(item.name)).map((item, index)=>{
@@ -127,6 +141,8 @@ const Dashboard = (props) => {
 
         if (posterQuery !== "" && itemQuery === "") 
         {
+            itemResults.current = ""
+            posterResults.current = "Showing results for poster: " + posterQuery
             return(<>
                 {
                     items.filter(item=>new RegExp(posterQuery, 'i').test(item.poster)).map((item, index)=>{
@@ -140,6 +156,9 @@ const Dashboard = (props) => {
 
         if (posterQuery !== "" && itemQuery !== "")
         {
+            itemResults.current = "Showing results for item: " + itemQuery
+            posterResults.current = "Showing results for poster: " + posterQuery
+
             return(<>
                 {
                     items.filter(item=>new RegExp(posterQuery, 'i').test(item.poster) && new RegExp(itemQuery, 'i').test(item.name)).map((item, index)=>{
@@ -155,7 +174,7 @@ const Dashboard = (props) => {
     return(<>
             <AppNav></AppNav>
             <Title title={"Put a Price On It!"} ></Title>
-
+            
             <div class="searchBar">
                 <div>
                     <Card class="searchCard">
@@ -204,7 +223,12 @@ const Dashboard = (props) => {
                     </Card>
                 </div>
         </div>
-            
+        
+        <div class="queryText">
+                <div ref={itemResults}>{typeof itemResults.current === 'string' ? itemResults.current : null}</div>
+                <div ref={posterResults}>{typeof posterResults.current === 'string' ? posterResults.current: null}</div>
+        </div>
+        
         <div class="itemLayout">
             <>
             {
