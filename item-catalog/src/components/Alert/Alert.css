@@ -1,4 +1,8 @@
 .itemAlert {
     display: flex;
     justify-content: center;
+    position: absolute;
+    top: 35%; 
+    left: 0;
+    right: 0;
 }
