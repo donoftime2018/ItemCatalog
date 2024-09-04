@@ -1,6 +1,7 @@
 import React from "react";
 import {Card, CardContent, Divider, IconButton, Box, Typography, Tooltip} from "@mui/material";
-import { useState } from "react";
+import AppAlert from "../Alert/Alert";
+import { useState, useEffect } from "react";
 import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -26,10 +27,22 @@ const style = {
 
 const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemRating, dateCreated, lastUpdated, id, dbID}) => {
 
+    const [alertOpen, setAlertOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
     const user = auth.user;
+
+    useEffect(()=>{
+        if (alertOpen === true)
+        {
+            setTimeout(()=>{
+                setAlertOpen(false);
+                setAlertMessage("");
+            }, 5000)
+        }
+    }, [alertOpen])
 
     const openDesc = () => {
         setOpen(true);
@@ -46,9 +59,13 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
         if (confirmDelete === true)
         {
             axios.delete("http://localhost:4000/items/deleteItems/" + id).then((res) => {
-                console.log(res.data)
+                if (res.status === 200)
+                {
+                    setAlertOpen(true)
+                    setAlertMessage(itemName + " deleted successfully")
+                }
                 }).catch((error) => {
-                console.log(error)
+                
                 })
         }
     }
@@ -73,7 +90,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
 
         let data = {user}
 
-        axios.put("http://localhost:4000/items/decreaseRating/" + id, data).then((res)=>{console.log(res);
+        axios.put("http://localhost:4000/items/decreaseRating/" + id, data).then((res)=>{
         }
         ).catch((error)=>{
             const errorMessage = JSON.parse(error.request.response)
@@ -161,9 +178,15 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
                     <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6" style={{margin: '5px 0px', lineHeight: '1.25'}}><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}</Typography></div>
                 </Box>
          </Modal>
+
+
+         {
+            alertOpen ? 
+            <AppAlert message={alertMessage}></AppAlert>
+            :
+            <></>
+        }
     </>)
-    
-   
 }
 
 export default Item;
