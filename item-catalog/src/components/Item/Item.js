@@ -59,11 +59,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
         if (confirmDelete === true)
         {
             axios.delete("http://localhost:4000/items/deleteItems/" + id).then((res) => {
-                if (res.status === 200)
-                {
-                    setAlertOpen(true)
-                    setAlertMessage(itemName + " deleted successfully")
-                }
                 }).catch((error) => {
                 
                 })
@@ -76,7 +71,12 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
         let user = auth.user
         let data = {user}
 
-        axios.put("http://localhost:4000/items/increaseRating/" + id, data).then((res)=>{console.log(res);
+        axios.put("http://localhost:4000/items/increaseRating/" + id, data).then((res)=>{
+                if (res.status === 200)
+                {
+                    setAlertOpen(true)
+                    setAlertMessage("You liked " + itemName)
+                }
         }
         ).catch((error)=>{
             const errorMessage = JSON.parse(error.request.response)
@@ -91,6 +91,11 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
         let data = {user}
 
         axios.put("http://localhost:4000/items/decreaseRating/" + id, data).then((res)=>{
+                if (res.status === 200)
+                {
+                    setAlertOpen(true)
+                    setAlertMessage("You unliked " + itemName)
+                }
         }
         ).catch((error)=>{
             const errorMessage = JSON.parse(error.request.response)
