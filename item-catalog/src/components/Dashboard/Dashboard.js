@@ -124,13 +124,22 @@ const Dashboard = (props) => {
 
     const displayQueriedItems = (itemQuery, posterQuery) => {
 
+        function createFlexibleSearchRegex(searchTerms)
+        {
+            const escapedTerms = searchTerms.split(' ').map(term=>term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'))
+            const regexPattern = escapedTerms.join(".*")
+            return new RegExp(regexPattern, 'i')
+        }
+        
+        const flexibleRegex = createFlexibleSearchRegex(itemQuery)
+
         if (itemQuery !== "" && posterQuery === "")
         {
             posterResults.current = ""
             itemResults.current = "Showing results for item: " + itemQuery
             return(<>
                 {
-                    items.filter(item=>new RegExp(itemQuery, 'i').test(item.name)).map((item, index)=>{
+                    items.filter(item=>flexibleRegex.test(item.name)).map((item, index)=>{
                         return(<>
                             <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
