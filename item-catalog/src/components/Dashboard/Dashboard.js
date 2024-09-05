@@ -106,23 +106,7 @@ const Dashboard = (props) => {
         }
     })
 
-    const displayItems = () => {
-        posterResults.current = ""
-        itemResults.current = ""
-        return(<>
-            {
-                items.map((item, index)=>{
-                 
-                    return(<>
-                        <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
-                    </>)
-                })
-            }
-        </>)
-    }
-
-
-    const displayQueriedItems = (itemQuery, posterQuery) => {
+    const displayItems = (itemQuery='', posterQuery='') => {
 
         function createFlexibleSearchRegex(searchTerms)
         {
@@ -148,7 +132,7 @@ const Dashboard = (props) => {
             </>)
         }
 
-        if (posterQuery !== "" && itemQuery === "") 
+        else if (posterQuery !== "" && itemQuery === "") 
         {
             itemResults.current = ""
             posterResults.current = "Showing results for poster: " + posterQuery
@@ -163,20 +147,37 @@ const Dashboard = (props) => {
             </>)
         }
 
-        if (posterQuery !== "" && itemQuery !== "")
+        else if (posterQuery !== "" && itemQuery !== "")
         {
             itemResults.current = "Showing results for item: " + itemQuery
             posterResults.current = "Showing results for poster: " + posterQuery
 
             return(<>
                 {
-                    items.filter(item=>new RegExp(posterQuery, 'i').test(item.poster) && new RegExp(itemQuery, 'i').test(item.name)).map((item, index)=>{
+                    items.filter(item=>new RegExp(posterQuery, 'i').test(item.poster) && flexibleRegex.test(item.name)).map((item, index)=>{
                         return(<>
                             <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }
             </>)
+        }
+
+        else
+        {
+            posterResults.current = ""
+            itemResults.current = ""
+        
+            return(<>
+                {
+                    items.map((item, index)=>{
+                 
+                        return(<>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
+                        </>)
+                    })
+                }
+        </>)
         }
         
     }
@@ -242,7 +243,7 @@ const Dashboard = (props) => {
             <>
             {
                 isQueried ? 
-                displayQueriedItems(itemName, posterName)
+                displayItems(itemName, posterName)
                 :
                 displayItems()
             }
