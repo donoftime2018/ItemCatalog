@@ -1,5 +1,7 @@
-import {React, useEffect} from "react";
-import {Card, CardContent, Divider, TextField, Button, CardHeader} from "@mui/material"
+import {React, useEffect, useState} from "react";
+import {Card, CardContent, Divider, TextField, Button, CardHeader, IconButton} from "@mui/material"
+import VisibilityIcon from "@mui/icons-material/Visibility"
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 import {useFormik} from "formik";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup"
@@ -7,6 +9,25 @@ import axios from "axios";
 import "./updatePassword.css";
 
 const UpdatePassword = (props) => {
+
+    const [passwordVisibility, setPasswordVisibility] = useState(false)
+    const [repeatVisibility, setRepeatVisibility] = useState(false)
+
+    const showPwd = () => {
+        setPasswordVisibility(true)
+    }
+
+    const showRepeat = () => {
+        setRepeatVisibility(true)
+    }
+
+    const hidePwd = () => {
+        setPasswordVisibility(false)
+    }
+
+    const hideRepeat = () => {
+        setRepeatVisibility(false)
+    }
 
     useEffect(()=>{
         document.title = props.title
@@ -28,7 +49,6 @@ const UpdatePassword = (props) => {
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
-            // addItemToDB(values.item_name, values.item_price, values.item_desc);
             changePassword(values.userName, values.passWord, values.confirmPassword)
         }
     }, {})
@@ -85,7 +105,7 @@ const UpdatePassword = (props) => {
                             id="passWord"
                             name="passWord"
                             variant="outlined"
-                            type="password"
+                            type={passwordVisibility ? "password" : "text"}
                             label="Password"
                             value={formik.values.password}
                             onChange={formik.handleChange}
@@ -96,6 +116,16 @@ const UpdatePassword = (props) => {
                             placeholder="Password goes here..." 
                             disableUnderline="true" 
                         ></TextField>
+                        {
+                            passwordVisibility ? 
+                            <>                                
+                                <IconButton fontSize="large"><VisibilityOffIcon onClick={hidePwd}></VisibilityOffIcon></IconButton>
+                            </> 
+                            : 
+                            <>
+                                <IconButton fontSize="large"><VisibilityIcon onClick={showPwd}></VisibilityIcon></IconButton>
+                            </>
+                        }
                     </div>
 
                     <div style={{display: "flex", justifyContent: 'center'}}>
@@ -103,7 +133,7 @@ const UpdatePassword = (props) => {
                             id="confirmPassword"
                             name="confirmPassword"
                             variant="outlined"
-                            type="password"
+                            type={repeatVisibility ? "password" : "text"}
                             label="Confirm Password"
                             value={formik.values.confirmPassword}
                             onChange={formik.handleChange}
@@ -114,6 +144,16 @@ const UpdatePassword = (props) => {
                             placeholder="Confirm password goes here..." 
                             disableUnderline="true" 
                         ></TextField>
+                        {
+                            repeatVisibility ? 
+                            <>                                
+                                <IconButton fontSize="large"><VisibilityOffIcon onClick={hideRepeat}></VisibilityOffIcon></IconButton>
+                            </> 
+                            : 
+                            <>
+                                <IconButton fontSize="large"><VisibilityIcon onClick={showRepeat}></VisibilityIcon></IconButton>
+                            </>
+                        }
                     </div>
 
                     <div style={{display: "flex", justifyContent: 'center'}}>
