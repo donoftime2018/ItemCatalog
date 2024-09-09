@@ -108,10 +108,28 @@ const Dashboard = (props) => {
 
     const displayItems = (itemQuery='', posterQuery='') => {
 
+        function getPermutations(arr)
+        {
+            if (arr.length <= 1) return [arr];
+            let permutations = [];
+          
+            arr.forEach((currentTerm, index) => {
+              const remainingTerms = [...arr.slice(0, index), ...arr.slice(index + 1)];
+              const remainingPermutations = getPermutations(remainingTerms);
+          
+              remainingPermutations.forEach(permutation => {
+                permutations.push([currentTerm, ...permutation]);
+              });
+            });
+          
+            return permutations;
+        }
+
         function createFlexibleSearchRegex(searchTerms)
         {
             const escapedTerms = searchTerms.split(' ').map(term=>term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'))
-            const regexPattern = escapedTerms.join(".*")
+            const permutations = getPermutations(escapedTerms)
+            const regexPattern = permutations.map(perm => perm.join('.*')).join('|')
             return new RegExp(regexPattern, 'i')
         }
         
