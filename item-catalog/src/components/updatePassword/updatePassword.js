@@ -80,9 +80,9 @@ const UpdatePassword = (props) => {
         <Card class="updateCard">
             <CardHeader sx={{textAlign: 'center'}} title="Change Password"></CardHeader>
             <Divider/>
-            <CardContent>
+            <CardContent style={{display: "flex", justifyContent: 'center'}}>
                 <form onSubmit={formik.handleSubmit}>
-                    <div style={{display: "flex", justifyContent: 'center'}}>
+                    <div>
                         <TextField
                             id="userName"
                             name="userName"
@@ -128,7 +128,7 @@ const UpdatePassword = (props) => {
                         }
                     </div>
 
-                    <div style={{display: "flex", justifyContent: 'center'}}>
+                    <div>
                         <TextField
                             id="confirmPassword"
                             name="confirmPassword"

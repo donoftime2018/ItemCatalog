@@ -68,9 +68,9 @@ const Register = (props) => {
         <Card class="registerCard">
             <CardHeader sx={{textAlign: 'center'}} title="Sign Up"></CardHeader>
             <Divider/>
-            <CardContent>
+            <CardContent style={{display: "flex", justifyContent: 'center'}}>
                 <form onSubmit={formik.handleSubmit}>
-                    <div style={{display: "flex", justifyContent: 'center'}}>
+                    <div>
                         <TextField
                             id="userName"
                             name="userName"
@@ -88,7 +88,7 @@ const Register = (props) => {
                         ></TextField>
                     </div>
 
-                    <div style={{display: "flex", justifyContent: 'center'}}>
+                    <div style={{display: "flex", alignItems: 'center'}}>
                         <TextField
                             id="passWord"
                             name="passWord"
@@ -116,7 +116,7 @@ const Register = (props) => {
                         }
                     </div>
 
-                    <div style={{display: "flex", justifyContent: 'center'}}>
+                    <div>
                         <TextField
                             id="email"
                             name="email"
