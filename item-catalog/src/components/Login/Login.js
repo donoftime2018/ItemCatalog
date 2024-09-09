@@ -68,9 +68,9 @@ const LoginPage = (props) => {
         <Card class="loginCard">
             <CardHeader sx={{textAlign: 'center'}} title="Login"></CardHeader>
             <Divider/>
-            <CardContent sx={{}}>
+            <CardContent sx={{display: 'flex', justifyContent: 'center'}}>
                 <form onSubmit={formik.handleSubmit}>
-                    <div style={{display: "flex", justifyContent: 'center'}}>
+                    <div>
                         <TextField
                             id="userName"
                             name="userName"
@@ -88,7 +88,7 @@ const LoginPage = (props) => {
                         ></TextField>
                     </div>
 
-                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
+                    <div style={{display: 'flex', alignItems: 'center'}}>
                         <TextField
                             id="passWord"
                             name="passWord"
