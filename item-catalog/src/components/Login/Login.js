@@ -1,5 +1,7 @@
-import {React, useEffect} from "react";
-import {Card, CardContent, Divider, TextField, Button, CardHeader} from "@mui/material"
+import {React, useEffect, useState} from "react";
+import {Card, CardContent, Divider, TextField, Button, CardHeader, IconButton} from "@mui/material"
+import VisibilityIcon from "@mui/icons-material/Visibility"
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 import {useFormik} from "formik";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import * as yup from "yup"
@@ -8,6 +10,15 @@ import { useAuth } from "../context/user";
 import "./Login.css";
 
 const LoginPage = (props) => {
+    const [passwordVisibility, setPasswordVisibility] = useState(false)
+
+    const showPwd = () => {
+        setPasswordVisibility(true)
+    }
+
+    const hidePwd = () => {
+        setPasswordVisibility(false)
+    }
 
     useEffect(()=>{
         document.title = props.title
@@ -77,12 +88,12 @@ const LoginPage = (props) => {
                         ></TextField>
                     </div>
 
-                    <div style={{display: "flex", justifyContent: 'center'}}>
+                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
                         <TextField
                             id="passWord"
                             name="passWord"
                             variant="outlined"
-                            type="password"
+                            type={passwordVisibility ? "password" : "text"}
                             label="Password"
                             value={formik.values.passWord}
                             onChange={formik.handleChange}
@@ -93,6 +104,16 @@ const LoginPage = (props) => {
                             placeholder="Password goes here..." 
                             disableUnderline="true" 
                         ></TextField>
+                        {
+                            passwordVisibility ? 
+                            <>                                
+                                <IconButton fontSize="large"><VisibilityOffIcon onClick={hidePwd}></VisibilityOffIcon></IconButton>
+                            </> 
+                            : 
+                            <>
+                                <IconButton fontSize="large"><VisibilityIcon onClick={showPwd}></VisibilityIcon></IconButton>
+                            </>
+                        }
                     </div>
 
                     <div style={{display: "flex", justifyContent: 'center'}}>
