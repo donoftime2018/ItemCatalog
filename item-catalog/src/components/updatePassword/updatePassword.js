@@ -105,7 +105,7 @@ const UpdatePassword = (props) => {
                             id="passWord"
                             name="passWord"
                             variant="outlined"
-                            type={passwordVisibility ? "password" : "text"}
+                            type={passwordVisibility ? "text" : "password"}
                             label="Password"
                             value={formik.values.password}
                             onChange={formik.handleChange}
@@ -119,11 +119,11 @@ const UpdatePassword = (props) => {
                         {
                             passwordVisibility ? 
                             <>                                
-                                <IconButton fontSize="large"><VisibilityOffIcon onClick={hidePwd}></VisibilityOffIcon></IconButton>
+                                <IconButton fontSize="large"><VisibilityIcon onClick={hidePwd}></VisibilityIcon></IconButton>
                             </> 
                             : 
                             <>
-                                <IconButton fontSize="large"><VisibilityIcon onClick={showPwd}></VisibilityIcon></IconButton>
+                                <IconButton fontSize="large"><VisibilityOffIcon onClick={showPwd}></VisibilityOffIcon></IconButton>
                             </>
                         }
                     </div>
@@ -133,7 +133,7 @@ const UpdatePassword = (props) => {
                             id="confirmPassword"
                             name="confirmPassword"
                             variant="outlined"
-                            type={repeatVisibility ? "password" : "text"}
+                            type={repeatVisibility ? "text" : "password"}
                             label="Confirm Password"
                             value={formik.values.confirmPassword}
                             onChange={formik.handleChange}
@@ -147,11 +147,11 @@ const UpdatePassword = (props) => {
                         {
                             repeatVisibility ? 
                             <>                                
-                                <IconButton fontSize="large"><VisibilityOffIcon onClick={hideRepeat}></VisibilityOffIcon></IconButton>
+                                <IconButton fontSize="large"><VisibilityIcon onClick={hideRepeat}></VisibilityIcon></IconButton>
                             </> 
                             : 
                             <>
-                                <IconButton fontSize="large"><VisibilityIcon onClick={showRepeat}></VisibilityIcon></IconButton>
+                                <IconButton fontSize="large"><VisibilityOffIcon onClick={showRepeat}></VisibilityOffIcon></IconButton>
                             </>
                         }
                     </div>

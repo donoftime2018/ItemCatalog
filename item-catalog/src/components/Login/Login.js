@@ -93,7 +93,7 @@ const LoginPage = (props) => {
                             id="passWord"
                             name="passWord"
                             variant="outlined"
-                            type={passwordVisibility ? "password" : "text"}
+                            type={passwordVisibility ? "text" : "password"}
                             label="Password"
                             value={formik.values.passWord}
                             onChange={formik.handleChange}
@@ -107,11 +107,11 @@ const LoginPage = (props) => {
                         {
                             passwordVisibility ? 
                             <>                                
-                                <IconButton fontSize="large"><VisibilityOffIcon onClick={hidePwd}></VisibilityOffIcon></IconButton>
+                                <IconButton fontSize="large"><VisibilityIcon onClick={hidePwd}></VisibilityIcon></IconButton>
                             </> 
                             : 
                             <>
-                                <IconButton fontSize="large"><VisibilityIcon onClick={showPwd}></VisibilityIcon></IconButton>
+                                <IconButton fontSize="large"><VisibilityOffIcon onClick={showPwd}></VisibilityOffIcon></IconButton>
                             </>
                         }
                     </div>
