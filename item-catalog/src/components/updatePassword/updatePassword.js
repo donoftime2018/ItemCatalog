@@ -128,7 +128,7 @@ const UpdatePassword = (props) => {
                         }
                     </div>
 
-                    <div>
+                    <div style={{display: "flex", justifyContent: 'center'}}>
                         <TextField
                             id="confirmPassword"
                             name="confirmPassword"
