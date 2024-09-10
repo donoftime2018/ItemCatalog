@@ -1,0 +1,19 @@
+.itemAlert {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 35%; 
+    left: 0;
+    right: 0;
+    -webkit-animation: fadeinout 5s linear forwards;
+    animation: fadeinout 5s linear forwards;
+    opacity: 0;
+}
+
+@-webkit-keyframes fadeinout {
+    50% { opacity: 1; }
+  }
+  
+  @keyframes fadeinout {
+    50% { opacity: 1; }
+  }
