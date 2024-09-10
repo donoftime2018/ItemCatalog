@@ -1,5 +1,7 @@
-import {React, useEffect} from "react";
-import {Card, CardContent, Divider, TextField, Button, CardHeader} from "@mui/material"
+import {React, useEffect, useState} from "react";
+import {Card, CardContent, Divider, TextField, Button, CardHeader, IconButton} from "@mui/material"
+import VisibilityIcon from "@mui/icons-material/Visibility"
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 import {useFormik} from "formik";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup"
@@ -7,6 +9,15 @@ import axios from "axios";
 import "./Register.css";
 
 const Register = (props) => {
+    const [passwordVisibility, setPasswordVisibility] = useState(false)
+
+    const showPwd = () => {
+        setPasswordVisibility(true)
+    }
+
+    const hidePwd = () => {
+        setPasswordVisibility(false)
+    }
 
     useEffect(() =>{
         document.title=props.title;
@@ -57,9 +68,9 @@ const Register = (props) => {
         <Card class="registerCard">
             <CardHeader sx={{textAlign: 'center'}} title="Sign Up"></CardHeader>
             <Divider/>
-            <CardContent>
+            <CardContent style={{display: "flex", justifyContent: 'center'}}>
                 <form onSubmit={formik.handleSubmit}>
-                    <div style={{display: "flex", justifyContent: 'center'}}>
+                    <div>
                         <TextField
                             id="userName"
                             name="userName"
@@ -77,12 +88,12 @@ const Register = (props) => {
                         ></TextField>
                     </div>
 
-                    <div style={{display: "flex", justifyContent: 'center'}}>
+                    <div style={{display: "flex", alignItems: 'center'}}>
                         <TextField
                             id="passWord"
                             name="passWord"
                             variant="outlined"
-                            type="password"
+                            type={passwordVisibility ? "text" : "password"}
                             label="Password"
                             value={formik.values.passWord}
                             onChange={formik.handleChange}
@@ -93,9 +104,19 @@ const Register = (props) => {
                             placeholder="Password goes here..." 
                             disableUnderline="true" 
                         ></TextField>
+                        {
+                            passwordVisibility ? 
+                            <>                                
+                                <IconButton fontSize="large"><VisibilityIcon onClick={hidePwd}></VisibilityIcon></IconButton>
+                            </> 
+                            : 
+                            <>
+                                <IconButton fontSize="large"><VisibilityOffIcon onClick={showPwd}></VisibilityOffIcon></IconButton>
+                            </>
+                        }
                     </div>
 
-                    <div style={{display: "flex", justifyContent: 'center'}}>
+                    <div>
                         <TextField
                             id="email"
                             name="email"

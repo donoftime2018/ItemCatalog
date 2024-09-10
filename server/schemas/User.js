@@ -45,7 +45,6 @@ userSchema.pre('validate', function(next){
     
     if (new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "i").test(this.email)===false)
     {
-        console.log(this.email);
         return(next('Email should be formatted such as harrypotter@hogwarts.edu'))
     }
 
@@ -56,11 +55,9 @@ userSchema.pre('validate', function(next){
 userSchema.pre('save', async function(next){
     if (this.isNew)
     {
-        console.log(this.password)
         const salt = await bcrypt.genSalt(10)
         const hashedPwd = await bcrypt.hash(this.password, salt);
         this.password = hashedPwd
-        console.log(this.password)
     }
     next()
 })
@@ -77,7 +74,6 @@ userSchema.post('save', function(error, doc, next) {
 
 userSchema.pre('updateOne', async function(next){
     const update = this.getUpdate()
-    console.log(update.password)
 
     if (update.password === "password")
     {
@@ -89,7 +85,6 @@ userSchema.pre('updateOne', async function(next){
         const salt = await bcrypt.genSalt(10)
         const hashedPwd = await bcrypt.hash(update.password, salt);
         update.password = hashedPwd
-        console.log(update.password)
         return next()
     }
 })
