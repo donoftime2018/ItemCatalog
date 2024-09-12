@@ -22,10 +22,6 @@ app.get("/getPostedItems/:user", async(req, res)=>{
         let itemsPosted = await Item.find({poster: user}).select("name").sort({updatedAt: -1}).limit(5)
         res.status(200).json(itemsPosted)
     } catch(err){}
-    } catch(err)
-    {
-
-    }
 })
 
 app.get("/numPostedItems/:user", async(req, res)=>{
@@ -76,8 +72,6 @@ app.get("/getLikedItems/:user", async(req, res) => {
 
 
 app.post("/insertItems", async(req, res)=>{
-
-    try {
     try {
         let newItem = await Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price, poster: req.body.user})
         console.log(newItem)
