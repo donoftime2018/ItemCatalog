@@ -5,8 +5,8 @@
     top: 35%; 
     left: 0;
     right: 0;
-    -webkit-animation: fadeinout 2s linear forwards;
-    animation: fadeinout 3s linear forwards;
+    -webkit-animation: fadeinout 1s linear forwards;
+    animation: fadeinout 2s linear forwards;
     opacity: 0;
 }
 
