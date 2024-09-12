@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
+import { useEffect} from "react";
+import { useSearchParams } from "react-router-dom";
 import "./Dashboard.css"
 import Item from "../Item/Item";
 import AddForm from "../addItem/addForm";
@@ -13,22 +15,85 @@ import { useAuth } from "../context/user";
 const Dashboard = (props) => {
     const [items, setItems] = useState([])
     const [isQueried, setIsQueried] = useState(false);
-    const [queriedItems, setQueriedItems] = useState("");
-    const [queriedPoster, setQueriedPoster] = useState("");
+
+    const itemResults = useRef("")
+    const posterResults = useRef("")
+
+    const [searchParams, setSearchParams] = useSearchParams({items: "", poster: ""})
+    const itemName = searchParams.get("items")
+    const posterName = searchParams.get("poster")
 
     const auth = useAuth()
     const user = auth.user
+
+    const searchQuery = (itemQuery="", posterQuery="") => {
+        console.log(itemQuery);
+        console.log(posterQuery);
+      
+
+        if (itemQuery !== "")
+        {
+            setIsQueried(true);
+            setSearchParams(prev => {
+                prev.set("items", itemQuery)
+                return prev
+            }, {replace: true})
+        }
+
+        if (posterQuery !== "")
+        {
+            setIsQueried(true);
+            setSearchParams(prev => {
+                prev.set("poster", posterQuery)
+                    return prev
+            }, {replace: true})
+        }
+
+        if (posterQuery === "")
+        {
+            setSearchParams(prev => {
+                prev.set("poster", posterQuery)
+                    return prev
+            }, {replace: true})
+        }
+
+        if (itemQuery === "")
+        {
+            setSearchParams(prev => {
+                prev.set("items", itemQuery)
+                return prev
+            }, {replace: true})
+        }
+
+        if (itemQuery === "" && posterQuery === "")
+        {
+            setIsQueried(false)
+            setSearchParams(prev => {
+                prev.delete("items")
+                prev.delete("poster")
+                return prev
+            },{replace: true})
+        }
+    }
 
     useEffect(()=>{
 
         const getItems = () => {
             axios.get("http://localhost:4000/items/").then((res)=>{setItems(res.data)}).catch((error) => {
-                // console.log(error)
               })
         }
         getItems()
+    
+        if (isQueried === false && (itemName !== "" || posterName !== ""))
+        {
+            setSearchParams(prev => {
+                prev.delete("items")
+                prev.delete("poster")
+                return prev
+            },{replace: true})
+        }
         document.title = props.title
-    }, [items.length, items, props])
+    }, [items.length, items, setSearchParams, isQueried, itemName, posterName, props])
 
 
     const formik = useFormik({
@@ -41,60 +106,42 @@ const Dashboard = (props) => {
         }
     })
 
+    const displayItems = (itemQuery='', posterQuery='') => {
 
-    const searchQuery = (itemQuery, posterQuery) => {
-        console.log(itemQuery);
-        console.log(posterQuery);
-
-        if (itemQuery !== "")
+        function getPermutations(arr)
         {
-            setIsQueried(true);
-            setQueriedItems(itemQuery);
+            if (arr.length <= 1) return [arr];
+            let permutations = [];
+          
+            arr.forEach((currentTerm, index) => {
+              const remainingTerms = [...arr.slice(0, index), ...arr.slice(index + 1)];
+              const remainingPermutations = getPermutations(remainingTerms);
+          
+              remainingPermutations.forEach(permutation => {
+                permutations.push([currentTerm, ...permutation]);
+              });
+            });
+          
+            return permutations;
         }
 
-        if (posterQuery !== "")
+        function createFlexibleSearchRegex(searchTerms)
         {
-            setIsQueried(true);
-            setQueriedPoster(posterQuery);
+            const escapedTerms = searchTerms.split(' ').map(term=>term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'))
+            const permutations = getPermutations(escapedTerms)
+            const regexPattern = permutations.map(perm => perm.join('.*')).join('|')
+            return new RegExp(regexPattern, 'i')
         }
-
-        if (posterQuery === "")
-        {
-            setQueriedPoster("")
-        }
-
-        if (itemQuery === "")
-        {
-            setQueriedItems("")
-        }
-
-        if (itemQuery === "" && posterQuery === "")
-        {
-            setIsQueried(false)
-        }
-    }
-
-    const displayItems = () => {
-        return(<>
-            {
-                items.map((item, index)=>{
-                 
-                    return(<>
-                        <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
-                    </>)
-                })
-            }
-        </>)
-    }
-
-
-    const displayQueriedItems = (itemQuery, posterQuery) => {
+        
+        const flexibleRegex = createFlexibleSearchRegex(itemQuery)
 
         if (itemQuery !== "" && posterQuery === "")
         {
+            posterResults.current = ""
+            itemResults.current = "Showing results for item: " + itemQuery
             return(<>
                 {
-                    items.filter(item=>new RegExp(itemQuery, 'i').test(item.name)).map((item, index)=>{
+                    items.filter(item=>flexibleRegex.test(item.name)).map((item, index)=>{
                         return(<>
                             <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
@@ -103,11 +150,13 @@ const Dashboard = (props) => {
             </>)
         }
 
-        if (posterQuery !== "" && itemQuery === "") 
+        else if (posterQuery !== "" && itemQuery === "") 
         {
+            itemResults.current = ""
+            posterResults.current = "Showing results for poster: " + posterQuery
             return(<>
                 {
-                    items.filter(item=>item.poster.includes(posterQuery)).map((item, index)=>{
+                    items.filter(item=>new RegExp(posterQuery, 'i').test(item.poster)).map((item, index)=>{
                         return(<>
                             <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
@@ -116,24 +165,44 @@ const Dashboard = (props) => {
             </>)
         }
 
-        if (posterQuery !== "" && itemQuery !== "")
+        else if (posterQuery !== "" && itemQuery !== "")
         {
+            itemResults.current = "Showing results for item: " + itemQuery
+            posterResults.current = "Showing results for poster: " + posterQuery
+
             return(<>
                 {
-                    items.filter(item=>item.poster.includes(posterQuery) && new RegExp(itemQuery, 'i').test(item.name)).map((item, index)=>{
+                    items.filter(item=>new RegExp(posterQuery, 'i').test(item.poster) && flexibleRegex.test(item.name)).map((item, index)=>{
                         return(<>
                             <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }
             </>)
+        }
+
+        else
+        {
+            posterResults.current = ""
+            itemResults.current = ""
+        
+            return(<>
+                {
+                    items.map((item, index)=>{
+                 
+                        return(<>
+                            <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
+                        </>)
+                    })
+                }
+        </>)
         }
         
     }
     return(<>
             <AppNav></AppNav>
             <Title title={"Put a Price On It!"} ></Title>
-
+            
             <div class="searchBar">
                 <div>
                     <Card class="searchCard">
@@ -182,16 +251,18 @@ const Dashboard = (props) => {
                     </Card>
                 </div>
         </div>
-            
+        
+        <div class="queryText">
+                <div ref={itemResults}>{typeof itemResults.current === 'string' ? itemResults.current : null}</div>
+                <div ref={posterResults}>{typeof posterResults.current === 'string' ? posterResults.current: null}</div>
+        </div>
+        
         <div class="itemLayout">
             <>
             {
-                isQueried && (queriedItems !== "" || queriedPoster !== "") ? 
-                
-
-                displayQueriedItems(queriedItems, queriedPoster)
+                isQueried ? 
+                displayItems(itemName, posterName)
                 :
-                
                 displayItems()
             }
             </>

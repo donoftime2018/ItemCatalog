@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {Card, CardHeader, CardContent, Divider, Button, TextField} from "@mui/material"
+import AppAlert from "../Alert/Alert";
 import Backdrop from "@mui/material/Backdrop";
 import {Tooltip} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
@@ -12,8 +13,20 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 const AddForm = () => {
     const [open, setOpen] = useState(false);
+    const [alertOpen, setAlertOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
+
     const auth = useAuth()
 
+    useEffect(()=>{
+        if (alertOpen === true)
+        {
+            setTimeout(()=>{
+                setAlertOpen(false);
+                setAlertMessage("");
+            }, 5000)
+        }
+    }, [alertOpen])
 
     const validation = () => yup.object({
         item_name: yup.string().max(65, "Item name cannot be over 65 characters long").required("Item name required"),
@@ -50,7 +63,12 @@ const AddForm = () => {
         const data = {name, price, desc, user}
 
         axios.post("http://localhost:4000/items/insertItems", data).then((res)=>{console.log(res);
-            handleClose()
+            if (res.status === 200)
+            {
+                setAlertOpen(true)
+                setAlertMessage(name + " added successfully")
+                handleClose()
+            }
             }).catch((error) => {
             const errorMessage = JSON.parse(error.request.response)
             console.error(errorMessage.msg); 
@@ -138,6 +156,12 @@ const AddForm = () => {
         </div>
         </Backdrop>
         
+        {
+            alertOpen ? 
+                <AppAlert message={alertMessage}></AppAlert>
+                :
+                <></>
+        }
    </>)
 
 }

@@ -1,10 +1,7 @@
 import {React, useState} from "react"
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from "react-router-dom";
 import SettingsIcon from '@mui/icons-material/Settings'
-import {DeleteForever, Edit, PersonRemove} from '@mui/icons-material'
-import { Tooltip, IconButton} from "@mui/material";
+import { Tooltip, IconButton, MenuItem, Menu} from "@mui/material";
 
 
 const Settings = () => {
@@ -22,7 +19,6 @@ const Settings = () => {
 
     const deleteProfile = () => {
         navigate("/deleteAccount")
-        // document.getElementById("body").style("overflow", "auto")
     }
   
 

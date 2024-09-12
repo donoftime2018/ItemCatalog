@@ -21,6 +21,7 @@ app.get("/getPostedItems/:user", async(req, res)=>{
     try {
         let itemsPosted = await Item.find({poster: user}).select("name").sort({updatedAt: -1}).limit(5)
         res.status(200).json(itemsPosted)
+    } catch(err){}
     } catch(err)
     {
 
@@ -49,6 +50,7 @@ app.get("/numLikedItems/:user", async(req, res)=>{
 })
 
 app.get("/mostPopularItems/:user", async(req, res)=>{
+
     let user = req.params.user;
  
     try {
@@ -61,7 +63,6 @@ app.get("/mostPopularItems/:user", async(req, res)=>{
 
 app.get("/getLikedItems/:user", async(req, res) => {
 
-
     let user = req.params.user
     
     try {
@@ -73,8 +74,10 @@ app.get("/getLikedItems/:user", async(req, res) => {
 })
 
 
+
 app.post("/insertItems", async(req, res)=>{
 
+    try {
     try {
         let newItem = await Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price, poster: req.body.user})
         console.log(newItem)
@@ -95,6 +98,7 @@ app.delete("/deleteItems/:id", async(req, res)=>{
    Item.deleteOne({_id: req.params.id}).then((result)=>{console.log(result); res.status(200).send()}).catch((err)=>{
     })
 })
+
 
 app.put("/increaseRating/:id", async(req, res, next)=>{
 
@@ -158,7 +162,5 @@ app.put("/decreaseRating/:id", async(req, res, next)=>{
             res.status(400).send({msg: err})
     })
 })
-
-
 
 module.exports = app

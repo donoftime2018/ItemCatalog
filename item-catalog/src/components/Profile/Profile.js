@@ -1,10 +1,9 @@
 import {useEffect, useState} from "react";
-import {Card, Box, CardContent, CardHeader, Divider} from "@mui/material"
+import {Card, CardContent, CardHeader, Divider} from "@mui/material"
 import axios from "axios";
 import { useAuth } from "../context/user";
 import Title from "../appTitle/appTitle";
 import AppNav from "../NavBar/NavBar";
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import "./Profile.css";
 
@@ -15,67 +14,57 @@ const Profile = (props) => {
     const [likedItems, setLikedItems] = useState([])
     const [postedItems, setPostedItems] = useState([])
     const [popularItems, setPopularItems] = useState([])
-    const [bookmarkedItems, setBookmarkedItems] = useState([])
 
     const [numLikedItems, setNumLikedItems] = useState(0);
     const [numPostedItems, setNumPostedItems] = useState(0);
-    const [numBookmarkedItems, setNumBookmarkedItems] = useState(0);
   
 
     useEffect(()=>{
         const getLikedItems = () => {
-            axios.get("http://localhost:4000/items/getLikedItems/" + user).then((res)=>{setLikedItems(res.data); console.log(res.data)}).catch((error)=>{console.error(error)});
+            axios.get("http://localhost:4000/items/getLikedItems/" + user).then((res)=>{setLikedItems(res.data); 
+            }).catch((error)=>{
+            });
         }
 
         const getPostedItems = () => {
-            axios.get("http://localhost:4000/items/getPostedItems/" + user).then((res)=>{setPostedItems(res.data); console.log(res.data)}).catch((error)=>{console.error(error)});
+            axios.get("http://localhost:4000/items/getPostedItems/" + user).then((res)=>{setPostedItems(res.data); 
+            }).catch((error)=>{
+            });
         }
 
         const getMostPopularItems = () => {
-            axios.get("http://localhost:4000/items/mostPopularItems/" + user).then((res)=>{setPopularItems(res.data); console.log(res.data)}).catch((error)=>{console.error(error)});
+            axios.get("http://localhost:4000/items/mostPopularItems/" + user).then((res)=>{setPopularItems(res.data); 
+            }).catch((error)=>{
+                });
         }
 
         const getNumLiked = () => {
             axios.get("http://localhost:4000/items/numLikedItems/" + user).then(
                 (res)=>{
                     setNumLikedItems(res.data); 
-                    console.log(res.data)}).catch((error)=>{console.error(error)});
+                }).catch((error)=>{
+                });
         }
 
         const getNumPosted = () => {
             axios.get("http://localhost:4000/items/numPostedItems/" + user).then(
                 (res)=>{
                     setNumPostedItems(res.data); 
-                    console.log(res.data)}).catch((error)=>{console.error(error)});
-        }
-
-        const getNumBookmarked = () => {
-            axios.get("http://localhost:4000/items/numBookmarkedItems/" + user).then(
-                (res)=>{
-                    setNumBookmarkedItems(res.data)
-                    console.log(res.data)}).catch((error)=>{console.error(error)});
-        }
-
-        const getBookmarkedItems = () => {
-            axios.get("http://localhost:4000/items/recentBookmarkedItems/" + user).then(
-                (res)=>{
-                    setBookmarkedItems(res.data); 
-                    console.log(res.data)}).catch((error)=>{console.error(error)});
+                }).catch((error)=>{
+                });
         }
 
         getLikedItems()
         getPostedItems()
         getMostPopularItems()
-        getBookmarkedItems()
-        getNumBookmarked()
         getNumLiked()
         getNumPosted()
 
         document.title = props.title
 
     }, [likedItems, postedItems, popularItems, popularItems.length, 
-        likedItems.length, postedItems.length, user, bookmarkedItems, bookmarkedItems.length,
-         numLikedItems, numBookmarkedItems, numPostedItems, props])
+        likedItems.length, postedItems.length, user,
+         numLikedItems, numPostedItems, props])
 
     return(<>
         <AppNav></AppNav>
