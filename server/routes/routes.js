@@ -74,14 +74,12 @@ app.get("/getLikedItems/:user", async(req, res) => {
 app.post("/insertItems", async(req, res)=>{
     try {
         let newItem = await Item.create({name: req.body.name, desc: req.body.desc, price: req.body.price, poster: req.body.user})
-        console.log(newItem)
         if(newItem)
         {
             res.status(200).send()
         }
     } catch(err)
     {
-        console.log(err);
         res.status(400).send({msg: err})
     }
   
@@ -102,13 +100,11 @@ app.put("/increaseRating/:id", async(req, res, next)=>{
     }).then((validatedDoc)=>{
         if(validatedDoc.usersRated.includes(req.body.user))
         {
-            console.log("You already rated for this item!");
             res.status(400).send({msg: 'You already rated for this item!'});
         }
 
         else if (validatedDoc.poster === req.body.user)
         {
-            console.log("You cannot rate for an item you posted");
             res.status(400).send({msg: 'You cannot rate for an item you posted'});
         }
         else {

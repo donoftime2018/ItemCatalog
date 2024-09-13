@@ -40,7 +40,7 @@ app.post("/register", async(req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
     let email = req.body.email
-
+    
     try {
         let findDuplicatePwd = await User.find({}).select("password")
             
@@ -48,23 +48,24 @@ app.post("/register", async(req, res) => {
         for (let i = 0; i < findDuplicatePwd.length; i++)
         {
             duplicateFound = await bcrypt.compare(pwd, findDuplicatePwd[i].password)
-            console.log(duplicateFound)
             if (duplicateFound===true)
             {
-                res.status(400).send({msg: "Password is in use"})
                 break;
             }
         }
 
-        // if (duplicateFound === true)
-        // {
-        //     res.status(400).send({msg: "Password is in use"})
-        // }
-
-        let newUser = await User.create({username: name, password: pwd, email: email})
-        if (newUser)
+        if (duplicateFound===true)
         {
-            res.status(200).send()
+            res.status(400).send({msg: "Password is in use"})
+        }
+
+        else
+        {
+            let newUser = await User.create({username: name, password: pwd, email: email})
+            if (newUser)
+            {
+                res.status(200).send()
+            }
         }
     } catch(err) {
         res.status(400).send({msg: err})
@@ -75,8 +76,6 @@ app.post("/register", async(req, res) => {
 app.put("/updatePassword", async(req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
-
-    console.log(pwd)
     
     try {
         let findUser = await User.find({username: name})
@@ -88,14 +87,13 @@ app.put("/updatePassword", async(req, res) => {
             for (let i = 0; i < findDuplicatePwd.length; i++)
             {
                 duplicateFound = await bcrypt.compare(pwd, findDuplicatePwd[i].password)
-                console.log(duplicateFound)
                 if (duplicateFound===true)
                 {
                     res.status(400).send({msg: "Password is in use"})
                     break;
                 }
             }
-          
+            
             let updatedPwd = await User.updateOne({username: name}, {password: pwd})
             res.status(200).send()
         }
