@@ -42,6 +42,15 @@ app.post("/register", async(req, res) => {
     let email = req.body.email
 
     try {
+        let findDuplicatePwd = (await User.find({})).filter(user =>{
+            bcrypt.compare(pwd, user.password)===true}
+        )
+        console.log(findDuplicatePwd)
+        if (findDuplicatePwd.length > 0)
+        {
+            res.status(400).send({msg: "Password already in use"})
+        }
+
         let newUser = await User.create({username: name, password: pwd, email: email})
         if (newUser)
         {
@@ -57,17 +66,28 @@ app.put("/updatePassword", async(req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
 
+    console.log(pwd)
+    
     try {
         let findUser = await User.find({username: name})
         if(findUser.length>0)
         {
-            let findPwd = await User.find({password: pwd})
-
-            let matches = await bcrypt.compare(pwd, findUser[0].password)
+            let findDuplicatePwd = await User.find({}).select("password")
             
-            if (matches)
+            let duplicateFound = false
+            for (let i = 0; i < findDuplicatePwd.length; i++)
             {
-                res.status(400).send({msg: "The password you entered is in use"})
+                duplicateFound = await bcrypt.compare(pwd, findDuplicatePwd[i].password)
+                console.log(duplicateFound)
+                if (duplicateFound===true)
+                {
+                    break;
+                }
+            }
+
+            if (duplicateFound === true)
+            {
+                res.status(400).send({msg: "Password is in use"})
             }
           
             let updatedPwd = await User.updateOne({username: name}, {password: pwd})
