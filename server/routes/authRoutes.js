@@ -17,7 +17,7 @@ app.post("/login", async (req, res) => {
         if (findUser.length>0)
         {
             let matches = await bcrypt.compare(pwd, findUser[0].password)
-            console.log(matches)
+            
             if (matches)
             {
                 res.status(200).json(findUser)
@@ -36,16 +36,44 @@ app.post("/login", async (req, res) => {
 
 })
 
+async function findDuplicatePwd(encryptedPwds, decryptedPwdTarget)
+{   
+    let duplicateFound = false
+    for (let i = 0; i < encryptedPwds.length; i++)
+    {
+        duplicateFound = await bcrypt.compare(decryptedPwdTarget, encryptedPwds[i].password)
+        if (duplicateFound===true)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}   
+
+
 app.post("/register", async(req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
     let email = req.body.email
-
+    
     try {
-        let newUser = await User.create({username: name, password: pwd, email: email})
-        if (newUser)
+        let allPasswords = await User.find({}).select("password").sort({password: 1})
+            
+        let duplicateFound = await findDuplicatePwd(allPasswords, pwd)
+
+        if (duplicateFound===true)
         {
-            res.status(200).send()
+            res.status(400).send({msg: "Password is in use"})
+        }
+
+        else
+        {
+            let newUser = await User.create({username: name, password: pwd, email: email})
+            if (newUser)
+            {
+                res.status(200).send()
+            }
         }
     } catch(err) {
         res.status(400).send({msg: err})
@@ -56,20 +84,20 @@ app.post("/register", async(req, res) => {
 app.put("/updatePassword", async(req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
-
+    
     try {
         let findUser = await User.find({username: name})
         if(findUser.length>0)
         {
-            let findPwd = await User.find({password: pwd})
-
-            let matches = await bcrypt.compare(pwd, findUser[0].password)
+            let allPasswords = await User.find({}).select("password").sort({password: 1})
             
-            if (matches)
+            let duplicateFound = await findDuplicatePwd(allPasswords, pwd)
+
+            if (duplicateFound === true)
             {
-                res.status(400).send({msg: "The password you entered is in use"})
+                res.status(400).send({msg: "Password already in use"})
             }
-          
+            
             let updatedPwd = await User.updateOne({username: name}, {password: pwd})
             res.status(200).send()
         }

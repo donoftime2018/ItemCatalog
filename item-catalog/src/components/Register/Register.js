@@ -50,10 +50,6 @@ const Register = (props) => {
             {
                 navigate("/login")
             }
-
-            else {
-                return res.data;
-            }
         }).catch((err) => {
             const errorMessage = JSON.parse(err.request.response);
             const validationMessage = err.response.data.msg.message;
