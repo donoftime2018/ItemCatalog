@@ -38,19 +38,12 @@ app.post("/login", async (req, res) => {
 
 async function findDuplicatePwd(encryptedPwds, decryptedPwdTarget, encryptedPwdTarget)
 {   
-    console.log(encryptedPwds)
-    console.log(decryptedPwdTarget)
-    console.log(encryptedPwdTarget)
-
     let duplicateFound = false
     let start = 0, end = encryptedPwds.length-1 
 
     while (start <= end)
     {
         let mid = Math.floor((start+end)/2)
-        console.log(mid)
-        console.log(encryptedPwds[mid].password)
-        console.log(encryptedPwdTarget[0].password)
         duplicateFound = await bcrypt.compare(decryptedPwdTarget, encryptedPwds[mid].password)
 
         if (duplicateFound === true)
@@ -61,13 +54,11 @@ async function findDuplicatePwd(encryptedPwds, decryptedPwdTarget, encryptedPwdT
         else if (encryptedPwds[mid].password.localeCompare(encryptedPwdTarget[0].password)<0)
         {
             start = mid + 1
-            console.log(start)
         }
 
         else
         {
             end = mid - 1
-            console.log(end)
         }
 
 
