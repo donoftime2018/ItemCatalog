@@ -72,17 +72,6 @@ async function findDuplicatePwd(encryptedPwds, decryptedPwdTarget, encryptedPwdT
 
 
     }
-    // let duplicateFound = false
-    // for (let i = 0; i < encryptedPwds.length; i++)
-    // {
-    //     duplicateFound = await bcrypt.compare(decryptedPwdTarget, encryptedPwds[i].password)
-    //     if (duplicateFound===true)
-    //     {
-    //         return true;
-    //     }
-    // }
-
-    // return false;
 }   
 
 
