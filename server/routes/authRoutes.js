@@ -36,19 +36,53 @@ app.post("/login", async (req, res) => {
 
 })
 
-async function findDuplicatePwd(encryptedPwds, decryptedPwdTarget)
+async function findDuplicatePwd(encryptedPwds, decryptedPwdTarget, encryptedPwdTarget)
 {   
-    let duplicateFound = false
-    for (let i = 0; i < encryptedPwds.length; i++)
-    {
-        duplicateFound = await bcrypt.compare(decryptedPwdTarget, encryptedPwds[i].password)
-        if (duplicateFound===true)
-        {
-            return true;
-        }
-    }
+    console.log(encryptedPwds)
+    console.log(decryptedPwdTarget)
+    console.log(encryptedPwdTarget)
 
-    return false;
+    let duplicateFound = false
+    let start = 0, end = encryptedPwds.length-1 
+
+    while (start <= end)
+    {
+        let mid = Math.floor((start+end)/2)
+        console.log(mid)
+        console.log(encryptedPwds[mid].password)
+        console.log(encryptedPwdTarget[0].password)
+        duplicateFound = await bcrypt.compare(decryptedPwdTarget, encryptedPwds[mid].password)
+
+        if (duplicateFound === true)
+        {
+            return true
+        }
+
+        else if (encryptedPwds[mid].password.localeCompare(encryptedPwdTarget[0].password)<0)
+        {
+            start = mid + 1
+            console.log(start)
+        }
+
+        else
+        {
+            end = mid - 1
+            console.log(end)
+        }
+
+
+    }
+    // let duplicateFound = false
+    // for (let i = 0; i < encryptedPwds.length; i++)
+    // {
+    //     duplicateFound = await bcrypt.compare(decryptedPwdTarget, encryptedPwds[i].password)
+    //     if (duplicateFound===true)
+    //     {
+    //         return true;
+    //     }
+    // }
+
+    // return false;
 }   
 
 
@@ -59,8 +93,8 @@ app.post("/register", async(req, res) => {
     
     try {
         let allPasswords = await User.find({}).select("password").sort({password: 1})
-            
-        let duplicateFound = await findDuplicatePwd(allPasswords, pwd)
+        let encryptedPwdTarget = await User.find({username: name}).select("password")
+        let duplicateFound = await findDuplicatePwd(allPasswords, pwd, encryptedPwdTarget)
 
         if (duplicateFound===true)
         {
@@ -90,8 +124,8 @@ app.put("/updatePassword", async(req, res) => {
         if(findUser.length>0)
         {
             let allPasswords = await User.find({}).select("password").sort({password: 1})
-            
-            let duplicateFound = await findDuplicatePwd(allPasswords, pwd)
+            let encryptedPwdTarget = await User.find({username: name}).select("password")
+            let duplicateFound = await findDuplicatePwd(allPasswords, pwd, encryptedPwdTarget)
 
             if (duplicateFound === true)
             {
