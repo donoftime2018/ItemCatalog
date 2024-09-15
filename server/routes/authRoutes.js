@@ -40,7 +40,6 @@ async function findDuplicatePwd(encryptedPwds, decryptedPwdTarget, encryptedPwdT
 {   
     let duplicateFound = false
     let start = 0, end = encryptedPwds.length-1 
-
     while (start <= end)
     {
         let mid = Math.floor((start+end)/2)
@@ -51,7 +50,7 @@ async function findDuplicatePwd(encryptedPwds, decryptedPwdTarget, encryptedPwdT
             return true
         }
 
-        else if (encryptedPwds[mid].password.localeCompare(encryptedPwdTarget[0].password)<0)
+        else if (encryptedPwds[mid].password.localeCompare(encryptedPwdTarget.password)<0)
         {
             start = mid + 1
         }
@@ -73,7 +72,7 @@ app.post("/register", async(req, res) => {
     
     try {
         let allPasswords = await User.find({}).select("password").sort({password: 1})
-        let encryptedPwdTarget = await User.find({username: name}).select("password")
+        let encryptedPwdTarget = await User.findOne({username: name}).select("password")
         let duplicateFound = await findDuplicatePwd(allPasswords, pwd, encryptedPwdTarget)
 
         if (duplicateFound===true)
@@ -104,7 +103,7 @@ app.put("/updatePassword", async(req, res) => {
         if(findUser.length>0)
         {
             let allPasswords = await User.find({}).select("password").sort({password: 1})
-            let encryptedPwdTarget = await User.find({username: name}).select("password")
+            let encryptedPwdTarget = await User.findOne({username: name}).select("password")
             let duplicateFound = await findDuplicatePwd(allPasswords, pwd, encryptedPwdTarget)
 
             if (duplicateFound === true)
