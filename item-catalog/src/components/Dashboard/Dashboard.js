@@ -141,7 +141,7 @@ const Dashboard = (props) => {
             itemResults.current = "Showing results for item: " + itemQuery
             return(<>
                 {
-                    items.filter(item=>flexibleRegex.test(item.name)).map((item, index)=>{
+                    items.filter(item=>flexibleRegex.test(item.name) || flexibleRegex.test(item.desc)).map((item, index)=>{
                         return(<>
                             <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
@@ -172,7 +172,7 @@ const Dashboard = (props) => {
 
             return(<>
                 {
-                    items.filter(item=>new RegExp(posterQuery, 'i').test(item.poster) && flexibleRegex.test(item.name)).map((item, index)=>{
+                    items.filter(item=>new RegExp(posterQuery, 'i').test(item.poster) && (flexibleRegex.test(item.name) || flexibleRegex.test(item.desc))).map((item, index)=>{
                         return(<>
                             <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
