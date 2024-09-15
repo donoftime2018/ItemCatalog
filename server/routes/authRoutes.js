@@ -97,9 +97,11 @@ app.put("/updatePassword", async(req, res) => {
             {
                 res.status(400).send({msg: "Password already in use"})
             }
-            
-            let updatedPwd = await User.updateOne({username: name}, {password: pwd})
-            res.status(200).send()
+            else
+            {
+                let updatedPwd = await User.updateOne({username: name}, {password: pwd})
+                res.status(200).send()
+            }
         }
 
         else
