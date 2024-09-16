@@ -66,7 +66,7 @@ userSchema.post('save', function(error, doc, next) {
    
     if(error.name === 'MongoServerError' && error.code === 11000)
     {
-        return(next("Name, password, or email already exists used in the database"))
+        return(next("Username or email already exists in the database"))
     }
 
     next()
