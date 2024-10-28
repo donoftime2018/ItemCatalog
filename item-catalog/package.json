@@ -38,14 +38,11 @@
     "web-vitals": "^2.1.4",
     "yup": "^1.2.0"
   },
-  "homepage": "https://donoftime2018.github.io/ItemCatalog",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -67,7 +64,6 @@
   },
   "devDependencies": {
     "@types/node": "^20.8.9",
-    "gh-pages": "^6.1.1",
     "react-scripts": "^5.0.1",
     "sass": "^1.64.1"
   },
