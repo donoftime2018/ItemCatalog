@@ -17,7 +17,6 @@
     "axios": "^1.4.0",
     "body-parser": "^1.20.2",
     "bootstrap": "^5.1.0",
-    "caniuse-lite": "^1.0.30001613",
     "config": "^3.3.9",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
