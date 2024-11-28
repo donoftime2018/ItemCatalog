@@ -35,9 +35,9 @@ const UpdatePassword = (props) => {
     const navigate = useNavigate()
 
     const validation = () => yup.object({
-        userName: yup.string().min(10, "Username must be at least 10 characters long").max(20, "Username cannot be more than 20 characters").required("Username required"),
-        passWord: yup.string().min(8, "Password must be at least 8 characters long").max(12, "Password cannot be over 12 characters long").required("Password required"),
-        confirmPassword: yup.string().min(8, "Confirmed password must be at least 8 characters long").max(12, "Confirmed password cannot be over 12 characters long").required("Confirm password required")
+        userName: yup.string().min(10, "Username must be at least 10 characters long").max(30, "Username cannot be more than 20 characters").required("Username required"),
+        passWord: yup.string().min(8, "Password must be at least 8 characters long").max(20, "Password cannot be over 20 characters long").required("Password required"),
+        confirmPassword: yup.string().min(8, "Confirmed password must be at least 8 characters long").max(20, "Confirmed password cannot be over 20 characters long").required("Confirm password required")
     })
 
     const formik = useFormik({
@@ -70,7 +70,6 @@ const UpdatePassword = (props) => {
         }
 
         else {
-            console.log("Passwords must match!")
             alert("Passwords do not match!")
         }
     }
