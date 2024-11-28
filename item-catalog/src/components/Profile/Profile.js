@@ -111,9 +111,9 @@ const Profile = (props) => {
                             return(<>
                                 <Divider></Divider>
                                 <div style={{display: 'flex', flexDirection: 'row'}} >   
-                                    <CardContent sx={{textAlign: 'center', display: 'inline-flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>{item.name}</CardContent>
+                                    <CardContent sx={{textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>{item.name}</CardContent>
                                     <Divider orientation="vertical" flexItem></Divider>
-                                    <CardContent sx={{textAlign: "center", display: 'inline-flex', flexDirection: 'row', alignItems: 'center'}}>{item.rating}<FavoriteIcon sx={{color:'#c70e0e', fontSize: 'large'}}/></CardContent>
+                                    <CardContent sx={{textAlign: "center", display: 'inline-flex', justifyContent: 'center', flexDirection: 'row', alignItems: 'center'}}>{item.rating}<FavoriteIcon sx={{color:'#c70e0e', fontSize: 'large'}}/></CardContent>
                                 </div>
                             </>)
                         })
