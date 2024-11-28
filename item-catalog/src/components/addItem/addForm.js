@@ -31,7 +31,7 @@ const AddForm = () => {
     const validation = () => yup.object({
         item_name: yup.string().max(65, "Item name cannot be over 65 characters long").required("Item name required"),
         item_price: yup.number().positive("Item price must be positive").required("Item price required"),
-        item_desc: yup.string().max(105, "Item description cannot be over 85 characters long").required("Item description required"),
+        item_desc: yup.string().max(138, "Item description cannot be over 138 characters long").required("Item description required"),
     })
 
     const formik = useFormik({
