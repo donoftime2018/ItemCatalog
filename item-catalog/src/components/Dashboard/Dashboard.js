@@ -156,7 +156,7 @@ const Dashboard = (props) => {
             posterResults.current = "Showing results for poster: " + posterQuery
             return(<>
                 {
-                    items.filter(item=>new RegExp(posterQuery, 'i').test(item.poster)).map((item, index)=>{
+                    items.filter(item=>new RegExp(posterQuery).test(item.poster)).map((item, index)=>{
                         return(<>
                             <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
@@ -172,7 +172,7 @@ const Dashboard = (props) => {
 
             return(<>
                 {
-                    items.filter(item=>new RegExp(posterQuery, 'i').test(item.poster) && (flexibleRegex.test(item.name) || flexibleRegex.test(item.desc))).map((item, index)=>{
+                    items.filter(item=>new RegExp(posterQuery).test(item.poster) && (flexibleRegex.test(item.name) || flexibleRegex.test(item.desc))).map((item, index)=>{
                         return(<>
                             <Item itemName={item.name} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
@@ -217,14 +217,14 @@ const Dashboard = (props) => {
                                     name="itemQuery"
                                     variant="outlined"
                                     type="text"
-                                    label="Search Item by Name"
+                                    label="Search Item"
                                     value={formik.values.itemQuery}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     error={formik.touched.itemQuery && Boolean(formik.errors.itemQuery)}
                                     helperText={formik.touched.itemQuery && formik.errors.itemQuery}
                                     sx={{ backgroundColor: 'white'}} 
-                                    placeholder="Item name here..." 
+                                    placeholder="Item here..." 
                                     disableUnderline="true" 
                                 />
                                 </div>
@@ -235,14 +235,14 @@ const Dashboard = (props) => {
                                     name="posterQuery"
                                     variant="outlined"
                                     type="text"
-                                    label="Search Item by Poster"
+                                    label="Search Poster"
                                     value={formik.values.posterQuery}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     error={formik.touched.posterQuery && Boolean(formik.errors.posterQuery)}
                                     helperText={formik.touched.posterQuery && formik.errors.posterQuery}
                                     sx={{ backgroundColor: 'white'}} 
-                                    placeholder="Item poster here..." 
+                                    placeholder="Poster here..." 
                                     disableUnderline="true" 
                                 />
                                 </div>

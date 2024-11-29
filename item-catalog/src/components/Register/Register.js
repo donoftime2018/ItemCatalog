@@ -10,6 +10,7 @@ import "./Register.css";
 
 const Register = (props) => {
     const [passwordVisibility, setPasswordVisibility] = useState(false)
+    const [repeatVisibility, setRepeatVisibility] = useState(false)
 
     const showPwd = () => {
         setPasswordVisibility(true)
@@ -19,14 +20,23 @@ const Register = (props) => {
         setPasswordVisibility(false)
     }
 
+    const showRepeat = () => {
+        setRepeatVisibility(true)
+    }
+    
+    const hideRepeat = () => {
+        setRepeatVisibility(false)
+    }
+
     useEffect(() =>{
         document.title=props.title;
     }, [props])
     const navigate=useNavigate()
 
     const validation = () => yup.object({
-        userName: yup.string().min(10, "Username must be at least 10 characters long").max(20, "Username cannot be more than 20 characters").required("Username required"),
-        passWord: yup.string().min(8, "Password must be at least 8 characters long").max(12, "Password cannot be over 12 characters long").required("Password required"),
+        userName: yup.string().min(10, "Username must be at least 10 characters long").max(30, "Username cannot be more than 30 characters").required("Username required"),
+        passWord: yup.string().min(8, "Password must be at least 8 characters long").max(20, "Password cannot be over 20 characters long").required("Password required"),
+        confirmPassword: yup.string().min(8, "Confirmed password must be at least 8 characters long").max(20, "Confirmed password cannot be over 20 characters long").required("Confirm password required"),
         email: yup.string().required("Email required")
     })
 
@@ -35,28 +45,35 @@ const Register = (props) => {
         initialValues: {
            userName: "",
            passWord: "",
+           confirmPassword: "",
            email: ""
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
-            registerUser(values.userName, values.passWord, values.email)
+            registerUser(values.userName, values.passWord, values.confirmPassword, values.email)
         }
     }, {})
 
-    const registerUser = (name, pwd, email) => {
-        const data = {name, pwd, email}
-        axios.post("http://localhost:4000/register", data).then((res)=>{
-            if(res.status===200)
-            {
-                navigate("/login")
-            }
-        }).catch((err) => {
-            const errorMessage = JSON.parse(err.request.response);
-            const validationMessage = err.response.data.msg.message;
-            const errorAlert = validationMessage===undefined ? errorMessage.msg : validationMessage;
-            alert(errorAlert);
-            
-        })
+    const registerUser = (name, pwd, confirmPwd, email) => {
+        if (confirmPwd === pwd)
+        {
+            const data = {name, pwd, email}
+            axios.post("http://localhost:4000/register", data).then((res)=>{
+                if(res.status===200)
+                {
+                    navigate("/login")
+                }
+            }).catch((err) => {
+                const errorMessage = JSON.parse(err.request.response);
+                const validationMessage = err.response.data.msg.message;
+                const errorAlert = validationMessage===undefined ? errorMessage.msg : validationMessage;
+                alert(errorAlert);
+                
+            })
+        }
+        else {
+            alert("Passwords do not match!")
+        }
     }
     return(<>
 
@@ -108,6 +125,34 @@ const Register = (props) => {
                             : 
                             <>
                                 <IconButton fontSize="large"><VisibilityOffIcon onClick={showPwd}></VisibilityOffIcon></IconButton>
+                            </>
+                        }
+                    </div>
+
+                    <div style={{display: "flex", justifyContent: 'center'}}>
+                        <TextField
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            variant="outlined"
+                            type={repeatVisibility ? "text" : "password"}
+                            label="Confirm Password"
+                            value={formik.values.confirmPassword}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+                            helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                            sx={{ backgroundColor: 'white'}} 
+                            placeholder="Confirm password goes here..." 
+                            disableUnderline="true" 
+                        ></TextField>
+                        {
+                            repeatVisibility ? 
+                            <>                                
+                                <IconButton fontSize="large"><VisibilityIcon onClick={hideRepeat}></VisibilityIcon></IconButton>
+                            </> 
+                            : 
+                            <>
+                                <IconButton fontSize="large"><VisibilityOffIcon onClick={showRepeat}></VisibilityOffIcon></IconButton>
                             </>
                         }
                     </div>
