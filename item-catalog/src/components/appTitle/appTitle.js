@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Badge from "react-bootstrap/Badge"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./appTitle.css"
@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal"
 import { IconButton, Tooltip, Box, Typography, Divider } from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
 import {useLocation} from "react-router-dom"
+import projectDesc from "./projectDesc.txt"
 
 const style = {
     position: 'absolute',
@@ -25,6 +26,19 @@ const Title = ({title}) => {
     const location = useLocation()
 
     const [open, setOpen] = useState(false)
+    const [appDesc, setDesc] = useState()
+
+    useEffect(()=>{
+        fetch(projectDesc).then(
+            (response)=>{
+                if (response.ok)
+                {
+                    return response.text()
+                }
+            }
+        ).then((text)=>{setDesc(text)})
+    }, 
+    [appDesc])
 
     const handleOpen = () => {
         setOpen(true)
@@ -57,7 +71,7 @@ const Title = ({title}) => {
         <Box sx={style}>
             <Typography id="modal-modal-title" variant="h5" style={{margin: '5px 0px', fontWeight: 'bold'}}>Put a Price On It!</Typography>
             <Divider></Divider>
-            <Typography id="modal-modal-description" variant="p" sx={{paddingTop: "10px"}}>Put a Price On It! is a  MERN Stack application where users can add information -- name, price, and a short description -- about items they find on eBay, Amazon, etc. Other users can see the items' price, description and popularity amongst users of the app to hopefully aid in making informed decisions about which items to buy. Users can post items and like items that they have not posted. Users can only like an item once, however (i.e. a user cannot like an item 2+ times). The most popular items with the lowest price are the first items users will see upon logging in. Users are also granted a profile showing recent activity on the app such as most popular items, recently liked and posted items, and total number of liked and posted items.</Typography>
+            <Typography id="modal-modal-description" variant="p" sx={{paddingTop: "10px"}}><pre>{appDesc}</pre></Typography>
         </Box>
     </Modal>
     </>)
