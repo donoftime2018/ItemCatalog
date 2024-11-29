@@ -17,5 +17,8 @@ p {
 }
 
 pre {
+    text-align: left;
     font-family: inherit;
+    white-space: pre-wrap; 
+    word-break: break-word;
 }
