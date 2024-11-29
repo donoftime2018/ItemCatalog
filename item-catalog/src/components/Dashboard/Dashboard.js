@@ -217,14 +217,14 @@ const Dashboard = (props) => {
                                     name="itemQuery"
                                     variant="outlined"
                                     type="text"
-                                    label="Search Item by Name"
+                                    label="Search Item"
                                     value={formik.values.itemQuery}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     error={formik.touched.itemQuery && Boolean(formik.errors.itemQuery)}
                                     helperText={formik.touched.itemQuery && formik.errors.itemQuery}
                                     sx={{ backgroundColor: 'white'}} 
-                                    placeholder="Item name here..." 
+                                    placeholder="Item here..." 
                                     disableUnderline="true" 
                                 />
                                 </div>
@@ -235,14 +235,14 @@ const Dashboard = (props) => {
                                     name="posterQuery"
                                     variant="outlined"
                                     type="text"
-                                    label="Search Item by Poster"
+                                    label="Search Poster"
                                     value={formik.values.posterQuery}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                     error={formik.touched.posterQuery && Boolean(formik.errors.posterQuery)}
                                     helperText={formik.touched.posterQuery && formik.errors.posterQuery}
                                     sx={{ backgroundColor: 'white'}} 
-                                    placeholder="Item poster here..." 
+                                    placeholder="Poster here..." 
                                     disableUnderline="true" 
                                 />
                                 </div>
