@@ -110,11 +110,14 @@ const Profile = (props) => {
                         popularItems.map((item, index)=>{
                             return(<>
                                 <Divider></Divider>
-                                <div style={{display: 'flex', flexDirection: 'row'}} >   
-                                    <CardContent sx={{textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>{item.name}</CardContent>
-                                    <Divider orientation="vertical" flexItem></Divider>
-                                    <CardContent sx={{textAlign: "center", display: 'inline-flex', justifyContent: 'center', flexDirection: 'row', alignItems: 'center'}}>{item.rating}<FavoriteIcon sx={{color:'#c70e0e', fontSize: 'large'}}/></CardContent>
-                                </div>
+                                <CardContent sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center'}}>
+                                    <div>
+                                        {item.name}
+                                    </div>
+                                    <div style={{display:'inline-flex'}}>
+                                        {item.rating}<FavoriteIcon sx={{color:'#c70e0e'}}/> 
+                                    </div>                                         
+                                </CardContent>
                             </>)
                         })
                     }
