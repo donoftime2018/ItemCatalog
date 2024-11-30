@@ -10,7 +10,7 @@ require('dotenv').config()
 
 app.use(express.static(path.join(__dirname, 'build')))
 
-mongoose.connect(process.env.MONGODB_ATLAS_URL).then(()=>{console.log("Connected!")}).catch((err)=>{console.error(err)})
+mongoose.connect(process.env.MONGO_ATLAS_URL).then(()=>{console.log("Connected!")}).catch((err)=>{console.error(err)})
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())
