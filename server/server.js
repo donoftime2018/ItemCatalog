@@ -8,8 +8,8 @@ const app = express()
 const path = require('path')
 require('dotenv').config()
 
-// app.use(express.static(path.join("../item-catalog", "build")));
-app.use(express.static(__dirname));
+// app.use(express.static(path.join("../item-catalog", "public")));
+app.use(express.static(path.join("../item-catalog", "build")));
 
 mongoose.connect(process.env.MONGO_ATLAS_URL, { useNewUrlParser: true, useUnifiedTopology: true }).then(()=>{console.log("Connected!")}).catch((err)=>{console.error(err)})
 app.use(bodyParser.json())
