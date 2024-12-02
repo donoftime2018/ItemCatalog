@@ -2,7 +2,7 @@
   "name": "item-catalog",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:4000",
+  "proxy": "https://itemcatalog-3.onrender.com",
   "dependencies": {
     "@babel/runtime": "^7.22.6",
     "@emotion/react": "^11.11.1",
