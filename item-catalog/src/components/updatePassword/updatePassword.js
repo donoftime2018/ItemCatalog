@@ -56,7 +56,7 @@ const UpdatePassword = (props) => {
     const changePassword = (name, pwd, confirmPwd) => {
         if(pwd===confirmPwd) {
             const data = {name, pwd}
-            axios.put("http://localhost:4000/updatePassword", data).then((res)=>{
+            axios.put(process.env.SERVER_URL + "/updatePassword", data).then((res)=>{
                 if(res.status===200)
                 {
                     navigate("/login")

@@ -58,7 +58,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
 
         if (confirmDelete === true)
         {
-            axios.delete("http://localhost:4000/items/deleteItems/" + id).then((res) => {
+            axios.delete(process.env.SERVER_URL + "/items/deleteItems/" + id).then((res) => {
                 }).catch((error) => {
                 
                 })
@@ -71,7 +71,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
         let user = auth.user
         let data = {user}
 
-        axios.put("http://localhost:4000/items/increaseRating/" + id, data).then((res)=>{
+        axios.put(process.env.SERVER_URL + "/items/increaseRating/" + id, data).then((res)=>{
                 if (res.status === 200)
                 {
                     setAlertOpen(true)
@@ -90,7 +90,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
 
         let data = {user}
 
-        axios.put("http://localhost:4000/items/decreaseRating/" + id, data).then((res)=>{
+        axios.put(process.env.SERVER_URL + "/items/decreaseRating/" + id, data).then((res)=>{
                 if (res.status === 200)
                 {
                     setAlertOpen(true)

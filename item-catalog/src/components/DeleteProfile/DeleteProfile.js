@@ -36,7 +36,7 @@ const DeleteProfile = (props) => {
 
             if (window.confirm("Are you sure you want to deactivate your account? All your likes and items will be gone forever.")===true)
             {
-                axios.delete("http://localhost:4000/deleteUser/" + user).then((res)=>{
+                axios.delete(process.env.SERVER_URL + "/deleteUser/" + user).then((res)=>{
                     console.log(res);
                     auth.logout()
                 }).catch((err)=>{

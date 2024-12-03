@@ -62,7 +62,7 @@ const AddForm = () => {
         const user = auth.user
         const data = {name, price, desc, user}
 
-        axios.post("http://localhost:4000/items/insertItems", data).then((res)=>{
+        axios.post(process.env.SERVER_URL + "/items/insertItems", data).then((res)=>{
             if (res.status === 200)
             {
                 setAlertOpen(true)

@@ -49,7 +49,7 @@ const LoginPage = (props) => {
 
     const checkLogin = (name, pwd) => {
         const data = {name, pwd}
-        axios.post("http://localhost:4000/login", data).then((res)=>{
+        axios.post(process.env.SERVER_URL + "/login", data).then((res)=>{
             if(res.status===200)
             {
                 let username = res.data[0].username
