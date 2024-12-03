@@ -10,7 +10,7 @@ import { useAuth } from "../context/user";
 import "./Login.css";
 
 const LoginPage = (props) => {
-    console.log(process.env.ITEM_CATALOG_SERVER_URL)
+    console.log(process.env.REACT_APP_SERVER_URL)
 
     const [passwordVisibility, setPasswordVisibility] = useState(false)
 

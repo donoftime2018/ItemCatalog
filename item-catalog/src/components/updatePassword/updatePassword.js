@@ -9,7 +9,7 @@ import axios from "axios";
 import "./updatePassword.css";
 
 const UpdatePassword = (props) => {
-    console.log(process.env.ITEM_CATALOG_SERVER_URL)
+    console.log(process.env.REACT_APP_SERVER_URL)
     const [passwordVisibility, setPasswordVisibility] = useState(false)
     const [repeatVisibility, setRepeatVisibility] = useState(false)
 
