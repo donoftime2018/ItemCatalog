@@ -79,7 +79,7 @@ const Dashboard = (props) => {
     useEffect(()=>{
 
         const getItems = () => {
-            axios.get(process.env.SERVER_URL + "/items/").then((res)=>{setItems(res.data)}).catch((error) => {
+            axios.get(process.env.ITEM_CATALOG_SERVER_URL + "/items/").then((res)=>{setItems(res.data)}).catch((error) => {
               })
         }
         getItems()
