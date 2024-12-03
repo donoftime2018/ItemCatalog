@@ -9,6 +9,8 @@ import axios from "axios";
 import "./Register.css";
 
 const Register = (props) => {
+    console.log(process.env.SERVER_URL)
+
     const [passwordVisibility, setPasswordVisibility] = useState(false)
     const [repeatVisibility, setRepeatVisibility] = useState(false)
 

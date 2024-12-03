@@ -10,6 +10,8 @@ import { useAuth } from "../context/user";
 import "./Login.css";
 
 const LoginPage = (props) => {
+    console.log(process.env.SERVER_URL)
+
     const [passwordVisibility, setPasswordVisibility] = useState(false)
 
     const showPwd = () => {
