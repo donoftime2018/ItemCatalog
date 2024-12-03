@@ -60,9 +60,9 @@ app.post("/register", async(req, res) => {
     try {
         let allPasswords = await User.find({}).select("password").sort({password: 1})
             
-        let duplicateFound = await findDuplicatePwd(allPasswords, pwd)
+        let duplicatePwdFound = await findDuplicatePwd(allPasswords, pwd)
 
-        if (duplicateFound===true)
+        if (duplicatePwdFound===true)
         {
             res.status(400).send({msg: "Password is in use"})
         }
@@ -91,9 +91,9 @@ app.put("/updatePassword", async(req, res) => {
         {
             let allPasswords = await User.find({}).select("password").sort({password: 1})
             
-            let duplicateFound = await findDuplicatePwd(allPasswords, pwd)
+            let duplicatePwdFound = await findDuplicatePwd(allPasswords, pwd)
 
-            if (duplicateFound === true)
+            if (duplicatePwdFound === true)
             {
                 res.status(400).send({msg: "Password already in use"})
             }
