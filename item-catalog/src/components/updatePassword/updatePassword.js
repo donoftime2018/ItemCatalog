@@ -56,7 +56,9 @@ const UpdatePassword = (props) => {
     const changePassword = (name, pwd, confirmPwd) => {
         if(pwd===confirmPwd) {
             const data = {name, pwd}
-            axios.put(process.env.SERVER_URL + "/updatePassword", data).then((res)=>{
+            const apiEndpoint = process.env.SERVER_URL + "/updatePassword"
+            axios.put(apiEndpoint, data).then((res)=>{
+                console.log(res)
                 if(res.status===200)
                 {
                     navigate("/login")

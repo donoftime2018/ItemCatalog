@@ -60,7 +60,10 @@ const Register = (props) => {
         if (confirmPwd === pwd)
         {
             const data = {name, pwd, email}
-            axios.post(process.env.SERVER_URL + "/register", data).then((res)=>{
+            const apiEndpoint = process.env.SERVER_URL + "/register"
+            
+            axios.post(apiEndpoint, data).then((res)=>{
+                console.log(res)
                 if(res.status===200)
                 {
                     navigate("/login")
