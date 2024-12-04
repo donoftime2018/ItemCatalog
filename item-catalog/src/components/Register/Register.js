@@ -60,7 +60,7 @@ const Register = (props) => {
         if (confirmPwd === pwd)
         {
             const data = {name, pwd, email}
-            const apiEndpoint = process.env.SERVER_URL + "/register"
+            const apiEndpoint = process.env.REACT_APP_SERVER_URL + "/register"
             
             axios.post(apiEndpoint, data).then((res)=>{
                 console.log(res)

@@ -21,25 +21,25 @@ const Profile = (props) => {
 
     useEffect(()=>{
         const getLikedItems = () => {
-            axios.get(process.env.SERVER_URL + "/items/getLikedItems/" + user).then((res)=>{setLikedItems(res.data); 
+            axios.get(process.env.REACT_APP_SERVER_URL + "/items/getLikedItems/" + user).then((res)=>{setLikedItems(res.data); 
             }).catch((error)=>{
             });
         }
 
         const getPostedItems = () => {
-            axios.get(process.env.SERVER_URL + "/items/getPostedItems/" + user).then((res)=>{setPostedItems(res.data); 
+            axios.get(process.env.REACT_APP_SERVER_URL + "/items/getPostedItems/" + user).then((res)=>{setPostedItems(res.data); 
             }).catch((error)=>{
             });
         }
 
         const getMostPopularItems = () => {
-            axios.get(process.env.SERVER_URL + "/items/mostPopularItems/" + user).then((res)=>{setPopularItems(res.data); 
+            axios.get(process.env.REACT_APP_SERVER_URL + "/items/mostPopularItems/" + user).then((res)=>{setPopularItems(res.data); 
             }).catch((error)=>{
                 });
         }
 
         const getNumLiked = () => {
-            axios.get(process.env.SERVER_URL + "/items/numLikedItems/" + user).then(
+            axios.get(process.env.REACT_APP_SERVER_URL + "/items/numLikedItems/" + user).then(
                 (res)=>{
                     setNumLikedItems(res.data); 
                 }).catch((error)=>{
@@ -47,7 +47,7 @@ const Profile = (props) => {
         }
 
         const getNumPosted = () => {
-            axios.get(process.env.SERVER_URL + "/items/numPostedItems/" + user).then(
+            axios.get(process.env.REACT_APP_SERVER_URL + "/items/numPostedItems/" + user).then(
                 (res)=>{
                     setNumPostedItems(res.data); 
                 }).catch((error)=>{
