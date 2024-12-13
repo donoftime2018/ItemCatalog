@@ -67,7 +67,7 @@ const Title = ({title}) => {
 
     </div>
 
-    <Modal open={open} onClose={handleClose} disableScrollLock={true}>
+    <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
             <Typography id="modal-modal-title" variant="h5" style={{margin: '5px 0px', fontWeight: 'bold'}}>Put a Price On It!</Typography>
             <Divider></Divider>

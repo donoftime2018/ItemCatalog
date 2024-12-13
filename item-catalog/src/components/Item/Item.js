@@ -166,8 +166,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
          </Card>
 
          <Modal open={open} 
-            onClose={closeDesc}            
-            disableScrollLock={true}
+            onClose={closeDesc}
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h5" style={{margin: '5px 0px', lineHeight: '1.25'}}>{itemName}</Typography>
