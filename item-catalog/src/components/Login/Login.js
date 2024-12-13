@@ -51,7 +51,6 @@ const LoginPage = (props) => {
         const data = {name, pwd}
         const apiEndpoint = process.env.REACT_APP_SERVER_URL + "/login"
         axios.post(apiEndpoint, data).then((res)=>{
-            console.log(res)
             if(res.status===200)
             {
                 let username = res.data[0].username

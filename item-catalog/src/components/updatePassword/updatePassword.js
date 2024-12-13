@@ -57,7 +57,6 @@ const UpdatePassword = (props) => {
             const data = {name, pwd}
             const apiEndpoint = process.env.REACT_APP_SERVER_URL + "/updatePassword"
             axios.put(apiEndpoint, data).then((res)=>{
-                console.log(res)
                 if(res.status===200)
                 {
                     navigate("/login")

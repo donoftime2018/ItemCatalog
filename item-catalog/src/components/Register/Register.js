@@ -61,7 +61,6 @@ const Register = (props) => {
             const apiEndpoint = process.env.REACT_APP_SERVER_URL + "/register"
             
             axios.post(apiEndpoint, data).then((res)=>{
-                console.log(res)
                 if(res.status===200)
                 {
                     navigate("/login")
