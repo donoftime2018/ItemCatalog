@@ -10,14 +10,12 @@ mongoose.set('setDefaultsOnInsert', true);
 app.post("/login", async (req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
-    console.log(name + ", " + pwd)
+ 
     try {
         let findUser = await User.find({username: name})
-        console.log(findUser)
         if (findUser.length>0)
         {
             let matches = await bcrypt.compare(pwd, findUser[0].password)
-            console.log(matches)
             if (matches)
             {
                 res.status(200).json(findUser)
@@ -56,14 +54,10 @@ app.post("/register", async(req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
     let email = req.body.email
-    
-    console.log(name + ", " + pwd + ", " + email)
 
     try {
         let allPasswords = await User.find({}).select("password").sort({password: 1})
-        console.log(allPasswords)
         let duplicateFound = await findDuplicatePwd(allPasswords, pwd)
-        console.log(duplicateFound)
         if (duplicateFound===true)
         {
             res.status(400).send({msg: "Password is in use"})
@@ -72,7 +66,6 @@ app.post("/register", async(req, res) => {
         else
         {
             let newUser = await User.create({username: name, password: pwd, email: email})
-            console.log(newUser)
             if (newUser)
             {
                 res.status(200).send()
@@ -87,17 +80,13 @@ app.post("/register", async(req, res) => {
 app.put("/updatePassword", async(req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
-    console.log(name + ", " + pwd)
     
     try {
         let findUser = await User.find({username: name})
-        console.log(findUser)
         if(findUser.length>0)
         {
             let allPasswords = await User.find({}).select("password").sort({password: 1})
-            console.log(allPasswords)
             let duplicateFound = await findDuplicatePwd(allPasswords, pwd)
-            console.log(duplicateFound)
             if (duplicateFound === true)
             {
                 res.status(400).send({msg: "Password already in use"})
@@ -105,7 +94,6 @@ app.put("/updatePassword", async(req, res) => {
             else
             {
                 let updatedPwd = await User.updateOne({username: name}, {password: pwd})
-                console.log(updatedPwd)
                 res.status(200).send()
             }
         }
