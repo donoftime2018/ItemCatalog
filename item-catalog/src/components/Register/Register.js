@@ -9,8 +9,6 @@ import axios from "axios";
 import "./Register.css";
 
 const Register = (props) => {
-    console.log(process.env.REACT_APP_SERVER_URL)
-
     const [passwordVisibility, setPasswordVisibility] = useState(false)
     const [repeatVisibility, setRepeatVisibility] = useState(false)
 
@@ -36,7 +34,7 @@ const Register = (props) => {
     const navigate=useNavigate()
 
     const validation = () => yup.object({
-        userName: yup.string().min(10, "Username must be at least 10 characters long").max(30, "Username cannot be more than 30 characters").required("Username required"),
+        userName: yup.string().min(6, "Username must be at least 6 characters long").max(30, "Username cannot be more than 30 characters").required("Username required"),
         passWord: yup.string().min(8, "Password must be at least 8 characters long").max(20, "Password cannot be over 20 characters long").required("Password required"),
         confirmPassword: yup.string().min(8, "Confirmed password must be at least 8 characters long").max(20, "Confirmed password cannot be over 20 characters long").required("Confirm password required"),
         email: yup.string().required("Email required")
