@@ -1,0 +1,8 @@
+.loadingIndicator {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 35%; 
+    left: 0;
+    right: 0;
+}
