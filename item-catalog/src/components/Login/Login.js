@@ -8,9 +8,11 @@ import * as yup from "yup"
 import axios from "axios";
 import { useAuth } from "../context/user";
 import "./Login.css";
+import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 
 const LoginPage = (props) => {
     const [passwordVisibility, setPasswordVisibility] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const showPwd = () => {
         setPasswordVisibility(true)
@@ -48,10 +50,11 @@ const LoginPage = (props) => {
     }, {})
 
     const checkLogin = (name, pwd) => {
+        setLoading(true)
         const data = {name, pwd}
         const apiEndpoint = process.env.REACT_APP_SERVER_URL + "/login"
         axios.post(apiEndpoint, data).then((res)=>{
-            if(res.status===200)
+            if (res.status === 200)
             {
                 let username = res.data[0].username
                 auth.login(username)
@@ -61,7 +64,9 @@ const LoginPage = (props) => {
             const errorMessage = JSON.parse(err.request.response);
             const validationMessage = err.response.data.msg.message;
             const errorAlert = validationMessage===undefined ? errorMessage.msg : validationMessage;
-            alert(errorAlert);})
+            alert(errorAlert);}).finally(()=>{
+                setLoading(false)
+            })
     }
 
     return(<>
@@ -118,7 +123,7 @@ const LoginPage = (props) => {
                     </div>
 
                     <div style={{display: "flex", justifyContent: 'center'}}>
-                        <Button type="Submit" variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Submit Info</Button>
+                        <Button type="Submit" variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Log In</Button>
                     </div>
 
             </form>
@@ -131,6 +136,14 @@ const LoginPage = (props) => {
         </Card>
         </div>
         
+        {
+            loading ? 
+            <>
+                <LoadingIndicator/>
+            </> 
+            : 
+            <></>
+        }
     </>)
 }
 

@@ -6,11 +6,13 @@ import {useFormik} from "formik";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup"
 import axios from "axios";
+import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import "./Register.css";
 
 const Register = (props) => {
     const [passwordVisibility, setPasswordVisibility] = useState(false)
     const [repeatVisibility, setRepeatVisibility] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const showPwd = () => {
         setPasswordVisibility(true)
@@ -57,6 +59,7 @@ const Register = (props) => {
     const registerUser = (name, pwd, confirmPwd, email) => {
         if (confirmPwd === pwd)
         {
+            setLoading(true)
             const data = {name, pwd, email}
             const apiEndpoint = process.env.REACT_APP_SERVER_URL + "/register"
             
@@ -71,6 +74,8 @@ const Register = (props) => {
                 const errorAlert = validationMessage===undefined ? errorMessage.msg : validationMessage;
                 alert(errorAlert);
                 
+            }).finally(()=>{
+                setLoading(false)
             })
         }
         else {
@@ -186,6 +191,15 @@ const Register = (props) => {
             <Divider></Divider>
         </Card>
         </div>
+
+        {
+            loading ? 
+            <>
+                <LoadingIndicator/>
+            </> 
+            : 
+            <></>
+        }
     </>)
 }
 
