@@ -11,8 +11,7 @@ const userSchema = new Schema({
 
     password: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
 
     email:  {
@@ -40,7 +39,7 @@ userSchema.pre('validate', function(next){
 
     if (this.password === "password")
     {
-        return(next('Password cannot be "pass" or "password"'))
+        return(next('Password cannot be "password"'))
     }
     
     if (new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "i").test(this.email)===false)
@@ -77,7 +76,7 @@ userSchema.pre('updateOne', async function(next){
 
     if (update.password === "password")
     {
-        return(next('Password cannot be "pass" or "password"'));
+        return(next('Password cannot be "password"'));
     }
 
     else
