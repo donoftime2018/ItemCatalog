@@ -6,11 +6,13 @@ import {useFormik} from "formik";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup"
 import axios from "axios";
+import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import "./updatePassword.css";
 
 const UpdatePassword = (props) => {
     const [passwordVisibility, setPasswordVisibility] = useState(false)
     const [repeatVisibility, setRepeatVisibility] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const showPwd = () => {
         setPasswordVisibility(true)
@@ -54,6 +56,7 @@ const UpdatePassword = (props) => {
 
     const changePassword = (name, pwd, confirmPwd) => {
         if(pwd===confirmPwd) {
+            setLoading(true)
             const data = {name, pwd}
             const apiEndpoint = process.env.REACT_APP_SERVER_URL + "/updatePassword"
             axios.put(apiEndpoint, data).then((res)=>{
@@ -66,6 +69,8 @@ const UpdatePassword = (props) => {
                 const validationMessage = err.response.data.msg.message;
                 const errorAlert = validationMessage===undefined ? errorMessage.msg : validationMessage;
                 alert(errorAlert);
+            }).finally(()=>{
+                setLoading(false)
             })
         }
 
@@ -162,6 +167,15 @@ const UpdatePassword = (props) => {
             </CardContent>
         </Card>
         </div>
+
+        {
+            loading ? 
+            <>
+                <LoadingIndicator/>
+            </> 
+            : 
+            <></>
+        }
     </>)
 }
 
