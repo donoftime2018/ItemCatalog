@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup"
 import axios from "axios";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
+import { isEdge } from "react-device-detect";
 import "./updatePassword.css";
 
 const UpdatePassword = (props) => {
@@ -121,7 +122,7 @@ const UpdatePassword = (props) => {
                             disableUnderline="true" 
                         ></TextField>
                         {
-                            passwordVisibility ? 
+                            passwordVisibility && !isEdge ? 
                             <>                                
                                 <IconButton fontSize="large"><VisibilityIcon onClick={hidePwd}></VisibilityIcon></IconButton>
                             </> 
@@ -149,7 +150,7 @@ const UpdatePassword = (props) => {
                             disableUnderline="true" 
                         ></TextField>
                         {
-                            repeatVisibility ? 
+                            repeatVisibility && !isEdge ? 
                             <>                                
                                 <IconButton fontSize="large"><VisibilityIcon onClick={hideRepeat}></VisibilityIcon></IconButton>
                             </> 

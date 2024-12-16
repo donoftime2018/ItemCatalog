@@ -8,6 +8,7 @@ import * as yup from "yup"
 import axios from "axios";
 import { useAuth } from "../context/user";
 import "./Login.css";
+import { isEdge } from "react-device-detect";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 
 const LoginPage = (props) => {
@@ -111,7 +112,7 @@ const LoginPage = (props) => {
                             disableUnderline="true" 
                         ></TextField>
                         {
-                            passwordVisibility ? 
+                            passwordVisibility && !isEdge ? 
                             <>                                
                                 <IconButton fontSize="large"><VisibilityIcon onClick={hidePwd}></VisibilityIcon></IconButton>
                             </> 
