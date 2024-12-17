@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup"
 import axios from "axios";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
-import {isEdge} from "react-device-detect"
+import {isEdge, isEdgeChromium} from "react-device-detect"
 import "./Register.css";
 
 const Register = (props) => {
@@ -126,13 +126,20 @@ const Register = (props) => {
                             disableUnderline="true" 
                         ></TextField>
                         {
-                            passwordVisibility && !isEdge ? 
-                            <>                                
-                                <IconButton fontSize="large"><VisibilityIcon onClick={hidePwd}></VisibilityIcon></IconButton>
-                            </> 
-                            : 
+                            isEdge || isEdgeChromium ?
+                            <></>
+                            :
                             <>
-                                <IconButton fontSize="large"><VisibilityOffIcon onClick={showPwd}></VisibilityOffIcon></IconButton>
+                            {
+                                passwordVisibility && !isEdge ? 
+                                <>                                
+                                    <IconButton fontSize="large"><VisibilityIcon onClick={hidePwd}></VisibilityIcon></IconButton>
+                                </> 
+                                : 
+                                <>
+                                    <IconButton fontSize="large"><VisibilityOffIcon onClick={showPwd}></VisibilityOffIcon></IconButton>
+                                </>
+                            }
                             </>
                         }
                     </div>
@@ -154,14 +161,22 @@ const Register = (props) => {
                             disableUnderline="true" 
                         ></TextField>
                         {
-                            repeatVisibility && !isEdge ? 
-                            <>                                
-                                <IconButton fontSize="large"><VisibilityIcon onClick={hideRepeat}></VisibilityIcon></IconButton>
-                            </> 
-                            : 
+                            isEdge || isEdgeChromium ? 
+                            <></>
+                            :
                             <>
-                                <IconButton fontSize="large"><VisibilityOffIcon onClick={showRepeat}></VisibilityOffIcon></IconButton>
+                            {
+                                repeatVisibility ? 
+                                <>                                
+                                    <IconButton fontSize="large"><VisibilityIcon onClick={hideRepeat}></VisibilityIcon></IconButton>
+                                </> 
+                                : 
+                                <>
+                                    <IconButton fontSize="large"><VisibilityOffIcon onClick={showRepeat}></VisibilityOffIcon></IconButton>
+                                </>
+                            }
                             </>
+
                         }
                     </div>
 

@@ -8,7 +8,7 @@ import * as yup from "yup"
 import axios from "axios";
 import { useAuth } from "../context/user";
 import "./Login.css";
-import { isEdge } from "react-device-detect";
+import { isEdge, isEdgeChromium } from "react-device-detect";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 
 const LoginPage = (props) => {
@@ -112,13 +112,20 @@ const LoginPage = (props) => {
                             disableUnderline="true" 
                         ></TextField>
                         {
-                            passwordVisibility && !isEdge ? 
-                            <>                                
-                                <IconButton fontSize="large"><VisibilityIcon onClick={hidePwd}></VisibilityIcon></IconButton>
-                            </> 
-                            : 
+                            isEdge || isEdgeChromium ? 
+                            <></>
+                            :
                             <>
-                                <IconButton fontSize="large"><VisibilityOffIcon onClick={showPwd}></VisibilityOffIcon></IconButton>
+                            {
+                                passwordVisibility ? 
+                                <>                                
+                                    <IconButton fontSize="large"><VisibilityIcon onClick={hidePwd}></VisibilityIcon></IconButton>
+                                </> 
+                                : 
+                                <>
+                                    <IconButton fontSize="large"><VisibilityOffIcon onClick={showPwd}></VisibilityOffIcon></IconButton>
+                                </>
+                            }
                             </>
                         }
                     </div>
