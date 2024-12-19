@@ -17,6 +17,8 @@ const Profile = (props) => {
 
     const [numLikedItems, setNumLikedItems] = useState(0);
     const [numPostedItems, setNumPostedItems] = useState(0);
+
+    const [isLoading, setLoading] = useState(true)
   
 
     useEffect(()=>{
@@ -51,18 +53,24 @@ const Profile = (props) => {
                 (res)=>{
                     setNumPostedItems(res.data); 
                 }).catch((error)=>{
+                }).finally(()=>{
+                    setLoading(false)
                 });
         }
 
-        getLikedItems()
-        getPostedItems()
-        getMostPopularItems()
-        getNumLiked()
-        getNumPosted()
+        const getProfileInfo = () => {
+            getLikedItems()
+            getPostedItems()
+            getMostPopularItems()
+            getNumLiked()
+            getNumPosted()
+        }
+
+        getProfileInfo()
 
         document.title = props.title
 
-    }, [likedItems, postedItems, popularItems, popularItems.length, 
+    }, [likedItems, postedItems, popularItems, popularItems.length, setLoading,
         likedItems.length, postedItems.length, user,
          numLikedItems, numPostedItems, props])
 
@@ -72,20 +80,33 @@ const Profile = (props) => {
      
         <Title title={user + "'s Profile"}></Title>
 
+        <dov class="loadingInfoText">
+            {
+                isLoading ? 
+                <>
+                    <h3>Loading...</h3>
+                </> :
+
+                <></>
+            }              
+        </dov>
+
         <div class="profileInfo">
             <Card class="infoCard">
                 <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Recently Liked Items:"></CardHeader>
-                <>
-                    {
-                        likedItems.map((item, index)=>{
-                                return(<>
-                                    <Divider></Divider>
-                                    <CardContent sx={{textAlign: 'center'}}>{item.name}</CardContent>
-                            </>)
-                           
-                        })
-                    }
-                </>
+                {
+                    <>
+                        {
+                            likedItems.map((item, index)=>{
+                                    return(<>
+                                        <Divider></Divider>
+                                        <CardContent sx={{textAlign: 'center'}}>{item.name}</CardContent>
+                                </>)
+                            
+                            })
+                        }
+                    </>
+                }
                 
             </Card>
 
