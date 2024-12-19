@@ -82,7 +82,6 @@ const Dashboard = (props) => {
 
         const getItems = () => {
             axios.get(process.env.REACT_APP_SERVER_URL + "/items/").then((res)=>{
-                setLoading(true)
                 setItems(res.data)
             }).catch((error) => {
               }).finally(()=>{
@@ -100,7 +99,7 @@ const Dashboard = (props) => {
             },{replace: true})
         }
         document.title = props.title
-    }, [items.length, items, setSearchParams, isLoading, isQueried, itemName, posterName, props])
+    }, [items.length, items, setSearchParams, setLoading, isQueried, itemName, posterName, props])
 
 
     const formik = useFormik({
@@ -266,9 +265,10 @@ const Dashboard = (props) => {
         </div>
         
         <div class="queryText">
-                <div ref={itemResults}>{typeof itemResults.current === 'string' ? itemResults.current : null}</div>
-                <div ref={posterResults}>{typeof posterResults.current === 'string' ? posterResults.current: null}</div>
-                <div ref={numItems}>{typeof numItems.current === 'string' ? numItems.current: null}</div>
+            {isLoading ? <>Loading...</> : <></>}
+            <div ref={itemResults}>{typeof itemResults.current === 'string' ? itemResults.current : null}</div>
+            <div ref={posterResults}>{typeof posterResults.current === 'string' ? posterResults.current: null}</div>
+            <div ref={numItems}>{typeof numItems.current === 'string' ? numItems.current: null}</div>
         </div>
         
         
