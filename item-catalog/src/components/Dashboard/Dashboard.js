@@ -15,9 +15,11 @@ import { useAuth } from "../context/user";
 const Dashboard = (props) => {
     const [items, setItems] = useState([])
     const [isQueried, setIsQueried] = useState(false);
+    const [isLoading, setLoading] = useState(true);
 
     const itemResults = useRef("")
     const posterResults = useRef("")
+    const numItems = useRef("")
 
     const [searchParams, setSearchParams] = useSearchParams({items: "", poster: ""})
     const itemName = searchParams.get("items")
@@ -79,7 +81,11 @@ const Dashboard = (props) => {
     useEffect(()=>{
 
         const getItems = () => {
-            axios.get(process.env.REACT_APP_SERVER_URL + "/items/").then((res)=>{setItems(res.data)}).catch((error) => {
+            axios.get(process.env.REACT_APP_SERVER_URL + "/items/").then((res)=>{
+                setItems(res.data)
+            }).catch((error) => {
+              }).finally(()=>{
+                setLoading(false)
               })
         }
         getItems()
@@ -93,7 +99,7 @@ const Dashboard = (props) => {
             },{replace: true})
         }
         document.title = props.title
-    }, [items.length, items, setSearchParams, isQueried, itemName, posterName, props])
+    }, [items.length, items, setSearchParams, setLoading, isQueried, itemName, posterName, props])
 
 
     const formik = useFormik({
@@ -139,6 +145,8 @@ const Dashboard = (props) => {
         {
             posterResults.current = ""
             itemResults.current = "Showing results for item: " + itemQuery
+            numItems.current = ""
+
             return(<>
                 {
                     items.filter(item=>flexibleRegex.test(item.name) || flexibleRegex.test(item.desc)).map((item, index)=>{
@@ -154,6 +162,8 @@ const Dashboard = (props) => {
         {
             itemResults.current = ""
             posterResults.current = "Showing results for poster: " + posterQuery
+            numItems.current = ""
+
             return(<>
                 {
                     items.filter(item=>new RegExp(posterQuery).test(item.poster)).map((item, index)=>{
@@ -169,6 +179,7 @@ const Dashboard = (props) => {
         {
             itemResults.current = "Showing results for item: " + itemQuery
             posterResults.current = "Showing results for poster: " + posterQuery
+            numItems.current = ""
 
             return(<>
                 {
@@ -185,6 +196,7 @@ const Dashboard = (props) => {
         {
             posterResults.current = ""
             itemResults.current = ""
+            numItems.current = "Total Items: " + items.length
         
             return(<>
                 {
@@ -253,10 +265,14 @@ const Dashboard = (props) => {
         </div>
         
         <div class="queryText">
-                <div ref={itemResults}>{typeof itemResults.current === 'string' ? itemResults.current : null}</div>
-                <div ref={posterResults}>{typeof posterResults.current === 'string' ? posterResults.current: null}</div>
+            {isLoading ? <>Loading...</> : <></>}
+            <div ref={itemResults}>{typeof itemResults.current === 'string' ? itemResults.current : null}</div>
+            <div ref={posterResults}>{typeof posterResults.current === 'string' ? posterResults.current: null}</div>
+            <div ref={numItems}>{typeof numItems.current === 'string' ? numItems.current: null}</div>
         </div>
         
+        
+
         <div class="itemLayout">
             <>
             {
