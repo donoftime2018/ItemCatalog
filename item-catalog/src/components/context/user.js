@@ -13,7 +13,7 @@ export const AuthProvider = ({children}) => {
 
     const logout = () => {
         setUser(null)
-        sessionStorage.setItem('signedInUser', user)
+        sessionStorage.clear()
     }
 
     return (<>
