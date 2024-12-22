@@ -284,7 +284,14 @@ const Dashboard = (props) => {
             </>
         </div>
         
-        <AddForm></AddForm>
+        {
+            user === null ? 
+            <></>
+            : 
+            <>
+                <AddForm></AddForm>
+            </>
+        }
         
     </>)
 }
