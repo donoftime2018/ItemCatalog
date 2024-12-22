@@ -122,33 +122,47 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
             <Divider/>
             <CardContent style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>
             {
-                itemRatedByUser ? 
+                user === null ? 
                 <>
                     <div>
-                        <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}>
-                            <Tooltip title="Unlike Item"><IconButton onClick={decreaseRating}><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon></IconButton>{itemRating}</Tooltip>
+                        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                            <FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}
                         </div>
                     </div>
-                </> :                 
+                </> 
+                : 
                 <>
                     {
-                        itemPoster !== user ? 
+                        itemRatedByUser ? 
                         <>
                             <div>
-                                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                    <Tooltip title="Like Item"><IconButton onClick={increaseRating}><FavoriteBorderIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteBorderIcon></IconButton>{itemRating}</Tooltip>
+                                <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}>
+                                    <Tooltip title="Unlike Item"><IconButton onClick={decreaseRating}><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon></IconButton>{itemRating}</Tooltip>
                                 </div>
                             </div>
-                        </> :
+                        </> 
+                        :                 
                         <>
-                            <div>
-                                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                    <FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}
-                                </div>
-                            </div>
-                        </>
-                    }
+                            {
+                                itemPoster !== user ? 
+                                <>
+                                    <div>
+                                        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                            <Tooltip title="Like Item"><IconButton onClick={increaseRating}><FavoriteBorderIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteBorderIcon></IconButton>{itemRating}</Tooltip>
+                                        </div>
+                                    </div>
+                                </> :
+                                <>
+                                    <div>
+                                        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                            <FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}
+                                        </div>
+                                    </div>
+                                </>
+                            }
                     
+                        </>
+                    }   
                 </>
             }
             </CardContent>

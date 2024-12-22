@@ -1,9 +1,8 @@
 import {React} from "react";
 import { useAuth } from "../context/user";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { AppBar, IconButton, Tooltip, Box, Button } from "@mui/material";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Link } from "react-router-dom";
 import Settings from "./Settings";
 import "bootstrap/dist/css/bootstrap.min.css"
 
@@ -18,10 +17,6 @@ const AppNav = () => {
         auth.logout()
     }
 
-    const signIn = () => {
-        navigate("/login")
-    }
-
     const goToProfile = () => {
         navigate('/profile')
     }
@@ -32,7 +27,11 @@ const AppNav = () => {
         <Box sx={{marginLeft: '5%', fontSize: '20px', display: 'flex',  alignItems: 'center'}}>
             {
                 user === null ? 
-                <></>
+                <>
+                    <div style={{fontWeight: 'bold'}}>
+                        <Link style={{color: 'white'}} to="/login">Sign In</Link> or <Link style={{color: 'white'}} to="/register">Register</Link> to Get the Full Experience!
+                    </div>
+                </>
                 : 
                 <>
                     <Tooltip title="Go to Profile"><IconButton onClick={goToProfile} color="inherit"><AccountCircleIcon fontSize="large"></AccountCircleIcon></IconButton></Tooltip>
@@ -45,7 +44,6 @@ const AppNav = () => {
                 {
                     user === null ? 
                     <>
-                        <Button variant="contained" color="success" sx={{border: '1px solid white', color: 'white', borderRadius: '25px'}} onClick={signIn}>Sign In</Button>
                     </> 
                     : 
                     <>
