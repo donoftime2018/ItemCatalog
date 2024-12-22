@@ -14,6 +14,11 @@ const AppNav = () => {
     const user = auth.user
 
     const signOut = () => {
+        if (location.pathname === "/profile")
+        {
+            navigate("/", {replace: true})
+        }
+
         auth.logout()
     }
 
