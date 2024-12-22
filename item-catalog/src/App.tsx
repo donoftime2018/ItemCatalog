@@ -8,7 +8,6 @@ import UpdatePassword from "./components/updatePassword/updatePassword";
 import { AuthProvider } from "./components/context/user";
 import Profile from "./components/Profile/Profile";
 import { ItemContext} from "./components/context/context"
-import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import DeleteProfile from "./components/DeleteProfile/DeleteProfile";
 import "./App.css";
 
@@ -20,9 +19,7 @@ const App = () =>
                 <AuthProvider>
                         <ItemContext>
                             <Routes>
-                                <Route element={<ProtectedRoute>
-                                        <Dashboard title="Put a Price On It!"/>
-                                    </ProtectedRoute>} path="/"></Route>
+                                <Route element={<Dashboard title="Put a Price On It!"/>} path="/"></Route>
                                 <Route element={<LoginPage title="Login"/>} path="/login"></Route>
                                 <Route element={<Register title="Sign Up"/>} path="/register"></Route>
                                 <Route element={<UpdatePassword title="Change Password"/>} path="/updatePassword"></Route>
