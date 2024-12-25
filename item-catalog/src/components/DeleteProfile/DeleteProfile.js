@@ -1,14 +1,16 @@
-import {React, useEffect} from "react"
+import {React, useEffect, useState} from "react"
 import axios from "axios"
 import {Card, CardHeader, CardContent, TextField, Divider, Button} from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { useFormik } from "formik"
 import { useAuth } from "../context/user"
+import LoadingIndicator from "../LoadingIndicator/LoadingIndicator"
 import "./DeleteProfile.css"
 import * as yup from "yup"
 
 const DeleteProfile = (props) => {
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
     useEffect(()=>{
         document.title = props.title
     }, [props])
@@ -34,9 +36,9 @@ const DeleteProfile = (props) => {
     const handleDelete = (enteredUser) => {
         if (user===enteredUser)
         {
-
             if (window.confirm("Are you sure you want to deactivate your account? All your likes and items will be gone forever.")===true)
             {
+                setLoading(true)
                 axios.delete(process.env.REACT_APP_SERVER_URL + "/deleteUser/" + user).then((res)=>{
                     console.log(res);
                     auth.logout()
@@ -45,6 +47,8 @@ const DeleteProfile = (props) => {
                     const errorMessage = JSON.parse(err.request.response)
                     console.error(errorMessage.msg); 
                     alert(errorMessage.msg);
+                }).finally(()=>{
+                    setLoading(false)
                 })
             }
         }
@@ -87,6 +91,15 @@ const DeleteProfile = (props) => {
                 </CardContent>
             </Card>
         </div>
+
+        {
+            loading ? 
+            <>
+                <LoadingIndicator/>
+            </> 
+            : 
+            <></>
+        }
     </>)
 }
 
