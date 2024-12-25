@@ -3,7 +3,7 @@ import {Card, CardContent, Divider, TextField, Button, CardHeader, IconButton} f
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 import {useFormik} from "formik";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import * as yup from "yup"
 import axios from "axios";
 import { useAuth } from "../context/user";
@@ -28,10 +28,7 @@ const LoginPage = (props) => {
     }, [props])
     
     const navigate = useNavigate()
-    const location = useLocation()
     const auth = useAuth()
-
-    const redirect = location.state?.path || '/'
 
     const validation = () => yup.object({
         userName: yup.string().min(6, "Username must be at least 6 characters long").max(30, "Username cannot be more than 30 characters").required("Username required"),
@@ -59,7 +56,7 @@ const LoginPage = (props) => {
             {
                 let username = res.data[0].username
                 auth.login(username)
-                navigate(redirect, {replace: true})
+                navigate("/", {replace: true})
             }
         }).catch((err)=>{
             const errorMessage = JSON.parse(err.request.response);
