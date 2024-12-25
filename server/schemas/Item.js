@@ -23,6 +23,11 @@ const itemSchema = new Schema({
         type: String,
         required: true
     },
+
+    website: {
+        type: String,
+        required: true
+    },
     
     rating: {
         type: Number,
