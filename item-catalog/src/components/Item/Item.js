@@ -25,7 +25,7 @@ const style = {
     alignItems: 'center'
   };
 
-const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemRating, dateCreated, lastUpdated, id, dbID}) => {
+const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, itemPrice, itemRating, dateCreated, lastUpdated, id, dbID}) => {
 
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
@@ -186,6 +186,8 @@ const Item = ({itemName, itemDesc, itemPoster, itemRatedByUser, itemPrice, itemR
                     <Typography id="modal-modal-title" variant="h5" style={{margin: '5px 0px', lineHeight: '1.25'}}>{itemName}</Typography>
                     <Divider></Divider>
                     <Typography id="modal-modal-description" style={{margin: '5px 0px'}}>Posted by: {itemPoster}</Typography>
+                    <Divider></Divider>
+                    <Typography id="modal-modal-description" style={{margin: '5px 0px'}}>Found on: {itemWebsite}</Typography>
                     <Divider></Divider>
                     <Typography id="modal-modal-description" style={{margin: '5px 0px'}}>Price Tag: ${itemPrice.toFixed(2)}</Typography>
                     <Divider></Divider>
