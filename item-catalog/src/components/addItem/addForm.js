@@ -32,6 +32,7 @@ const AddForm = () => {
         item_name: yup.string().max(65, "Item name cannot be over 65 characters long").required("Item name required"),
         item_price: yup.number().positive("Item price must be positive").required("Item price required"),
         item_desc: yup.string().max(138, "Item description cannot be over 138 characters long").required("Item description required"),
+        item_site: yup.string().required("The website that the item was found on is required")
     })
 
     const formik = useFormik({
@@ -39,11 +40,12 @@ const AddForm = () => {
         initialValues: {
             item_name: "",
             item_price: "",
-            item_desc: ""
+            item_desc: "",
+            item_site: ""
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
-            addItemToDB(values.item_name, values.item_price, values.item_desc);
+            addItemToDB(values.item_name, values.item_price, values.item_desc, values.item_site);
         }
     }, {})
 
@@ -57,12 +59,12 @@ const AddForm = () => {
         setOpen(false)
     }
 
-    const addItemToDB = (name, price, desc) => {
+    const addItemToDB = (name, price, desc, website) => {
 
         const user = auth.user
-        const data = {name, price, desc, user}
+        const data = {name, price, desc, user, website}
 
-        axios.post(process.env.REACT_APP_SERVER_URL + "/items/insertItems", data).then((res)=>{
+        axios.post(process.env.REACT_APP_SERVER_URL + "/insertItems", data).then((res)=>{
             if (res.status === 200)
             {
                 setAlertOpen(true)
@@ -125,6 +127,23 @@ const AddForm = () => {
                         sx={{backgroundColor: 'white', width: '100%'}} 
                         placeholder="Item Price goes here..." 
                         label="Item Price (USD)"
+                        disableUnderline="true" 
+                    />
+                </div>
+                <div style={{display: "flex", justifyContent: 'center'}}>
+                    <TextField
+                        id="item_site"
+                        name="item_site"
+                        variant="outlined"
+                        type="text"
+                        value={formik.values.item_site}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.item_site && Boolean(formik.errors.item_site)}
+                        helperText={formik.touched.item_site && formik.errors.item_site}
+                        sx={{ backgroundColor: 'white', width: '100%'}}
+                        placeholder="Item Website goes here..." 
+                        label="Item Website"
                         disableUnderline="true" 
                     />
                 </div>
