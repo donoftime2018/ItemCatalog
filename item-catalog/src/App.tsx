@@ -20,13 +20,15 @@ const App = () =>
                 <AuthProvider>
                         <ItemContext>
                             <Routes>
-                                <Route element={<Dashboard title="Put a Price On It!"/>} path="/"></Route>
+                                <Route element={
+                                    <ProtectedRoute>
+                                        <Dashboard title="Put a Price On It!"/>
+                                    </ProtectedRoute>
+                                } path="/"></Route>
                                 <Route element={<LoginPage title="Login"/>} path="/login"></Route>
                                 <Route element={<Register title="Sign Up"/>} path="/register"></Route>
                                 <Route element={<UpdatePassword title="Change Password"/>} path="/updatePassword"></Route>
-                                <Route element={
-                                    <ProtectedRoute><Profile title="User Profile"/></ProtectedRoute>
-                                } path="/profile">
+                                <Route element={<Profile title="User Profile"/>} path="/profile">
                                 </Route>
                                 <Route element={<DeleteProfile title="Delete Account"/>} path="/deleteAccount"></Route>
                             </Routes>

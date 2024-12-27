@@ -3,7 +3,7 @@ import {Card, CardContent, Divider, TextField, Button, CardHeader, IconButton} f
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 import {useFormik} from "formik";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import * as yup from "yup"
 import axios from "axios";
 import { useAuth } from "../context/user";
@@ -14,7 +14,7 @@ import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 const LoginPage = (props) => {
     const [passwordVisibility, setPasswordVisibility] = useState(false)
     const [loading, setLoading] = useState(false)
-
+    
     const showPwd = () => {
         setPasswordVisibility(true)
     }
@@ -28,7 +28,10 @@ const LoginPage = (props) => {
     }, [props])
     
     const navigate = useNavigate()
+    const location = useLocation()
     const auth = useAuth()
+
+    const redirect = location.state?.path || '/'
 
     const validation = () => yup.object({
         userName: yup.string().required("Username required"),
@@ -56,7 +59,7 @@ const LoginPage = (props) => {
             {
                 let username = res.data[0].username
                 auth.login(username)
-                navigate("/", {replace: true})
+                navigate(redirect, {replace: true})
             }
         }).catch((err)=>{
             const errorMessage = JSON.parse(err.request.response);
