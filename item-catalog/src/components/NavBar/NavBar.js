@@ -34,7 +34,7 @@ const AppNav = () => {
                 user === null ? 
                 <>
                     <div style={{fontWeight: 'bold'}}>
-                        <Link style={{color: 'white'}} to="/login">Sign In</Link> or <Link style={{color: 'white'}} to="/register">Register</Link> to Get the Full Experience!
+                        <Link style={{color: 'white'}} to="/login">Sign In</Link> or <Link style={{color: 'white'}} to="/register">Register</Link> to use the website!
                     </div>
                 </>
                 : 
