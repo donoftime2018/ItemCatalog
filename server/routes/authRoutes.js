@@ -38,11 +38,14 @@ app.post("/register", async(req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
     let email = req.body.email
+    let birthdate = req.body.birthdate
 
     try {
-        let newUser = await User.create({username: name, password: pwd, email: email})
+        console.log(birthdate)
+        let newUser = await User.create({username: name, password: pwd, email: email, birthdate: birthdate})
         if (newUser)
         {
+            console.log(newUser.birthdate)
             res.status(200).send()
         }
     } catch(err) {

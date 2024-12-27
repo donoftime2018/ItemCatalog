@@ -62,8 +62,9 @@ const Register = (props) => {
     const registerUser = (name, pwd, confirmPwd, email, birthdate) => {
         if (confirmPwd === pwd)
         {
+            birthdate = new Date(birthdate)
             setLoading(true)
-            const data = {name, pwd, email}
+            const data = {name, pwd, email, birthdate}
             const apiEndpoint = process.env.REACT_APP_LOCAL_HOST + "/register"
             
             axios.post(apiEndpoint, data).then((res)=>{
