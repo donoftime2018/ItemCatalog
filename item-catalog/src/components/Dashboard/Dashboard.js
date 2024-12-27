@@ -215,71 +215,84 @@ const Dashboard = (props) => {
             <AppNav></AppNav>
             <Title title={"Put a Price On It!"} ></Title>
             
-            <div class="searchBar">
-                <div>
-                    <Card class="searchCard">
-                        <CardHeader sx={{display: 'flex', textAlign: 'center'}} title="Search Items"></CardHeader>
-                        <Divider/>
-                        <CardContent>
-                            <form onSubmit={formik.handleSubmit}>
-                                <div>
-                                <Tooltip title="Search Items"><IconButton type="submit"><SearchIcon fontSize='large'/></IconButton></Tooltip>
-                                <TextField
-                                    id="itemQuery"
-                                    name="itemQuery"
-                                    variant="outlined"
-                                    type="text"
-                                    label="Search Item"
-                                    value={formik.values.itemQuery}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    error={formik.touched.itemQuery && Boolean(formik.errors.itemQuery)}
-                                    helperText={formik.touched.itemQuery && formik.errors.itemQuery}
-                                    sx={{ backgroundColor: 'white'}} 
-                                    placeholder="Item here..." 
-                                    disableUnderline="true" 
-                                />
-                                </div>
+            {
+                user === null ? 
+                <></> 
+                :  
+                <>
+                <div class="searchBar">
+                    <div>
+                        <Card class="searchCard">
+                            <CardHeader sx={{display: 'flex', textAlign: 'center'}} title="Search Items"></CardHeader>
+                            <Divider/>
+                            <CardContent>
+                                <form onSubmit={formik.handleSubmit}>
+                                    <div>
+                                    <Tooltip title="Search Items"><IconButton type="submit"><SearchIcon fontSize='large'/></IconButton></Tooltip>
+                                    <TextField
+                                        id="itemQuery"
+                                        name="itemQuery"
+                                        variant="outlined"
+                                        type="text"
+                                        label="Search Item"
+                                        value={formik.values.itemQuery}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        error={formik.touched.itemQuery && Boolean(formik.errors.itemQuery)}
+                                        helperText={formik.touched.itemQuery && formik.errors.itemQuery}
+                                        sx={{ backgroundColor: 'white'}} 
+                                        placeholder="Item here..." 
+                                        disableUnderline="true" 
+                                    />
+                                    </div>
 
-                                <div style={{display: 'flex', justifyContent: 'end', marginBottom: '-3%'}}>
-                                <TextField
-                                    id="posterQuery"
-                                    name="posterQuery"
-                                    variant="outlined"
-                                    type="text"
-                                    label="Search Poster"
-                                    value={formik.values.posterQuery}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    error={formik.touched.posterQuery && Boolean(formik.errors.posterQuery)}
-                                    helperText={formik.touched.posterQuery && formik.errors.posterQuery}
-                                    sx={{ backgroundColor: 'white'}} 
-                                    placeholder="Poster here..." 
-                                    disableUnderline="true" 
-                                />
-                                </div>
-                            </form>
-                        </CardContent>
-                    </Card>
+                                    <div style={{display: 'flex', justifyContent: 'end', marginBottom: '-3%'}}>
+                                    <TextField
+                                        id="posterQuery"
+                                        name="posterQuery"
+                                        variant="outlined"
+                                        type="text"
+                                        label="Search Poster"
+                                        value={formik.values.posterQuery}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        error={formik.touched.posterQuery && Boolean(formik.errors.posterQuery)}
+                                        helperText={formik.touched.posterQuery && formik.errors.posterQuery}
+                                        sx={{ backgroundColor: 'white'}} 
+                                        placeholder="Poster here..." 
+                                        disableUnderline="true" 
+                                    />
+                                    </div>
+                                </form>
+                            </CardContent>
+                        </Card>
+                    </div>
                 </div>
-        </div>
+                </>
+            }
+
         
         <div class="queryText">
-            {isLoading ? <>Loading...</> : <></>}
+            {isLoading && user !== null ? <>Loading...</> : <></>}
             <div ref={itemResults}>{typeof itemResults.current === 'string' ? itemResults.current : null}</div>
             <div ref={posterResults}>{typeof posterResults.current === 'string' ? posterResults.current: null}</div>
-            <div ref={numItems}>{typeof numItems.current === 'string' ? numItems.current: null}</div>
+            {user !== null ? <><div ref={numItems}>{typeof numItems.current === 'string' ? numItems.current: null}</div></> : <></>}
         </div>
-        
-        
 
         <div class="itemLayout">
             <>
             {
-                isQueried ? 
-                displayItems(itemName, posterName)
-                :
-                displayItems()
+                user === null ?
+                <></>
+                :   
+                <>
+                {
+                    isQueried ? 
+                    displayItems(itemName, posterName)
+                    :
+                    displayItems()
+                }
+                </>
             }
             </>
         </div>
