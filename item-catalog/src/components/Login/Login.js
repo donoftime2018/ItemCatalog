@@ -31,8 +31,8 @@ const LoginPage = (props) => {
     const auth = useAuth()
 
     const validation = () => yup.object({
-        userName: yup.string().min(6, "Username must be at least 6 characters long").max(30, "Username cannot be more than 30 characters").required("Username required"),
-        passWord: yup.string().min(8, "Password must be at least 8 characters long").max(20, "Password cannot be over 20 characters long").required("Password required")
+        userName: yup.string().required("Username required"),
+        passWord: yup.string().required("Password required")
     })
 
     const formik = useFormik({
