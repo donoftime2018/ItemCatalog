@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose
 const bcrypt = require('bcryptjs');
+const moment = require('moment');
 
 const userSchema = new Schema({
     username: {
@@ -46,6 +47,23 @@ userSchema.pre('validate', function(next){
     {
         return(next('Password cannot be "password"'))
     }
+
+    console.log(new Date().getFullYear() - this.birthdate.getFullYear())
+    console.log(new Date().getFullYear())
+    console.log(this.birthdate.getFullYear())
+    console.log(new Date().getMonth())
+    console.log(this.birthdate.getMonth())
+    console.log(new Date().getDate())
+    console.log(this.birthdate.getDate())
+
+    if (
+        (new Date().getFullYear() - this.birthdate.getFullYear() < 18) || 
+        (new Date().getFullYear() - this.birthdate.getFullYear() <= 18 && new Date().getMonth() <= this.birthdate.getMonth() 
+        && new Date().getDate() < this.birthdate.getDate())
+        )
+    {
+        return(next("You must be at least 18 years old to create an account"))
+    }
     
     if (new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "i").test(this.email)===false)
     {
@@ -82,6 +100,11 @@ userSchema.pre('updateOne', async function(next){
     if (update.password === "password")
     {
         return(next('Password cannot be "password"'));
+    }
+
+    else if (update.password === this.username)
+    {
+        return(next('Password should be distinct from username'))
     }
 
     else
