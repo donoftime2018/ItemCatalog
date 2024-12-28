@@ -36,6 +36,15 @@ const itemSchema = new Schema({
         default: 0,
         required: true,
     },
+
+    flagged: {
+        isFlagged: {
+            type: Boolean,
+            default: false
+        },
+        reasons: [String]
+    },
+
     usersRated: [String]
 }, {
     collection: 'item',
@@ -47,6 +56,10 @@ itemSchema.post('save', function(error, doc, next) {
     {
        return(next(this.name + " already exists in the catalog"))
     }
+})
+
+itemSchema.pre('updateOne', function(next) {
+    
 })
 
 module.exports = mongoose.model("Item", itemSchema);
