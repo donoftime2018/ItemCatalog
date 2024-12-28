@@ -48,14 +48,6 @@ userSchema.pre('validate', function(next){
         return(next('Password cannot be "password"'))
     }
 
-    console.log(new Date().getFullYear() - this.birthdate.getFullYear())
-    console.log(new Date().getFullYear())
-    console.log(this.birthdate.getFullYear())
-    console.log(new Date().getMonth())
-    console.log(this.birthdate.getMonth())
-    console.log(new Date().getDate())
-    console.log(this.birthdate.getDate())
-
     if (
         (new Date().getFullYear() - this.birthdate.getFullYear() < 18) || 
         (new Date().getFullYear() - this.birthdate.getFullYear() <= 18 && new Date().getMonth() <= this.birthdate.getMonth() 
