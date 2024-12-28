@@ -40,7 +40,8 @@ const Register = (props) => {
         userName: yup.string().min(6, "Username must be at least 6 characters long").max(30, "Username cannot be more than 30 characters").required("Username required"),
         passWord: yup.string().min(8, "Password must be at least 8 characters long").max(20, "Password cannot be over 20 characters long").required("Password required"),
         confirmPassword: yup.string().min(8, "Confirmed password must be at least 8 characters long").max(20, "Confirmed password cannot be over 20 characters long").required("Confirm password required"),
-        email: yup.string().required("Email required")
+        email: yup.string().required("Email required"),
+        birthdate: yup.date().required("Date of birth required")
     })
 
     const formik = useFormik({
@@ -49,19 +50,20 @@ const Register = (props) => {
            userName: "",
            passWord: "",
            confirmPassword: "",
-           email: ""
+           email: "",
+           birthdate: ""
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
-            registerUser(values.userName, values.passWord, values.confirmPassword, values.email)
+            registerUser(values.userName, values.passWord, values.confirmPassword, values.email, values.birthdate)
         }
     }, {})
 
-    const registerUser = (name, pwd, confirmPwd, email) => {
+    const registerUser = (name, pwd, confirmPwd, email, birthdate) => {
         if (confirmPwd === pwd)
         {
             setLoading(true)
-            const data = {name, pwd, email}
+            const data = {name, pwd, email, birthdate}
             const apiEndpoint = process.env.REACT_APP_SERVER_URL + "/register"
             
             axios.post(apiEndpoint, data).then((res)=>{
@@ -192,9 +194,25 @@ const Register = (props) => {
                             onBlur={formik.handleBlur}
                             error={formik.touched.email && Boolean(formik.errors.email)}
                             helperText={formik.touched.email && formik.errors.email}
-                            sx={{ backgroundColor: 'white', /*borderRadius: '25px'*/}} 
+                            sx={{ backgroundColor: 'white'}} 
                             placeholder="Email goes here..." 
                             disableUnderline="true" 
+                        ></TextField>
+                    </div>
+
+                    <div>
+                        <TextField
+                            id="birthdate"
+                            name="birthdate"
+                            variant="outlined"
+                            type="date"
+                            value={formik.values.birthdate}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.birthdate && Boolean(formik.touched.birthdate)}
+                            helperText={formik.touched.birthdate && formik.errors.birthdate}
+                            sx={{backgroundColor: "white"}}
+                            disableUnderline="true"
                         ></TextField>
                     </div>
 
