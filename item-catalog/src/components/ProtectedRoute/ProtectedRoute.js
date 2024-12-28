@@ -5,8 +5,9 @@ const ProtectedRoute = ({children}) =>
 {
     const auth = useAuth()
     const location = useLocation()
+    const user = auth.user
 
-    if (auth.user===null)
+    if (user===null)
     {
         return <Navigate to="/login" state={{path: location.pathname}}/>
     }
