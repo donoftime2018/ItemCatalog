@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const express = require('express');
 const app = express()
 const bcrypt = require('bcryptjs')
+const moment = require('moment')
 const User = require("../schemas/User");
 const Item = require("../schemas/Item")
 
@@ -26,7 +27,7 @@ app.post("/login", async (req, res) => {
             }
         }
         else {
-            res.status(400).send({msg: "Invalid username or password"})
+            res.status(400).send({msg: name + " is not a registered user."})
         }
     } catch(err) {
         res.status(400).send({msg: err})
@@ -38,7 +39,7 @@ app.post("/register", async(req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
     let email = req.body.email
-    let birthdate = req.body.birthdate
+    let birthdate = new Date(req.body.birthdate)
 
     try {
         console.log(birthdate)
