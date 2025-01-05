@@ -1,5 +1,5 @@
 import {React, useEffect, useState} from "react";
-import {Card, CardContent, Divider, TextField, Button, CardHeader, IconButton} from "@mui/material"
+import {Card, CardContent, Divider, TextField, Button, CardHeader, IconButton, FormGroup, FormControlLabel, FormHelperText, Checkbox} from "@mui/material"
 import { isMobile } from "react-device-detect";
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
@@ -42,7 +42,8 @@ const Register = (props) => {
         passWord: yup.string().min(8, "Password must be at least 8 characters long").max(20, "Password cannot be over 20 characters long").required("Password required"),
         confirmPassword: yup.string().min(8, "Confirmed password must be at least 8 characters long").max(20, "Confirmed password cannot be over 20 characters long").required("Confirm password required"),
         email: yup.string().required("Email required"),
-        birthdate: yup.date().required("Date of birth required")
+        birthdate: yup.date().required("Date of birth required"),
+        tandc: yup.boolean().required("Must agree to the terms and conditions").oneOf([true], "Must agree to the terms and conditions")
     })
 
     const formik = useFormik({
@@ -52,7 +53,8 @@ const Register = (props) => {
            passWord: "",
            confirmPassword: "",
            email: "",
-           birthdate: ""
+           birthdate: "",
+           tandc: false
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
@@ -147,7 +149,7 @@ const Register = (props) => {
                         }
                     </div>
 
-                    <div style={{display: "flex", justifyContent: 'center'}}>
+                    <div style={{display: "flex",  alignItems: 'center'}}>
                         <TextField
                             id="confirmPassword"
                             name="confirmPassword"
@@ -219,6 +221,30 @@ const Register = (props) => {
                             placeholder="MM/DD/YYYY"
                             disableUnderline="true"
                         ></TextField>
+                    </div>
+
+                    <div style={{display: "flex",  alignItems: 'center'}}>
+                        <FormGroup>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        name="tandc"
+                                        id="tandc"
+                                        onChange={(e)=>{formik.setFieldValue("tandc", e.target.checked)}}
+                                        checked={formik.values.tandc}
+                                    >
+
+                                    </Checkbox>
+                                }
+                                label="I agree to the terms and conditions."
+                                onChange={formik.handleChange}
+                            >
+                                
+                            </FormControlLabel>
+                            <FormHelperText style={{color: 'red'}}>
+                                {formik.touched.tandc && formik.errors.tandc ? formik.touched.tandc && formik.errors.tandc : ""}
+                            </FormHelperText>
+                        </FormGroup>
                     </div>
 
                     <div style={{display: "flex", justifyContent: 'center'}}>
