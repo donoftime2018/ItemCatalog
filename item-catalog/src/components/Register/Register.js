@@ -1,5 +1,5 @@
 import {React, useEffect, useState} from "react";
-import {Card, CardContent, Divider, TextField, Button, CardHeader, IconButton, FormGroup, FormControlLabel, FormHelperText, Checkbox} from "@mui/material"
+import {Card, CardContent, Divider, TextField, Typography, Box, Button, CardHeader, IconButton, FormGroup, FormControlLabel, FormHelperText, Checkbox} from "@mui/material"
 import { isMobile } from "react-device-detect";
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
@@ -9,12 +9,40 @@ import * as yup from "yup"
 import axios from "axios";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import {isEdge, isEdgeChromium} from "react-device-detect"
+import Modal from "@mui/material/Modal";
+import termsAndConditions from "./TermsAndConditions.txt"
 import "./Register.css";
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 600,
+    bgcolor: 'azure',
+    borderRadius: '25px',
+    boxShadow: 24,
+    p: 3,
+    textAlign: 'center',
+    alignItems: 'center'
+  };
 
 const Register = (props) => {
     const [passwordVisibility, setPasswordVisibility] = useState(false)
     const [repeatVisibility, setRepeatVisibility] = useState(false)
     const [loading, setLoading] = useState(false)
+
+    const [open, setOpen] = useState(false)
+    const [tandc, setTandC] = useState("")
+    const [readTandC, setReadTandC] = useState(false)
+
+    const handleClose = () => {
+        setOpen(false)
+    }
+
+    const handleOpen = () => {
+        setOpen(true)
+    }
 
     const showPwd = () => {
         setPasswordVisibility(true)
@@ -34,7 +62,18 @@ const Register = (props) => {
 
     useEffect(() =>{
         document.title=props.title;
-    }, [props])
+
+        fetch(termsAndConditions).then(res=>{
+            if (res.ok)
+            {
+                return res.text()
+            }
+        }
+        ).then(text=>{
+            setTandC(text)
+        })
+
+    }, [props, tandc])
     const navigate=useNavigate()
 
     const validation = () => yup.object({
@@ -238,6 +277,7 @@ const Register = (props) => {
                                 }
                                 label="I agree to the terms and conditions."
                                 onChange={formik.handleChange}
+                                onClick={handleOpen}
                             >
                                 
                             </FormControlLabel>
@@ -265,6 +305,16 @@ const Register = (props) => {
             : 
             <></>
         }
+
+    <Modal open={open} onClose={handleClose}>
+        <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h5" style={{margin: '5px 0px', fontWeight: 'bold'}}>Terms and Conditions</Typography>
+            <Divider></Divider>
+            <Typography id="modal-modal-description" variant="p" sx={{paddingTop: "10px"}}><pre>{tandc}</pre></Typography>
+            <Divider></Divider>
+        </Box>
+    </Modal>
+
     </>)
 }
 
