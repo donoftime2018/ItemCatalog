@@ -29,9 +29,6 @@ const Dashboard = (props) => {
     const user = auth.user
 
     const searchQuery = (itemQuery="", posterQuery="") => {
-        console.log(itemQuery);
-        console.log(posterQuery);
-      
 
         if (itemQuery !== "")
         {
