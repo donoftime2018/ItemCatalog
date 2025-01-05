@@ -1,5 +1,6 @@
 import {React, useEffect, useState} from "react";
 import {Card, CardContent, Divider, TextField, Button, CardHeader, IconButton} from "@mui/material"
+import { isMobile } from "react-device-detect";
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 import {useFormik} from "formik";
@@ -206,12 +207,16 @@ const Register = (props) => {
                             name="birthdate"
                             variant="outlined"
                             type="date"
+                            label={
+                                isMobile ? <>Date of Birth</> : <></>
+                            }
                             value={formik.values.birthdate}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.birthdate && Boolean(formik.touched.birthdate)}
                             helperText={formik.touched.birthdate && formik.errors.birthdate}
                             sx={{backgroundColor: "white"}}
+                            placeholder="MM/DD/YYYY"
                             disableUnderline="true"
                         ></TextField>
                     </div>
