@@ -40,9 +40,8 @@ const DeleteProfile = (props) => {
             {
                 setLoading(true)
                 axios.delete(process.env.REACT_APP_SERVER_URL + "/deleteUser/" + user).then((res)=>{
-                    console.log(res);
                     auth.logout()
-                    navigate("/", {replace: true})
+                    navigate("/login", {replace: true})
                 }).catch((err)=>{
                     const errorMessage = JSON.parse(err.request.response)
                     console.error(errorMessage.msg); 
