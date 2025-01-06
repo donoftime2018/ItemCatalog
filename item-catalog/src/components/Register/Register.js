@@ -40,6 +40,11 @@ const Register = (props) => {
         setOpen(false)
     }
 
+    const handleReadTandC = () => {
+        handleClose()
+        setReadTandC(true)
+    }
+
     const handleOpen = () => {
         setOpen(true)
     }
@@ -270,14 +275,14 @@ const Register = (props) => {
                                         name="tandc"
                                         id="tandc"
                                         onChange={(e)=>{formik.setFieldValue("tandc", e.target.checked)}}
+                                        disabled={!readTandC}
                                         checked={formik.values.tandc}
                                     >
 
                                     </Checkbox>
                                 }
-                                label="I agree to the terms and conditions."
+                                label={<>I agree to the <span style={{color: 'blue', textDecoration: 'underline', cursor: 'pointer'}} onClick={handleOpen}>terms and conditions</span></>}
                                 onChange={formik.handleChange}
-                                onClick={handleOpen}
                             >
                                 
                             </FormControlLabel>
@@ -311,7 +316,7 @@ const Register = (props) => {
             <Typography id="modal-modal-title" variant="h5" style={{margin: '5px 0px', fontWeight: 'bold'}}>Terms and Conditions</Typography>
             <Divider></Divider>
             <Typography id="modal-modal-description" variant="p" sx={{paddingTop: "10px"}}><pre>{tandc}</pre></Typography>
-            <Divider></Divider>
+            <div style={{display: 'flex', justifyContent: 'center'}}><Button variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={handleReadTandC}>I Have Read the Terms and Conditions</Button></div>
         </Box>
     </Modal>
 
