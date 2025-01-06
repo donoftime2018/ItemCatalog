@@ -1,0 +1,5 @@
+Data Collection:
+Put a Price On It! collects certain personal information during registration, including date of birth and email address, to verify age and ensure compliance with our terms. Additional data may be collected through cookies for site functionality and analytics.
+
+Data Storage and Security:
+User data is securely stored in our MongoDB Atlas database, and we take appropriate security measures, including encryption and access controls, to protect your information.

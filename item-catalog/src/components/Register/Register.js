@@ -1,5 +1,5 @@
 import {React, useEffect, useState} from "react";
-import {Card, CardContent, Divider, TextField, Button, CardHeader, IconButton} from "@mui/material"
+import {Card, CardContent, Divider, TextField, Typography, Box, Button, CardHeader, IconButton, FormGroup, FormControlLabel, FormHelperText, Checkbox} from "@mui/material"
 import { isMobile } from "react-device-detect";
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
@@ -9,12 +9,45 @@ import * as yup from "yup"
 import axios from "axios";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import {isEdge, isEdgeChromium} from "react-device-detect"
+import Modal from "@mui/material/Modal";
+import termsAndConditions from "./TermsAndConditions.txt"
 import "./Register.css";
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 600,
+    bgcolor: 'azure',
+    borderRadius: '25px',
+    boxShadow: 24,
+    p: 3,
+    textAlign: 'center',
+    alignItems: 'center'
+  };
 
 const Register = (props) => {
     const [passwordVisibility, setPasswordVisibility] = useState(false)
     const [repeatVisibility, setRepeatVisibility] = useState(false)
     const [loading, setLoading] = useState(false)
+
+    const [open, setOpen] = useState(false)
+    const [tandc, setTandC] = useState("")
+    const [readTandC, setReadTandC] = useState(false)
+
+    const handleClose = () => {
+        setOpen(false)
+    }
+
+    const handleReadTandC = () => {
+        handleClose()
+        setReadTandC(true)
+    }
+
+    const handleOpen = () => {
+        setOpen(!readTandC && !open)
+    }
 
     const showPwd = () => {
         setPasswordVisibility(true)
@@ -34,7 +67,18 @@ const Register = (props) => {
 
     useEffect(() =>{
         document.title=props.title;
-    }, [props])
+
+        fetch(termsAndConditions).then(res=>{
+            if (res.ok)
+            {
+                return res.text()
+            }
+        }
+        ).then(text=>{
+            setTandC(text)
+        })
+
+    }, [props, tandc])
     const navigate=useNavigate()
 
     const validation = () => yup.object({
@@ -42,7 +86,8 @@ const Register = (props) => {
         passWord: yup.string().min(8, "Password must be at least 8 characters long").max(20, "Password cannot be over 20 characters long").required("Password required"),
         confirmPassword: yup.string().min(8, "Confirmed password must be at least 8 characters long").max(20, "Confirmed password cannot be over 20 characters long").required("Confirm password required"),
         email: yup.string().required("Email required"),
-        birthdate: yup.date().required("Date of birth required")
+        birthdate: yup.date().required("Date of birth required"),
+        tandc: yup.boolean().required("Must agree to the terms and conditions").oneOf([true], "Must agree to the terms and conditions")
     })
 
     const formik = useFormik({
@@ -52,7 +97,8 @@ const Register = (props) => {
            passWord: "",
            confirmPassword: "",
            email: "",
-           birthdate: ""
+           birthdate: "",
+           tandc: false
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
@@ -147,7 +193,7 @@ const Register = (props) => {
                         }
                     </div>
 
-                    <div style={{display: "flex", justifyContent: 'center'}}>
+                    <div style={{display: "flex",  alignItems: 'center'}}>
                         <TextField
                             id="confirmPassword"
                             name="confirmPassword"
@@ -221,6 +267,31 @@ const Register = (props) => {
                         ></TextField>
                     </div>
 
+                    <div style={{display: "flex",  alignItems: 'center'}}>
+                        <FormGroup>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        name="tandc"
+                                        id="tandc"
+                                        onChange={(e)=>{formik.setFieldValue("tandc", e.target.checked)}}
+                                        disabled={!readTandC}
+                                        checked={formik.values.tandc}
+                                    >
+
+                                    </Checkbox>
+                                }
+                                label={<>I agree to the <span style={{color: 'blue', textDecoration: 'underline', cursor: 'pointer'}} onClick={handleOpen}>terms and conditions</span></>}
+                                onChange={formik.handleChange}
+                            >
+                                
+                            </FormControlLabel>
+                            <FormHelperText style={{color: 'red'}}>
+                                {formik.touched.tandc && formik.errors.tandc ? formik.touched.tandc && formik.errors.tandc : ""}
+                            </FormHelperText>
+                        </FormGroup>
+                    </div>
+
                     <div style={{display: "flex", justifyContent: 'center'}}>
                         <Button type="Submit" variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Register</Button>
                     </div>
@@ -239,6 +310,16 @@ const Register = (props) => {
             : 
             <></>
         }
+
+    <Modal open={open} onClose={handleClose}>
+        <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h5" style={{margin: '5px 0px', fontWeight: 'bold'}}>Terms and Conditions</Typography>
+            <Divider></Divider>
+            <Typography id="modal-modal-description" variant="p" sx={{paddingTop: "10px"}}><pre>{tandc}</pre></Typography>
+            <div style={{display: 'flex', justifyContent: 'center'}}><Button variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={handleReadTandC}>I Have Read and Agree to the Terms and Conditions</Button></div>
+        </Box>
+    </Modal>
+
     </>)
 }
 
