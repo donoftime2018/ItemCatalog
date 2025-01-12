@@ -11,9 +11,10 @@ mongoose.set('setDefaultsOnInsert', true);
 app.post("/login", async (req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
- 
+   
     try {
-        let findUser = await User.find({username: name})
+        let findUser = await User.find({$or: [{username: name}, {email: name}]})
+  
         if (findUser.length>0)
         {
             let matches = await bcrypt.compare(pwd, findUser[0].password)

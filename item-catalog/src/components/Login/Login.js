@@ -83,14 +83,14 @@ const LoginPage = (props) => {
                             name="userName"
                             variant="outlined"
                             type="text"
-                            label="User Name"
+                            label="Username or Email"
                             value={formik.values.userName}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.userName && Boolean(formik.errors.userName)}
                             helperText={formik.touched.userName && formik.errors.userName}
                             sx={{ backgroundColor: 'white'}} 
-                            placeholder="User name goes here..." 
+                            placeholder="Username or Email goes here..." 
                             disableUnderline="true" 
                         ></TextField>
                     </div>
