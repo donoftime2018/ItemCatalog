@@ -34,6 +34,8 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
     const auth=useAuth();
     const user = auth.user;
 
+    const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/
+
     useEffect(()=>{
         if (alertOpen === true)
         {
@@ -187,7 +189,17 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
                     <Divider></Divider>
                     <Typography id="modal-modal-description" style={{margin: '5px 0px'}}>Posted by: {itemPoster}</Typography>
                     <Divider></Divider>
-                    <Typography id="modal-modal-description" style={{margin: '5px 0px'}}>Found on: {itemWebsite}</Typography>
+                    <Typography id="modal-modal-description" style={{margin: '5px 0px'}}>Found on:
+                        <>
+                            {
+                                urlRegex.test(itemWebsite) === true ? 
+                                
+                                <> <a href={itemWebsite} target="blank">{itemWebsite}</a></> 
+                                : 
+                                <> {itemWebsite}</>
+                            }
+                        </>
+                    </Typography>
                     <Divider></Divider>
                     <Typography id="modal-modal-description" style={{margin: '5px 0px'}}>Price Tag: ${itemPrice.toFixed(2)}</Typography>
                     <Divider></Divider>
