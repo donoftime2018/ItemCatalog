@@ -55,30 +55,30 @@ app.post("/register", async(req, res) => {
 })
 
 app.put("/updatePassword", async(req, res) => {
-    let name = req.body.name
+    let email = req.body.email
     let pwd = req.body.pwd
     
     try {
-        let findUser = await User.find({username: name})
+        let findUser = await User.find({email: email})
         if(findUser.length>0)
         {
-            let allPasswords = await User.findOne({username: name}).select("password")
+            let allPasswords = await User.findOne({email: email}).select("password")
             let pwdInUse = await bcrypt.compare(pwd, allPasswords.password)
-          
+
             if (pwdInUse === true)
             {
                 res.status(400).send({msg: "You are already using this password"})
             }
             else
             {
-                let updatedPwd = await User.updateOne({username: name}, {password: pwd})
+                let updatedPwd = await User.updateOne({email: email}, {password: pwd})
                 res.status(200).send()
             }
         }
 
         else
         {
-            res.status(400).send({msg: name + " is not a registered user"})
+            res.status(400).send({msg:  email + " is not an email associated with a registered user"})
         }
     } catch(err)
     {

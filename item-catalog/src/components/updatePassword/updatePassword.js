@@ -55,10 +55,10 @@ const UpdatePassword = (props) => {
         }
     }, {})
 
-    const changePassword = (name, pwd, confirmPwd) => {
+    const changePassword = (email, pwd, confirmPwd) => {
         if(pwd===confirmPwd) {
             setLoading(true)
-            const data = {name, pwd}
+            const data = {email, pwd}
             const apiEndpoint = process.env.REACT_APP_SERVER_URL + "/updatePassword"
             axios.put(apiEndpoint, data).then((res)=>{
                 if(res.status===200)
@@ -90,17 +90,17 @@ const UpdatePassword = (props) => {
                     <div>
                         <TextField
                             id="userName"
-                            name="userName"
+                            email="userName"
                             variant="outlined"
-                            type="text"
-                            label="User Name"
+                            type="email"
+                            label="Email"
                             value={formik.values.userName}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.userName && Boolean(formik.errors.userName)}
                             helperText={formik.touched.userName && formik.errors.userName}
                             sx={{ backgroundColor: 'white'}} 
-                            placeholder="User name goes here..." 
+                            placeholder="Email goes here..." 
                             disableUnderline="true" 
                         ></TextField>
                     </div>
@@ -108,7 +108,7 @@ const UpdatePassword = (props) => {
                     <div style={{display: "flex", justifyContent: 'center'}}>
                         <TextField
                             id="passWord"
-                            name="passWord"
+                            email="passWord"
                             variant="outlined"
                             type={passwordVisibility ? "text" : "password"}
                             label="Password"
@@ -143,7 +143,7 @@ const UpdatePassword = (props) => {
                     <div style={{display: "flex", justifyContent: 'center'}}>
                         <TextField
                             id="confirmPassword"
-                            name="confirmPassword"
+                            email="confirmPassword"
                             variant="outlined"
                             type={repeatVisibility ? "text" : "password"}
                             label="Confirm Password"
