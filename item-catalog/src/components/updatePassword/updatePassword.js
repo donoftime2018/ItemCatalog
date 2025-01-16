@@ -37,7 +37,7 @@ const UpdatePassword = (props) => {
     const navigate = useNavigate()
 
     const validation = () => yup.object({
-        userName: yup.string().min(6, "Username must be at least 6 characters long").max(30, "Username cannot be more than 30 characters").required("Username required"),
+        email: yup.string().required("Email required"),
         passWord: yup.string().min(8, "Password must be at least 8 characters long").max(20, "Password cannot be over 20 characters long").required("Password required"),
         confirmPassword: yup.string().min(8, "Confirmed password must be at least 8 characters long").max(20, "Confirmed password cannot be over 20 characters long").required("Confirm password required")
     })
@@ -45,13 +45,13 @@ const UpdatePassword = (props) => {
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-           userName: "",
+           email: "",
            passWord: "",
            confirmPassword: ""
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
-            changePassword(values.userName, values.passWord, values.confirmPassword)
+            changePassword(values.email, values.passWord, values.confirmPassword)
         }
     }, {})
 
@@ -89,16 +89,16 @@ const UpdatePassword = (props) => {
                 <form onSubmit={formik.handleSubmit}>
                     <div>
                         <TextField
-                            id="userName"
-                            email="userName"
+                            id="email"
+                            email="email"
                             variant="outlined"
                             type="email"
                             label="Email"
-                            value={formik.values.userName}
+                            value={formik.values.email}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            error={formik.touched.userName && Boolean(formik.errors.userName)}
-                            helperText={formik.touched.userName && formik.errors.userName}
+                            error={formik.touched.email && Boolean(formik.errors.email)}
+                            helperText={formik.touched.email && formik.errors.email}
                             sx={{ backgroundColor: 'white'}} 
                             placeholder="Email goes here..." 
                             disableUnderline="true" 
