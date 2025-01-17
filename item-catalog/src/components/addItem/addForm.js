@@ -84,7 +84,7 @@ const AddForm = () => {
         color="primary" 
         sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', top: '12%', left: '5%', position: 'fixed',
          justifyContent: 'center', alignItems: 'center' }}>
-            Open Add Items
+            Add an Item
         </Button>
 
         <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 100 }} open={open}>
