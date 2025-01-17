@@ -8,7 +8,7 @@ Put a Price On It! is a modern MERN stack web application designed to help users
 This intuitive platform empowers users to make informed buying decisions by combining price visibility with community feedback.
 
 
-This MERN stack application is containerized and was initially available as [Docker images on Docker Hub](https://hub.docker.com/r/donoftime2018/item-catalog). However, with the full transition to Render.com for hosting, the Docker-based deployment is now defunct.
+This MERN stack application is containerized and was initially available as [Docker images on Docker Hub](https://hub.docker.com/repository/docker/donoftime2018/item-catalog/general). However, with the full transition to Render.com for hosting, the Docker-based deployment is now defunct.
 
 Continuous Integration/Continuous Deployment (CI/CD):
 A robust CI/CD pipeline automates updates to the client and server images. Each merged pull request to the main branch triggers the pipeline, which rebuilds and pushes updated Docker images to Docker Hub, ensuring that the latest code changes remain available for reference.
