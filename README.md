@@ -8,12 +8,12 @@ Put a Price On It! is a modern MERN stack web application designed to help users
 This intuitive platform empowers users to make informed buying decisions by combining price visibility with community feedback.
 
 
-This MERN stack application is containerized and was initially available as Docker images on Docker Hub. However, with the full transition to Render.com for hosting, the Docker-based deployment is now defunct.
+This MERN stack application is containerized and was initially available as [Docker images on Docker Hub](https://hub.docker.com/r/donoftime2018/item-catalog). However, with the full transition to Render.com for hosting, the Docker-based deployment is now defunct.
 
 Continuous Integration/Continuous Deployment (CI/CD):
 A robust CI/CD pipeline automates updates to the client and server images. Each merged pull request to the main branch triggers the pipeline, which rebuilds and pushes updated Docker images to Docker Hub, ensuring that the latest code changes remain available for reference.
 
 Hosting on Render.com:
-The live application is now hosted on Render.com using the renderDeploymentSetup branch. Render.com handles all hosting and scaling requirements, ensuring a seamless and reliable user experience. This branch is specifically configured for the deployment workflow, replacing the previous Docker deployment.
+The live application is now [hosted on Render.com](https://item-catalog-client.onrender.com/) using the renderDeploymentSetup branch. Render.com handles all hosting and scaling requirements, ensuring a seamless and reliable user experience. This branch is specifically configured for the deployment workflow, replacing the previous Docker deployment.
 
 Feel free to explore the Docker images or view the live application hosted on Render.com!
