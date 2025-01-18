@@ -32,7 +32,7 @@ const AddForm = () => {
         item_name: yup.string().max(65, "Item name cannot be over 65 characters long").required("Item name required"),
         item_price: yup.number().positive("Item price must be positive").required("Item price required"),
         item_desc: yup.string().max(138, "Item description cannot be over 138 characters long").required("Item description required"),
-        item_site: yup.string().required("The website/link that the item was found on is required")
+        item_site: yup.string().max(50, "Item site or link cannot be over 50 characters long").required("The website/link that the item was found on is required")
     })
 
     const formik = useFormik({
@@ -64,7 +64,7 @@ const AddForm = () => {
         const user = auth.user
         const data = {name, price, desc, user, website}
 
-        axios.post(process.env.REACT_APP_SERVER_URL + "/items/insertItems", data).then((res)=>{
+        axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/insertItems", data).then((res)=>{
             if (res.status === 200)
             {
                 setAlertOpen(true)
