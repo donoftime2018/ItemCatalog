@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FlagIcon from '@mui/icons-material/Flag';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Modal from "@mui/material/Modal"
 import InfoIcon from '@mui/icons-material/Info';
@@ -16,14 +17,16 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 600,
     bgcolor: 'azure',
-    borderRadius: '25px',
     boxShadow: 24,
+    overflow: 'auto',
+    maxHeight: 170,
     p: 3,
     textAlign: 'center',
     alignItems: 'center'
   };
+
 
 const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, itemPrice, itemRating, dateCreated, lastUpdated, id, dbID}) => {
 
@@ -60,7 +63,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
 
         if (confirmDelete === true)
         {
-            axios.delete(process.env.REACT_APP_SERVER_URL + "/items/deleteItems/" + id).then((res) => {
+            axios.delete(process.env.REACT_APP_LOCAL_HOST + "/items/deleteItems/" + id).then((res) => {
                 }).catch((error) => {
                 
                 })
@@ -73,7 +76,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
         let user = auth.user
         let data = {user}
 
-        axios.put(process.env.REACT_APP_SERVER_URL + "/items/increaseRating/" + id, data).then((res)=>{
+        axios.put(process.env.REACT_APP_LOCAL_HOST + "/items/increaseRating/" + id, data).then((res)=>{
                 if (res.status === 200)
                 {
                     setAlertOpen(true)
@@ -92,7 +95,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
 
         let data = {user}
 
-        axios.put(process.env.REACT_APP_SERVER_URL + "/items/decreaseRating/" + id, data).then((res)=>{
+        axios.put(process.env.REACT_APP_LOCAL_HOST + "/items/decreaseRating/" + id, data).then((res)=>{
                 if (res.status === 200)
                 {
                     setAlertOpen(true)
@@ -208,7 +211,12 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
                     <Typography id="modal-modal-description" style={{margin: '5px 0px', lineHeight: '1.25'}}>Date Added: {new Date(dateCreated).toDateString()}</Typography>
                     <Divider></Divider>
                     <Typography id="modal-modal-description" style={{margin: '5px 0px', lineHeight: '1.25'}}>Date Last Updated: {new Date(lastUpdated).toDateString()}</Typography>
-                    <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6" style={{margin: '5px 0px', lineHeight: '1.25'}}><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}</Typography></div>
+                    <Divider></Divider>
+                    <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6"><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}</Typography></div>
+                    <Divider></Divider>
+                    <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center', margin: '0px 0px', padding: '0px 0px'}}>
+                        <Tooltip title="Report Item"><IconButton color='error'><FlagIcon fontSize="large"></FlagIcon></IconButton></Tooltip>
+                    </div>
                 </Box>
          </Modal>
 
