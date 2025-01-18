@@ -19,9 +19,8 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: 600,
     bgcolor: 'azure',
+    borderRadius: '25px',
     boxShadow: 24,
-    overflow: 'auto',
-    maxHeight: 170,
     p: 3,
     textAlign: 'center',
     alignItems: 'center'
@@ -32,6 +31,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
 
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
+    const [reportModal, setReportOpen] = useState(false);
 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
@@ -51,6 +51,14 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
 
     const openDesc = () => {
         setOpen(true);
+    }
+
+    const openReport = () => {
+        setReportOpen(true)
+    }
+
+    const closeReport = () => {
+        setReportOpen(false)
     }
 
     const closeDesc = () => {
@@ -215,13 +223,19 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
                     <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6"><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}</Typography></div>
                     <Divider></Divider>
                     <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center', margin: '0px 0px', padding: '0px 0px'}}>
-                        <Tooltip title="Report Item"><IconButton color='error'><FlagIcon fontSize="large"></FlagIcon></IconButton></Tooltip>
+                        <Tooltip title="Report Item"><IconButton onClick={openReport} color='error'><FlagIcon fontSize="large"></FlagIcon></IconButton></Tooltip>
                     </div>
                 </Box>
          </Modal>
 
+         <Modal open={reportModal} onClose={closeReport}>
+            <Box sx={style}>
 
-         {
+            </Box>
+         </Modal>
+
+
+        {
             alertOpen ? 
             <AppAlert message={alertMessage}></AppAlert>
             :
