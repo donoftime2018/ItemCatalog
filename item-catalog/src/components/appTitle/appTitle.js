@@ -15,8 +15,9 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: 600,
     bgcolor: 'azure',
-    borderRadius: '25px',
     boxShadow: 24,
+    overflow: 'auto',
+    maxHeight: 340,
     p: 3,
     textAlign: 'center',
     alignItems: 'center'
