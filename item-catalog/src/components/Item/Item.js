@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FlagIcon from '@mui/icons-material/Flag';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Modal from "@mui/material/Modal"
 import InfoIcon from '@mui/icons-material/Info';
@@ -25,10 +26,12 @@ const style = {
     alignItems: 'center'
   };
 
+
 const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, itemPrice, itemRating, dateCreated, lastUpdated, id, dbID}) => {
 
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
+    const [reportModal, setReportOpen] = useState(false);
 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
@@ -48,6 +51,14 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
 
     const openDesc = () => {
         setOpen(true);
+    }
+
+    const openReport = () => {
+        setReportOpen(true)
+    }
+
+    const closeReport = () => {
+        setReportOpen(false)
     }
 
     const closeDesc = () => {
@@ -208,12 +219,16 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
                     <Typography id="modal-modal-description" style={{margin: '5px 0px', lineHeight: '1.25'}}>Date Added: {new Date(dateCreated).toDateString()}</Typography>
                     <Divider></Divider>
                     <Typography id="modal-modal-description" style={{margin: '5px 0px', lineHeight: '1.25'}}>Date Last Updated: {new Date(lastUpdated).toDateString()}</Typography>
-                    <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6" style={{margin: '5px 0px', lineHeight: '1.25'}}><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}</Typography></div>
+                    <Divider></Divider>
+                    <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6"><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}</Typography></div>
+                    <Divider></Divider>
+                    <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center', margin: '0px 0px', padding: '0px 0px'}}>
+                        <Tooltip title="Report Item"><IconButton onClick={openReport} color='error'><FlagIcon fontSize="large"></FlagIcon></IconButton></Tooltip>
+                    </div>
                 </Box>
          </Modal>
 
-
-         {
+        {
             alertOpen ? 
             <AppAlert message={alertMessage}></AppAlert>
             :
