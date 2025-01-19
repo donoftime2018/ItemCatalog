@@ -17,7 +17,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 600,
+    width: 400,
     bgcolor: 'azure',
     borderRadius: '25px',
     boxShadow: 24,
@@ -71,7 +71,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
 
         if (confirmDelete === true)
         {
-            axios.delete(process.env.REACT_APP_LOCAL_HOST + "/items/deleteItems/" + id).then((res) => {
+            axios.delete(process.env.REACT_APP_SERVER_URL + "/items/deleteItems/" + id).then((res) => {
                 }).catch((error) => {
                 
                 })
@@ -84,7 +84,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
         let user = auth.user
         let data = {user}
 
-        axios.put(process.env.REACT_APP_LOCAL_HOST + "/items/increaseRating/" + id, data).then((res)=>{
+        axios.put(process.env.REACT_APP_SERVER_URL + "/items/increaseRating/" + id, data).then((res)=>{
                 if (res.status === 200)
                 {
                     setAlertOpen(true)
@@ -103,7 +103,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
 
         let data = {user}
 
-        axios.put(process.env.REACT_APP_LOCAL_HOST + "/items/decreaseRating/" + id, data).then((res)=>{
+        axios.put(process.env.REACT_APP_SERVER_URL + "/items/decreaseRating/" + id, data).then((res)=>{
                 if (res.status === 200)
                 {
                     setAlertOpen(true)
@@ -227,13 +227,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
                     </div>
                 </Box>
          </Modal>
-
-         <Modal open={reportModal} onClose={closeReport}>
-            <Box sx={style}>
-
-            </Box>
-         </Modal>
-
 
         {
             alertOpen ? 
