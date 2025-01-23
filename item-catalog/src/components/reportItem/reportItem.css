@@ -1,0 +1,18 @@
+.reportFormStyle {
+    border-radius: 25px;
+    width: 438px;
+    background-color: whitesmoke;;
+    margin-top: 1%;
+}
+
+form div {
+    margin-bottom: 2%;
+}
+
+.formLayout {
+    display: flex;
+    top: 0%;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+}
