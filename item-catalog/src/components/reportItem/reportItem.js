@@ -13,16 +13,39 @@ const ReportItem = () => {
     const [open, setOpen] = useState(false);
 
     const schema = yup.object().shape({
-        sexual: yup.boolean().oneOf([true]),
-        
+        sexual: yup.boolean(),
+        inappropriate: yup.boolean(),
+        harmfulOrDangerous: yup.boolean()
+    })
+
+    const formik = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            sexual: false,
+            inappropriate: false,
+            harmfulOrDangerous: false
+        },
+        validationSchema: schema,
+        onSubmit: (values, action) => {
+            submitReport(values.sexual, values.inappropriate, values.harmfulOrDangerous)
+        }
     })
     
     const closeForm = () => {
+        formik.resetForm()
+        formik.setTouched({}, false)
         setOpen(false)
     }
 
     const openForm = () => {
         setOpen(true)
+    }
+
+    const submitReport = (sexual, inappropriate, harmful) => {
+        console.log(sexual)
+        console.log(inappropriate)
+        console.log(harmful)
+        closeForm()
     }
 
     return (<>
@@ -40,11 +63,46 @@ const ReportItem = () => {
                     <CardHeader sx={{textAlign: 'center'}} title="Report Item"></CardHeader>
                     <Divider></Divider>
                     <CardContent style={{display: 'flex', justifyContent: 'center', padding: '0px'}}>
-                    <form>
+                    <form onSubmit={formik.handleSubmit}>
                         <FormGroup>
-                            <FormControlLabel control={<Checkbox/>} label="Sexual Content"></FormControlLabel>
-                            <FormControlLabel control={<Checkbox/>} label="Inappropriate Content"></FormControlLabel>
-                            <FormControlLabel control={<Checkbox/>} label="Potentially Harmful or Dangerous Content"></FormControlLabel>
+                            <FormControlLabel control={
+                                    <Checkbox
+                                        name="sexual"
+                                        id="sexual"
+                                        onChange={(e)=>{formik.setFieldValue("sexual", e.target.checked)}}
+                                        checked={formik.values.sexual}
+                                    />
+                                } 
+                            label="Sexual Content"
+                            onChange={formik.handleChange}
+                            >
+                            </FormControlLabel>
+
+                            <FormControlLabel control={
+                                <Checkbox
+                                    name="inappropriate"
+                                    id="inappropriate"
+                                    onChange={(e)=>{formik.setFieldValue("inappropriate", e.target.checked)}}
+                                    checked={formik.values.inappropriate}
+                                />
+                            } 
+                            label="Inappropriate Content"
+                            onChange={formik.handleChange}
+                            >
+                            </FormControlLabel>
+
+                            <FormControlLabel control={
+                                <Checkbox
+                                    name="harmfulOrDangerous"
+                                    id="harmfulOrDangerous"
+                                    onChange={(e)=>{formik.setFieldValue("harmfulOrDangerous", e.target.checked)}}
+                                    checked={formik.values.harmfulOrDangerous}
+                                />
+                            } 
+                            label="Potentially Harmful or Dangerous Content"
+                            onChange={formik.handleChange}
+                            >
+                            </FormControlLabel>
                         </FormGroup>
 
                         <div style={{display: 'flex', justifyContent: 'center', padding: '10px'}}>
