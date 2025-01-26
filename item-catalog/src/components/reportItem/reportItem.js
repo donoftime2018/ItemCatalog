@@ -11,6 +11,11 @@ import "./reportItem.css"
 
 const ReportItem = () => {
     const [open, setOpen] = useState(false);
+
+    const schema = yup.object().shape({
+        sexual: yup.boolean().oneOf([true]),
+        
+    })
     
     const closeForm = () => {
         setOpen(false)
@@ -37,8 +42,9 @@ const ReportItem = () => {
                     <CardContent style={{display: 'flex', justifyContent: 'center', padding: '0px'}}>
                     <form>
                         <FormGroup>
-                            <FormControlLabel control={<Checkbox/>} label="Sexual or Inappropriate Content"></FormControlLabel>
-                            <FormControlLabel control={<Checkbox/>} label="Potentially Dangerous Content"></FormControlLabel>
+                            <FormControlLabel control={<Checkbox/>} label="Sexual Content"></FormControlLabel>
+                            <FormControlLabel control={<Checkbox/>} label="Inappropriate Content"></FormControlLabel>
+                            <FormControlLabel control={<Checkbox/>} label="Potentially Harmful or Dangerous Content"></FormControlLabel>
                         </FormGroup>
 
                         <div style={{display: 'flex', justifyContent: 'center', padding: '10px'}}>
