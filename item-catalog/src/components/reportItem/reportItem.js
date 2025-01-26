@@ -13,17 +13,17 @@ const ReportItem = () => {
     const [open, setOpen] = useState(false);
 
     const schema = yup.object().shape({
-        sexual: yup.boolean(),
-        inappropriate: yup.boolean(),
-        harmfulOrDangerous: yup.boolean()
+        sexual: yup.string(),
+        inappropriate: yup.string(),
+        harmfulOrDangerous: yup.string()
     })
 
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            sexual: false,
-            inappropriate: false,
-            harmfulOrDangerous: false
+            sexual: "",
+            inappropriate: "",
+            harmfulOrDangerous: ""
         },
         validationSchema: schema,
         onSubmit: (values, action) => {
@@ -69,7 +69,8 @@ const ReportItem = () => {
                                     <Checkbox
                                         name="sexual"
                                         id="sexual"
-                                        onChange={(e)=>{formik.setFieldValue("sexual", e.target.checked)}}
+                                        value="sexual"
+                                        onChange={(e)=>{formik.setFieldValue("sexual", e.target.value)}}
                                         checked={formik.values.sexual}
                                     />
                                 } 
@@ -82,7 +83,8 @@ const ReportItem = () => {
                                 <Checkbox
                                     name="inappropriate"
                                     id="inappropriate"
-                                    onChange={(e)=>{formik.setFieldValue("inappropriate", e.target.checked)}}
+                                    value="inappropriate"
+                                    onChange={(e)=>{formik.setFieldValue("inappropriate", e.target.value)}}
                                     checked={formik.values.inappropriate}
                                 />
                             } 
@@ -95,7 +97,8 @@ const ReportItem = () => {
                                 <Checkbox
                                     name="harmfulOrDangerous"
                                     id="harmfulOrDangerous"
-                                    onChange={(e)=>{formik.setFieldValue("harmfulOrDangerous", e.target.checked)}}
+                                    value="harmfulOrDangerous"
+                                    onChange={(e)=>{formik.setFieldValue("harmfulOrDangerous", e.target.value)}}
                                     checked={formik.values.harmfulOrDangerous}
                                 />
                             } 
