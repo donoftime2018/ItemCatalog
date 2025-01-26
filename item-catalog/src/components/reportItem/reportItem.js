@@ -30,9 +30,10 @@ const ReportItem = () => {
         
         <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 100 }} open={open}>
             <div class="formLayout">
-                <Tooltip title="Close Add Items"><IconButton onClick={closeForm}><CancelIcon sx={{fontSize: 60, color: 'white'}}></CancelIcon></IconButton></Tooltip>
+                <Tooltip title="Close Report Item"><IconButton onClick={closeForm}><CancelIcon sx={{fontSize: 60, color: 'white'}}></CancelIcon></IconButton></Tooltip>
                 <Card class="reportFormStyle">
-
+                    <CardHeader sx={{textAlign: 'center'}} title="Report Item"></CardHeader>
+                    <Divider></Divider>
                 </Card>
             </div>
         </Backdrop>

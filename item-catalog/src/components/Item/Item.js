@@ -8,6 +8,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Modal from "@mui/material/Modal"
 import InfoIcon from '@mui/icons-material/Info';
+import ReportItem from "../reportItem/reportItem";
 import axios from 'axios';
 import { useAuth } from "../context/user";
 
@@ -119,21 +120,12 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
                 <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Price Tag: ${itemPrice.toFixed(2)}</span>
             </CardContent>
             <Divider/>
-            <CardContent key={id} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px'}}>
+            <CardContent key={id} sx={{display: 'flex',  alignItems: 'center', justifyContent: 'center', padding: '5px'}}>
             <Tooltip title="View Full Description"><IconButton onClick={openDesc}><InfoIcon color="info" fontSize="large"></InfoIcon></IconButton></Tooltip>
             </CardContent>
             <Divider/>
-            <CardContent style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>
+            <CardContent style={{display: 'flex', padding: '5px', paddingBottom: '10px!important', textAlign: 'center', justifyContent: 'center'}}>
             {
-                user === null ? 
-                <>
-                    <div>
-                        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                            <FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}
-                        </div>
-                    </div>
-                </> 
-                : 
                 <>
                     {
                         itemRatedByUser ? 
@@ -174,11 +166,16 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
                 <>
                     
                     <Divider></Divider>
-                    <CardContent sx={{display: 'flex', flexDirection: 'row', paddingTop: '5px', paddingBottom: '10px!important', alignItems: 'center', justifyContent: 'center'}}>
+                    <CardContent sx={{display: 'flex', flexDirection: 'row', padding: '5px', paddingBottom: '10px!important', alignItems: 'center', justifyContent: 'center'}}>
                         <Tooltip title="Delete item"><IconButton onClick={deleteItem} ><Delete color="error" fontSize='large'></Delete></IconButton></Tooltip>
                     </CardContent>
                 </> : 
-                <></>
+                <>
+                    <Divider></Divider>
+                    <CardContent sx={{display: 'flex', flexDirection: 'row', padding: '5px', paddingBottom: '10px!important', alignItems: 'center', justifyContent: 'center'}}>
+                        <ReportItem></ReportItem>
+                    </CardContent>
+                </>
             }
          </Card>
 
@@ -211,6 +208,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
                     <Typography id="modal-modal-description" style={{margin: '5px 0px', lineHeight: '1.25'}}>Date Last Updated: {new Date(lastUpdated).toDateString()}</Typography>
                     <Divider></Divider>
                     <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6"><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}</Typography></div>
+                    <Divider></Divider>
                 </Box>
          </Modal>
 
