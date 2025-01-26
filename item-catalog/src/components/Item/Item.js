@@ -5,10 +5,10 @@ import { useState, useEffect } from "react";
 import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FlagIcon from '@mui/icons-material/Flag';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Modal from "@mui/material/Modal"
 import InfoIcon from '@mui/icons-material/Info';
+import ReportItem from "../reportItem/reportItem";
 import axios from 'axios';
 import { useAuth } from "../context/user";
 
@@ -31,7 +31,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
 
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
-    const [reportModal, setReportOpen] = useState(false);
 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
@@ -51,14 +50,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
 
     const openDesc = () => {
         setOpen(true);
-    }
-
-    const openReport = () => {
-        setReportOpen(true)
-    }
-
-    const closeReport = () => {
-        setReportOpen(false)
     }
 
     const closeDesc = () => {
@@ -129,21 +120,12 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
                 <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Price Tag: ${itemPrice.toFixed(2)}</span>
             </CardContent>
             <Divider/>
-            <CardContent key={id} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px'}}>
+            <CardContent key={id} sx={{display: 'flex',  alignItems: 'center', justifyContent: 'center', padding: '5px'}}>
             <Tooltip title="View Full Description"><IconButton onClick={openDesc}><InfoIcon color="info" fontSize="large"></InfoIcon></IconButton></Tooltip>
             </CardContent>
             <Divider/>
-            <CardContent style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>
+            <CardContent style={{display: 'flex', padding: '5px', paddingBottom: '10px!important', textAlign: 'center', justifyContent: 'center'}}>
             {
-                user === null ? 
-                <>
-                    <div>
-                        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                            <FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}
-                        </div>
-                    </div>
-                </> 
-                : 
                 <>
                     {
                         itemRatedByUser ? 
@@ -184,11 +166,16 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
                 <>
                     
                     <Divider></Divider>
-                    <CardContent sx={{display: 'flex', flexDirection: 'row', paddingTop: '5px', paddingBottom: '10px!important', alignItems: 'center', justifyContent: 'center'}}>
+                    <CardContent sx={{display: 'flex', flexDirection: 'row', padding: '5px', paddingBottom: '10px!important', alignItems: 'center', justifyContent: 'center'}}>
                         <Tooltip title="Delete item"><IconButton onClick={deleteItem} ><Delete color="error" fontSize='large'></Delete></IconButton></Tooltip>
                     </CardContent>
                 </> : 
-                <></>
+                <>
+                    <Divider></Divider>
+                    <CardContent sx={{display: 'flex', flexDirection: 'row', padding: '5px', paddingBottom: '10px!important', alignItems: 'center', justifyContent: 'center'}}>
+                        <ReportItem></ReportItem>
+                    </CardContent>
+                </>
             }
          </Card>
 
@@ -222,9 +209,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
                     <Divider></Divider>
                     <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6"><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}</Typography></div>
                     <Divider></Divider>
-                    <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center', margin: '0px 0px', padding: '0px 0px'}}>
-                        <Tooltip title="Report Item"><IconButton onClick={openReport} color='error'><FlagIcon fontSize="large"></FlagIcon></IconButton></Tooltip>
-                    </div>
                 </Box>
          </Modal>
 
