@@ -42,10 +42,15 @@ const ReportItem = () => {
     }
 
     const submitReport = (sexual, inappropriate, harmful) => {
-        console.log(sexual)
-        console.log(inappropriate)
-        console.log(harmful)
-        closeForm()
+        if (!sexual && !inappropriate && !harmful)
+        {
+            alert("You must select at least one reason to report this item!")
+        }
+
+        else
+        {
+            closeForm()            
+        }
     }
 
     return (<>
