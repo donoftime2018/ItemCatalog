@@ -34,7 +34,7 @@ const LoginPage = (props) => {
     const redirect = location.state?.path || '/'
 
     const validation = () => yup.object({
-        userName: yup.string().required("Username required"),
+        userName: yup.string().required("Username or Email required"),
         passWord: yup.string().required("Password required")
     })
 

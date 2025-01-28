@@ -54,7 +54,7 @@ const ReportItem = () => {
     }
 
     return (<>
-        <Tooltip title="Report Item">
+        <Tooltip title="Report Item (WIP)">
             <IconButton onClick={openForm}>
                 <FlagIcon color='error' fontSize='large'></FlagIcon>
             </IconButton>
@@ -63,9 +63,9 @@ const ReportItem = () => {
         
         <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 100 }} open={open}>
             <div class="formLayout">
-                <Tooltip title="Close Report Item"><IconButton onClick={closeForm}><CancelIcon sx={{fontSize: 60, color: 'white'}}></CancelIcon></IconButton></Tooltip>
+                <Tooltip title="Close Report Item (WIP)"><IconButton onClick={closeForm}><CancelIcon sx={{fontSize: 60, color: 'white'}}></CancelIcon></IconButton></Tooltip>
                 <Card class="reportFormStyle">
-                    <CardHeader sx={{textAlign: 'center'}} title="Report Item"></CardHeader>
+                    <CardHeader sx={{textAlign: 'center'}} title="Report Item (WIP)"></CardHeader>
                     <Divider></Divider>
                     <CardContent style={{display: 'flex', justifyContent: 'center', padding: '0px'}}>
                     <form onSubmit={formik.handleSubmit}>
