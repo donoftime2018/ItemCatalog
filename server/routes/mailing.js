@@ -25,4 +25,4 @@ const sendMail = (recipient, message, subject) => {
       });
 }
 
-export default sendMail
+module.exports = sendMail
