@@ -2,9 +2,9 @@ const mongoose = require('mongoose')
 const express = require('express');
 const app = express()
 const bcrypt = require('bcryptjs')
-const moment = require('moment')
 const User = require("../schemas/User");
 const Item = require("../schemas/Item")
+const sendMail = require('./mailing')
 
 mongoose.set('setDefaultsOnInsert', true);
 
@@ -46,6 +46,7 @@ app.post("/register", async(req, res) => {
         let newUser = await User.create({username: name, password: pwd, email: email, birthdate: birthdate})
         if (newUser)
         {
+            sendMail(newUser.email, "Thank you for registering for Put a Price On It!", "Welcome to Put a Price On It!")
             res.status(200).send()
         }
     } catch(err) {
@@ -72,6 +73,7 @@ app.put("/updatePassword", async(req, res) => {
             else
             {
                 let updatedPwd = await User.updateOne({email: email}, {password: pwd})
+                sendMail(findUser[0].email, "Your password for Put a Price On It! has been updated.", "Password Updated")
                 res.status(200).send()
             }
         }

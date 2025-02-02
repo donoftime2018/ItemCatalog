@@ -270,7 +270,7 @@ const Dashboard = (props) => {
 
         
         <div class="queryText">
-            {isLoading && user !== null ? <>Loading...</> : <></>}
+            {isLoading ? <>Loading...</> : <></>}
             <div ref={itemResults}>{typeof itemResults.current === 'string' ? itemResults.current : null}</div>
             <div ref={posterResults}>{typeof posterResults.current === 'string' ? posterResults.current: null}</div>
             {user !== null ? <><div ref={numItems}>{typeof numItems.current === 'string' ? numItems.current: null}</div></> : <></>}
