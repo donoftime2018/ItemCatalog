@@ -62,6 +62,11 @@ userSchema.pre('validate', function(next){
         return(next('Email should be formatted such as harrypotter@hogwarts.edu'))
     }
 
+    if (new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "i").test(this.username)===true)
+    {
+        return(next('Username cannot be your email'))
+    }
+
     next()
 
 })
