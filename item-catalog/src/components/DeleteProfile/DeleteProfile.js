@@ -40,7 +40,7 @@ const DeleteProfile = (props) => {
             {
                 const data = {user}
                 setLoading(true)
-                axios.delete(process.env.REACT_APP_SERVER_URL + "/deleteUser/", data).then((res)=>{
+                axios.delete(process.env.REACT_APP_LOCAL_HOST + "/deleteUser/", data).then((res)=>{
                     auth.logout()
                     navigate("/login", {replace: true})
                 }).catch((err)=>{

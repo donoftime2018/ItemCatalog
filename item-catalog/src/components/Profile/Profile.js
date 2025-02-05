@@ -55,7 +55,7 @@ const Profile = (props) => {
 
         const getNumPosted = () => {
             const body = {user}
-            axios.get(process.env.REACT_APP_SERVER_URL + "/items/numPostedItems", body).then(
+            axios.get(process.env.REACT_APP_LOCAL_HOST + "/items/numPostedItems", body).then(
                 (res)=>{
                     setNumPostedItems(res.data); 
                 }).catch((error)=>{
