@@ -24,7 +24,7 @@ app.post("/login", async (req, res) => {
             }
 
             else {
-                res.status(400).send({msg: "Password incorrect"})
+                res.status(400).send({msg: "Incorrect password and username combination"})
             }
         }
         else {
