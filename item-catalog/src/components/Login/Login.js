@@ -53,7 +53,7 @@ const LoginPage = (props) => {
     const checkLogin = (name, pwd) => {
         setLoading(true)
         const data = {name, pwd}
-        const apiEndpoint = process.env.REACT_APP_SERVER_URL + "/login"
+        const apiEndpoint = process.env.REACT_APP_LOCAL_HOST + "/login"
         axios.post(apiEndpoint, data).then((res)=>{
             if (res.status === 200)
             {
@@ -139,7 +139,7 @@ const LoginPage = (props) => {
             <Divider></Divider>
             <CardContent style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center'}}>
                 <p><Link to="/register">Click here to sign up.</Link></p>
-                <p><Link to="/updatePassword">Forgot Password?</Link></p>
+                <p><Link to="/forgotPassword">Forgot Password?</Link></p>
             </CardContent>
         </Card>
         </div>
