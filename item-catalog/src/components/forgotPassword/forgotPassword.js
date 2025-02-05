@@ -6,6 +6,25 @@ import "./forgotPassword.css"
 
 const ForgotPassword = (props) => {
 
+    const validation = () => yup.object({
+        email: yup.string().required("Email required")
+    })
+
+    const formik = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            email: ""
+        },
+        validationSchema: validation,
+        onSubmit: (values)=>{
+            sendResetLink(values.email)
+        }
+    })
+    
+    const sendResetLink = (email) => {
+        console.log(email)
+    }
+
     useEffect(
         () => {
             document.title = props.title
@@ -17,6 +36,30 @@ const ForgotPassword = (props) => {
             <Card class="forgotCard">
                 <CardHeader sx={{textAlign: 'center'}} title="Forgot Password"></CardHeader>
                 <Divider></Divider>
+                <CardContent>
+                    <form onSubmit={formik.handleSubmit}>
+                        <div style={{display: 'flex', justifyContent: 'center'}}>
+                            <TextField
+                                id="email"
+                                email="email"
+                                variant="outlined"
+                                type="email"
+                                label="Email"
+                                value={formik.values.email}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.email && Boolean(formik.errors.email)}
+                                helperText={formik.touched.email && formik.errors.email}
+                                sx={{ backgroundColor: 'white'}} 
+                                placeholder="Email goes here..." 
+                                disableUnderline="true" 
+                            ></TextField>
+                        </div>
+                        <div style={{display: 'flex', justifyContent: 'center'}}>
+                            <Button type="submit" variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Send Reset Link</Button>
+                        </div>
+                    </form>
+                </CardContent>
             </Card>
         </div>
     </>)
