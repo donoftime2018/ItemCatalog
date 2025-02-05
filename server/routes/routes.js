@@ -15,7 +15,7 @@ app.get("/", async(req, res)=>{
     }
 })
 
-app.get("/getPostedItems", async(req, res)=>{
+app.post("/getPostedItems", async(req, res)=>{
     let user = req.body.user;
     console.log(user)
     try {
@@ -24,7 +24,7 @@ app.get("/getPostedItems", async(req, res)=>{
     } catch(err){}
 })
 
-app.get("/numPostedItems", async(req, res)=>{
+app.post("/numPostedItems", async(req, res)=>{
 
     let user = req.body.user;
     console.log(user)
@@ -36,7 +36,7 @@ app.get("/numPostedItems", async(req, res)=>{
 
 })
 
-app.get("/numLikedItems", async(req, res)=>{
+app.post("/numLikedItems", async(req, res)=>{
 
     let user = req.body.user;
     console.log(user)
@@ -48,10 +48,10 @@ app.get("/numLikedItems", async(req, res)=>{
     }
 })
 
-app.get("/mostPopularItems", async(req, res)=>{
+app.post("/mostPopularItems", async(req, res)=>{
 
     let user = req.body.user;
- 
+    console.log(user)
     try {
         let popularItems = await Item.find({poster: user, rating: {$gte: 1}}).select("name rating").sort({rating: -1, updatedAt: -1}).limit(5)
         res.status(200).json(popularItems)
@@ -60,7 +60,7 @@ app.get("/mostPopularItems", async(req, res)=>{
     }
 })
 
-app.get("/getLikedItems", async(req, res) => {
+app.post("/getLikedItems", async(req, res) => {
 
     let user = req.body.user
     console.log(user)

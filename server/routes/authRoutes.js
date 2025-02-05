@@ -55,6 +55,12 @@ app.post("/register", async(req, res) => {
     
 })
 
+app.post("/resetPasswordLink", async (req, res) => {
+    let email = req.body.email
+    console.log(email)
+    console.log(process.env.REACT_APP_LOCAL_HOST)
+})
+
 app.put("/updatePassword", async(req, res) => {
     let email = req.body.email
     let pwd = req.body.pwd
