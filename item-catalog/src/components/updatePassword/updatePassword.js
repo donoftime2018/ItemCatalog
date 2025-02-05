@@ -37,7 +37,6 @@ const UpdatePassword = (props) => {
     const navigate = useNavigate()
 
     const validation = () => yup.object({
-        email: yup.string().required("Email required"),
         passWord: yup.string().min(8, "Password must be at least 8 characters long").max(20, "Password cannot be over 20 characters long").required("Password required"),
         confirmPassword: yup.string().min(8, "Confirmed password must be at least 8 characters long").max(20, "Confirmed password cannot be over 20 characters long").required("Confirm password required")
     })
@@ -45,7 +44,6 @@ const UpdatePassword = (props) => {
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-           email: "",
            passWord: "",
            confirmPassword: ""
         },
@@ -59,7 +57,7 @@ const UpdatePassword = (props) => {
         if(pwd===confirmPwd) {
             setLoading(true)
             const data = {email, pwd}
-            const apiEndpoint = process.env.REACT_APP_SERVER_URL + "/updatePassword"
+            const apiEndpoint = process.env.REACT_APP_LOCAL_HOST + "/updatePassword"
             axios.put(apiEndpoint, data).then((res)=>{
                 if(res.status===200)
                 {
@@ -87,24 +85,6 @@ const UpdatePassword = (props) => {
             <Divider/>
             <CardContent style={{display: "flex", justifyContent: 'center'}}>
                 <form onSubmit={formik.handleSubmit}>
-                    <div>
-                        <TextField
-                            id="email"
-                            email="email"
-                            variant="outlined"
-                            type="email"
-                            label="Email"
-                            value={formik.values.email}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.email && Boolean(formik.errors.email)}
-                            helperText={formik.touched.email && formik.errors.email}
-                            sx={{ backgroundColor: 'white'}} 
-                            placeholder="Email goes here..." 
-                            disableUnderline="true" 
-                        ></TextField>
-                    </div>
-
                     <div style={{display: "flex", justifyContent: 'center'}}>
                         <TextField
                             id="passWord"

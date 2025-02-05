@@ -88,19 +88,24 @@ app.put("/updatePassword", async(req, res) => {
     }
 })
 
-app.delete("/deleteUser/:user", async(req, res, next)=>{
-    req.user = req.params.user
+app.delete("/deleteUser", async(req, res, next)=>{
+    console.log(req.body.user)
+    req.user = req.body.user
+    console.log(req.user)
     next()
 }, deletePostedItems, removeLikes, removeUser)
 
 async function deletePostedItems(req, res, next)
 {   
+    console.log(req.user)
     let postedItems = await Item.deleteMany({poster: req.user})
     next()
 }
 
 async function removeLikes(req, res, next)
 {
+    console.log(req.user)
+
     let checkUserLiked = await Item.find({usersRated: req.user})
 
     if (checkUserLiked.length>0)
@@ -115,6 +120,8 @@ async function removeLikes(req, res, next)
 
 async function removeUser(req, res)
 {
+    console.log(req.user)
+
     let deleteUser = await User.deleteOne({username: req.user})
     res.status(200).send()
 }

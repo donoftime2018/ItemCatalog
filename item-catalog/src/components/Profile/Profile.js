@@ -23,25 +23,30 @@ const Profile = (props) => {
 
     useEffect(()=>{
         const getLikedItems = () => {
-            axios.get(process.env.REACT_APP_SERVER_URL + "/items/getLikedItems/" + user).then((res)=>{setLikedItems(res.data); 
+            const body = {user}
+            axios.get(process.env.REACT_APP_SERVER_URL + "/items/getLikedItems/", body).then((res)=>{setLikedItems(res.data); 
             }).catch((error)=>{
             });
         }
 
         const getPostedItems = () => {
-            axios.get(process.env.REACT_APP_SERVER_URL + "/items/getPostedItems/" + user).then((res)=>{setPostedItems(res.data); 
+            const body = {user}
+            axios.get(process.env.REACT_APP_SERVER_URL + "/items/getPostedItems/", body).then((res)=>{setPostedItems(res.data); 
             }).catch((error)=>{
             });
         }
 
         const getMostPopularItems = () => {
-            axios.get(process.env.REACT_APP_SERVER_URL + "/items/mostPopularItems/" + user).then((res)=>{setPopularItems(res.data); 
+            const body = {user}
+            axios.get(process.env.REACT_APP_SERVER_URL + "/items/mostPopularItems/", body).then((res)=>{setPopularItems(res.data); 
             }).catch((error)=>{
                 });
         }
 
         const getNumLiked = () => {
-            axios.get(process.env.REACT_APP_SERVER_URL + "/items/numLikedItems/" + user).then(
+            const body = {user}
+
+            axios.get(process.env.REACT_APP_SERVER_URL + "/items/numLikedItems", body).then(
                 (res)=>{
                     setNumLikedItems(res.data); 
                 }).catch((error)=>{
@@ -49,7 +54,8 @@ const Profile = (props) => {
         }
 
         const getNumPosted = () => {
-            axios.get(process.env.REACT_APP_SERVER_URL + "/items/numPostedItems/" + user).then(
+            const body = {user}
+            axios.get(process.env.REACT_APP_SERVER_URL + "/items/numPostedItems", body).then(
                 (res)=>{
                     setNumPostedItems(res.data); 
                 }).catch((error)=>{

@@ -15,19 +15,20 @@ app.get("/", async(req, res)=>{
     }
 })
 
-app.get("/getPostedItems/:user", async(req, res)=>{
-    let user = req.params.user;
-
+app.get("/getPostedItems", async(req, res)=>{
+    let user = req.body.user;
+    console.log(user)
     try {
         let itemsPosted = await Item.find({poster: user}).select("name").sort({updatedAt: -1}).limit(5)
         res.status(200).json(itemsPosted)
     } catch(err){}
 })
 
-app.get("/numPostedItems/:user", async(req, res)=>{
+app.get("/numPostedItems", async(req, res)=>{
 
+    let user = req.body.user;
+    console.log(user)
     try {
-        let user = req.params.user;
         const count = await Item.countDocuments({poster: user});
         res.status(200).json(count)
     } catch (error) {
@@ -35,19 +36,21 @@ app.get("/numPostedItems/:user", async(req, res)=>{
 
 })
 
-app.get("/numLikedItems/:user", async(req, res)=>{
+app.get("/numLikedItems", async(req, res)=>{
+
+    let user = req.body.user;
+    console.log(user)
 
     try {
-        let user = req.params.user;
         const count = await Item.countDocuments({usersRated: user});
         res.status(200).json(count)
     } catch(error){
     }
 })
 
-app.get("/mostPopularItems/:user", async(req, res)=>{
+app.get("/mostPopularItems", async(req, res)=>{
 
-    let user = req.params.user;
+    let user = req.body.user;
  
     try {
         let popularItems = await Item.find({poster: user, rating: {$gte: 1}}).select("name rating").sort({rating: -1, updatedAt: -1}).limit(5)
@@ -57,9 +60,10 @@ app.get("/mostPopularItems/:user", async(req, res)=>{
     }
 })
 
-app.get("/getLikedItems/:user", async(req, res) => {
+app.get("/getLikedItems", async(req, res) => {
 
-    let user = req.params.user
+    let user = req.body.user
+    console.log(user)
     
     try {
         let likedItems = await Item.find({usersRated: user}).select("name").sort({updatedAt: -1}).limit(5)
