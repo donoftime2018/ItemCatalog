@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import {Card, CardContent, TextField, Divider, Button, CardHeader} from "@mui/material"
 import * as yup from "yup"
 import { useFormik } from "formik"
+import axios from "axios"
 import "./forgotPassword.css"
 
 const ForgotPassword = (props) => {
@@ -23,6 +24,18 @@ const ForgotPassword = (props) => {
     
     const sendResetLink = (email) => {
         console.log(email)
+        const data = {email}
+        axios.post(process.env.REACT_APP_LOCAL_HOST + "/resetPasswordLink", data).then((res)=>{
+            if (res.status === 200)
+            {
+
+            }
+        }).catch((err)=>{
+            const errorMessage = JSON.parse(err.request.response);
+            const validationMessage = err.response.data.msg.message;
+            const errorAlert = validationMessage===undefined ? errorMessage.msg : validationMessage;
+            alert(errorAlert);
+        })
     }
 
     useEffect(

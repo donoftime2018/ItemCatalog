@@ -59,6 +59,8 @@ app.post("/resetPasswordLink", async (req, res) => {
     let email = req.body.email
     console.log(email)
     console.log(process.env.REACT_APP_LOCAL_HOST)
+    console.log(process.env.REACT_APP_SERVER_URL)
+
 })
 
 app.put("/updatePassword", async(req, res) => {
