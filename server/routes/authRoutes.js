@@ -143,13 +143,8 @@ async function removeLikes(req, res, next)
 async function removeUser(req, res)
 {
     console.log(req.user)
-
-    // let deleteUser = await User.deleteOne({username: req.user})
     console.log(req.email)
-    // if (deleteUser > 0)
-    // {
-        sendMail(req.email, "We're sorry to see you go. We hope your stay with us was a good one.", "Put a Price On It! Account Deleted")
-    // }
+    sendMail(req.email, "We're sorry to see you go. We hope your stay with us was a good one.", "Put a Price On It! Account Deleted")
     res.status(200).send()
 }
 module.exports = app;
