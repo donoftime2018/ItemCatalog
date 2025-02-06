@@ -144,6 +144,7 @@ async function removeUser(req, res)
 {
     console.log(req.user)
     console.log(req.email)
+    let deleteUser = await User.deleteOne({username: req.user})
     sendMail(req.email, "We're sorry to see you go. We hope your stay with us was a good one.", "Put a Price On It! Account Deleted")
     res.status(200).send()
 }
