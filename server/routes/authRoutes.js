@@ -97,11 +97,23 @@ app.put("/updatePassword", async(req, res) => {
 })
 
 app.delete("/deleteUser", async(req, res, next)=>{
-    console.log(req.body.user)
-    req.user = req.body.user
-    req.email = req.body.email
-    console.log(req.user)
-    console.log(req.email)
+    let pwd = req.body.password
+    let user = req.body.user
+    console.log(user + ", " + pwd)
+    let findUser = await User.findOne({username: user})
+    let checkPwdMatch = await bcrypt.compare(pwd, findUser.password)
+ 
+    if (checkPwdMatch)
+    {
+        req.user = findUser.username
+        req.email = findUser.email
+        next()
+    }
+    else
+    {
+        res.status(400).send({msg: "Password incorrect"})
+    }
+
     next()
 }, deletePostedItems, removeLikes, removeUser)
 
@@ -132,9 +144,12 @@ async function removeUser(req, res)
 {
     console.log(req.user)
 
-    let deleteUser = await User.deleteOne({username: req.user})
+    // let deleteUser = await User.deleteOne({username: req.user})
     console.log(req.email)
-    sendMail(req.email, "We're sorry to see you go. We hope your stay with us was a good one.", "Put a Price On It! Account Deleted")
+    // if (deleteUser > 0)
+    // {
+        sendMail(req.email, "We're sorry to see you go. We hope your stay with us was a good one.", "Put a Price On It! Account Deleted")
+    // }
     res.status(200).send()
 }
 module.exports = app;
