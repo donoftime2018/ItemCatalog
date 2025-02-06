@@ -19,26 +19,28 @@ const DeleteProfile = (props) => {
     const user = auth.user;
 
     const validation = () => yup.object({
-        userName: yup.string().required("Username required")
+        userName: yup.string().required("Username required"),
+        email: yup.string().required("Email required")
     })
 
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-           userName: ""
+           userName: "",
+           email: ""
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
-            handleDelete(values.userName)
+            handleDelete(values.userName, values.email)
         }
     }, {})
 
-    const handleDelete = (enteredUser) => {
+    const handleDelete = (enteredUser, email) => {
         if (user===enteredUser)
         {
             if (window.confirm("Are you sure you want to deactivate your account? All your likes and items will be gone forever.")===true)
             {
-                const data = {user}
+                const data = {user, email}
                 setLoading(true)
                 axios.delete(process.env.REACT_APP_LOCAL_HOST + "/deleteUser", {data: data}).then((res)=>{
                     auth.logout()
@@ -82,6 +84,24 @@ const DeleteProfile = (props) => {
                                 disableUnderline="true" 
                             >
                             </TextField>
+                        </div>
+
+                        <div style={{display: "flex", justifyContent: 'center'}}>
+                            <TextField
+                                id="email"
+                                name="email"
+                                variant="outlined"
+                                type="email"
+                                label="Email"
+                                value={formik.values.email}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.email && Boolean(formik.errors.email)}
+                                helperText={formik.touched.email && formik.errors.email}
+                                sx={{ backgroundColor: 'white'}} 
+                                placeholder="Email goes here..." 
+                                disableUnderline="true" 
+                            ></TextField>
                         </div>
                         
                         <div style={{display: "flex", justifyContent: 'center'}}>
