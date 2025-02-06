@@ -1,8 +1,11 @@
 import {React, useEffect, useState} from "react"
 import axios from "axios"
-import {Card, CardHeader, CardContent, TextField, Divider, Button} from "@mui/material"
+import {Card, CardHeader, CardContent, TextField, Divider, Button, IconButton} from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { useFormik } from "formik"
+import { isEdge, isEdgeChromium } from "react-device-detect"
+import VisibilityIcon from "@mui/icons-material/Visibility"
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 import { useAuth } from "../context/user"
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator"
 import "./DeleteProfile.css"
@@ -10,7 +13,17 @@ import * as yup from "yup"
 
 const DeleteProfile = (props) => {
     const navigate = useNavigate()
-    const [loading, setLoading] = useState(false)
+    const [passwordVisibility, setPasswordVisibility] = useState(false)
+        const [loading, setLoading] = useState(false)
+        
+        const showPwd = () => {
+            setPasswordVisibility(true)
+        }
+    
+        const hidePwd = () => {
+            setPasswordVisibility(false)
+        }
+    
     useEffect(()=>{
         document.title = props.title
     }, [props])
@@ -20,27 +33,27 @@ const DeleteProfile = (props) => {
 
     const validation = () => yup.object({
         userName: yup.string().required("Username required"),
-        email: yup.string().required("Email required")
+        password: yup.string().required("password required")
     })
 
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
            userName: "",
-           email: ""
+           password: ""
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
-            handleDelete(values.userName, values.email)
+            handleDelete(values.userName, values.password)
         }
     }, {})
 
-    const handleDelete = (enteredUser, email) => {
+    const handleDelete = (enteredUser, password) => {
         if (user===enteredUser)
         {
             if (window.confirm("Are you sure you want to deactivate your account? All your likes and items will be gone forever.")===true)
             {
-                const data = {user, email}
+                const data = {user, password}
                 setLoading(true)
                 axios.delete(process.env.REACT_APP_LOCAL_HOST + "/deleteUser", {data: data}).then((res)=>{
                     auth.logout()
@@ -65,9 +78,9 @@ const DeleteProfile = (props) => {
             <Card class="deleteCard">
                 <CardHeader  sx={{textAlign: 'center'}} title="Deactivate Account"></CardHeader>
                 <Divider></Divider>
-                <CardContent>
+                <CardContent style={{display: "flex", justifyContent: 'center'}}>
                     <form onSubmit={formik.handleSubmit}>
-                        <div style={{display: "flex", justifyContent: 'center'}}>
+                        <div>
                             <TextField
                                 id="userName"
                                 name="userName"
@@ -86,22 +99,39 @@ const DeleteProfile = (props) => {
                             </TextField>
                         </div>
 
-                        <div style={{display: "flex", justifyContent: 'center'}}>
+                        <div style={{display: "flex", alignItems: 'center'}}>
                             <TextField
-                                id="email"
-                                name="email"
+                                id="password"
+                                name="password"
                                 variant="outlined"
-                                type="email"
-                                label="Email"
-                                value={formik.values.email}
+                                type={passwordVisibility ? "text" : "password"}
+                                label="Password"
+                                value={formik.values.password}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                error={formik.touched.email && Boolean(formik.errors.email)}
-                                helperText={formik.touched.email && formik.errors.email}
+                                error={formik.touched.password && Boolean(formik.errors.password)}
+                                helperText={formik.touched.password && formik.errors.password}
                                 sx={{ backgroundColor: 'white'}} 
-                                placeholder="Email goes here..." 
+                                placeholder="Password goes here..." 
                                 disableUnderline="true" 
                             ></TextField>
+                                                    {
+                            isEdge || isEdgeChromium ? 
+                            <></>
+                            :
+                            <>
+                            {
+                                passwordVisibility ? 
+                                <>                                
+                                    <IconButton fontSize="large"><VisibilityIcon onClick={hidePwd}></VisibilityIcon></IconButton>
+                                </> 
+                                : 
+                                <>
+                                    <IconButton fontSize="large"><VisibilityOffIcon onClick={showPwd}></VisibilityOffIcon></IconButton>
+                                </>
+                            }
+                            </>
+                        }
                         </div>
                         
                         <div style={{display: "flex", justifyContent: 'center'}}>
