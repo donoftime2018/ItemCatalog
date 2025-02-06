@@ -30,7 +30,11 @@ const App = () =>
                                 <Route element={<Register title="Sign Up"/>} path="/register"></Route>
                                 <Route element={<UpdatePassword title="Change Password"/>} path="/updatePassword"></Route>
                                 <Route element={<ForgotPassword title="Forgot Password"/>} path="/forgotPassword"></Route>
-                                <Route element={<Profile title="User Profile"/>} path="/profile">
+                                <Route element={
+                                    <ProtectedRoute>
+                                        <Profile title="User Profile"/>
+                                    </ProtectedRoute>
+                                } path="/profile">
                                 </Route>
                                 <Route element={<DeleteProfile title="Delete Account"/>} path="/deleteAccount"></Route>
                             </Routes>
