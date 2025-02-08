@@ -99,35 +99,36 @@ app.put("/updatePassword", async(req, res) => {
 app.delete("/deleteUser", async(req, res, next)=>{
     let pwd = req.body.password
     let user = req.body.user
-    console.log(user + ", " + pwd)
     let findUser = await User.findOne({username: user})
     let checkPwdMatch = await bcrypt.compare(pwd, findUser.password)
- 
-    if (checkPwdMatch)
+    try
     {
-        req.user = findUser.username
-        req.email = findUser.email
-        next()
-    }
-    else
+        if (checkPwdMatch)
+        {
+            req.user = findUser.username
+            req.email = findUser.email
+            next()
+        }
+        else
+        {
+            res.status(400).send({msg: "Password incorrect"})
+        }
+    } 
+    catch(err)
     {
-        res.status(400).send({msg: "Password incorrect"})
+        res.status(400).send({msg: err})
     }
-
-    next()
+  
 }, deletePostedItems, removeLikes, removeUser)
 
 async function deletePostedItems(req, res, next)
 {   
-    console.log(req.user)
     let postedItems = await Item.deleteMany({poster: req.user})
     next()
 }
 
 async function removeLikes(req, res, next)
 {
-    console.log(req.user)
-
     let checkUserLiked = await Item.find({usersRated: req.user})
 
     if (checkUserLiked.length>0)
@@ -142,8 +143,6 @@ async function removeLikes(req, res, next)
 
 async function removeUser(req, res)
 {
-    console.log(req.user)
-    console.log(req.email)
     let deleteUser = await User.deleteOne({username: req.user})
     sendMail(req.email, "We're sorry to see you go. We hope your stay with us was a good one.", "Put a Price On It! Account Deleted")
     res.status(200).send()
