@@ -1,11 +1,13 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import {Card, CardContent, TextField, Divider, Button, CardHeader} from "@mui/material"
+import LoadingIndicator from "../LoadingIndicator/LoadingIndicator"
 import * as yup from "yup"
 import { useFormik } from "formik"
 import axios from "axios"
 import "./forgotPassword.css"
 
 const ForgotPassword = (props) => {
+    const [loading, setLoading] = useState(false)
 
     const validation = () => yup.object({
         email: yup.string().required("Email required")
@@ -26,6 +28,7 @@ const ForgotPassword = (props) => {
         console.log(email)
         const data = {email}
         axios.post(process.env.REACT_APP_LOCAL_HOST + "/resetPasswordLink", data).then((res)=>{
+            setLoading(true)
             if (res.status === 200)
             {
                 alert("A link to reset your password has been sent to your email.")
@@ -35,6 +38,8 @@ const ForgotPassword = (props) => {
             const validationMessage = err.response.data.msg.message;
             const errorAlert = validationMessage===undefined ? errorMessage.msg : validationMessage;
             alert(errorAlert);
+        }).finally(()=>{
+            setLoading(false)
         })
     }
 
@@ -75,6 +80,15 @@ const ForgotPassword = (props) => {
                 </CardContent>
             </Card>
         </div>
+
+        {
+            loading ? 
+            <>
+                <LoadingIndicator/>
+            </>
+            : 
+            <></>
+        }
     </>)
 }
 

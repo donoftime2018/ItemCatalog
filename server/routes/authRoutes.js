@@ -4,7 +4,7 @@ const app = express()
 const bcrypt = require('bcryptjs')
 const User = require("../schemas/User");
 const Item = require("../schemas/Item")
-const jsonwebtoken = require("jsonwebtoken")
+const jwt = require("jsonwebtoken")
 const sendMail = require('./mailing')
 
 mongoose.set('setDefaultsOnInsert', true);
@@ -71,9 +71,11 @@ app.post("/resetPasswordLink", async (req, res) => {
         }
         else
         {
-            const token = jsonwebtoken.sign({userId: findUser._id}, process.env.JWT_SECRET, {expiresIn: '10m'})
+            console.log(findUser._id)
+            const token = jwt.sign({userId: findUser._id}, process.env.JWT_SECRET, {expiresIn: '10m'})
             console.log(token)
-            sendMail(email, '<a href=http://localhost:3000/updatePassword/${token}>Click here to reset your password.</a> <p>The link expires in 10 minutes.</p>', "Reset Password")
+            console.log("http://localhost:3000/updatePassword/")
+            sendMail(email, `<a href="http://localhost:3000/updatePassword/${token}">Click here to reset your password.</a> <p>The link expires in 10 minutes.</p>`, "Reset Password")
             res.status(200).send()
         }
     } catch(err) {
