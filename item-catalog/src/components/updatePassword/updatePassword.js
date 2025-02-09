@@ -3,7 +3,8 @@ import {Card, CardContent, Divider, TextField, Button, CardHeader, IconButton} f
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 import {useFormik} from "formik";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
 import * as yup from "yup"
 import axios from "axios";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
@@ -11,6 +12,9 @@ import { isEdgeChromium, isEdge } from "react-device-detect";
 import "./updatePassword.css";
 
 const UpdatePassword = (props) => {
+    const {token} = useParams()
+    console.log(token)
+
     const [passwordVisibility, setPasswordVisibility] = useState(false)
     const [repeatVisibility, setRepeatVisibility] = useState(false)
     const [loading, setLoading] = useState(false)

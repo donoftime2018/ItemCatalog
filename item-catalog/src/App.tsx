@@ -28,7 +28,7 @@ const App = () =>
                                 } path="/"></Route>
                                 <Route element={<LoginPage title="Login"/>} path="/login"></Route>
                                 <Route element={<Register title="Sign Up"/>} path="/register"></Route>
-                                <Route element={<UpdatePassword title="Change Password"/>} path="/updatePassword"></Route>
+                                <Route element={<UpdatePassword title="Change Password"/>} path="/updatePassword/:token"></Route>
                                 <Route element={<ForgotPassword title="Forgot Password"/>} path="/forgotPassword"></Route>
                                 <Route element={
                                     <ProtectedRoute>
