@@ -74,7 +74,6 @@ app.post("/resetPasswordLink", async (req, res) => {
             console.log(findUser._id)
             const token = jwt.sign({userId: findUser._id}, process.env.JWT_SECRET, {expiresIn: '10m'})
             console.log(token)
-            console.log("http://localhost:3000/updatePassword/")
             sendMail(email, `<a href="http://localhost:3000/updatePassword/${token}">Click here to reset your password.</a> <p>The link expires in 10 minutes.</p>`, "Reset Password")
             res.status(200).send()
         }
@@ -83,16 +82,21 @@ app.post("/resetPasswordLink", async (req, res) => {
     }
 })
 
-app.put("/updatePassword", async(req, res) => {
-    let email = req.body.email
+app.put("/updatePassword/:token", async(req, res) => {
     let pwd = req.body.pwd
+    let token = req.params.token
+
+    console.log(token)
     
     try {
-        let findUser = await User.find({email: email})
-        if(findUser.length>0)
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+        console.log(decodedToken)
+        if(decodedToken)
         {
-            let allPasswords = await User.findOne({email: email}).select("password")
-            let pwdInUse = await bcrypt.compare(pwd, allPasswords.password)
+            let findUser = await User.findOne({_id: decodedToken.userId})
+            console.log(findUser)
+            let pwdInUse = await bcrypt.compare(pwd, findUser.password)
+            console.log(pwdInUse)
 
             if (pwdInUse === true)
             {
@@ -100,15 +104,16 @@ app.put("/updatePassword", async(req, res) => {
             }
             else
             {
-                let updatedPwd = await User.updateOne({email: email}, {password: pwd})
-                sendMail(findUser[0].email, "<p>Your password for Put a Price On It! has been updated.</p>", "Password Updated")
+                let updatedPwd = await User.updateOne({_id: decodedToken.userId}, {password: pwd})
+                console.log(updatedPwd)
+                sendMail(findUser.email, "<p>Your password for Put a Price On It! has been updated.</p>", "Password Updated")
                 res.status(200).send()
             }
         }
 
         else
         {
-            res.status(400).send({msg:  email + " is not an email associated with a registered user"})
+            res.status(400).send({msg: "Invalid token"})
         }
     } catch(err)
     {

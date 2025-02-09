@@ -60,7 +60,7 @@ const UpdatePassword = (props) => {
         if(pwd===confirmPwd) {
             setLoading(true)
             const data = {email, pwd}
-            const apiEndpoint = process.env.REACT_APP_LOCAL_HOST + "/updatePassword"
+            const apiEndpoint = process.env.REACT_APP_LOCAL_HOST + "/updatePassword/" + resetToken
             axios.put(apiEndpoint, data).then((res)=>{
                 if(res.status===200)
                 {
