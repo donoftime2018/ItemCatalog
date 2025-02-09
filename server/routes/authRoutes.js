@@ -4,6 +4,7 @@ const app = express()
 const bcrypt = require('bcryptjs')
 const User = require("../schemas/User");
 const Item = require("../schemas/Item")
+const jsonwebtoken = require("jsonwebtoken")
 const sendMail = require('./mailing')
 
 mongoose.set('setDefaultsOnInsert', true);
@@ -13,9 +14,9 @@ app.post("/login", async (req, res) => {
     let pwd = req.body.pwd
    
     try {
-        let findUser = await User.find({$or: [{username: name}, {email: name}]})
+        let findUser = await User.findOne({$or: [{username: name}, {email: name}]})
   
-        if (findUser.length>0)
+        if (findUser)
         {
             let matches = await bcrypt.compare(pwd, findUser[0].password)
             if (matches)
@@ -46,7 +47,7 @@ app.post("/register", async(req, res) => {
         let newUser = await User.create({username: name, password: pwd, email: email, birthdate: birthdate})
         if (newUser)
         {
-            sendMail(newUser.email, "Thank you for registering for Put a Price On It!", "Welcome to Put a Price On It!")
+            sendMail(newUser.email, "<h1>Thank you for registering for Put a Price On It!</h1> <p>We hope you have an enjoyable time using our site!</p>", "Welcome to Put a Price On It!")
             res.status(200).send()
         }
     } catch(err) {
@@ -58,9 +59,26 @@ app.post("/register", async(req, res) => {
 app.post("/resetPasswordLink", async (req, res) => {
     let email = req.body.email
     console.log(email)
-    console.log(process.env.REACT_APP_LOCAL_HOST)
-    console.log(process.env.REACT_APP_SERVER_URL)
-
+    console.log(process.env.JWT_SECRET)
+    
+    try
+    {
+        const findUser = await User.findOne({email: email})
+        console.log(findUser)
+        if (!findUser)
+        {
+            res.status(404).send({msg: "No such user with the email " + email + " exists"})
+        }
+        else
+        {
+            const token = jsonwebtoken.sign({userId: findUser._id}, process.env.JWT_SECRET, {expiresIn: '10m'})
+            console.log(token)
+            sendMail(email, '<a href=http://localhost:3000/updatePassword/${token}>Click here to reset your password.</a> <p>The link expires in 10 minutes.</p>', "Reset Password")
+            res.status(200).send()
+        }
+    } catch(err) {
+        res.status(400).send({msg: err})
+    }
 })
 
 app.put("/updatePassword", async(req, res) => {
@@ -81,7 +99,7 @@ app.put("/updatePassword", async(req, res) => {
             else
             {
                 let updatedPwd = await User.updateOne({email: email}, {password: pwd})
-                sendMail(findUser[0].email, "Your password for Put a Price On It! has been updated.", "Password Updated")
+                sendMail(findUser[0].email, "<p>Your password for Put a Price On It! has been updated.</p>", "Password Updated")
                 res.status(200).send()
             }
         }
@@ -144,7 +162,7 @@ async function removeLikes(req, res, next)
 async function removeUser(req, res)
 {
     let deleteUser = await User.deleteOne({username: req.user})
-    sendMail(req.email, "We're sorry to see you go. We hope your stay with us was a good one.", "Put a Price On It! Account Deleted")
+    sendMail(req.email, "<h1>Thank you for using Put a Price On It!</h1><p>We're sorry to see you go. We hope your stay with us was a good one.</p>", "Put a Price On It! Account Deleted")
     res.status(200).send()
 }
 module.exports = app;
