@@ -18,7 +18,7 @@ app.post("/login", async (req, res) => {
   
         if (findUser)
         {
-            let matches = await bcrypt.compare(pwd, findUser[0].password)
+            let matches = await bcrypt.compare(pwd, findUser.password)
             if (matches)
             {
                 res.status(200).json(findUser)
