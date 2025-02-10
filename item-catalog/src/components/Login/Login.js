@@ -57,7 +57,7 @@ const LoginPage = (props) => {
         axios.post(apiEndpoint, data).then((res)=>{
             if (res.status === 200)
             {
-                let username = res.data[0].username
+                let username = res.data.username
                 auth.login(username)
                 navigate(redirect, {replace: true})
             }

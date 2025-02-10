@@ -15,7 +15,7 @@ app.post("/login", async (req, res) => {
    
     try {
         let findUser = await User.findOne({$or: [{username: name}, {email: name}]})
-  
+        console.log(findUser)
         if (findUser)
         {
             let matches = await bcrypt.compare(pwd, findUser.password)
