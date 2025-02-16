@@ -57,7 +57,7 @@ const LoginPage = (props) => {
         axios.post(apiEndpoint, data).then((res)=>{
             if (res.status === 200)
             {
-                let username = res.data[0].username
+                let username = res.data.username
                 auth.login(username)
                 navigate(redirect, {replace: true})
             }
@@ -139,7 +139,7 @@ const LoginPage = (props) => {
             <Divider></Divider>
             <CardContent style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center'}}>
                 <p><Link to="/register">Click here to sign up.</Link></p>
-                <p><Link to="/updatePassword">Forgot Password?</Link></p>
+                <p><Link to="/forgotPassword">Forgot Password?</Link></p>
             </CardContent>
         </Card>
         </div>
