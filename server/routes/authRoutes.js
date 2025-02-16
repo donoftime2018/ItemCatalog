@@ -47,6 +47,10 @@ app.post("/register", async(req, res) => {
     let email = req.body.email
     let birthdate = new Date(req.body.birthdate)
 
+    console.log(email)
+    email = email.toLowerCase()
+    console.log(email)
+
     try {
         let newUser = await User.create({username: name, password: pwd, email: email, birthdate: birthdate})
         if (newUser)
