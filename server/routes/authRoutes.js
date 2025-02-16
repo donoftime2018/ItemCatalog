@@ -13,13 +13,10 @@ app.post("/login", async (req, res) => {
     let name = req.body.name
     let pwd = req.body.pwd
 
-    console.log(name)
-
     if (new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "i").test(name))
     {
         name = name.toLowerCase()
     }
-    console.log(name)
 
     try {
         let findUser = await User.findOne({$or: [{username: name}, {email: name}]})
