@@ -78,7 +78,7 @@ const Dashboard = (props) => {
     useEffect(()=>{
 
         const getItems = () => {
-            axios.get(process.env.REACT_APP_LOCAL_HOST + "/items/").then((res)=>{
+            axios.get(process.env.REACT_APP_SERVER_URL + "/items/").then((res)=>{
                 setItems(res.data)
             }).catch((error) => {
               }).finally(()=>{

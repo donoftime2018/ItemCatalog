@@ -112,7 +112,7 @@ const Register = (props) => {
         {
             setLoading(true)
             const data = {name, pwd, email, birthdate}
-            const apiEndpoint = process.env.REACT_APP_LOCAL_HOST + "/register"
+            const apiEndpoint = process.env.REACT_APP_SERVER_URL + "/register"
             
             axios.post(apiEndpoint, data).then((res)=>{
                 if(res.status===200)
