@@ -58,22 +58,18 @@ app.post("/register", async(req, res) => {
 
 app.post("/resetPasswordLink", async (req, res) => {
     let email = req.body.email
-    console.log(email)
-    console.log(process.env.JWT_SECRET)
     
     try
     {
         const findUser = await User.findOne({email: email})
-        console.log(findUser)
+        
         if (!findUser)
         {
             res.status(404).send({msg: "No such user with the email " + email + " exists"})
         }
         else
         {
-            console.log(findUser._id)
             const token = jwt.sign({userId: findUser._id}, process.env.JWT_SECRET, {expiresIn: '10m'})
-            console.log(token)
             sendMail(email, `<a href="http://localhost:3000/updatePassword/${token}">Click here to reset your password.</a> <p>The link expires in 10 minutes.</p>`, "Reset Password")
             res.status(200).send()
         }
@@ -86,17 +82,13 @@ app.put("/updatePassword/:token", async(req, res) => {
     let pwd = req.body.pwd
     let token = req.params.token
 
-    console.log(token)
     
     try {
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-        console.log(decodedToken)
         if(decodedToken)
         {
             let findUser = await User.findOne({_id: decodedToken.userId})
-            console.log(findUser)
             let pwdInUse = await bcrypt.compare(pwd, findUser.password)
-            console.log(pwdInUse)
 
             if (pwdInUse === true)
             {
@@ -105,7 +97,6 @@ app.put("/updatePassword/:token", async(req, res) => {
             else
             {
                 let updatedPwd = await User.updateOne({_id: decodedToken.userId}, {password: pwd})
-                console.log(updatedPwd)
                 sendMail(findUser.email, "<p>Your password for Put a Price On It! has been updated.</p>", "Password Updated")
                 res.status(200).send()
             }

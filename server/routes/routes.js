@@ -17,7 +17,6 @@ app.get("/", async(req, res)=>{
 
 app.post("/getPostedItems", async(req, res)=>{
     let user = req.body.user;
-    console.log(user)
     try {
         let itemsPosted = await Item.find({poster: user}).select("name").sort({updatedAt: -1}).limit(5)
         res.status(200).json(itemsPosted)
@@ -27,7 +26,6 @@ app.post("/getPostedItems", async(req, res)=>{
 app.post("/numPostedItems", async(req, res)=>{
 
     let user = req.body.user;
-    console.log(user)
     try {
         const count = await Item.countDocuments({poster: user});
         res.status(200).json(count)
@@ -39,7 +37,6 @@ app.post("/numPostedItems", async(req, res)=>{
 app.post("/numLikedItems", async(req, res)=>{
 
     let user = req.body.user;
-    console.log(user)
 
     try {
         const count = await Item.countDocuments({usersRated: user});
@@ -51,7 +48,6 @@ app.post("/numLikedItems", async(req, res)=>{
 app.post("/mostPopularItems", async(req, res)=>{
 
     let user = req.body.user;
-    console.log(user)
     try {
         let popularItems = await Item.find({poster: user, rating: {$gte: 1}}).select("name rating").sort({rating: -1, updatedAt: -1}).limit(5)
         res.status(200).json(popularItems)
@@ -63,7 +59,6 @@ app.post("/mostPopularItems", async(req, res)=>{
 app.post("/getLikedItems", async(req, res) => {
 
     let user = req.body.user
-    console.log(user)
     
     try {
         let likedItems = await Item.find({usersRated: user}).select("name").sort({updatedAt: -1}).limit(5)
