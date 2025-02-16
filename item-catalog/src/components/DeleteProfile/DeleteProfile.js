@@ -55,7 +55,7 @@ const DeleteProfile = (props) => {
             {
                 const data = {user, password}
                 setLoading(true)
-                axios.delete(process.env.REACT_APP_LOCAL_HOST + "/deleteUser", {data: data}).then((res)=>{
+                axios.delete(process.env.REACT_APP_SERVER_URL + "/deleteUser", {data: data}).then((res)=>{
                     if (res.status === 200)
                     {
                         auth.logout()

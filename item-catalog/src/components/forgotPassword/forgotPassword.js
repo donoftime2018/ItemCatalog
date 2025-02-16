@@ -27,7 +27,7 @@ const ForgotPassword = (props) => {
     const sendResetLink = (email) => {
         console.log(email)
         const data = {email}
-        axios.post(process.env.REACT_APP_LOCAL_HOST + "/resetPasswordLink", data).then((res)=>{
+        axios.post(process.env.REACT_APP_SERVER_URL + "/resetPasswordLink", data).then((res)=>{
             setLoading(true)
             if (res.status === 200)
             {
