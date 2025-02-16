@@ -112,7 +112,7 @@ const Register = (props) => {
         {
             setLoading(true)
             const data = {name, pwd, email, birthdate}
-            const apiEndpoint = process.env.REACT_APP_SERVER_URL + "/register"
+            const apiEndpoint = process.env.REACT_APP_LOCAL_HOST + "/register"
             
             axios.post(apiEndpoint, data).then((res)=>{
                 if(res.status===200)
@@ -260,7 +260,7 @@ const Register = (props) => {
                             value={formik.values.birthdate}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            error={formik.touched.birthdate && Boolean(formik.touched.birthdate)}
+                            error={formik.touched.birthdate && Boolean(formik.errors.birthdate)}
                             helperText={formik.touched.birthdate && formik.errors.birthdate}
                             sx={{backgroundColor: "white"}}
                             placeholder="MM/DD/YYYY"
