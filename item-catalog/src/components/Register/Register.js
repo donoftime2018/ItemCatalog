@@ -88,7 +88,7 @@ const Register = (props) => {
         confirmPassword: yup.string().min(8, "Confirmed password must be at least 8 characters long").max(20, "Confirmed password cannot be over 20 characters long").required("Confirm password required"),
         email: yup.string().required("Email required"),
         birthdate: yup.date().required("Date of birth required"),
-        tandc: yup.boolean().required("Must agree to the terms and conditions").oneOf([true], "Must agree to the terms and conditions")
+        tandc: yup.boolean().required("Must agree to the terms and conditions").oneOf([true], "Must agree to the terms and conditions. NOTE: You MUST read the terms and conditions and click I Have Read and Agree to the Terms and Conditions")
     })
 
     const formik = useFormik({
@@ -287,7 +287,7 @@ const Register = (props) => {
                             >
                                 
                             </FormControlLabel>
-                            <FormHelperText style={{color: 'red'}}>
+                            <FormHelperText style={{color: '#b53737'}}>
                                 {formik.touched.tandc && formik.errors.tandc ? formik.touched.tandc && formik.errors.tandc : ""}
                             </FormHelperText>
                         </FormGroup>
