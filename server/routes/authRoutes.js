@@ -69,7 +69,7 @@ app.post("/resetPasswordLink", async (req, res) => {
         else
         {
             const token = jwt.sign({userId: findUser._id}, process.env.JWT_SECRET, {expiresIn: '10m'})
-            sendMail(email, `<a href="${process.env.LOCAL_CLIENT}/updatePassword/${token}">Click here to reset your password.</a> <p>The link expires in 10 minutes.</p>`, "Reset Password")
+            sendMail(email, `<a href="${process.env.HOSTED_CLIENT}/updatePassword/${token}">Click here to reset your password.</a> <p>The link expires in 10 minutes.</p>`, "Reset Password")
             res.status(200).send()
         }
     } catch(err) {
