@@ -212,11 +212,7 @@ const Dashboard = (props) => {
             <AppNav></AppNav>
             <Title title={"Put a Price On It!"} ></Title>
             
-            {
-                user === null ? 
-                <></> 
-                :  
-                <>
+            
                 <div class="searchBar">
                     <div>
                         <Card class="searchCard">
@@ -265,44 +261,24 @@ const Dashboard = (props) => {
                         </Card>
                     </div>
                 </div>
-                </>
-            }
-
         
         <div class="queryText">
             {isLoading ? <>Loading...</> : <></>}
             <div ref={itemResults}>{typeof itemResults.current === 'string' ? itemResults.current : null}</div>
             <div ref={posterResults}>{typeof posterResults.current === 'string' ? posterResults.current: null}</div>
-            {user !== null ? <><div ref={numItems}>{typeof numItems.current === 'string' ? numItems.current: null}</div></> : <></>}
+            <div ref={numItems}>{typeof numItems.current === 'string' ? numItems.current: null}</div>
         </div>
 
         <div class="itemLayout">
-            <>
             {
-                user === null ?
-                <></>
-                :   
-                <>
-                {
-                    isQueried ? 
-                    displayItems(itemName, posterName)
-                    :
-                    displayItems()
-                }
-                </>
+                isQueried ? 
+                displayItems(itemName, posterName)
+                :
+                displayItems()
             }
-            </>
         </div>
         
-        {
-            user === null ? 
-            <></>
-            : 
-            <>
-                <AddForm></AddForm>
-            </>
-        }
-        
+        <AddForm></AddForm>        
     </>)
 }
 

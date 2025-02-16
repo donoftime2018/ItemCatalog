@@ -12,7 +12,6 @@ import "./updatePassword.css";
 
 const UpdatePassword = (props) => {
     let {resetToken} = useParams()
-    console.log(resetToken)
     
     const [passwordVisibility, setPasswordVisibility] = useState(false)
     const [repeatVisibility, setRepeatVisibility] = useState(false)
