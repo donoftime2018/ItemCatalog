@@ -88,7 +88,7 @@ const Register = (props) => {
         confirmPassword: yup.string().min(8, "Confirmed password must be at least 8 characters long").max(20, "Confirmed password cannot be over 20 characters long").required("Confirm password required"),
         email: yup.string().required("Email required"),
         birthdate: yup.date().required("Date of birth required"),
-        tandc: yup.boolean().required("Must agree to the terms and conditions").oneOf([true], "Must agree to the terms and conditions. NOTE: You MUST read the terms and conditions and click I Have Read and Agree to the Terms and Conditions")
+        tandc: yup.boolean().required("Must agree to the terms and conditions").oneOf([true], "Must agree to the terms and conditions. NOTE: You MUST read the terms and conditions and click I Have Read the Terms and Conditions")
     })
 
     const formik = useFormik({
@@ -317,7 +317,7 @@ const Register = (props) => {
             <Typography id="modal-modal-title" variant="h5" style={{margin: '5px 0px', fontWeight: 'bold'}}>Terms and Conditions</Typography>
             <Divider></Divider>
             <Typography id="modal-modal-description" variant="p" sx={{paddingTop: "10px"}}><pre>{tandc}</pre></Typography>
-            <div style={{display: 'flex', justifyContent: 'center'}}><Button variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={handleReadTandC}>I Have Read and Agree to the Terms and Conditions</Button></div>
+            <div style={{display: 'flex', justifyContent: 'center'}}><Button variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={handleReadTandC}>I Have Read the Terms and Conditions</Button></div>
         </Box>
     </Modal>
 
