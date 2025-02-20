@@ -15,6 +15,7 @@ const AppNav = () => {
 
     const signOut = () => {
         auth.logout()
+        navigate("/login", {replace: true})
     }
 
     const goToProfile = () => {
