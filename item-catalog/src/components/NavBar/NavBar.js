@@ -1,8 +1,7 @@
 import {React} from "react";
 import { useAuth } from "../context/user";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { AppBar, IconButton, Tooltip, Box, Button } from "@mui/material";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { AppBar, Box, Button } from "@mui/material";
 import Settings from "./Settings";
 import "bootstrap/dist/css/bootstrap.min.css"
 
