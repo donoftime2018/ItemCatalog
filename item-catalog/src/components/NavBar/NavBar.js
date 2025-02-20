@@ -24,8 +24,8 @@ const AppNav = () => {
     const dashBoardNav = () => {
        return(<>
         <AppBar sx={{paddingBottom: '10px', paddingTop:'0.4%', display: 'flex', flexDirection: 'row', alignItems: 'center'}} color="primary" position="sticky">
-        <Box sx={{marginLeft: '5%', fontSize: '20px', display: 'flex',  alignItems: 'center'}}>
-           <Tooltip title="Go to Profile"><IconButton onClick={goToProfile} color="inherit"><AccountCircleIcon fontSize="large"></AccountCircleIcon></IconButton></Tooltip>
+        <Box sx={{marginLeft: '5%', fontSize: '20px', display: 'flex',  alignItems: 'center', justifyContent: 'space-between', gap: '20px'}}>
+            <Button variant="contained" color="success" sx={{border: '1px solid black', color: 'white', borderRadius: '25px'}} onClick={goToProfile}>Go to Profile</Button>
             <div>Welcome, <span style={{fontWeight: 'bold'}}>{user}</span></div>
         </Box>
         <Box sx={{flexGrow: '1'}}/>
@@ -40,7 +40,7 @@ const AppNav = () => {
         return(<>
         <AppBar sx={{paddingBottom: '10px', paddingTop:'0.4%', display: 'flex', flexDirection: 'row', alignItems: 'center'}} color="primary" position="sticky">
             <Box sx={{marginLeft: '5%', fontSize: '20px', display: 'flex', justifyContent: "space-between", alignItems: 'center'}}>
-                <Link style={{fontWeight: 'bold', color: 'white'}} to="/">Return to Dashboard</Link>
+                <Link style={{fontWeight: 'bold', color: 'white'}} to="/">Go to Dashboard</Link>
             </Box>
             <Box sx={{flexGrow: '1'}}/>
             <Box sx={{marginRight: '5%', display: {xs: 'none', md: 'flex', alignItems: 'center'}}}>
