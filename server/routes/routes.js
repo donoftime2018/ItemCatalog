@@ -110,7 +110,6 @@ app.put("/increaseRating/:id", async(req, res, next)=>{
             return Item.findOneAndUpdate({_id: req.params.id}, 
                 {rating: validatedDoc.rating, $addToSet: {usersRated: req.body.user}}, 
                 {new: true, upsert: true, runValidators: true}).then((updatedDoc)=>{
-                    console.log(updatedDoc);
                     res.status(200).send()})
         }
     }).catch(err=>{
@@ -132,7 +131,6 @@ app.put("/decreaseRating/:id", async(req, res, next)=>{
                 {rating: validatedDoc.rating, 
                 $pull: {usersRated: req.body.user}}, 
                 {new: true, upsert: true, runValidators: true}).then((updatedDoc)=>{
-                    console.log(updatedDoc);
                     res.status(200).send()
                 })
         }
