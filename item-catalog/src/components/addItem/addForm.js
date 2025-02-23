@@ -95,7 +95,7 @@ const AddForm = () => {
                 <Divider></Divider>
                 <CardContent>
                 <form onSubmit={formik.handleSubmit}>
-                <div style={{display: "flex", justifyContent: 'center'}}>
+                <div >
                     <TextField 
                         id="item_name"
                         name="item_name"
@@ -112,7 +112,7 @@ const AddForm = () => {
                         disableUnderline="true" 
                     />
                 </div>
-                <div style={{display: "flex", justifyContent: 'center'}}>
+                <div >
                     <TextField 
                         id="item_price"
                         name="item_price"
@@ -130,7 +130,7 @@ const AddForm = () => {
                         disableUnderline="true" 
                     />
                 </div>
-                <div style={{display: "flex", justifyContent: 'center'}}>
+                <div>
                     <TextField
                         id="item_site"
                         name="item_site"
@@ -147,7 +147,7 @@ const AddForm = () => {
                         disableUnderline="true" 
                     />
                 </div>
-                <div style={{display: "flex", justifyContent: 'center'}}>
+                <div >
                     <TextField
                         id="item_desc"
                         name="item_desc"
@@ -166,7 +166,7 @@ const AddForm = () => {
                         disableUnderline="true" 
                     />
                 </div>
-                <div style={{display: "flex", justifyContent: 'center'}}>
+                <div >
                     <Button type="Submit" variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Add Item to Catalog</Button>
                 </div>
             </form>

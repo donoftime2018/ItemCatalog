@@ -9,6 +9,11 @@ form div {
     margin-bottom: 2%;
 }
 
+form >* {
+    display: flex;
+    justify-content: center;
+}
+
 .formLayout {
     display: flex;
     top: 0%;
