@@ -52,7 +52,7 @@ const AddForm = () => {
         }
     }, {})
 
-    console.log(formik.values.item_image)
+    // console.log(formik.values.item_image)
 
     const handleOpen = () => {
         setOpen(true)
@@ -193,7 +193,7 @@ const AddForm = () => {
                         >
                         </input>
                     </Button>
-                    {formik.values.item_image.name !== null ? formik.values.item_image.name : <></>}
+                    {formik.values.item_image !== "" ? formik.values.item_image.name : <></>}
                     <FormHelperText style={{color: '#b53737'}}>
                         {formik.touched.item_image && formik.errors.item_image ? formik.touched.item_image && formik.errors.item_image : ""}
                     </FormHelperText>
