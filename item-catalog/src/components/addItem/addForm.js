@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import {Card, CardHeader, CardContent, Divider, Button, TextField} from "@mui/material"
+import {Card, CardHeader, CardContent, Divider, Button, FormHelperText, TextField} from "@mui/material"
 import AppAlert from "../Alert/Alert";
 import Backdrop from "@mui/material/Backdrop";
 import {Tooltip} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import "./addForm.css";
 import {useFormik} from "formik";
 import { useAuth } from "../context/user";
@@ -32,7 +33,8 @@ const AddForm = () => {
         item_name: yup.string().max(65, "Item name cannot be over 65 characters long").required("Item name required"),
         item_price: yup.number().positive("Item price must be positive").required("Item price required"),
         item_desc: yup.string().max(138, "Item description cannot be over 138 characters long").required("Item description required"),
-        item_site: yup.string().max(50, "Item site or link cannot be over 50 characters long").required("The website/link that the item was found on is required")
+        item_site: yup.string().max(50, "Item site or link cannot be over 50 characters long").required("The website/link that the item was found on is required"),
+        item_image: yup.mixed().nullable().required("Image of item is required")
     })
 
     const formik = useFormik({
@@ -41,13 +43,16 @@ const AddForm = () => {
             item_name: "",
             item_price: "",
             item_desc: "",
-            item_site: ""
+            item_site: "",
+            item_image: null
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
             addItemToDB(values.item_name, values.item_price, values.item_desc, values.item_site);
         }
     }, {})
+
+    console.log(formik.values.item_image)
 
     const handleOpen = () => {
         setOpen(true)
@@ -165,6 +170,34 @@ const AddForm = () => {
                         label="Item Description"
                         disableUnderline="true" 
                     />
+                </div>
+                <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', padding: '0px'}}>
+                    <Button 
+                        type="button" 
+                        component="label"
+                        variant="contained" 
+                        id="item_image"
+                        name="item_image"
+                        startIcon={<FileUploadIcon/>}
+                        color="success" 
+                        sx={{borderRadius: '25px', border: '1px solid black', display: 'inline-flex', justifyContent: 'center', alignItems: 'center' }}>
+                        Upload Image
+                        <input 
+                            type="file"
+                            hidden
+                            accept="image/*"
+                            value={formik.values.item_image}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.item_image && Boolean(formik.errors.item_image)}
+                            helperText={formik.touched.item_image && formik.errors.item_image}
+                        >
+                        </input>
+                    </Button>
+                    {formik.values.item_image !== null ? formik.values.item_image : <></>}
+                    <FormHelperText style={{color: '#b53737'}}>
+                        {formik.touched.item_image && formik.errors.item_image ? formik.touched.item_image && formik.errors.item_image : ""}
+                    </FormHelperText>
                 </div>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                     <Button type="Submit" variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Add Item to Catalog</Button>
