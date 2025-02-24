@@ -34,7 +34,7 @@ const AddForm = () => {
         item_price: yup.number().positive("Item price must be positive").required("Item price required"),
         item_desc: yup.string().max(138, "Item description cannot be over 138 characters long").required("Item description required"),
         item_site: yup.string().max(50, "Item site or link cannot be over 50 characters long").required("The website/link that the item was found on is required"),
-        item_image: yup.mixed().nullable().required("Image of item is required")
+        item_image: yup.mixed().required("Image of item is required")
     })
 
     const formik = useFormik({
@@ -44,7 +44,7 @@ const AddForm = () => {
             item_price: "",
             item_desc: "",
             item_site: "",
-            item_image: null
+            item_image: ""
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
@@ -186,15 +186,14 @@ const AddForm = () => {
                             type="file"
                             hidden
                             accept="image/*"
-                            value={formik.values.item_image}
-                            onChange={formik.handleChange}
+                            onChange={e=>formik.setFieldValue('item_image', e.target.files[0])}
                             onBlur={formik.handleBlur}
                             error={formik.touched.item_image && Boolean(formik.errors.item_image)}
                             helperText={formik.touched.item_image && formik.errors.item_image}
                         >
                         </input>
                     </Button>
-                    {formik.values.item_image !== null ? formik.values.item_image : <></>}
+                    {formik.values.item_image.name !== null ? formik.values.item_image.name : <></>}
                     <FormHelperText style={{color: '#b53737'}}>
                         {formik.touched.item_image && formik.errors.item_image ? formik.touched.item_image && formik.errors.item_image : ""}
                     </FormHelperText>
