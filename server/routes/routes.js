@@ -42,7 +42,7 @@ app.get("/", async(req, res)=>{
         let allItems = await Item.find({}).sort({ rating: -1, price: 1, name: 1})
         res.status(200).json(allItems)
     } catch (err) {
-        console.error(err)
+        res.status(400).send({msg: err})
     }
 })
 
@@ -51,7 +51,9 @@ app.post("/getPostedItems", async(req, res)=>{
     try {
         let itemsPosted = await Item.find({poster: user}).select("name").sort({updatedAt: -1}).limit(5)
         res.status(200).json(itemsPosted)
-    } catch(err){}
+    } catch(err){
+        res.status(400).send({msg: err})
+    }
 })
 
 app.post("/numPostedItems", async(req, res)=>{
@@ -61,6 +63,7 @@ app.post("/numPostedItems", async(req, res)=>{
         const count = await Item.countDocuments({poster: user});
         res.status(200).json(count)
     } catch (error) {
+        res.status(400).send({msg: err})
     }
 
 })
@@ -73,6 +76,7 @@ app.post("/numLikedItems", async(req, res)=>{
         const count = await Item.countDocuments({usersRated: user});
         res.status(200).json(count)
     } catch(error){
+        res.status(400).send({msg: err})
     }
 })
 
@@ -83,7 +87,7 @@ app.post("/mostPopularItems", async(req, res)=>{
         let popularItems = await Item.find({poster: user, rating: {$gte: 1}}).select("name rating").sort({rating: -1, updatedAt: -1}).limit(5)
         res.status(200).json(popularItems)
     } catch(err) {
-
+        res.status(400).send({msg: err})
     }
 })
 
@@ -95,7 +99,7 @@ app.post("/getLikedItems", async(req, res) => {
         let likedItems = await Item.find({usersRated: user}).select("name").sort({updatedAt: -1}).limit(5)
         res.status(200).json(likedItems)
     } catch(err){
-
+        res.status(400).send({msg: err})
     }
 })
 
@@ -128,6 +132,7 @@ app.post("/insertItems", upload.single('image'), async(req, res)=>{
 
 app.delete("/deleteItems/:id", async(req, res)=>{
    Item.deleteOne({_id: req.params.id}).then((result)=>{console.log(result); res.status(200).send()}).catch((err)=>{
+    res.status(400).send({msg: err})
     })
 })
 
@@ -154,7 +159,6 @@ app.put("/increaseRating/:id", async(req, res, next)=>{
                     res.status(200).send()})
         }
     }).catch(err=>{
-        console.log(err)
         res.status(400).send({msg: err})
     })
 
@@ -186,7 +190,6 @@ app.put("/decreaseRating/:id", async(req, res, next)=>{
             res.status(400).send({msg: "You haven't even rated this item yet!"});
         }
     }).catch(err=>{
-        console.error(err)
             res.status(400).send({msg: err})
     })
 })
