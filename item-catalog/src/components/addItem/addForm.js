@@ -48,7 +48,7 @@ const AddForm = () => {
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
-            addItemToDB(values.item_name, values.item_price, values.item_desc, values.item_site);
+            addItemToDB(values.item_name, values.item_price, values.item_desc, values.item_site, values.item_image);
         }
     }, {})
 
@@ -64,10 +64,16 @@ const AddForm = () => {
         setOpen(false)
     }
 
-    const addItemToDB = (name, price, desc, website) => {
-
+    const addItemToDB = (name, price, desc, website, image) => {
+        console.log(image)
         const user = auth.user
-        const data = {name, price, desc, user, website}
+        const data = new FormData()
+        data.append('name', name)
+        data.append('desc', desc)
+        data.append('website', website)
+        data.append('price', price)
+        data.append('user', user)
+        data.append('image', image)
 
         axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/insertItems", data).then((res)=>{
             if (res.status === 200)
@@ -77,9 +83,11 @@ const AddForm = () => {
                 handleClose()
             }
             }).catch((error) => {
-            const errorMessage = JSON.parse(error.request.response)
-            console.error(errorMessage.msg); 
-            alert(errorMessage.msg);})
+                const errorMessage = JSON.parse(error.request.response);
+                const validationMessage = error.response.data.msg.message;
+                const errorAlert = validationMessage===undefined ? errorMessage.msg : validationMessage;
+                alert(errorAlert);
+        })
     }
 
    return(<>
@@ -193,7 +201,7 @@ const AddForm = () => {
                         >
                         </input>
                     </Button>
-                    {formik.values.item_image !== "" ? formik.values.item_image.name : <></>}
+                    {formik.values.item_image.name !== undefined ? formik.values.item_image.name : <></>}
                     <FormHelperText style={{color: '#b53737'}}>
                         {formik.touched.item_image && formik.errors.item_image ? formik.touched.item_image && formik.errors.item_image : ""}
                     </FormHelperText>
