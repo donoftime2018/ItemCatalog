@@ -1,9 +1,40 @@
 const mongoose = require('mongoose')
 const express = require('express');
 const app = express();
+const multer = require('multer');
+const {v4: uuidv4} = require('uuid')
+const path = require('path')
 const Item = require('../schemas/Item.js');
 
 mongoose.set('setDefaultsOnInsert', true);
+
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, '../uploads/')
+    },
+
+    filename: function(req, file, cb){
+        cb(null, uuidv4()+'-'+Date.now()+path.extname(file.originalname))
+    }   
+})
+
+const fileFilter = (req, file, cb) => {
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
+
+    if (allowedTypes.includes(file.mimetype))
+    {
+        cb(null, true)
+    }
+
+    else
+    {
+        cb(null, false)
+    }
+}
+
+let upload = multer({storage, fileFilter})
 
 app.get("/", async(req, res)=>{
 
@@ -70,9 +101,19 @@ app.post("/getLikedItems", async(req, res) => {
 
 
 
-app.post("/insertItems", async(req, res)=>{
+app.post("/insertItems", upload.single('image'), async(req, res)=>{
+    const itemName = req.body.name
+    const itemDesc = req.body.desc
+    const itemSiteOrLink = req.body.website
+    const itemPrice = req.body.price
+    const itemPoster = req.body.user
+    const itemImage = req.file ? req.file.filename : null
+
+    console.log(itemImage)
+
     try {
-        let newItem = await Item.create({name: req.body.name, desc: req.body.desc, website: req.body.website, price: req.body.price, poster: req.body.user})
+        let newItem = await Item.create({name: itemName, 
+            desc: itemDesc, website: itemSiteOrLink, price: itemPrice, poster: itemPoster, image: itemImage})
         if (newItem)
         {
             res.status(200).send()
