@@ -122,6 +122,10 @@ app.post("/insertItems", upload.single('image'), async(req, res)=>{
         {
             res.status(200).send()
         }
+        else
+        {
+            res.status(400).send({msg: "Error adding " + itemName})
+        }
     } catch(err)
     {
         res.status(400).send({msg: err})
