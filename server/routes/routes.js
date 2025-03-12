@@ -110,7 +110,7 @@ app.post("/insertItems", upload.single('image'), async(req, res)=>{
     const itemPrice = req.body.price
     const itemPoster = req.body.user
     const itemImage = req.file ? req.file.filename : null
-
+    console.log(req.file)
     console.log(itemImage)
 
     try {
