@@ -226,8 +226,17 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemImage, itemRated
          </Modal>
 
          <Modal open={imageOpen} onClose={closeImage}>
-            <Box>
-                
+            <Box 
+                component="img" 
+                src={`${process.env.REACT_APP_LOCAL_HOST}/uploads/${itemImage}`}
+                alt=''
+                sx={{
+                    height: 233,
+                    width: 350,
+                    maxHeight: { xs: 233, md: 167 },
+                    maxWidth: { xs: 350, md: 250 },
+                  }}
+            >
             </Box>
          </Modal>
 
