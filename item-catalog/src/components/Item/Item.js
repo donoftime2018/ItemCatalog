@@ -70,9 +70,11 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemImage, itemRated
         let id = dbID;
         let confirmDelete = window.confirm("Are you sure you want to delete " + itemName + "?")
 
+        let image = itemImage
+        let data = {image}
         if (confirmDelete === true)
         {
-            axios.delete(process.env.REACT_APP_SERVER_URL + "/items/deleteItems/" + id).then((res) => {
+            axios.delete(process.env.REACT_APP_LOCAL_HOST + "/items/deleteItems/" + id, {data: data}).then((res) => {
                 }).catch((error) => {
                 
                 })

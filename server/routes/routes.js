@@ -4,6 +4,7 @@ const app = express();
 const multer = require('multer');
 const {v4: uuidv4} = require('uuid')
 const path = require('path')
+const fs = require('fs')
 const Item = require('../schemas/Item.js');
 
 mongoose.set('setDefaultsOnInsert', true);
@@ -32,7 +33,7 @@ const fileFilter = (req, file, cb) => {
     }
 }
 
-let upload = multer({storage, fileFilter})
+let upload = multer({storage})
 
 app.get("/", async(req, res)=>{
 
@@ -133,7 +134,16 @@ app.post("/insertItems", upload.single('image'), async(req, res)=>{
 })
 
 app.delete("/deleteItems/:id", async(req, res)=>{
-   Item.deleteOne({_id: req.params.id}).then(()=>{res.status(200).send()}).catch((err)=>{
+    let itemImage = req.body.image
+    console.log(itemImage)
+
+    Item.deleteOne({_id: req.params.id}).then(()=>{
+        fs.unlink(`../uploads/${itemImage}`, (err)=>{
+            console.error(err)
+            res.status(400).send({msg: err})
+        })
+        res.status(200).send();
+    }).catch((err)=>{
     res.status(400).send({msg: err})
     })
 })
