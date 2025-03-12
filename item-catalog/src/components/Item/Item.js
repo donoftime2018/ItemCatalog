@@ -6,6 +6,7 @@ import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import ImageIcon from '@mui/icons-material/Image';
 import Modal from "@mui/material/Modal"
 import InfoIcon from '@mui/icons-material/Info';
 import ReportItem from "../reportItem/reportItem";
@@ -209,6 +210,9 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemImage, itemRated
                     <Divider></Divider>
                     <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6"><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}</Typography></div>
                     <Divider></Divider>
+                    <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6">
+                        <Tooltip title="View Image of Item"><IconButton><ImageIcon color="primary" fontSize="large"></ImageIcon></IconButton></Tooltip>
+                    </Typography></div>
                 </Box>
          </Modal>
 
