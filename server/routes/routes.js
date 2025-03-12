@@ -8,8 +8,6 @@ const Item = require('../schemas/Item.js');
 
 mongoose.set('setDefaultsOnInsert', true);
 
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
         cb(null, 'public/uploads')
