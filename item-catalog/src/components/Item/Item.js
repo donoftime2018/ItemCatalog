@@ -31,6 +31,7 @@ const style = {
 const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemImage, itemRatedByUser, itemPrice, itemRating, dateCreated, lastUpdated, id, dbID}) => {
 
     const [alertOpen, setAlertOpen] = useState(false);
+    const [imageOpen, setImageOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
 
     const [open, setOpen] = useState(false);
@@ -55,6 +56,14 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemImage, itemRated
 
     const closeDesc = () => {
         setOpen(false);
+    }
+
+    const openImage = () => {
+        setImageOpen(true);
+    }
+
+    const closeImage = () => {
+        setImageOpen(false);
     }
 
     const deleteItem = () => {
@@ -211,9 +220,15 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemImage, itemRated
                     <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6"><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}</Typography></div>
                     <Divider></Divider>
                     <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6">
-                        <Tooltip title="View Image of Item"><IconButton><ImageIcon color="primary" fontSize="large"></ImageIcon></IconButton></Tooltip>
+                        <Tooltip title="View Image of Item"><IconButton onClick={openImage}><ImageIcon color="primary" fontSize="large"></ImageIcon></IconButton></Tooltip>
                     </Typography></div>
                 </Box>
+         </Modal>
+
+         <Modal open={imageOpen} onClose={closeImage}>
+            <Box>
+                
+            </Box>
          </Modal>
 
         {
