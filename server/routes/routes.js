@@ -72,7 +72,8 @@ app.post("/getLikedItems", async(req, res) => {
 
 app.post("/insertItems", async(req, res)=>{
     try {
-        let newItem = await Item.create({name: req.body.name, desc: req.body.desc, website: req.body.website, price: req.body.price, poster: req.body.user})
+        console.log(req.body.quantity)
+        let newItem = await Item.create({name: req.body.name, desc: req.body.desc, quantity: req.body.quantity, website: req.body.website, price: req.body.price, poster: req.body.user})
         if (newItem)
         {
             res.status(200).send()

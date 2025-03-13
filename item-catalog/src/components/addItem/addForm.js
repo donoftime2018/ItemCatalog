@@ -31,6 +31,7 @@ const AddForm = () => {
     const validation = () => yup.object({
         item_name: yup.string().max(65, "Item name cannot be over 65 characters long").required("Item name required"),
         item_price: yup.number().positive("Item price must be positive").required("Item price required"),
+        item_quantity: yup.number().positive("Item quantity must be positive").required("Item quantity required"),
         item_desc: yup.string().max(138, "Item description cannot be over 138 characters long").required("Item description required"),
         item_site: yup.string().max(50, "Item site or link cannot be over 50 characters long").required("The website/link that the item was found on is required")
     })
@@ -40,12 +41,13 @@ const AddForm = () => {
         initialValues: {
             item_name: "",
             item_price: "",
+            item_quantity: "",
             item_desc: "",
             item_site: ""
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
-            addItemToDB(values.item_name, values.item_price, values.item_desc, values.item_site);
+            addItemToDB(values.item_name, values.item_price, values.item_quantity, values.item_desc, values.item_site);
         }
     }, {})
 
@@ -59,10 +61,10 @@ const AddForm = () => {
         setOpen(false)
     }
 
-    const addItemToDB = (name, price, desc, website) => {
+    const addItemToDB = (name, price, quantity, desc, website) => {
 
         const user = auth.user
-        const data = {name, price, desc, user, website}
+        const data = {name, price, quantity, desc, user, website}
 
         axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/insertItems", data).then((res)=>{
             if (res.status === 200)
@@ -127,6 +129,24 @@ const AddForm = () => {
                         sx={{backgroundColor: 'white', width: '100%'}} 
                         placeholder="Item Price goes here..." 
                         label="Item Price (USD)"
+                        disableUnderline="true" 
+                    />
+                </div>
+                <div style={{display: "flex", justifyContent: 'center'}}>
+                    <TextField 
+                        id="item_quantity"
+                        name="item_quantity"
+                        variant="outlined"
+                        type="number"
+                        value={formik.values.item_quantity}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.item_quantity && Boolean(formik.errors.item_quantity)}
+                        helperText={formik.touched.item_quantity && formik.errors.item_quantity}
+                        inputProps={{step: 1, min: 0}} 
+                        sx={{backgroundColor: 'white', width: '100%'}} 
+                        placeholder="Item Quantity goes here..." 
+                        label="Item Quantity"
                         disableUnderline="true" 
                     />
                 </div>

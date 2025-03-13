@@ -27,7 +27,7 @@ const style = {
   };
 
 
-const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, itemPrice, itemRating, dateCreated, lastUpdated, id, dbID}) => {
+const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemQuantity, itemRatedByUser, itemPrice, itemRating, dateCreated, lastUpdated, id, dbID}) => {
 
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
@@ -120,6 +120,10 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
                 <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Price Tag: ${itemPrice.toFixed(2)}</span>
             </CardContent>
             <Divider/>
+            <CardContent>
+                <span style={{display: 'flex', textAlign: 'center', justifyContent: 'center'}}>Quantity: {itemQuantity}</span>
+            </CardContent>
+            <Divider/>
             <CardContent key={id} sx={{display: 'flex',  alignItems: 'center', justifyContent: 'center', padding: '5px'}}>
             <Tooltip title="View Full Description"><IconButton onClick={openDesc}><InfoIcon color="info" fontSize="large"></InfoIcon></IconButton></Tooltip>
             </CardContent>
@@ -200,6 +204,8 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
                     </Typography>
                     <Divider></Divider>
                     <Typography id="modal-modal-description" style={{margin: '5px 0px'}}>Price Tag: ${itemPrice.toFixed(2)}</Typography>
+                    <Divider></Divider>
+                    <Typography id="modal-modal-description" style={{margin: '5px 0px'}}>Quantity: {itemQuantity}</Typography>
                     <Divider></Divider>
                     <Typography id="modal-modal-description" style={{margin: '5px 0px', lineHeight: '1.25'}}>{itemDesc}</Typography>
                     <Divider></Divider>
