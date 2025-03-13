@@ -137,8 +137,11 @@ app.delete("/deleteItems/:id", async(req, res)=>{
     let itemImage = req.body.image
     console.log(itemImage)
     fs.unlink(`uploads/${itemImage}`, (err)=>{
-        console.error(err)
-        res.status(400).send({msg: err})
+        if (err)
+        {
+            console.error(err)
+            res.status(400).send({msg: err})
+        }
     })
     Item.deleteOne({_id: req.params.id}).then(()=>{
         res.status(200).send();
