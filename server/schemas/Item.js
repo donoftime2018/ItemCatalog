@@ -28,6 +28,12 @@ const itemSchema = new Schema({
         type: String,
         required: true
     },
+
+    quantity: {
+        type: Number,
+        min: 0,
+        required: true
+    },
     
     rating: {
         type: Number,
