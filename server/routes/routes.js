@@ -136,12 +136,11 @@ app.post("/insertItems", upload.single('image'), async(req, res)=>{
 app.delete("/deleteItems/:id", async(req, res)=>{
     let itemImage = req.body.image
     console.log(itemImage)
-
+    fs.unlink(`uploads/${itemImage}`, (err)=>{
+        console.error(err)
+        res.status(400).send({msg: err})
+    })
     Item.deleteOne({_id: req.params.id}).then(()=>{
-        fs.unlink(`../uploads/${itemImage}`, (err)=>{
-            console.error(err)
-            res.status(400).send({msg: err})
-        })
         res.status(200).send();
     }).catch((err)=>{
     res.status(400).send({msg: err})
