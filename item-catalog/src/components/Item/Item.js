@@ -74,9 +74,12 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemImage, itemRated
         let data = {image}
         if (confirmDelete === true)
         {
-            axios.delete(process.env.REACT_APP_LOCAL_HOST + "/items/deleteItems/" + id, {data: data}).then((res) => {
+            axios.delete(process.env.REACT_APP_SERVER_URL + "/items/deleteItems/" + id, {data: data}).then((res) => {
                 }).catch((error) => {
-                
+                    const errorMessage = JSON.parse(error.request.response);
+                    const validationMessage = error.response.data.msg.message;
+                    const errorAlert = validationMessage===undefined ? errorMessage.msg : validationMessage;
+                    alert(errorAlert);
                 })
         }
     }
