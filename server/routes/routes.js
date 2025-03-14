@@ -111,8 +111,6 @@ app.post("/insertItems", upload.single('image'), async(req, res)=>{
     const itemPrice = req.body.price
     const itemPoster = req.body.user
     const itemImage = req.file ? req.file.filename : null
-    console.log(req.file)
-    console.log(itemImage)
 
     try {
         let newItem = await Item.create({name: itemName, 
@@ -135,7 +133,6 @@ app.post("/insertItems", upload.single('image'), async(req, res)=>{
 
 app.delete("/deleteItems/:id", async(req, res)=>{
     let itemImage = req.body.image
-    console.log(itemImage)
     fs.unlink(`uploads/${itemImage}`, (err)=>{
         if (err)
         {

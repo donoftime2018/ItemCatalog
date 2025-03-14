@@ -65,7 +65,6 @@ const AddForm = () => {
     }
 
     const addItemToDB = (name, price, desc, website, image) => {
-        console.log(image)
         const user = auth.user
         const data = new FormData()
         data.append('name', name)
@@ -75,7 +74,7 @@ const AddForm = () => {
         data.append('user', user)
         data.append('image', image)
 
-        axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/insertItems", data).then((res)=>{
+        axios.post(process.env.REACT_APP_SERVER_URL + "/items/insertItems", data).then((res)=>{
             if (res.status === 200)
             {
                 setAlertOpen(true)
