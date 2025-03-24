@@ -15,9 +15,7 @@ import {useFormik} from "formik";
 import { useAuth } from "../context/user";
 
 const Dashboard = (props) => {
-    // const [items, setItems] = useState([])
     const [isQueried, setIsQueried] = useState(false);
-    const [isLoading, setLoading] = useState(true);
     
     const {items, loading, numOfItems} = useSelector((state)=>state.items)
     const dispatch = useDispatch()
