@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { useEffect} from "react";
+import { useEffect, useCallback} from "react";
 import { useSearchParams } from "react-router-dom";
 import "./Dashboard.css"
 import Item from "../Item/Item";
@@ -8,14 +8,19 @@ import Title from "../appTitle/appTitle";
 import AppNav from "../NavBar/NavBar";
 import axios from 'axios'
 import {Card, CardHeader, CardContent, Divider, IconButton, TextField, Tooltip} from "@mui/material"
+import { useSelector, useDispatch } from "react-redux";
+import { getItems } from "../features/itemSlice";
 import SearchIcon from '@mui/icons-material/Search';
 import {useFormik} from "formik";
 import { useAuth } from "../context/user";
 
 const Dashboard = (props) => {
-    const [items, setItems] = useState([])
+    // const [items, setItems] = useState([])
     const [isQueried, setIsQueried] = useState(false);
     const [isLoading, setLoading] = useState(true);
+    
+    const {items, loading, numOfItems} = useSelector((state)=>state.items)
+    const dispatch = useDispatch()
 
     const itemResults = useRef("")
     const posterResults = useRef("")
@@ -76,28 +81,10 @@ const Dashboard = (props) => {
     }
 
     useEffect(()=>{
-
-        const getItems = () => {
-            axios.get(process.env.REACT_APP_SERVER_URL + "/items/").then((res)=>{
-                setItems(res.data)
-            }).catch((error) => {
-              }).finally(()=>{
-                setLoading(false)
-              })
-        }
-        getItems()
-    
-        if (isQueried === false && (itemName !== "" || posterName !== ""))
-        {
-            setSearchParams(prev => {
-                prev.delete("items")
-                prev.delete("poster")
-                return prev
-            },{replace: true})
-        }
+        dispatch(getItems())
         document.title = props.title
-    }, [items.length, items, setSearchParams, setLoading, isQueried, itemName, posterName, props])
-
+    }, [ dispatch, props])
+    console.log(items, numOfItems, loading)
 
     const formik = useFormik({
         initialValues: {
@@ -193,7 +180,7 @@ const Dashboard = (props) => {
         {
             posterResults.current = ""
             itemResults.current = ""
-            numItems.current = "Total Items: " + items.length
+            numItems.current = "Total Items: " + numOfItems
         
             return(<>
                 {
@@ -263,7 +250,7 @@ const Dashboard = (props) => {
                 </div>
         
         <div class="queryText">
-            {isLoading ? <>Loading...</> : <></>}
+            {loading ? <>Loading...</> : <></>}
             <div ref={itemResults}>{typeof itemResults.current === 'string' ? itemResults.current : null}</div>
             <div ref={posterResults}>{typeof posterResults.current === 'string' ? posterResults.current: null}</div>
             <div ref={numItems}>{typeof numItems.current === 'string' ? numItems.current: null}</div>
