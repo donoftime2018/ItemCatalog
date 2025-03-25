@@ -5,11 +5,22 @@ const Item = require('../schemas/Item.js');
 
 mongoose.set('setDefaultsOnInsert', true);
 
-app.get("/", async(req, res)=>{
-
+app.get("/:id?", async(req, res)=>{
+    let itemId = req.params.id
+    console.log(itemId)
     try {
-        let allItems = await Item.find({}).sort({ rating: -1, price: 1, name: 1})
-        res.status(200).json(allItems)
+            if (itemId)
+            {
+                let updatedItem = await Item.findById(itemId)
+                console.log(updatedItem)
+                res.status(200).json(updatedItem)
+            }
+
+            else
+            {
+                let allItems = await Item.find({}).sort({ rating: -1, price: 1, name: 1})
+                res.status(200).json(allItems)
+            }
     } catch (err) {
         console.error(err)
     }

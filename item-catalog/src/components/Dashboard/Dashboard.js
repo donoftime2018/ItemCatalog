@@ -82,7 +82,6 @@ const Dashboard = (props) => {
         dispatch(getItems())
         document.title = props.title
     }, [ dispatch, props])
-    console.log(items, numOfItems, loading)
 
     const formik = useFormik({
         initialValues: {
