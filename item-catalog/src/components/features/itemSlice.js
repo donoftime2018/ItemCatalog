@@ -1,8 +1,9 @@
+import { accordionActionsClasses } from "@mui/material";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const getItems = createAsyncThunk('items/getItems', async() => {
-    const res = await fetch(process.env.REACT_APP_LOCAL_HOST+"/items/", 
+    const updatedData = await fetch(process.env.REACT_APP_LOCAL_HOST+"/items/", 
         {
             method: 'GET',
             header: {
@@ -10,30 +11,25 @@ export const getItems = createAsyncThunk('items/getItems', async() => {
             },
         }
     )
-    const data = await res.json()
+    const data = await updatedData.json()
     console.log(data)
     return data
 })
 
 export const addLike = createAsyncThunk('items/addLike', async({id, data})=>{
     console.log(id, data)
-    const res = await axios.put(process.env.REACT_APP_LOCAL_HOST+"/items/increaseRating/"+id, data)
-    console.log(res.data.usersRated)
-    return {id, data}
+    const updatedData = await axios.put(process.env.REACT_APP_LOCAL_HOST+"/items/increaseRating/"+id, data)
+    console.log(updatedData.data)
+    return {id, updatedData}
 })
 
 export const removeLike = createAsyncThunk('items/removeLike', async({id, data})=>{
     console.log(id, data)
-    const res = await axios.put(process.env.REACT_APP_LOCAL_HOST+"/items/decreaseRating/"+id, data)
-    console.log(res)
-    console.log(res.data)
+    const updatedData = await axios.put(process.env.REACT_APP_LOCAL_HOST+"/items/decreaseRating/"+id, data)
+    console.log(updatedData)
+    console.log(updatedData.data)
 
-    if (res.status !== 200)
-    {
-        return new Error(res.data)
-    }
-
-    return {id, data}
+    return {id, updatedData}
 })
 
 export const itemSlice = createSlice({
@@ -46,14 +42,16 @@ export const itemSlice = createSlice({
     reducers: {},
     extraReducers: {
         [addLike.fulfilled]: (state, action) => {
+            console.log(action.payload)
             state.items = state.items.map(item =>
-                item._id === action.payload.id ? { ...item, ...action.payload.data } : item
+                item._id === action.payload.id ? { ...item, ...action.payload.updatedData.data } : item
             );
         },
 
         [removeLike.fulfilled]: (state, action) => {
+            console.log(action.payload)
             state.items = state.items.map(item =>
-                item._id === action.payload.id ? { ...item, ...action.payload.data } : item
+                item._id === action.payload.id ? { ...item, ...action.payload.updatedData.data } : item
             );
         },
 
