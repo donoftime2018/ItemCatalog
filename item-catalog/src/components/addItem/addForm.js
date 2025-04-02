@@ -7,6 +7,8 @@ import IconButton from "@mui/material/IconButton";
 import "./addForm.css";
 import {useFormik} from "formik";
 import { useAuth } from "../context/user";
+import { useSelector, useDispatch } from "react-redux";
+import { newItem } from "../features/itemSlice";
 import * as yup from "yup"
 import axios from "axios";
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -15,6 +17,8 @@ const AddForm = () => {
     const [open, setOpen] = useState(false);
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
+
+    const dispatch = useDispatch()
 
     const auth = useAuth()
 
@@ -64,17 +68,18 @@ const AddForm = () => {
         const user = auth.user
         const data = {name, price, desc, user, website}
 
-        axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/insertItems", data).then((res)=>{
-            if (res.status === 200)
-            {
-                setAlertOpen(true)
-                setAlertMessage(name + " added successfully")
-                handleClose()
-            }
-            }).catch((error) => {
-            const errorMessage = JSON.parse(error.request.response)
-            console.error(errorMessage.msg); 
-            alert(errorMessage.msg);})
+        dispatch(newItem(data))
+        // axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/insertItems", data).then((res)=>{
+        //     if (res.status === 200)
+        //     {
+        //         setAlertOpen(true)
+        //         setAlertMessage(name + " added successfully")
+        //         handleClose()
+        //     }
+        //     }).catch((error) => {
+        //     const errorMessage = JSON.parse(error.request.response)
+        //     console.error(errorMessage.msg); 
+        //     alert(errorMessage.msg);})
     }
 
    return(<>

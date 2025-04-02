@@ -16,6 +16,13 @@ export const getItems = createAsyncThunk('items/getItems', async() => {
     return data
 })
 
+export const newItem = createAsyncThunk('items/addNewItem', async(data)=>{
+    console.log(data)
+    const newData = await axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/insertItems", data)
+    console.log(newData.data)
+    return {newData}
+})
+
 export const addLike = createAsyncThunk('items/addLike', async({id, data})=>{
     console.log(id, data)
     const updatedData = await axios.put(process.env.REACT_APP_LOCAL_HOST+"/items/increaseRating/"+id, data)
@@ -53,6 +60,12 @@ export const itemSlice = createSlice({
             state.items = state.items.map(item =>
                 item._id === action.payload.id ? { ...item, ...action.payload.updatedData.data } : item
             );
+        },
+
+        [newItem.fulfilled]: (state, action) => {
+            console.log(action.payload.newData.data)
+            state.items.push(action.payload.newData.data)
+            state.numOfItems = state.items.length
         },
 
         [getItems.pending]: (state)=>{
