@@ -2,6 +2,8 @@ import React from "react";
 import {Card, CardContent, Divider, IconButton, Box, Typography, Tooltip} from "@mui/material";
 import AppAlert from "../Alert/Alert";
 import { useState, useEffect } from "react";
+import { useDispatch} from "react-redux";
+import { addLike, removeLike } from "../features/itemSlice";
 import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -31,6 +33,8 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
 
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
+
+    const dispatch = useDispatch()
 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
@@ -74,18 +78,19 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
         
         let user = auth.user
         let data = {user}
-
-        axios.put(process.env.REACT_APP_LOCAL_HOST + "/items/increaseRating/" + id, data).then((res)=>{
-                if (res.status === 200)
-                {
-                    setAlertOpen(true)
-                    setAlertMessage("You liked " + itemName)
-                }
-        }
-        ).catch((error)=>{
-            const errorMessage = JSON.parse(error.request.response)
-            console.error(errorMessage.msg); 
-            alert(errorMessage.msg);})
+        
+        dispatch(addLike({id, data}))
+        // axios.put(process.env.REACT_APP_LOCAL_HOST + "/items/increaseRating/" + id, data).then((res)=>{
+        //         if (res.status === 200)
+        //         {
+        //             setAlertOpen(true)
+        //             setAlertMessage("You liked " + itemName)
+        //         }
+        // }
+        // ).catch((error)=>{
+        //     const errorMessage = JSON.parse(error.request.response)
+        //     console.error(errorMessage.msg); 
+        //     alert(errorMessage.msg);})
     }
 
     const decreaseRating = () => {
@@ -93,18 +98,26 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
         let user = auth.user
 
         let data = {user}
-
-        axios.put(process.env.REACT_APP_LOCAL_HOST + "/items/decreaseRating/" + id, data).then((res)=>{
-                if (res.status === 200)
-                {
-                    setAlertOpen(true)
-                    setAlertMessage("You unliked " + itemName)
-                }
+        
+        try{
+            dispatch(removeLike({id, data}))
+        } catch(err)
+        {
+            alert(err)
         }
-        ).catch((error)=>{
-            const errorMessage = JSON.parse(error.request.response)
-            console.error(errorMessage.msg); 
-            alert(errorMessage.msg);})
+
+
+        // axios.put(process.env.REACT_APP_LOCAL_HOST + "/items/decreaseRating/" + id, data).then((res)=>{
+        //         if (res.status === 200)
+        //         {
+        //             setAlertOpen(true)
+        //             setAlertMessage("You unliked " + itemName)
+        //         }
+        // }
+        // ).catch((error)=>{
+        //     const errorMessage = JSON.parse(error.request.response)
+        //     console.error(errorMessage.msg); 
+        //     alert(errorMessage.msg);})
     }
 
     return(<>
