@@ -69,6 +69,9 @@ const AddForm = () => {
         const data = {name, price, desc, user, website}
 
         dispatch(newItem(data))
+        setAlertOpen(true)
+        setAlertMessage(name + " added successfully")
+        handleClose()
         // axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/insertItems", data).then((res)=>{
         //     if (res.status === 200)
         //     {

@@ -80,6 +80,8 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
         let data = {user}
         
         dispatch(addLike({id, data}))
+        setAlertOpen(true)
+        setAlertMessage("You liked " + itemName)
         // axios.put(process.env.REACT_APP_LOCAL_HOST + "/items/increaseRating/" + id, data).then((res)=>{
         //         if (res.status === 200)
         //         {
@@ -99,12 +101,10 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
 
         let data = {user}
         
-        try{
-            dispatch(removeLike({id, data}))
-        } catch(err)
-        {
-            alert(err)
-        }
+        dispatch(removeLike({id, data}))
+        setAlertOpen(true)
+        setAlertMessage("You unliked " + itemName)
+
 
 
         // axios.put(process.env.REACT_APP_LOCAL_HOST + "/items/decreaseRating/" + id, data).then((res)=>{
