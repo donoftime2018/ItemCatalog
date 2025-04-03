@@ -17,7 +17,7 @@ import { useAuth } from "../context/user";
 const Dashboard = (props) => {
     const [isQueried, setIsQueried] = useState(false);
     
-    const {items, loading, numOfItems} = useSelector((state)=>state.items)
+    const {items, loading} = useSelector((state)=>state.items)
     const dispatch = useDispatch()
 
     const itemResults = useRef("")
@@ -177,7 +177,7 @@ const Dashboard = (props) => {
         {
             posterResults.current = ""
             itemResults.current = ""
-            numItems.current = "Total Items: " + numOfItems
+            // numItems.current = "Total Items: " + items.length
         
             return(<>
                 {

@@ -51,8 +51,7 @@ export const itemSlice = createSlice({
     name: "items",
     initialState: {
         items: [],
-        loading: false,
-        numOfItems: 0
+        loading: false
     },
     reducers: {},
     extraReducers: {
@@ -73,7 +72,6 @@ export const itemSlice = createSlice({
         [newItem.fulfilled]: (state, action) => {
             console.log(action.payload.newData.data)
             state.items.push(action.payload.newData.data)
-            state.numOfItems = state.items.length
         },
 
         [removeItem.fulfilled]: (state, action) => {
@@ -81,23 +79,19 @@ export const itemSlice = createSlice({
             console.log(id)
             state.items = state.items.filter(item=>item._id !== id)
             console.log(state.items)
-            state.numOfItems = state.items.length
         },
 
         [getItems.pending]: (state)=>{
             state.loading = true
-            state.numOfItems = 0
         },
 
         [getItems.fulfilled]: (state, {payload})=>{
             state.loading = false
             state.items = payload
-            state.numOfItems = state.items.length
         },
 
         [getItems.rejected]: (state)=>{
             state.loading = false
-            state.numOfItems = 0
         }
     }
 })
