@@ -3,7 +3,7 @@ import {Card, CardContent, Divider, IconButton, Box, Typography, Tooltip} from "
 import AppAlert from "../Alert/Alert";
 import { useState, useEffect } from "react";
 import { useDispatch} from "react-redux";
-import { addLike, removeLike, getItems } from "../features/itemSlice";
+import { addLike, removeLike, removeItem } from "../features/itemSlice";
 import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -66,10 +66,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
 
         if (confirmDelete === true)
         {
-            axios.delete(process.env.REACT_APP_LOCAL_HOST + "/items/deleteItems/" + id).then((res) => {
-                }).catch((error) => {
-                
-                })
+            dispatch(removeItem(id))
         }
     }
 

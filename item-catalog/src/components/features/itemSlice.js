@@ -39,6 +39,14 @@ export const removeLike = createAsyncThunk('items/removeLike', async({id, data})
     return {id, updatedData}
 })
 
+export const removeItem = createAsyncThunk('items/deleteItem', async(id)=>{
+    console.log(id)
+    const deletedData = await axios.delete(process.env.REACT_APP_LOCAL_HOST+"/items/deleteItems/"+id)
+    console.log(deletedData)
+
+    return {id}
+})
+
 export const itemSlice = createSlice({
     name: "items",
     initialState: {
@@ -65,6 +73,14 @@ export const itemSlice = createSlice({
         [newItem.fulfilled]: (state, action) => {
             console.log(action.payload.newData.data)
             state.items.push(action.payload.newData.data)
+            state.numOfItems = state.items.length
+        },
+
+        [removeItem.fulfilled]: (state, action) => {
+            const {id} = action.payload
+            console.log(id)
+            state.items = state.items.filter(item=>item._id !== id)
+            console.log(state.items)
             state.numOfItems = state.items.length
         },
 
