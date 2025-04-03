@@ -1,4 +1,3 @@
-import { accordionActionsClasses } from "@mui/material";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -16,21 +15,27 @@ export const getItems = createAsyncThunk('items/getItems', async() => {
     return data
 })
 
-export const newItem = createAsyncThunk('items/addNewItem', async(data)=>{
-    console.log(data)
-    const newData = await axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/insertItems", data)
-    console.log(newData.data)
-    return {newData}
+export const newItem = createAsyncThunk('items/addNewItem', async(data, {rejectWithValue})=>{
+    try{
+        const newData = await axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/insertItems", data)
+        return {newData}
+
+    } catch(err)
+    {
+        const errorMessage = err.response.data.msg
+        console.log(errorMessage)
+        return rejectWithValue(errorMessage)
+    }
 })
 
-export const addLike = createAsyncThunk('items/addLike', async({id, data})=>{
+export const addLike = createAsyncThunk('items/addLike', async({id, data}, {rejectWithValue})=>{
     console.log(id, data)
     const updatedData = await axios.put(process.env.REACT_APP_LOCAL_HOST+"/items/increaseRating/"+id, data)
     console.log(updatedData.data)
     return {id, updatedData}
 })
 
-export const removeLike = createAsyncThunk('items/removeLike', async({id, data})=>{
+export const removeLike = createAsyncThunk('items/removeLike', async({id, data}, {rejectWithValue})=>{
     console.log(id, data)
     const updatedData = await axios.put(process.env.REACT_APP_LOCAL_HOST+"/items/decreaseRating/"+id, data)
     console.log(updatedData)
@@ -39,7 +44,7 @@ export const removeLike = createAsyncThunk('items/removeLike', async({id, data})
     return {id, updatedData}
 })
 
-export const removeItem = createAsyncThunk('items/deleteItem', async(id)=>{
+export const removeItem = createAsyncThunk('items/deleteItem', async(id, {rejectWithValue})=>{
     console.log(id)
     const deletedData = await axios.delete(process.env.REACT_APP_LOCAL_HOST+"/items/deleteItems/"+id)
     console.log(deletedData)
@@ -51,7 +56,8 @@ export const itemSlice = createSlice({
     name: "items",
     initialState: {
         items: [],
-        loading: false
+        loading: false,
+        error: ""
     },
     reducers: {},
     extraReducers: {
@@ -72,6 +78,11 @@ export const itemSlice = createSlice({
         [newItem.fulfilled]: (state, action) => {
             console.log(action.payload.newData.data)
             state.items.push(action.payload.newData.data)
+        },
+
+        [newItem.rejected]: (state, action) => {
+            console.log(action.payload)
+            state.error = action.payload
         },
 
         [removeItem.fulfilled]: (state, action) => {
