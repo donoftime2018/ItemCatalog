@@ -83,6 +83,7 @@ export const itemSlice = createSlice({
         [newItem.rejected]: (state, action) => {
             console.log(action.payload)
             state.error = action.payload
+            console.log(state.error)
         },
 
         [removeItem.fulfilled]: (state, action) => {

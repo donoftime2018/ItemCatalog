@@ -18,6 +18,8 @@ const AddForm = () => {
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
 
+    const {error} = useSelector((state)=>state.items.error)
+
     const dispatch = useDispatch()
 
     const auth = useAuth()
@@ -63,15 +65,21 @@ const AddForm = () => {
         setOpen(false)
     }
 
-    const addItemToDB = (name, price, desc, website) => {
+    const addItemToDB = async (name, price, desc, website) => {
 
         const user = auth.user
         const data = {name, price, desc, user, website}
 
-        dispatch(newItem(data))
-        setAlertOpen(true)
-        setAlertMessage(name + " added successfully")
-        handleClose()
+        try{
+             await dispatch(newItem(data)).unwrap()
+             setAlertOpen(true)
+             setAlertMessage(name + " added successfully")
+             handleClose()
+          
+        } catch(err){
+            alert(err)
+        }
+ 
         // axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/insertItems", data).then((res)=>{
         //     if (res.status === 200)
         //     {
