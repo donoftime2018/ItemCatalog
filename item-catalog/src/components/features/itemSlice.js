@@ -30,18 +30,34 @@ export const newItem = createAsyncThunk('items/addNewItem', async(data, {rejectW
 
 export const addLike = createAsyncThunk('items/addLike', async({id, data}, {rejectWithValue})=>{
     console.log(id, data)
-    const updatedData = await axios.put(process.env.REACT_APP_LOCAL_HOST+"/items/increaseRating/"+id, data)
-    console.log(updatedData.data)
-    return {id, updatedData}
+    try{
+        const updatedData = await axios.put(process.env.REACT_APP_LOCAL_HOST+"/items/increaseRating/"+id, data)
+        return {id, updatedData}
+    } catch(err)
+    {
+        const errorMessage = err.response.data.msg
+        console.log(errorMessage)
+        return rejectWithValue(errorMessage)
+    }
+    
 })
 
 export const removeLike = createAsyncThunk('items/removeLike', async({id, data}, {rejectWithValue})=>{
     console.log(id, data)
-    const updatedData = await axios.put(process.env.REACT_APP_LOCAL_HOST+"/items/decreaseRating/"+id, data)
-    console.log(updatedData)
-    console.log(updatedData.data)
+    try{
+        const updatedData = await axios.put(process.env.REACT_APP_LOCAL_HOST+"/items/decreaseRating/"+id, data)
+        console.log(updatedData)
+        console.log(updatedData.data)
+    
+        return {id, updatedData}
+    }  catch(err)
+    {
+        const errorMessage = err.response.data.msg
+        console.log(errorMessage)
+        return rejectWithValue(errorMessage)
+    }
+    
 
-    return {id, updatedData}
 })
 
 export const removeItem = createAsyncThunk('items/deleteItem', async(id, {rejectWithValue})=>{
@@ -68,11 +84,24 @@ export const itemSlice = createSlice({
             );
         },
 
+        [addLike.rejected]: (state, action) => {
+            console.log(action.payload)
+            state.error = action.payload
+            console.log(state.error)
+        },
+
+
         [removeLike.fulfilled]: (state, action) => {
             console.log(action.payload)
             state.items = state.items.map(item =>
                 item._id === action.payload.id ? { ...item, ...action.payload.updatedData.data } : item
             );
+        },
+
+        [removeLike.rejected]: (state, action) => {
+            console.log(action.payload)
+            state.error = action.payload
+            console.log(state.error)
         },
 
         [newItem.fulfilled]: (state, action) => {

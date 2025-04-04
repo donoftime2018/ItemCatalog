@@ -70,15 +70,20 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
         }
     }
 
-    const increaseRating = () => {
+    const increaseRating = async() => {
         let id = dbID;
         
         let user = auth.user
         let data = {user}
         
-        dispatch(addLike({id, data}))
-        setAlertOpen(true)
-        setAlertMessage("You liked " + itemName)
+        try{            
+            await dispatch(addLike({id, data})).unwrap()
+            setAlertOpen(true)
+            setAlertMessage("You liked " + itemName)
+        } catch(err)
+        {
+            alert(err)
+        }
         // axios.put(process.env.REACT_APP_LOCAL_HOST + "/items/increaseRating/" + id, data).then((res)=>{
         //         if (res.status === 200)
         //         {
@@ -92,15 +97,20 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
         //     alert(errorMessage.msg);})
     }
 
-    const decreaseRating = () => {
+    const decreaseRating = async() => {
         let id = dbID;
         let user = auth.user
 
         let data = {user}
         
-        dispatch(removeLike({id, data}))
-        setAlertOpen(true)
-        setAlertMessage("You unliked " + itemName)
+        try{            
+            await dispatch(removeLike({id, data})).unwrap()
+            setAlertOpen(true)
+            setAlertMessage("You liked " + itemName)
+        } catch(err)
+        {
+            alert(err)
+        }
 
 
 
