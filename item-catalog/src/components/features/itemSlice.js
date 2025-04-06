@@ -73,6 +73,7 @@ export const itemSlice = createSlice({
     initialState: {
         items: [],
         loading: false,
+        numOfItems: null,
         error: ""
     },
     reducers: {},
@@ -107,6 +108,8 @@ export const itemSlice = createSlice({
         [newItem.fulfilled]: (state, action) => {
             console.log(action.payload.newData.data)
             state.items.push(action.payload.newData.data)
+            state.numOfItems = state.items.length
+            console.log(state.numOfItems)
         },
 
         [newItem.rejected]: (state, action) => {
@@ -119,7 +122,9 @@ export const itemSlice = createSlice({
             const {id} = action.payload
             console.log(id)
             state.items = state.items.filter(item=>item._id !== id)
+            state.numOfItems = state.items.length
             console.log(state.items)
+            console.log(state.numOfItems)
         },
 
         [getItems.pending]: (state)=>{
@@ -129,6 +134,7 @@ export const itemSlice = createSlice({
         [getItems.fulfilled]: (state, {payload})=>{
             state.loading = false
             state.items = payload
+            state.numOfItems = state.items.length
         },
 
         [getItems.rejected]: (state)=>{

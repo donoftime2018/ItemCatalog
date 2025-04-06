@@ -17,7 +17,7 @@ import { useAuth } from "../context/user";
 const Dashboard = (props) => {
     const [isQueried, setIsQueried] = useState(false);
     
-    const {items, loading} = useSelector((state)=>state.items)
+    const {items, loading, numOfItems} = useSelector((state)=>state.items)
     const dispatch = useDispatch()
 
     const itemResults = useRef("")
@@ -81,7 +81,9 @@ const Dashboard = (props) => {
     useEffect(()=>{
         dispatch(getItems())
         document.title = props.title
-    }, [ dispatch, props])
+    }, [ dispatch, props, numOfItems])
+
+    console.log(loading, items, numOfItems)
 
     const formik = useFormik({
         initialValues: {
@@ -177,7 +179,7 @@ const Dashboard = (props) => {
         {
             posterResults.current = ""
             itemResults.current = ""
-            // numItems.current = "Total Items: " + items.length
+            numItems.current = "Total Items: " + numOfItems 
         
             return(<>
                 {
@@ -255,10 +257,13 @@ const Dashboard = (props) => {
 
         <div class="itemLayout">
             {
-                isQueried ? 
-                displayItems(itemName, posterName)
+                !loading ? 
+                    isQueried ?     
+                        displayItems(itemName, posterName)
+                        :
+                        displayItems()
                 :
-                displayItems()
+                <></>
             }
         </div>
         
