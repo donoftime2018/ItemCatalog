@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { useEffect, useCallback} from "react";
+import { useEffect} from "react";
 import { useSearchParams } from "react-router-dom";
 import "./Dashboard.css"
 import Item from "../Item/Item";
@@ -11,6 +11,7 @@ import {Card, CardHeader, CardContent, Divider, IconButton, TextField, Tooltip} 
 import { useSelector, useDispatch } from "react-redux";
 import { getItems } from "../features/itemSlice";
 import SearchIcon from '@mui/icons-material/Search';
+import SearchBar from "../searchBar/searchBar";
 import {useFormik} from "formik";
 import { useAuth } from "../context/user";
 
@@ -197,8 +198,10 @@ const Dashboard = (props) => {
     return(<>
             <AppNav></AppNav>
             <Title title={"Put a Price On It!"} ></Title>
+
+            <SearchBar></SearchBar>
             
-            
+{/*             
                 <div class="searchBar">
                     <div>
                         <Card class="searchCard">
@@ -246,7 +249,7 @@ const Dashboard = (props) => {
                             </CardContent>
                         </Card>
                     </div>
-                </div>
+                </div> */}
         
         <div class="queryText">
             {loading ? <>Loading...</> : <></>}
