@@ -81,8 +81,18 @@ const Dashboard = (props) => {
 
     useEffect(()=>{
         dispatch(getItems())
+
+        if (isQueried === false && (itemName !== "" || posterName !== ""))
+            {
+                setSearchParams(prev => {
+                    prev.delete("items")
+                    prev.delete("poster")
+                    return prev
+                },{replace: true})
+            }
+
         document.title = props.title
-    }, [ dispatch, props, numOfItems])
+    }, [dispatch, props, numOfItems, isQueried, itemName, posterName, setSearchParams])
 
     console.log(loading, items, numOfItems)
 
@@ -199,9 +209,9 @@ const Dashboard = (props) => {
             <AppNav></AppNav>
             <Title title={"Put a Price On It!"} ></Title>
 
-            <SearchBar></SearchBar>
+            {/* <SearchBar></SearchBar> */}
             
-{/*             
+            
                 <div class="searchBar">
                     <div>
                         <Card class="searchCard">
@@ -249,7 +259,7 @@ const Dashboard = (props) => {
                             </CardContent>
                         </Card>
                     </div>
-                </div> */}
+                </div>
         
         <div class="queryText">
             {loading ? <>Loading...</> : <></>}
