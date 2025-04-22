@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const getItems = createAsyncThunk('items/getItems', async() => {
-    const updatedData = await fetch(process.env.REACT_APP_LOCAL_HOST+"/items/", 
+    const updatedData = await fetch(process.env.REACT_APP_SERVER_URL+"/items/", 
         {
             method: 'GET',
             header: {
@@ -17,7 +17,7 @@ export const getItems = createAsyncThunk('items/getItems', async() => {
 
 export const newItem = createAsyncThunk('items/addNewItem', async(data, {rejectWithValue})=>{
     try{
-        const newData = await axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/insertItems", data)
+        const newData = await axios.post(process.env.REACT_APP_SERVER_URL + "/items/insertItems", data)
         return {newData}
 
     } catch(err)
@@ -31,7 +31,7 @@ export const newItem = createAsyncThunk('items/addNewItem', async(data, {rejectW
 export const addLike = createAsyncThunk('items/addLike', async({id, data}, {rejectWithValue})=>{
     console.log(id, data)
     try{
-        const updatedData = await axios.put(process.env.REACT_APP_LOCAL_HOST+"/items/increaseRating/"+id, data)
+        const updatedData = await axios.put(process.env.REACT_APP_SERVER_URL+"/items/increaseRating/"+id, data)
         return {id, updatedData}
     } catch(err)
     {
@@ -45,7 +45,7 @@ export const addLike = createAsyncThunk('items/addLike', async({id, data}, {reje
 export const removeLike = createAsyncThunk('items/removeLike', async({id, data}, {rejectWithValue})=>{
     console.log(id, data)
     try{
-        const updatedData = await axios.put(process.env.REACT_APP_LOCAL_HOST+"/items/decreaseRating/"+id, data)
+        const updatedData = await axios.put(process.env.REACT_APP_SERVER_URL+"/items/decreaseRating/"+id, data)
         console.log(updatedData)
         console.log(updatedData.data)
     
@@ -62,7 +62,7 @@ export const removeLike = createAsyncThunk('items/removeLike', async({id, data},
 
 export const removeItem = createAsyncThunk('items/deleteItem', async(id, {rejectWithValue})=>{
     console.log(id)
-    const deletedData = await axios.delete(process.env.REACT_APP_LOCAL_HOST+"/items/deleteItems/"+id)
+    const deletedData = await axios.delete(process.env.REACT_APP_SERVER_URL+"/items/deleteItems/"+id)
     console.log(deletedData)
 
     return {id}

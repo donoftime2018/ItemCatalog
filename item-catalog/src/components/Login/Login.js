@@ -53,7 +53,7 @@ const LoginPage = (props) => {
     const checkLogin = (name, pwd) => {
         setLoading(true)
         const data = {name, pwd}
-        const apiEndpoint = process.env.REACT_APP_LOCAL_HOST + "/login"
+        const apiEndpoint = process.env.REACT_APP_SERVER_URL + "/login"
         axios.post(apiEndpoint, data).then((res)=>{
             if (res.status === 200)
             {
