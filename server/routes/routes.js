@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const express = require('express');
 const app = express();
 const multer = require('multer');
-const {v4: uuidv4} = require('uuid')
+const uuid = require('uuid')
 const path = require('path')
 const fs = require('fs')
 const Item = require('../schemas/Item.js');
@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
     },
 
     filename: function(req, file, cb){
-        cb(null, uuidv4()+'-'+Date.now()+path.extname(file.originalname))
+        cb(null, uuid.v4()+'-'+Date.now()+path.extname(file.originalname))
     }   
 })
 
