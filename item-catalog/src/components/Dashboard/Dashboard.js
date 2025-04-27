@@ -148,7 +148,7 @@ const Dashboard = (props) => {
                 {
                     items.filter(item=>flexibleRegex.test(item.name) || flexibleRegex.test(item.desc)).map((item, index)=>{
                         return(<>
-                            <Item itemName={item.name} itemWebsite={item.website}  itemImage={item.image}  itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
+                            <Item itemName={item.name} itemWebsite={item.website} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }
@@ -165,7 +165,7 @@ const Dashboard = (props) => {
                 {
                     items.filter(item=>new RegExp(posterQuery).test(item.poster)).map((item, index)=>{
                         return(<>
-                            <Item itemName={item.name} itemWebsite={item.website}  itemImage={item.image} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
+                            <Item itemName={item.name} itemWebsite={item.website} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }
@@ -182,7 +182,7 @@ const Dashboard = (props) => {
                 {
                     items.filter(item=>new RegExp(posterQuery).test(item.poster) && (flexibleRegex.test(item.name) || flexibleRegex.test(item.desc))).map((item, index)=>{
                         return(<>
-                            <Item itemName={item.name} itemWebsite={item.website} itemImage={item.image} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
+                            <Item itemName={item.name} itemWebsite={item.website} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }
@@ -200,7 +200,7 @@ const Dashboard = (props) => {
                     items.map((item, index)=>{
                  
                         return(<>
-                            <Item itemName={item.name} itemWebsite={item.website} itemImage={item.image}  itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
+                            <Item itemName={item.name} itemWebsite={item.website} itemDesc={item.desc} itemPoster={item.poster} itemRatedByUser={item.usersRated.includes(user)} itemPrice={item.price} itemRating={item.rating} dateCreated={item.createdAt} lastUpdated={item.updatedAt} id={index} dbID={item._id}></Item>
                         </>)
                     })
                 }

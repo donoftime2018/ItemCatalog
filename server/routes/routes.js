@@ -1,39 +1,9 @@
 const mongoose = require('mongoose')
 const express = require('express');
 const app = express();
-const multer = require('multer');
-const {v4: uuidv4} = require('uuid')
-const path = require('path')
-const fs = require('fs')
 const Item = require('../schemas/Item.js');
 
 mongoose.set('setDefaultsOnInsert', true);
-
-const storage = multer.diskStorage({
-    destination: function(req, file, cb){
-        cb(null, 'uploads/')
-    },
-
-    filename: function(req, file, cb){
-        cb(null, uuidv4()+'-'+Date.now()+path.extname(file.originalname))
-    }   
-})
-
-const fileFilter = (req, file, cb) => {
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
-
-    if (allowedTypes.includes(file.mimetype))
-    {
-        cb(null, true)
-    }
-
-    else
-    {
-        cb(null, false)
-    }
-}
-
-let upload = multer({storage})
 
 app.get("/", async(req, res)=>{
 
@@ -41,7 +11,7 @@ app.get("/", async(req, res)=>{
         let allItems = await Item.find({}).sort({ rating: -1, price: 1, name: 1})
         res.status(200).json(allItems)
     } catch (err) {
-        res.status(400).send({msg: err})
+        console.error(err)
     }
 })
 
@@ -50,9 +20,7 @@ app.post("/getPostedItems", async(req, res)=>{
     try {
         let itemsPosted = await Item.find({poster: user}).select("name").sort({updatedAt: -1}).limit(5)
         res.status(200).json(itemsPosted)
-    } catch(err){
-        res.status(400).send({msg: err})
-    }
+    } catch(err){}
 })
 
 app.post("/numPostedItems", async(req, res)=>{
@@ -62,7 +30,6 @@ app.post("/numPostedItems", async(req, res)=>{
         const count = await Item.countDocuments({poster: user});
         res.status(200).json(count)
     } catch (error) {
-        res.status(400).send({msg: err})
     }
 
 })
@@ -75,7 +42,6 @@ app.post("/numLikedItems", async(req, res)=>{
         const count = await Item.countDocuments({usersRated: user});
         res.status(200).json(count)
     } catch(error){
-        res.status(400).send({msg: err})
     }
 })
 
@@ -86,7 +52,7 @@ app.post("/mostPopularItems", async(req, res)=>{
         let popularItems = await Item.find({poster: user, rating: {$gte: 1}}).select("name rating").sort({rating: -1, updatedAt: -1}).limit(5)
         res.status(200).json(popularItems)
     } catch(err) {
-        res.status(400).send({msg: err})
+
     }
 })
 
@@ -98,30 +64,18 @@ app.post("/getLikedItems", async(req, res) => {
         let likedItems = await Item.find({usersRated: user}).select("name").sort({updatedAt: -1}).limit(5)
         res.status(200).json(likedItems)
     } catch(err){
-        res.status(400).send({msg: err})
+
     }
 })
 
 
 
-app.post("/insertItems", upload.single('image'), async(req, res)=>{
-    const itemName = req.body.name
-    const itemDesc = req.body.desc
-    const itemSiteOrLink = req.body.website
-    const itemPrice = req.body.price
-    const itemPoster = req.body.user
-    const itemImage = req.file ? req.file.filename : null
-
+app.post("/insertItems", async(req, res)=>{
     try {
-        let newItem = await Item.create({name: itemName, 
-            desc: itemDesc, website: itemSiteOrLink, price: itemPrice, poster: itemPoster, image: itemImage})
+        let newItem = await Item.create({name: req.body.name, desc: req.body.desc, website: req.body.website, price: req.body.price, poster: req.body.user})
         if (newItem)
         {
             res.status(200).send()
-        }
-        else
-        {
-            res.status(400).send({msg: "Error adding " + itemName})
         }
     } catch(err)
     {
@@ -132,17 +86,7 @@ app.post("/insertItems", upload.single('image'), async(req, res)=>{
 })
 
 app.delete("/deleteItems/:id", async(req, res)=>{
-    let itemImage = req.body.image
-    fs.unlink(`uploads/${itemImage}`, (err)=>{
-        if (err)
-        {
-            res.status(400).send({msg: err})
-        }
-    })
-    Item.deleteOne({_id: req.params.id}).then(()=>{
-        res.status(200).send();
-    }).catch((err)=>{
-    res.status(400).send({msg: err})
+   Item.deleteOne({_id: req.params.id}).then((result)=>{console.log(result); res.status(200).send()}).catch((err)=>{
     })
 })
 
@@ -169,6 +113,7 @@ app.put("/increaseRating/:id", async(req, res, next)=>{
                     res.status(200).send()})
         }
     }).catch(err=>{
+        console.log(err)
         res.status(400).send({msg: err})
     })
 
@@ -200,6 +145,7 @@ app.put("/decreaseRating/:id", async(req, res, next)=>{
             res.status(400).send({msg: "You haven't even rated this item yet!"});
         }
     }).catch(err=>{
+        console.error(err)
             res.status(400).send({msg: err})
     })
 })

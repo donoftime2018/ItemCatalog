@@ -8,7 +8,6 @@ const app = express()
 require('dotenv').config()
 
 mongoose.connect(process.env.MONGO_ATLAS_URL).then(()=>{console.log("Connected!")}).catch((err)=>{console.error(err)})
-app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())

@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import {Card, CardHeader, CardContent, Divider, Button, FormHelperText, TextField} from "@mui/material"
+import {Card, CardHeader, CardContent, Divider, Button, TextField} from "@mui/material"
 import AppAlert from "../Alert/Alert";
 import Backdrop from "@mui/material/Backdrop";
 import {Tooltip} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import FileUploadIcon from '@mui/icons-material/FileUpload';
 import "./addForm.css";
 import {useFormik} from "formik";
 import { useAuth } from "../context/user";
@@ -33,8 +32,7 @@ const AddForm = () => {
         item_name: yup.string().max(65, "Item name cannot be over 65 characters long").required("Item name required"),
         item_price: yup.number().positive("Item price must be positive").required("Item price required"),
         item_desc: yup.string().max(138, "Item description cannot be over 138 characters long").required("Item description required"),
-        item_site: yup.string().max(50, "Item site or link cannot be over 50 characters long").required("The website/link that the item was found on is required"),
-        item_image: yup.mixed().required("Image of item is required")
+        item_site: yup.string().max(50, "Item site or link cannot be over 50 characters long").required("The website/link that the item was found on is required")
     })
 
     const formik = useFormik({
@@ -43,16 +41,13 @@ const AddForm = () => {
             item_name: "",
             item_price: "",
             item_desc: "",
-            item_site: "",
-            item_image: ""
+            item_site: ""
         },
         validationSchema: validation,
         onSubmit: (values, actions)=>{
-            addItemToDB(values.item_name, values.item_price, values.item_desc, values.item_site, values.item_image);
+            addItemToDB(values.item_name, values.item_price, values.item_desc, values.item_site);
         }
     }, {})
-
-    // console.log(formik.values.item_image)
 
     const handleOpen = () => {
         setOpen(true)
@@ -64,15 +59,10 @@ const AddForm = () => {
         setOpen(false)
     }
 
-    const addItemToDB = (name, price, desc, website, image) => {
+    const addItemToDB = (name, price, desc, website) => {
+
         const user = auth.user
-        const data = new FormData()
-        data.append('name', name)
-        data.append('desc', desc)
-        data.append('website', website)
-        data.append('price', price)
-        data.append('user', user)
-        data.append('image', image)
+        const data = {name, price, desc, user, website}
 
         axios.post(process.env.REACT_APP_SERVER_URL + "/items/insertItems", data).then((res)=>{
             if (res.status === 200)
@@ -82,11 +72,9 @@ const AddForm = () => {
                 handleClose()
             }
             }).catch((error) => {
-                const errorMessage = JSON.parse(error.request.response);
-                const validationMessage = error.response.data.msg.message;
-                const errorAlert = validationMessage===undefined ? errorMessage.msg : validationMessage;
-                alert(errorAlert);
-        })
+            const errorMessage = JSON.parse(error.request.response)
+            console.error(errorMessage.msg); 
+            alert(errorMessage.msg);})
     }
 
    return(<>
@@ -107,7 +95,7 @@ const AddForm = () => {
                 <Divider></Divider>
                 <CardContent>
                 <form onSubmit={formik.handleSubmit}>
-                <div >
+                <div style={{display: "flex", justifyContent: 'center'}}>
                     <TextField 
                         id="item_name"
                         name="item_name"
@@ -124,7 +112,7 @@ const AddForm = () => {
                         disableUnderline="true" 
                     />
                 </div>
-                <div >
+                <div style={{display: "flex", justifyContent: 'center'}}>
                     <TextField 
                         id="item_price"
                         name="item_price"
@@ -142,7 +130,7 @@ const AddForm = () => {
                         disableUnderline="true" 
                     />
                 </div>
-                <div>
+                <div style={{display: "flex", justifyContent: 'center'}}>
                     <TextField
                         id="item_site"
                         name="item_site"
@@ -159,7 +147,7 @@ const AddForm = () => {
                         disableUnderline="true" 
                     />
                 </div>
-                <div >
+                <div style={{display: "flex", justifyContent: 'center'}}>
                     <TextField
                         id="item_desc"
                         name="item_desc"
@@ -178,34 +166,7 @@ const AddForm = () => {
                         disableUnderline="true" 
                     />
                 </div>
-                <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', padding: '0px'}}>
-                    <Button 
-                        type="button" 
-                        component="label"
-                        variant="contained" 
-                        id="item_image"
-                        name="item_image"
-                        startIcon={<FileUploadIcon/>}
-                        color="success" 
-                        sx={{borderRadius: '25px', border: '1px solid black', display: 'inline-flex', justifyContent: 'center', alignItems: 'center' }}>
-                        Upload Image
-                        <input 
-                            type="file"
-                            hidden
-                            accept="image/*"
-                            onChange={e=>formik.setFieldValue('item_image', e.target.files[0])}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.item_image && Boolean(formik.errors.item_image)}
-                            helperText={formik.touched.item_image && formik.errors.item_image}
-                        >
-                        </input>
-                    </Button>
-                    {formik.values.item_image.name !== undefined ? formik.values.item_image.name : <></>}
-                    <FormHelperText style={{color: '#b53737'}}>
-                        {formik.touched.item_image && formik.errors.item_image ? formik.touched.item_image && formik.errors.item_image : ""}
-                    </FormHelperText>
-                </div>
-                <div style={{display: 'flex', justifyContent: 'center'}}>
+                <div style={{display: "flex", justifyContent: 'center'}}>
                     <Button type="Submit" variant="contained" color="primary" sx={{borderRadius: '25px', border: '1px solid black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Add Item to Catalog</Button>
                 </div>
             </form>

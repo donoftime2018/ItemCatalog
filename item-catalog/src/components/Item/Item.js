@@ -6,7 +6,6 @@ import "./Item.css"
 import Delete from "@mui/icons-material/Delete";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ImageIcon from '@mui/icons-material/Image';
 import Modal from "@mui/material/Modal"
 import InfoIcon from '@mui/icons-material/Info';
 import ReportItem from "../reportItem/reportItem";
@@ -28,10 +27,9 @@ const style = {
   };
 
 
-const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemImage, itemRatedByUser, itemPrice, itemRating, dateCreated, lastUpdated, id, dbID}) => {
+const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, itemPrice, itemRating, dateCreated, lastUpdated, id, dbID}) => {
 
     const [alertOpen, setAlertOpen] = useState(false);
-    const [imageOpen, setImageOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
 
     const [open, setOpen] = useState(false);
@@ -58,28 +56,15 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemImage, itemRated
         setOpen(false);
     }
 
-    const openImage = () => {
-        setImageOpen(true);
-    }
-
-    const closeImage = () => {
-        setImageOpen(false);
-    }
-
     const deleteItem = () => {
         let id = dbID;
         let confirmDelete = window.confirm("Are you sure you want to delete " + itemName + "?")
 
-        let image = itemImage
-        let data = {image}
         if (confirmDelete === true)
         {
-            axios.delete(process.env.REACT_APP_SERVER_URL + "/items/deleteItems/" + id, {data: data}).then((res) => {
+            axios.delete(process.env.REACT_APP_SERVER_URL + "/items/deleteItems/" + id).then((res) => {
                 }).catch((error) => {
-                    const errorMessage = JSON.parse(error.request.response);
-                    const validationMessage = error.response.data.msg.message;
-                    const errorAlert = validationMessage===undefined ? errorMessage.msg : validationMessage;
-                    alert(errorAlert);
+                
                 })
         }
     }
@@ -224,25 +209,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemImage, itemRated
                     <Divider></Divider>
                     <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6"><FavoriteIcon fontSize="large" sx={{color:'#c70e0e'}}></FavoriteIcon>{itemRating}</Typography></div>
                     <Divider></Divider>
-                    <div style={{display: 'flex-inline', justifyContent: 'center', alignItems: 'center'}}><Typography variant="h6">
-                        <Tooltip title="View Image of Item"><IconButton onClick={openImage}><ImageIcon color="primary" fontSize="large"></ImageIcon></IconButton></Tooltip>
-                    </Typography></div>
                 </Box>
-         </Modal>
-
-         <Modal open={imageOpen} onClose={closeImage}>
-            <Box 
-                component="img" 
-                src={`${process.env.REACT_APP_SERVER_URL}/uploads/${itemImage}`}
-                alt=''
-                sx={{
-                    height: 233,
-                    width: 350,
-                    maxHeight: { xs: 233, md: 167 },
-                    maxWidth: { xs: 350, md: 250 },
-                  }}
-            >
-            </Box>
          </Modal>
 
         {
