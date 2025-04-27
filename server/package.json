@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "frontend-build":"cd ../item-catalog && npm install && npm run build",
+    "frontend-build": "cd ../item-catalog && npm install && npm run build",
     "backend-build": "npm install",
     "build": "npm run frontend-build && npm run backend-build",
     "dev": "nodemon server.js",
@@ -32,7 +32,8 @@
     "nodemailer": "^6.10.0",
     "nodemon": "^3.0.1",
     "punycode": "^2.3.1",
-    "redis": "^4.7.0"
+    "redis": "^4.7.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "gh-pages": "^6.0.0"
