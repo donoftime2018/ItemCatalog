@@ -6,8 +6,15 @@ const uuid = require('uuid')
 const path = require('path')
 const fs = require('fs')
 const Item = require('../schemas/Item.js');
+const cloudinary = require('cloudinary').v2
 
 mongoose.set('setDefaultsOnInsert', true);
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_KEY,
+    api_secret: process.env.CLOUDINARY_SECRET
+})
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
@@ -113,8 +120,22 @@ app.post("/insertItems", upload.single('image'), async(req, res)=>{
     const itemImage = req.file ? req.file.filename : null
 
     try {
+
+        const cloudinaryRes = await cloudinary.uploader.upload(itemImage.path, {
+            resource_type: 'raw'
+        })
+
+        console.log(cloudinaryRes)
+
+        const fileURL = cloudinaryRes.url(cloudinaryRes.public_id, {
+            secure: true,
+            resource_type: 'raw'
+        })
+
+        console.log(fileURL)
+
         let newItem = await Item.create({name: itemName, 
-            desc: itemDesc, website: itemSiteOrLink, price: itemPrice, poster: itemPoster, image: itemImage})
+            desc: itemDesc, website: itemSiteOrLink, price: itemPrice, poster: itemPoster, image: fileURL})
         if (newItem)
         {
             res.status(200).send()
