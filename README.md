@@ -19,5 +19,6 @@ The live application is now [hosted on Render.com](https://item-catalog-client.o
 Feel free to explore the Docker images or view the live application hosted on Render.com!
 
 > 📌 Used as a Foundation for HCI/UIUX Coursework:
+> 
 > This deployed application was selected as the base project for a Human-Computer Interaction and UI/UX design class. As part of a team project, we conducted usability testing on the live site and developed low- and high-fidelity prototypes in Figma to explore enhancements and new features grounded in user feedback.
  
