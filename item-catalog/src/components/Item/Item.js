@@ -11,6 +11,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import ReportItem from "../reportItem/reportItem";
 import axios from 'axios';
 import { useAuth } from "../context/user";
+import * as cheerio from 'cheerio'
 
 const style = {
     position: 'absolute',
@@ -31,6 +32,11 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
 
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
+
+    const $ = cheerio.load(itemWebsite)
+    // console.log($)
+    let actualPrice = $('x-price-approx').text()
+    console.log(actualPrice)
 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
