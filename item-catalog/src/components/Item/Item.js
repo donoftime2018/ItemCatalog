@@ -33,10 +33,14 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
 
-    const $ = cheerio.load(itemWebsite)
-    // console.log($)
-    let actualPrice = $('x-price-approx').text()
-    console.log(actualPrice)
+    const priceScraper = async() => {
+        const { data: html } = await axios.get(itemWebsite)
+        const $ = cheerio.load(html)
+        let actualPrice = $('body').text()
+        console.log(actualPrice)
+    }
+    
+    priceScraper()
 
     const [open, setOpen] = useState(false);
     const auth=useAuth();
