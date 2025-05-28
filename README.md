@@ -17,3 +17,7 @@ Hosting on Render.com:
 The live application is now [hosted on Render.com](https://item-catalog-client.onrender.com/) using the renderDeploymentSetup branch. Render.com handles all hosting and scaling requirements, ensuring a seamless and reliable user experience. This branch is specifically configured for the deployment workflow, replacing the previous Docker deployment.
 
 Feel free to explore the Docker images or view the live application hosted on Render.com!
+
+> 📌 Used as a Foundation for HCI/UIUX Coursework:
+> This deployed application was selected as the base project for a Human-Computer Interaction and UI/UX design class. As part of a team project, we conducted usability testing on the live site and developed low- and high-fidelity prototypes in Figma to explore enhancements and new features grounded in user feedback.
+ 
