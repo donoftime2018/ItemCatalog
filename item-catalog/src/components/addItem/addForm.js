@@ -74,7 +74,11 @@ const AddForm = () => {
         data.append('user', user)
         data.append('image', image)
 
-        axios.post(process.env.REACT_APP_SERVER_URL + "/items/insertItems", data).then((res)=>{
+        axios.post(process.env.REACT_APP_SERVER_URL + "/items/insertItems", data, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        }).then((res)=>{
             if (res.status === 200)
             {
                 setAlertOpen(true)

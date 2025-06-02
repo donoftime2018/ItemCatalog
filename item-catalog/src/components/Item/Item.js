@@ -233,7 +233,7 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemImage, itemRated
          <Modal open={imageOpen} onClose={closeImage}>
             <Box 
                 component="img" 
-                src={`${process.env.REACT_APP_SERVER_URL}/uploads/${itemImage}`}
+                src={itemImage}
                 alt=''
                 sx={{
                     height: 233,
