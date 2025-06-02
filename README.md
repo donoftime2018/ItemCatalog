@@ -1,17 +1,17 @@
 # ItemCatalog
 ### RoadMap:
-  ✅ Core CRUD functionality with MongoDB and Express
-  ✅ User authentication
-  ✅ Nodemailer for sending emails on account creation, deletion, etc. 
-  ✅ Using JSON Web Tokens (JSWTs) for secure password reset 
-  ✅ Item ranking by popularity and affordability
-  🚧 Integrate Redux for improved state management
-  🚧 Enable image uploads using Multer
-  🚧 Add Cheerio-based web crawling for real-time data updates
-- [ ] Mobile-first UI improvements
-- [ ] Flagging inappropriate items
-- [ ] Dark mode support
-- [ ] Hosting on Railway
+  ✅ Core CRUD functionality with MongoDB and Express  
+  ✅ User authentication  
+  ✅ Nodemailer for sending emails on account creation, deletion, etc.  
+  ✅ Using JSON Web Tokens (JSWTs) for secure password reset  
+  ✅ Item ranking by popularity and affordability  
+  🚧 Integrate Redux for improved state management  
+  🚧 Enable image uploads using Multer  
+  🚧 Add Cheerio-based web crawling for real-time data updates 
+- [ ] Mobile-first UI improvements  
+- [ ] Flagging inappropriate items  
+- [ ] Dark mode support  
+- [ ] Hosting on Railway  
 
 Put a Price On It! is a modern MERN stack web application designed to help users make smarter purchasing decisions. Users can share information about items they find on platforms like eBay, Amazon, and more by adding an item’s name, price, and a brief description. The community can view these items, like their favorites, and assess their popularity. Key features include:
 
