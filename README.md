@@ -24,27 +24,24 @@ This intuitive platform empowers users to make informed buying decisions by comb
 
 This MERN stack application is containerized and was initially available as [Docker images on Docker Hub](https://hub.docker.com/repository/docker/donoftime2018/item-catalog/general). However, with the full transition to Render.com for hosting, the Docker-based deployment is now defunct.
 
-Continuous Integration/Continuous Deployment (CI/CD):
-
+Continuous Integration/Continuous Deployment (CI/CD): <br/>
 A robust CI/CD pipeline automates updates to the client and server images. Each merged pull request to the main branch triggers the pipeline, which rebuilds and pushes updated Docker images to Docker Hub, ensuring that the latest code changes remain available for reference.
 
-Hosting on Render.com:
-
+Hosting on Render.com: <br/>
 The live application is now [hosted on Render.com](https://item-catalog-client.onrender.com/) using the renderDeploymentSetup branch. Render.com handles all hosting and scaling requirements, ensuring a seamless and reliable user experience. This branch is specifically configured for the deployment workflow, replacing the previous Docker deployment.
 
 Feel free to explore the Docker images or view the live application hosted on Render.com!
 
-🚧 Work in Progress:
-
+🚧 Work in Progress:<br/>
 Several new features and enhancements are currently being developed to improve functionality, performance, and user experience:
-
-1. Redux Integration for Smarter State Management:
+<br/>
+1. Redux Integration for Smarter State Management:<br/>
 Refactoring the app to use Redux for global state management, reducing unnecessary network requests by only syncing with the backend during actual CRUD operations.
 
-1. Image Uploads via Multer:
+1. Image Uploads via Multer:<br/>
 Enabling users to upload images of listed items for better visual context and assessment, using Multer for handling image uploads on the backend.
 
-1. Real-Time Price and Stock Monitoring with Cheerio:
+1. Real-Time Price and Stock Monitoring with Cheerio:<br/>
 Implementing web scraping functionality with Cheerio to detect live updates such as price changes or stock availability by crawling item links from external platforms.
 
 These features are actively being developed on feature branches and will be merged into the main codebase as they are completed and tested.
