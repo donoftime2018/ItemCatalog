@@ -5,9 +5,9 @@
 - [x] Nodemailer for sending emails on account creation, deletion, etc.  
 - [x] Using JSON Web Tokens (JSWTs) for secure password reset  
 - [x] Item ranking by popularity and affordability  
-&nbsp;&nbsp;&nbsp;🚧 Integrate Redux for improved state management  
-&nbsp;&nbsp;&nbsp;🚧 Enable image uploads using Multer  
-&nbsp;&nbsp;&nbsp;🚧 Add Cheerio-based web crawling for real-time data updates  
+- 🚧 Integrate Redux for improved state management  
+- 🚧 Enable image uploads using Multer  
+- 🚧 Add Cheerio-based web crawling for real-time data updates  
 - [ ] Mobile-first UI improvements  
 - [ ] Flagging inappropriate items  
 - [ ] Dark mode support  
