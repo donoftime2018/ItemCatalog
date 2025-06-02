@@ -1,10 +1,10 @@
 # ItemCatalog
 ### RoadMap:
-  ✅ Core CRUD functionality with MongoDB and Express  
-  ✅ User authentication  
-  ✅ Nodemailer for sending emails on account creation, deletion, etc.  
-  ✅ Using JSON Web Tokens (JSWTs) for secure password reset  
-  ✅ Item ranking by popularity and affordability  
+- [x] Core CRUD functionality with MongoDB and Express  
+- [x] User authentication  
+- [x] Nodemailer for sending emails on account creation, deletion, etc.  
+- [x] Using JSON Web Tokens (JSWTs) for secure password reset  
+- [x] Item ranking by popularity and affordability  
   🚧 Integrate Redux for improved state management  
   🚧 Enable image uploads using Multer  
   🚧 Add Cheerio-based web crawling for real-time data updates  
