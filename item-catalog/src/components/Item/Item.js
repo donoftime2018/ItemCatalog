@@ -171,10 +171,6 @@ const Item = ({itemName, itemDesc, itemPoster, itemWebsite, itemRatedByUser, ite
                     </CardContent>
                 </> : 
                 <>
-                    {/* <Divider></Divider>
-                    <CardContent sx={{display: 'flex', flexDirection: 'row', padding: '5px', paddingBottom: '10px!important', alignItems: 'center', justifyContent: 'center'}}>
-                        <ReportItem></ReportItem>
-                    </CardContent> */}
                 </>
             }
          </Card>
