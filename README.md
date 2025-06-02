@@ -7,7 +7,7 @@
   ✅ Item ranking by popularity and affordability  
   🚧 Integrate Redux for improved state management  
   🚧 Enable image uploads using Multer  
-  🚧 Add Cheerio-based web crawling for real-time data updates 
+  🚧 Add Cheerio-based web crawling for real-time data updates  
 - [ ] Mobile-first UI improvements  
 - [ ] Flagging inappropriate items  
 - [ ] Dark mode support  
