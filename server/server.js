@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const itemRoute = require("./routes/routes.js")
 const userRoute = require("./routes/authRoutes.js")
+const cloudinaryConfig = require('./routes/cloudinaryConfig.js');
 const app = express()
 require('dotenv').config()
 

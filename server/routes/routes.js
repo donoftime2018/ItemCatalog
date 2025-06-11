@@ -6,25 +6,23 @@ const uuid = require('uuid')
 const path = require('path')
 const fs = require('fs')
 const Item = require('../schemas/Item.js');
-const cloudinary = require('cloudinary').v2
+const {CloudinaryStorage} = require('multer-storage-cloudinary');
+const cloudinaryConfig = require('./cloudinaryConfig.js');
+
 
 mongoose.set('setDefaultsOnInsert', true);
 
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_NAME,
-    api_key: process.env.CLOUDINARY_KEY,
-    api_secret: process.env.CLOUDINARY_SECRET
-})
 
-const storage = multer.diskStorage({
-    destination: function(req, file, cb){
-        cb(null, 'uploads/')
-    },
 
-    filename: function(req, file, cb){
-        cb(null, uuid.v4()+'-'+Date.now()+path.extname(file.originalname))
-    }   
-})
+// const storage = multer.diskStorage({
+//     destination: function(req, file, cb){
+//         cb(null, 'uploads/')
+//     },
+
+//     filename: function(req, file, cb){
+//         cb(null, uuid.v4()+'-'+Date.now()+path.extname(file.originalname))
+//     }   
+// })
 
 const fileFilter = (req, file, cb) => {
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
@@ -39,6 +37,15 @@ const fileFilter = (req, file, cb) => {
         cb(null, false)
     }
 }
+
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinaryConfig,
+    params:async(req,file)=>{
+        return {
+            folder: 'uploads'
+        }
+    }
+})
 
 let upload = multer({storage})
 
@@ -121,8 +128,8 @@ app.post("/insertItems", upload.single('image'), async(req, res)=>{
 
     try {
 
-        const cloudinaryRes = await cloudinary.uploader.upload(itemImage.path, {
-            resource_type: 'raw'
+        const cloudinaryRes = await cloudinaryConfig.uploader.upload(itemImage.path, {
+            folder: 'uploads'
         })
 
         console.log(cloudinaryRes)
@@ -133,6 +140,13 @@ app.post("/insertItems", upload.single('image'), async(req, res)=>{
         })
 
         console.log(fileURL)
+
+        fs.unlink(itemImage.path, (err)=>{
+            if (err)
+            {
+                res.status(400).send({msg: err})
+            }
+        })
 
         let newItem = await Item.create({name: itemName, 
             desc: itemDesc, website: itemSiteOrLink, price: itemPrice, poster: itemPoster, image: fileURL})
