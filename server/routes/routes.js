@@ -7,22 +7,27 @@ const path = require('path')
 const fs = require('fs')
 const Item = require('../schemas/Item.js');
 const {CloudinaryStorage} = require('multer-storage-cloudinary');
-const cloudinaryConfig = require('./cloudinaryConfig.js');
+const cloudinary = require('cloudinary').v2;
 
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_KEY,
+    api_secret: process.env.CLOUDINARY_SECRET
+})
 
 mongoose.set('setDefaultsOnInsert', true);
 
 
 
-// const storage = multer.diskStorage({
-//     destination: function(req, file, cb){
-//         cb(null, 'uploads/')
-//     },
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, 'uploads/')
+    },
 
-//     filename: function(req, file, cb){
-//         cb(null, uuid.v4()+'-'+Date.now()+path.extname(file.originalname))
-//     }   
-// })
+    filename: function(req, file, cb){
+        cb(null, uuid.v4()+'-'+Date.now()+path.extname(file.originalname))
+    }   
+})
 
 const fileFilter = (req, file, cb) => {
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
@@ -38,14 +43,12 @@ const fileFilter = (req, file, cb) => {
     }
 }
 
-const storage = new CloudinaryStorage({
-    cloudinary: cloudinaryConfig,
-    params:async(req,file)=>{
-        return {
-            folder: 'uploads'
-        }
-    }
-})
+// const storage = new CloudinaryStorage({
+//     cloudinary: cloudinary,
+//     params: {
+//             folder: '/uploads'
+//     }
+// })
 
 let upload = multer({storage})
 
@@ -126,27 +129,28 @@ app.post("/insertItems", upload.single('image'), async(req, res)=>{
     const itemPoster = req.body.user
     const itemImage = req.file ? req.file.filename : null
 
+    console.log(itemName, itemDesc, itemSiteOrLink, itemPrice, itemPoster, itemImage)
     try {
 
-        const cloudinaryRes = await cloudinaryConfig.uploader.upload(itemImage.path, {
-            folder: 'uploads'
-        })
+        // const cloudinaryRes = await cloudinaryConfig.uploader.upload(itemImage.path, {
+        //     folder: 'uploads'
+        // })
 
-        console.log(cloudinaryRes)
+        // console.log(cloudinaryRes)
 
-        const fileURL = cloudinaryRes.url(cloudinaryRes.public_id, {
-            secure: true,
-            resource_type: 'raw'
-        })
+        // const fileURL = cloudinaryRes.url(cloudinaryRes.public_id, {
+        //     secure: true,
+        //     resource_type: 'raw'
+        // })
 
-        console.log(fileURL)
+        // console.log(fileURL)
 
-        fs.unlink(itemImage.path, (err)=>{
-            if (err)
-            {
-                res.status(400).send({msg: err})
-            }
-        })
+        // fs.unlink(itemImage.path, (err)=>{
+        //     if (err)
+        //     {
+        //         res.status(400).send({msg: err})
+        //     }
+        // })
 
         let newItem = await Item.create({name: itemName, 
             desc: itemDesc, website: itemSiteOrLink, price: itemPrice, poster: itemPoster, image: fileURL})

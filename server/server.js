@@ -12,7 +12,9 @@ mongoose.connect(process.env.MONGO_ATLAS_URL).then(()=>{console.log("Connected!"
 app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
-app.use(cors())
+app.use(cors({
+      origin: [process.env.LOCAL_CLIENT, process.env.HOSTED_CLIENT]
+}))
 app.use("/items", itemRoute)
 app.use(userRoute)
 

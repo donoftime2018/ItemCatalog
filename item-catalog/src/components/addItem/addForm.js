@@ -74,20 +74,16 @@ const AddForm = () => {
         data.append('user', user)
         data.append('image', image)
 
-        axios.post(process.env.REACT_APP_SERVER_URL + "/items/insertItems", data, {
-            headers: {
-                "Content-Type": "multipart/form-data"
-            }
-        }).then((res)=>{
+        axios.post(process.env.REACT_APP_SERVER_URL + "/items/insertItems", data).then((res)=>{
             if (res.status === 200)
             {
                 setAlertOpen(true)
                 setAlertMessage(name + " added successfully")
                 handleClose()
             }
-            }).catch((error) => {
-                const errorMessage = JSON.parse(error.request.response);
-                const validationMessage = error.response.data.msg.message;
+            }).catch((err) => {
+                const errorMessage = JSON.parse(err.request.response);
+                const validationMessage = err.response.data.msg.message;
                 const errorAlert = validationMessage===undefined ? errorMessage.msg : validationMessage;
                 alert(errorAlert);
         })
@@ -121,7 +117,7 @@ const AddForm = () => {
                         value={formik.values.item_name}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        error={formik.touched.item_name && Boolean(formik.errors.item_name)}
+                        err={formik.touched.item_name && Boolean(formik.errors.item_name)}
                         helperText={formik.touched.item_name && formik.errors.item_name}
                         sx={{ backgroundColor: 'white', width: '100%'}} 
                         placeholder="Item name goes here..." 
@@ -137,7 +133,7 @@ const AddForm = () => {
                         value={formik.values.item_price}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        error={formik.touched.item_price && Boolean(formik.errors.item_price)}
+                        err={formik.touched.item_price && Boolean(formik.errors.item_price)}
                         helperText={formik.touched.item_price && formik.errors.item_price}
                         inputProps={{step: 0.01, min: 0.00}} 
                         sx={{backgroundColor: 'white', width: '100%'}} 
@@ -155,7 +151,7 @@ const AddForm = () => {
                         value={formik.values.item_site}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        error={formik.touched.item_site && Boolean(formik.errors.item_site)}
+                        err={formik.touched.item_site && Boolean(formik.errors.item_site)}
                         helperText={formik.touched.item_site && formik.errors.item_site}
                         sx={{ backgroundColor: 'white', width: '100%'}}
                         placeholder="Item Website/Link goes here..." 
@@ -172,7 +168,7 @@ const AddForm = () => {
                         value={formik.values.item_desc}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        error={formik.touched.item_desc && Boolean(formik.errors.item_desc)}
+                        err={formik.touched.item_desc && Boolean(formik.errors.item_desc)}
                         helperText={formik.touched.item_desc && formik.errors.item_desc}
                         sx={{ backgroundColor: 'white', width: '100%'}}
                         multiline
@@ -199,7 +195,7 @@ const AddForm = () => {
                             accept="image/*"
                             onChange={e=>formik.setFieldValue('item_image', e.target.files[0])}
                             onBlur={formik.handleBlur}
-                            error={formik.touched.item_image && Boolean(formik.errors.item_image)}
+                            err={formik.touched.item_image && Boolean(formik.errors.item_image)}
                             helperText={formik.touched.item_image && formik.errors.item_image}
                         >
                         </input>
