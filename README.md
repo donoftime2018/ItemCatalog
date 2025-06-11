@@ -12,9 +12,9 @@
 📝 Flagging inappropriate items  
 📝 Dark mode support  
 📝 Hosting on Railway   
-📝 Automatically delete item after 30 days of no activity
-📝 AI-powered product recommendation
-📝 Integrate AI chatbot for user interaction
+📝 Automatically delete item after 30 days of no activity  
+📝 AI-powered product recommendation  
+📝 Integrate AI chatbot for user interaction 
 
 Put a Price On It! is a modern MERN stack web application designed to help users make smarter purchasing decisions. Users can share information about items they find on platforms like eBay, Amazon, and more by adding an item’s name, price, and a brief description. The community can view these items, like their favorites, and assess their popularity. Key features include:
 
