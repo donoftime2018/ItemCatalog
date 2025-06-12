@@ -26,7 +26,7 @@
     "mdb-react-ui-kit": "^6.2.0",
     "mongodb": "^5.7.0",
     "mongoose": "^8.1.0",
-    "next": "^13.4.12",
+    "next": "^15.3.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.0-beta.1",
     "react-device-detect": "^2.2.3",
@@ -68,7 +68,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.8.9",
-    "react-scripts": "^5.0.1",
+    "react-scripts": "^0.0.0",
     "sass": "^1.64.1"
   },
   "overrides": {
