@@ -100,6 +100,10 @@ const Dashboard = (props) => {
             dispatch(getItems());
         });
 
+        socket.on("itemUnliked", () => {
+            dispatch(getItems());  
+        });
+
         socket.on("itemDeleted", () => {
             dispatch(getItems());
         });
@@ -107,6 +111,7 @@ const Dashboard = (props) => {
         return () => {
             socket.off("itemAdded");
             socket.off("itemLiked");
+            socket.off("itemUnliked");
             socket.off("itemDeleted");
         };
         document.title = props.title
