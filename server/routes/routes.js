@@ -75,6 +75,7 @@ app.post("/insertItems", async(req, res)=>{
         let newItem = await Item.create({name: req.body.name, desc: req.body.desc, website: req.body.website, price: req.body.price, poster: req.body.user})
         if (newItem)
         {
+            req.io.emit("itemAdded")
             res.status(200).send(newItem)
         }
     } catch(err)
