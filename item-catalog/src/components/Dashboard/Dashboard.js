@@ -14,6 +14,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import SearchBar from "../searchBar/searchBar";
 import {useFormik} from "formik";
 import { useAuth } from "../context/user";
+import socket from "../socket/socket";
 
 const Dashboard = (props) => {
     const [isQueried, setIsQueried] = useState(false);
@@ -90,7 +91,24 @@ const Dashboard = (props) => {
                     return prev
                 },{replace: true})
             }
+        
+        socket.on("itemAdded", () => {
+            dispatch(getItems());
+        });
 
+        socket.on("itemLiked", () => {
+            dispatch(getItems());
+        });
+
+        socket.on("itemDeleted", () => {
+            dispatch(getItems());
+        });
+
+        return () => {
+            socket.off("itemAdded");
+            socket.off("itemLiked");
+            socket.off("itemDeleted");
+        };
         document.title = props.title
     }, [dispatch, props, numOfItems, isQueried, itemName, posterName, setSearchParams])
 
