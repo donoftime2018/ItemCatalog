@@ -17,6 +17,23 @@ app.get("/", async(req, res)=>{
     }
 })
 
+app.post("/recommendedItems", async(req, res)=>{
+    const user = req.body.user;
+    console.log(user)
+    try{
+        let recommendedItems = await Item.find({$or: {poster: {$nin: user}, usersRated: {$nin: user}}}).sort({rating: -1, price: 1, name: 1}).limit(5);
+        console.log(recommendedItems);
+
+        let interactedItems = await Item.find({$or: {poster: {$in: user}, usersRated: {$in: user}}})
+        console.log(interactedItems);
+
+        
+
+    } catch(err){
+
+    }
+})
+
 app.post("/getPostedItems", async(req, res)=>{
     let user = req.body.user;
     try {
@@ -74,9 +91,11 @@ app.post("/getLikedItems", async(req, res) => {
 
 app.post("/insertItems", async(req, res)=>{
     try {
-        let newItem = await Item.create({name: req.body.name, desc: req.body.desc, website: req.body.website, price: req.body.price, poster: req.body.user})
+        let newItem = await Item.create({name: req.body.name, desc: req.body.desc, website: req.body.website, 
+            price: req.body.price, poster: req.body.user, textVector: await getEmbeddings(req.body.name + " " + req.body.desc)})
         if (newItem)
         {
+            console.log(newItem);
             res.status(200).send()
         }
     } catch(err)
