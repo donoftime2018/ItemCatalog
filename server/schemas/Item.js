@@ -36,7 +36,11 @@ const itemSchema = new Schema({
         default: 0,
         required: true,
     },
-    usersRated: [String]
+    usersRated: [String],
+    textVector: {
+        type: [Number],
+        required: true
+    }
 }, {
     collection: 'item',
     timestamps: true
