@@ -21,13 +21,45 @@ app.post("/recommendedItems", async(req, res)=>{
     const user = req.body.user;
     console.log(user)
     try{
-        let recommendedItems = await Item.find({$or: {poster: {$nin: user}, usersRated: {$nin: user}}}).sort({rating: -1, price: 1, name: 1}).limit(5);
+        let recommendedItems = await Item.find({
+            $or: 
+            [
+                {poster: {$nin: [user]}}, {usersRated: {$nin: [user]}}
+            ]            
+        }).sort({rating: -1, price: 1, name: 1}).limit(5);
         console.log(recommendedItems);
 
-        let interactedItems = await Item.find({$or: {poster: {$in: user}, usersRated: {$in: user}}})
+        let interactedItems = await Item.find({
+            $or: 
+            [
+                {poster: {$in: [user]}}, {usersRated: {$in: [user]}}
+            ]
+        })
         console.log(interactedItems);
 
-        
+        if (interactedItems.length == 0)
+        {
+            res.status(200).json([])
+        }
+
+        const vectorLength = interactedItems[0].textVector.length;
+        const avgVector = Array(vectorLength).fill(0);
+
+        interactedItems.forEach((item)=>{
+            item.textVector.forEach((value, index)=>{
+                avgVector[index] += value;
+            })
+        })
+
+        const userVector = avgVector.map(value => value / interactedItems.length);
+
+        const scored = recommendedItems.map((item) => ({
+            item,
+            score: calculateSimilarity(userVector, item.textVector)
+        }))
+
+        const topMatches = scored.sort((a, b) => b.score - a.score).slice(0, 5).map(match => match.item);
+        res.status(200).json(topMatches);
 
     } catch(err){
 
