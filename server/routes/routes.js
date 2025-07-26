@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 const express = require('express');
 const app = express();
 const Item = require('../schemas/Item.js');
+const calculateSimilarity = require('./embeddings.js').calculateSimilarity;
+const getEmbeddings = require('./embeddings.js').getEmbeddings;
 
 mongoose.set('setDefaultsOnInsert', true);
 
