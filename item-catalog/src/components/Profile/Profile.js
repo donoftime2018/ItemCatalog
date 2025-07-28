@@ -14,6 +14,7 @@ const Profile = (props) => {
     const [likedItems, setLikedItems] = useState([])
     const [postedItems, setPostedItems] = useState([])
     const [popularItems, setPopularItems] = useState([])
+    const [recommendedItems, setRecommendedItems] = useState([])
 
     const [numLikedItems, setNumLikedItems] = useState(0);
     const [numPostedItems, setNumPostedItems] = useState(0);
@@ -64,12 +65,22 @@ const Profile = (props) => {
                 });
         }
 
+        const getRecommendedItems = () => {
+            const body = {user}
+            axios.post(process.env.REACT_APP_SERVER_URL + "/items/recommendedItems", body).then(
+                (res)=>{
+                    setRecommendedItems(res.data); 
+                }).catch((error)=>{
+                });
+        }
+
         const getProfileInfo = () => {
             getLikedItems()
             getPostedItems()
             getMostPopularItems()
             getNumLiked()
             getNumPosted()
+            getRecommendedItems()
         }
 
         getProfileInfo()
@@ -77,7 +88,7 @@ const Profile = (props) => {
         document.title = props.title
 
     }, [likedItems, postedItems, popularItems, popularItems.length, setLoading,
-        likedItems.length, postedItems.length, user,
+        likedItems.length, recommendedItems, recommendedItems.length, postedItems.length, user,
          numLikedItems, numPostedItems, props])
 
     return(<>

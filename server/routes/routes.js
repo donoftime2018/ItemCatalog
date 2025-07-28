@@ -45,20 +45,29 @@ app.post("/recommendedItems", async(req, res)=>{
         const vectorLength = interactedItems[0].textVector.length;
         const avgVector = Array(vectorLength).fill(0);
 
+        console.log(avgVector);
+        console.log(vectorLength)
+
         interactedItems.forEach((item)=>{
             item.textVector.forEach((value, index)=>{
                 avgVector[index] += value;
             })
         })
 
+        console.log(interactedItems)
+
         const userVector = avgVector.map(value => value / interactedItems.length);
+
+        console.log(userVector)
 
         const scored = recommendedItems.map((item) => ({
             item,
             score: calculateSimilarity(userVector, item.textVector)
         }))
+        console.log(scored)
 
         const topMatches = scored.sort((a, b) => b.score - a.score).slice(0, 5).map(match => match.item);
+        console.log(topMatches)
         res.status(200).json(topMatches);
 
     } catch(err){
@@ -124,7 +133,7 @@ app.post("/getLikedItems", async(req, res) => {
 app.post("/insertItems", async(req, res)=>{
     try {
         let newItem = await Item.create({name: req.body.name, desc: req.body.desc, website: req.body.website, 
-            price: req.body.price, poster: req.body.user, textVector: await getEmbeddings(req.body.name + " " + req.body.desc)})
+            price: req.body.price, poster: req.body.user, textVector: await getEmbeddings(req.body.name + "" + req.body.desc)})
         if (newItem)
         {
             console.log(newItem);
