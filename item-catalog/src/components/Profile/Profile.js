@@ -67,8 +67,9 @@ const Profile = (props) => {
 
         const getRecommendedItems = () => {
             const body = {user}
-            axios.post(process.env.REACT_APP_SERVER_URL + "/items/recommendedItems", body).then(
+            axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/recommendedItems", body).then(
                 (res)=>{
+                    console.log(res.data)
                     setRecommendedItems(res.data); 
                 }).catch((error)=>{
                 });
@@ -177,6 +178,24 @@ const Profile = (props) => {
                 <CardContent sx={{textAlign: 'center', padding: "4px!important", fontSize: "24px", alignItems: 'center'}}>{numPostedItems}</CardContent>
             </Card>
         </div>
+
+        <Card class="infoCard">
+                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Recently Liked Items:"></CardHeader>
+                {
+                    <>
+                        {
+                            recommendedItems.map((item, index)=>{
+                                    return(<>
+                                        <Divider></Divider>
+                                        <CardContent sx={{textAlign: 'center'}}>{item.name}</CardContent>
+                                </>)
+                            
+                            })
+                        }
+                    </>
+                }
+                
+            </Card>
         
     </>)
 }
