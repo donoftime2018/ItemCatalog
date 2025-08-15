@@ -1,5 +1,5 @@
 const use = require('@tensorflow-models/universal-sentence-encoder')
-const tf = require('@tensorflow/tfjs');
+const tf = require('@tensorflow/tfjs-node');
 
 async function getEmbeddings(text) {
     const model = await use.load();

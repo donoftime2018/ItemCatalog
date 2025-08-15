@@ -25,21 +25,21 @@ const Profile = (props) => {
     useEffect(()=>{
         const getLikedItems = () => {
             const body = {user}
-            axios.post(process.env.REACT_APP_SERVER_URL + "/items/getLikedItems/", body).then((res)=>{setLikedItems(res.data); 
+            axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/getLikedItems/", body).then((res)=>{setLikedItems(res.data); 
             }).catch((error)=>{
             });
         }
 
         const getPostedItems = () => {
             const body = {user}
-            axios.post(process.env.REACT_APP_SERVER_URL + "/items/getPostedItems/", body).then((res)=>{setPostedItems(res.data); 
+            axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/getPostedItems/", body).then((res)=>{setPostedItems(res.data); 
             }).catch((error)=>{
             });
         }
 
         const getMostPopularItems = () => {
             const body = {user}
-            axios.post(process.env.REACT_APP_SERVER_URL + "/items/mostPopularItems/", body).then((res)=>{setPopularItems(res.data); 
+            axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/mostPopularItems/", body).then((res)=>{setPopularItems(res.data); 
             }).catch((error)=>{
                 });
         }
@@ -47,7 +47,7 @@ const Profile = (props) => {
         const getNumLiked = () => {
             const body = {user}
 
-            axios.post(process.env.REACT_APP_SERVER_URL + "/items/numLikedItems", body).then(
+            axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/numLikedItems", body).then(
                 (res)=>{
                     setNumLikedItems(res.data); 
                 }).catch((error)=>{
@@ -56,7 +56,7 @@ const Profile = (props) => {
 
         const getNumPosted = () => {
             const body = {user}
-            axios.post(process.env.REACT_APP_SERVER_URL + "/items/numPostedItems", body).then(
+            axios.post(process.env.REACT_APP_LOCAL_HOST + "/items/numPostedItems", body).then(
                 (res)=>{
                     setNumPostedItems(res.data); 
                 }).catch((error)=>{
@@ -180,7 +180,7 @@ const Profile = (props) => {
         </div>
 
         <Card class="infoCard">
-                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Recently Liked Items:"></CardHeader>
+                <CardHeader sx={{textAlign: 'center', textDecoration: 'underline'}} title="Recommended Items:"></CardHeader>
                 {
                     <>
                         {
