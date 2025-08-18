@@ -1,5 +1,12 @@
 const use = require('@tensorflow-models/universal-sentence-encoder')
-const tf = require('@tensorflow/tfjs-node');
+let tf;
+try {
+  tf = require('@tensorflow/tfjs-node');
+  console.log("Using TensorFlow Node backend (native)");
+} catch {
+  console.warn("Falling back to TensorFlow.js (slower, no native acceleration)");
+  tf = require('@tensorflow/tfjs');
+}
 
 async function getEmbeddings(text) {
     const model = await use.load();
