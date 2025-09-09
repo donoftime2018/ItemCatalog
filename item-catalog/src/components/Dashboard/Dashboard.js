@@ -11,6 +11,7 @@ import {Card, CardHeader, CardContent, Divider, IconButton, TextField, Tooltip} 
 import SearchIcon from '@mui/icons-material/Search';
 import {useFormik} from "formik";
 import { useAuth } from "../context/user";
+import socket from "../socket/Socket";
 
 const Dashboard = (props) => {
     const [items, setItems] = useState([])
@@ -77,6 +78,7 @@ const Dashboard = (props) => {
 
     useEffect(()=>{
 
+
         const getItems = () => {
             axios.get(process.env.REACT_APP_LOCAL_HOST + "/items/").then((res)=>{
                 setItems(res.data)
@@ -96,6 +98,13 @@ const Dashboard = (props) => {
             },{replace: true})
         }
         document.title = props.title
+        socket.on("newItem", (item)=>{
+            setItems(items => [...items, item])
+        })
+
+        return () => {
+            socket.off("newItem")
+        }
     }, [items.length, items, setSearchParams, setLoading, isQueried, itemName, posterName, props])
 
 
