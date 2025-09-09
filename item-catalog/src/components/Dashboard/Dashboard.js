@@ -98,13 +98,13 @@ const Dashboard = (props) => {
             },{replace: true})
         }
         document.title = props.title
-        socket.on("newItem", (item)=>{
-            setItems(items => [...items, item])
-        })
+        // socket.on("newItem", (item)=>{
+        //     setItems(items => [...items, item])
+        // })
 
-        return () => {
-            socket.off("newItem")
-        }
+        // return () => {
+        //     socket.off("newItem")
+        // }
     }, [items.length, items, setSearchParams, setLoading, isQueried, itemName, posterName, props])
 
 

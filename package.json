@@ -4,13 +4,16 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-      "install-server": "cd server && npm install",
-      "start-server": "cd server && npm start",
-      "install-client": "cd item-catalog && npm install",
-      "build-client": "cd item-catalog && npm run build",
-      "start-client": "cd item-catalog && npm run start"
+        "install-server": "cd server && npm install",
+        "start-server": "cd server && npm start",
+        "install-client": "cd item-catalog && npm install",
+        "build-client": "cd item-catalog && npm run build",
+        "start-client": "cd item-catalog && npm run start"
     },
     "keywords": [],
     "author": "",
-    "license": "ISC"
-  }
+    "license": "ISC",
+    "dependencies": {
+        "@tensorflow/tfjs-node": "^4.20.0"
+    }
+}
