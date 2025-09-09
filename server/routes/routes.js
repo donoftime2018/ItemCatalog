@@ -137,6 +137,10 @@ app.post("/insertItems", async(req, res)=>{
         if (newItem)
         {
             console.log(newItem);
+            if (req.io)
+            {
+                req.io.emit('newItem', newItem);
+            }
             res.status(200).send()
         }
     } catch(err)

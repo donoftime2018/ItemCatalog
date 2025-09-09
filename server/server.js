@@ -13,6 +13,10 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())
 app.use("/items", itemRoute)
 app.use(userRoute)
+app.use((req, res, next)=>{
+    req.io = io
+    next()
+})
 
 const port = process.env.PORT | 4000
 
