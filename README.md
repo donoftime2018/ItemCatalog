@@ -56,17 +56,18 @@ These features are actively being developed on feature branches and will be merg
 >
 > This deployed application was selected as the base project for a Human-Computer Interaction and UI/UX design class. As part of a team project, we conducted usability testing on the live site and developed low- and high-fidelity prototypes in Figma to explore enhancements and new features grounded in user feedback.
 >
+> 
 > 🛠️ Lightweight Refactor & Structural Improvements
 >
 > For an [in-class activity in ACS 560](https://github.com/donoftime2018/InClassProject), I collaborated with two classmates to build a streamlined version of this project that focused on improving code clarity and backend structure rather than expanding features.
 >
 > This iteration emphasized:
 >
-- Improving frontend and backend code readability for clearer logic flow and maintainability  
-- Refactoring the MERN backend into a more conventional structure with dedicated `controllers` and `routes` directories  
-- Implementing MongoDB document references (`ref`) within Mongoose schemas to better model relationships  
-- Updating queries to properly leverage referenced documents for cleaner and more scalable data access patterns  
+> - Improving frontend and backend code readability for clearer logic flow and maintainability  
+> - Refactoring the MERN backend into a more conventional structure with dedicated `controllers` and `routes` directories  
+> - Implementing MongoDB document references (`ref`) within Mongoose schemas to better model relationships  
+> - Updating queries to properly leverage referenced documents for cleaner and more scalable data access patterns  
 
-The goal of this version was to strengthen architectural organization, database design, and long-term maintainability.
+> The goal of this version was to strengthen architectural organization, database design, and long-term maintainability.
  >
  > 
