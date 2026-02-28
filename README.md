@@ -56,7 +56,8 @@ These features are actively being developed on feature branches and will be merg
 >
 > This deployed application was selected as the base project for a Human-Computer Interaction and UI/UX design class. As part of a team project, we conducted usability testing on the live site and developed low- and high-fidelity prototypes in Figma to explore enhancements and new features grounded in user feedback.
 >
-> 
+> <br/>
+> <br/>
 > 🛠️ Lightweight Refactor & Structural Improvements
 >
 > For an [in-class activity in ACS 560](https://github.com/donoftime2018/InClassProject), I collaborated with two classmates to build a streamlined version of this project that focused on improving code clarity and backend structure rather than expanding features.
